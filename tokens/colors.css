@@ -1,0 +1,75 @@
+/* ─────────────────────────────────────────────
+   Mooza · Color Tokens
+   Brand palette + semantic aliases
+───────────────────────────────────────────── */
+:root {
+  /* ── Brand Palette (official) ── */
+  --color-yellow:   #fcee21;
+  --color-orange:   #fbb03b;
+  --color-navy:     #1b1444;
+  --color-dark:     #03021b;
+  --color-light:    #f2f2f2;
+  --color-white:    #ffffff;
+
+  /* ── Navy Scale (derived, 4-step interpolation) ── */
+  --color-navy-950: #03021b;   /* Noche Profunda — deepest */
+  --color-navy-900: #07051f;
+  --color-navy-850: #0d0a2c;
+  --color-navy-800: #131039;
+  --color-navy-700: #1b1444;   /* Azul Noche — base */
+  --color-navy-600: #221d55;
+  --color-navy-500: #2c2566;
+  --color-navy-400: #382f7a;
+  --color-navy-300: #4a3f96;
+  --color-navy-200: #6a5fb8;
+  --color-navy-100: #9b94d4;
+
+  /* ── Yellow Scale ── */
+  --color-yellow-50:  #fffde8;
+  --color-yellow-100: #fefac0;
+  --color-yellow-200: #fdf591;
+  --color-yellow-300: #fdf060;
+  --color-yellow-400: #fcee21;   /* base */
+  --color-yellow-500: #e6d700;
+  --color-yellow-600: #c4b800;
+
+  /* ── Orange Scale ── */
+  --color-orange-100: #fde8b5;
+  --color-orange-200: #fcd07a;
+  --color-orange-300: #fbb03b;   /* base */
+  --color-orange-400: #e89500;
+  --color-orange-500: #c47c00;
+
+  /* ── Semantic — Backgrounds ── */
+  --bg-base:              var(--color-navy-950);   /* page root */
+  --bg-surface:           var(--color-navy-700);   /* primary surface */
+  --bg-surface-raised:    var(--color-navy-600);   /* card, slightly elevated */
+  --bg-surface-highlight: var(--color-navy-500);   /* featured / hover */
+  --bg-overlay:           rgba(3, 2, 27, 0.88);
+
+  /* ── Semantic — Text ── */
+  --text-primary:    var(--color-white);
+  --text-secondary:  rgba(255, 255, 255, 0.65);
+  --text-muted:      rgba(255, 255, 255, 0.35);
+  --text-disabled:   rgba(255, 255, 255, 0.20);
+  --text-on-accent:  var(--color-dark);
+
+  /* ── Semantic — Accent ── */
+  --accent:          var(--color-yellow);
+  --accent-warm:     var(--color-orange);
+  --accent-hover:    var(--color-yellow-300);
+  --accent-active:   var(--color-yellow-500);
+
+  /* ── Semantic — Borders & Dividers ── */
+  --border-subtle:   rgba(255, 255, 255, 0.08);
+  --border-default:  rgba(255, 255, 255, 0.18);
+  --border-strong:   rgba(255, 255, 255, 0.38);
+  --border-accent:   var(--color-yellow);
+  --divider:         rgba(255, 255, 255, 0.07);
+
+  /* ── Semantic — States ── */
+  --state-success:   #34d399;
+  --state-warning:   var(--color-orange);
+  --state-error:     #f87171;
+  --state-info:      #60a5fa;
+}

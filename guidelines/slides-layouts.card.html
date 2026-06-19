@@ -1,0 +1,192 @@
+<!-- @dsCard group="Slides" viewport="700x440" name="Layouts de Slides" subtitle="4 estructuras base para presentaciones Mooza — 16:9" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin:0; background:#0a0818; font-family:var(--font-sans); padding:18px 16px; display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+
+  /* Slide shell — 16:9 */
+  .slide { aspect-ratio:16/9; border-radius:8px; overflow:hidden; position:relative; }
+
+  /* 01 — Portada */
+  .s1 {
+    background:radial-gradient(ellipse at 45% 40%, #2c2566 0%, #1b1444 40%, #07051f 100%);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+    padding:20px;
+  }
+  .s1 .wm { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; }
+  .s1 .wm img { width:70%; opacity:0.04; }
+  .s1 .logo { height:22px; margin-bottom:16px; position:relative; }
+  .s1 .title { font-family:var(--font-display); font-weight:800; font-size:28px; line-height:1.05; letter-spacing:-0.025em; color:#fff; position:relative; }
+  .s1 .title span { color:var(--accent); }
+  .s1 .pill { display:inline-block; align-self:center; width:fit-content; background:var(--accent); color:#03021b; font-size:9px; font-weight:800; border-radius:99px; padding:4px 12px; margin-top:12px; position:relative; }
+  .s1 .corner { position:absolute; bottom:10px; right:12px; font-size:7px; color:rgba(255,255,255,0.25); font-weight:500; letter-spacing:0.08em; }
+
+  /* 02 — Lista de eventos */
+  .s2 {
+    background:#03021b;
+    display:flex;
+  }
+  .s2-left { width:36%; background:var(--color-navy); padding:14px 14px; display:flex; flex-direction:column; justify-content:space-between; }
+  .s2-left .logo { height:13px; margin-bottom:8px; }
+  .s2-left .section { font-size:7px; font-weight:700; color:rgba(255,255,255,0.35); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:4px; }
+  .s2-left .title { font-family:var(--font-display); font-weight:800; font-size:16px; line-height:1.1; letter-spacing:-0.02em; color:#fff; }
+  .s2-left .title span { color:var(--accent); }
+  .s2-left .date { font-size:8px; color:rgba(255,255,255,0.4); font-weight:500; margin-top:6px; }
+  .s2-right { flex:1; padding:10px 12px; display:flex; flex-direction:column; justify-content:center; gap:0; }
+  .ev { display:flex; align-items:center; gap:7px; padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.06); }
+  .ev:last-child { border-bottom:none; }
+  .ev-feat { background:#221d55; border-radius:6px; padding:5px 7px; margin:2px 0; }
+  .db { width:30px; min-width:30px; height:32px; border-radius:5px; background:#03021b; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0; }
+  .db.hl { background:var(--accent); }
+  .db-n { font-family:var(--font-display); font-weight:800; font-size:13px; line-height:1; color:#fff; }
+  .db.hl .db-n { color:#03021b; }
+  .db-d { font-size:5px; font-weight:700; color:rgba(255,255,255,0.35); text-transform:uppercase; letter-spacing:0.1em; }
+  .db.hl .db-d { color:rgba(3,2,27,0.4); }
+  .ev-cat { font-size:6px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:0.1em; }
+  .ev-t { font-size:8.5px; font-weight:700; color:#fff; line-height:1.2; }
+  .ev-v { font-size:7px; color:rgba(255,255,255,0.4); }
+  .ev-p { font-size:7.5px; font-weight:600; color:#fff; border:1px solid rgba(255,255,255,0.2); border-radius:99px; padding:2px 6px; white-space:nowrap; flex-shrink:0; }
+  .ev-p.free { background:var(--accent); color:#03021b; border-color:var(--accent); }
+  .ev-info { flex:1; min-width:0; }
+  .feat-badge { font-size:5.5px; font-weight:800; color:#03021b; background:var(--accent); border-radius:99px; padding:1.5px 5px; text-transform:uppercase; letter-spacing:0.1em; display:inline-block; margin-bottom:2px; }
+
+  /* 03 — Evento destacado */
+  .s3 {
+    background:radial-gradient(ellipse at 30% 60%, #2c2566 0%, #1b1444 50%, #07051f 100%);
+    display:flex; align-items:stretch;
+  }
+  .s3-left { flex:1; padding:16px 14px; display:flex; flex-direction:column; justify-content:space-between; overflow:hidden; }
+  .s3-tags { display:flex; gap:4px; }
+  .s3-tag { font-size:6.5px; font-weight:700; color:var(--accent); border:1.5px solid var(--accent); border-radius:99px; padding:2px 7px; text-transform:uppercase; letter-spacing:0.1em; }
+  .s3-tag.f { background:var(--accent); color:#03021b; }
+  .s3-bignum { font-family:var(--font-display); font-weight:800; font-size:80px; line-height:0.85; letter-spacing:-0.05em; color:rgba(255,255,255,0.05); }
+  .s3-title { font-family:var(--font-display); font-weight:800; font-size:16px; line-height:1.15; letter-spacing:-0.02em; color:#fff; }
+  .s3-right { width:38%; padding:14px 14px; display:flex; flex-direction:column; justify-content:space-between; border-left:1px solid rgba(255,255,255,0.07); }
+  .s3-logo { height:13px; }
+  .s3-info { display:flex; flex-direction:column; gap:6px; }
+  .s3-row { display:flex; align-items:center; gap:5px; }
+  .s3-icon { font-family:'Material Symbols Outlined'; font-size:12px; color:var(--accent); font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 16; line-height:1; font-style:normal; flex-shrink:0; }
+  .s3-info-text { font-size:8.5px; color:rgba(255,255,255,0.55); font-weight:500; }
+  .s3-price { font-family:var(--font-display); font-weight:800; font-size:18px; color:#fff; letter-spacing:-0.02em; }
+  .s3-cta { background:var(--accent); color:#03021b; font-size:8px; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; border-radius:99px; padding:8px; text-align:center; }
+
+  /* 04 — Cierre / CTA */
+  .s4 {
+    background:radial-gradient(ellipse at 50% 40%, #221d42 0%, #17152f 40%, #03021b 100%);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+    padding:20px; gap:10px; position:relative; overflow:hidden;
+  }
+  .s4 .wm-l { position:absolute; left:-30px; bottom:-30px; width:140px; opacity:0.06; }
+  .s4 .wm-r { position:absolute; right:-30px; top:-20px; width:110px; opacity:0.04; transform:rotate(15deg); }
+  .s4 .eyebrow { font-size:8px; font-weight:700; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.14em; }
+  .s4 .url { font-family:var(--font-display); font-weight:800; font-size:32px; letter-spacing:-0.02em; color:var(--accent); line-height:1; }
+  .s4 .sub { font-size:10px; color:rgba(255,255,255,0.5); font-weight:500; }
+  .s4 .logo { height:18px; }
+  .s4 .handle { font-size:9px; color:rgba(255,255,255,0.3); font-weight:600; letter-spacing:0.08em; }
+
+  /* Slide labels */
+  .slide-label { position:absolute; bottom:6px; left:8px; font-size:6.5px; font-weight:700; color:rgba(255,255,255,0.25); text-transform:uppercase; letter-spacing:0.12em; }
+  .slide-num { position:absolute; top:6px; right:8px; font-size:6.5px; font-weight:700; color:rgba(255,255,255,0.2); }
+</style>
+</head>
+<body>
+
+<!-- 01 Portada -->
+<div class="slide s1">
+  <div class="wm"><img src="../assets/logos/logo-iso-white.svg"></div>
+  <img class="logo" src="../assets/logos/logo-horizontal-color-dark.svg">
+  <div class="title">Tu semana<br><span>cultural</span></div>
+  <div class="pill">15 — 21 junio · Santiago</div>
+  <div class="corner">mooza.cl</div>
+  <span class="slide-num">01</span>
+  <span class="slide-label">Portada</span>
+</div>
+
+<!-- 02 Lista -->
+<div class="slide s2">
+  <div class="s2-left">
+    <div>
+      <img class="logo" src="../assets/logos/logo-horizontal-color-dark.svg">
+      <div class="section">Agenda semanal</div>
+      <div class="title">Tu semana<br><span>cultural</span></div>
+      <div class="date">15 — 21 junio</div>
+    </div>
+    <div style="font-size:7px;color:rgba(255,255,255,0.25);">mooza.cl</div>
+  </div>
+  <div class="s2-right">
+    <div class="ev">
+      <div class="db"><div class="db-n">20</div><div class="db-d">SÁB</div></div>
+      <div class="ev-info"><div class="ev-cat">Música</div><div class="ev-t">4sure en casa elisa pizza bar</div><div class="ev-v">22:00 · Casa Elisa</div></div>
+      <div class="ev-p">$6.000</div>
+    </div>
+    <div class="ev-feat">
+      <div class="feat-badge">Destacado · Música</div>
+      <div class="ev" style="border:none;padding:2px 0 0;">
+        <div class="db hl"><div class="db-n">20</div><div class="db-d">SÁB</div></div>
+        <div class="ev-info"><div class="ev-t">Leo quinteros en bar de rené</div><div class="ev-v">21:30 · desde $6.000</div></div>
+      </div>
+    </div>
+    <div class="ev">
+      <div class="db"><div class="db-n">21</div><div class="db-d">DOM</div></div>
+      <div class="ev-info"><div class="ev-cat">Música</div><div class="ev-t">Concierto Homenaje Ídolos América</div><div class="ev-v">20:00 · Teatro Oriente</div></div>
+      <div class="ev-p">$15.000</div>
+    </div>
+    <div class="ev-feat">
+      <div class="feat-badge">Destacado · Gratis</div>
+      <div class="ev" style="border:none;padding:2px 0 0;">
+        <div class="db hl"><div class="db-n">20</div><div class="db-d">SÁB</div></div>
+        <div class="ev-info"><div class="ev-t">Schwenke y nilo en la casona</div><div class="ev-v">18:30 · Gratis</div></div>
+        <div class="ev-p free">Gratis</div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num" style="color:rgba(255,255,255,0.2)">02</span>
+  <span class="slide-label" style="color:rgba(255,255,255,0.2)">Lista de eventos</span>
+</div>
+
+<!-- 03 Evento destacado -->
+<div class="slide s3">
+  <div class="s3-left">
+    <div class="s3-tags">
+      <span class="s3-tag f">Destacado</span>
+      <span class="s3-tag">Música</span>
+    </div>
+    <div>
+      <div class="s3-bignum">20</div>
+      <div class="s3-title">Leo quinteros<br>vuelve al bar<br>de rené</div>
+    </div>
+  </div>
+  <div class="s3-right">
+    <img class="s3-logo" src="../assets/logos/logo-horizontal-color-dark.svg">
+    <div class="s3-info">
+      <div class="s3-row"><span class="s3-icon">location_on</span><span class="s3-info-text">Bar de René, Santiago</span></div>
+      <div class="s3-row"><span class="s3-icon">schedule</span><span class="s3-info-text">Sábado 20 junio · 21:30</span></div>
+      <div class="s3-row"><span class="s3-icon">confirmation_number</span><span class="s3-info-text">Desde $6.000</span></div>
+    </div>
+    <div>
+      <div class="s3-price">$6.000</div>
+      <div class="s3-cta" style="margin-top:6px">Ver en mooza.cl</div>
+    </div>
+  </div>
+  <span class="slide-num">03</span>
+  <span class="slide-label">Evento destacado</span>
+</div>
+
+<!-- 04 Cierre -->
+<div class="slide s4">
+  <img class="wm-l" src="../assets/logos/logo-iso-white.svg">
+  <img class="wm-r" src="../assets/logos/logo-iso-white.svg">
+  <span class="eyebrow">Toda la agenda en</span>
+  <div class="url">mooza.cl</div>
+  <img class="logo" src="../assets/logos/logo-horizontal-color-dark.svg">
+  <div class="sub">Encuentra tu próxima experiencia cultural</div>
+  <div class="handle">@mooza_cl</div>
+  <span class="slide-num">04</span>
+  <span class="slide-label">Cierre</span>
+</div>
+
+</body>
+</html>

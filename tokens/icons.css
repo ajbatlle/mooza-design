@@ -1,0 +1,47 @@
+/* ─────────────────────────────────────────────
+   Mooza · Icon Tokens
+   Material Symbols Outlined — variable font, thin/outline style
+   Usage: <span class="icon">search</span>
+          or inline: fontFamily: 'var(--font-icons)'
+───────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block');
+
+:root {
+  /* ── Icon font ── */
+  --font-icons:   'Material Symbols Outlined';
+
+  /* ── Default axis values (outline / thin) ── */
+  --icon-fill:    0;     /* 0 = outline, 1 = filled */
+  --icon-weight:  200;   /* 100–700; 200 = thin, clean lines */
+  --icon-grade:   0;     /* @kind other */
+  --icon-opsz:    24; /* @kind other */
+
+  /* ── Size scale ── */
+  --icon-sm:  18px;
+  --icon-md:  22px;
+  --icon-lg:  28px;
+  --icon-xl:  36px;
+}
+
+/* Base class — use on any <span> containing an icon name */
+.icon {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: var(--icon-md);
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+  user-select: none;
+}
+
+.icon-sm { font-size: var(--icon-sm); font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20; }
+.icon-lg { font-size: var(--icon-lg); font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 28; }
+.icon-xl { font-size: var(--icon-xl); font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 36; }

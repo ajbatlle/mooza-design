@@ -1,0 +1,54 @@
+<!-- @dsCard group="Colors" viewport="700x220" name="Semantic Colors" subtitle="Contextual aliases — bg, text, accent, border" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; background: var(--bg-base); font-family: var(--font-sans); padding: 20px 28px; }
+  .group { margin-bottom: 14px; }
+  .group-label { font-size: 9px; font-weight: var(--weight-bold); color: var(--text-muted); text-transform: uppercase; letter-spacing: var(--tracking-widest); margin-bottom: 8px; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 6px; background: var(--bg-surface-raised); }
+  .dot  { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+  .token { font-size: 10px; font-weight: var(--weight-semibold); color: var(--text-secondary); letter-spacing: 0; }
+</style>
+</head>
+<body>
+  <div class="group">
+    <div class="group-label">Backgrounds</div>
+    <div class="row">
+      <div class="chip"><div class="dot" style="background:var(--bg-base); border:1px solid var(--border-subtle)"></div><span class="token">--bg-base</span></div>
+      <div class="chip"><div class="dot" style="background:var(--bg-surface)"></div><span class="token">--bg-surface</span></div>
+      <div class="chip"><div class="dot" style="background:var(--bg-surface-raised)"></div><span class="token">--bg-surface-raised</span></div>
+      <div class="chip"><div class="dot" style="background:var(--bg-surface-highlight)"></div><span class="token">--bg-surface-highlight</span></div>
+    </div>
+  </div>
+  <div class="group">
+    <div class="group-label">Text</div>
+    <div class="row">
+      <div class="chip"><div class="dot" style="background:var(--text-primary)"></div><span class="token">--text-primary</span></div>
+      <div class="chip"><div class="dot" style="background:var(--text-secondary)"></div><span class="token">--text-secondary</span></div>
+      <div class="chip"><div class="dot" style="background:var(--text-muted)"></div><span class="token">--text-muted</span></div>
+      <div class="chip"><div class="dot" style="background:var(--text-on-accent)"></div><span class="token">--text-on-accent</span></div>
+    </div>
+  </div>
+  <div class="group">
+    <div class="group-label">Accent</div>
+    <div class="row">
+      <div class="chip"><div class="dot" style="background:var(--accent); box-shadow:0 0 8px rgba(252,238,33,0.5)"></div><span class="token">--accent</span></div>
+      <div class="chip"><div class="dot" style="background:var(--accent-warm)"></div><span class="token">--accent-warm</span></div>
+      <div class="chip"><div class="dot" style="background:var(--accent-hover)"></div><span class="token">--accent-hover</span></div>
+    </div>
+  </div>
+  <div class="group">
+    <div class="group-label">Borders</div>
+    <div class="row">
+      <div class="chip"><div class="dot" style="background:var(--border-subtle); border:1px solid var(--border-subtle)"></div><span class="token">--border-subtle</span></div>
+      <div class="chip"><div class="dot" style="background:var(--border-default)"></div><span class="token">--border-default</span></div>
+      <div class="chip"><div class="dot" style="background:var(--border-accent)"></div><span class="token">--border-accent</span></div>
+      <div class="chip"><div class="dot" style="background:var(--divider)"></div><span class="token">--divider</span></div>
+    </div>
+  </div>
+</body>
+</html>

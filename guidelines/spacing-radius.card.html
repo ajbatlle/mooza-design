@@ -1,0 +1,27 @@
+<!-- @dsCard group="Spacing" viewport="700x120" name="Border Radius" subtitle="radius-sm through radius-full" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; background: var(--bg-base); font-family: var(--font-sans); padding: 20px 28px; display: flex; align-items: center; }
+  .row { display: flex; gap: 16px; align-items: center; }
+  .item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .box { width: 52px; height: 52px; background: var(--bg-surface-raised); border: 1.5px solid var(--border-default); }
+  .lbl { font-size: 9px; font-weight: var(--weight-semibold); color: var(--text-muted); text-align: center; }
+  .px  { font-size: 9px; color: var(--accent); text-align: center; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="item"><div class="box" style="border-radius:var(--radius-none)"></div><div class="lbl">none</div><div class="px">0px</div></div>
+  <div class="item"><div class="box" style="border-radius:var(--radius-sm)"></div><div class="lbl">sm</div><div class="px">6px</div></div>
+  <div class="item"><div class="box" style="border-radius:var(--radius-md)"></div><div class="lbl">md</div><div class="px">10px</div></div>
+  <div class="item"><div class="box" style="border-radius:var(--radius-lg)"></div><div class="lbl">lg</div><div class="px">14px</div></div>
+  <div class="item"><div class="box" style="border-radius:var(--radius-xl)"></div><div class="lbl">xl</div><div class="px">20px</div></div>
+  <div class="item"><div class="box" style="border-radius:var(--radius-2xl)"></div><div class="lbl">2xl</div><div class="px">28px</div></div>
+  <div class="item"><div class="box" style="border-radius:var(--radius-full)"></div><div class="lbl">full</div><div class="px">9999px</div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!-- @dsCard group="Brand" viewport="700x420" name="Afiche Callejero" subtitle="A3 vertical — agenda semanal para impresión y exterior" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin:0; background:#0a0818; font-family:var(--font-sans); display:flex; justify-content:center; padding:20px; gap:20px; }
+
+  /* A3 shell — ratio 1:√2 ≈ 210:297 */
+  .poster { width:256px; height:362px; border-radius:10px; overflow:hidden; position:relative; flex-shrink:0; }
+
+  /* Poster A: Agenda semanal */
+  .pa {
+    background: linear-gradient(175deg, #221d42 0%, #1b1444 30%, #0d0e1e 65%, #03021b 100%);
+    display:flex; flex-direction:column; padding:18px 16px 14px;
+  }
+  .pa .wm { position:absolute; bottom:-30px; right:-30px; width:180px; opacity:0.05; pointer-events:none; }
+  .pa .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+  .pa .logo { height:16px; }
+  .pa .header-tag { font-size:7px; font-weight:700; color:rgba(255,255,255,0.35); text-transform:uppercase; letter-spacing:0.12em; }
+  .pa .pill { display:inline-block; align-self:flex-start; width:fit-content; background:var(--accent); color:#03021b; font-size:9px; font-weight:800; border-radius:99px; padding:4px 12px; margin-bottom:8px; }
+  .pa .hero { font-family:var(--font-display); font-weight:800; font-size:38px; line-height:1.0; letter-spacing:-0.03em; margin-bottom:16px; }
+  .pa .hero .w { color:#fff; }
+  .pa .hero .a { color:var(--accent); }
+  .pa .divider { height:1px; background:rgba(255,255,255,0.1); margin-bottom:10px; }
+  .pa .events { flex:1; display:flex; flex-direction:column; gap:0; }
+  .pa .ev { display:flex; align-items:center; gap:8px; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.06); }
+  .pa .ev:last-child { border-bottom:none; }
+  .pa .db { width:34px; min-width:34px; height:36px; border-radius:6px; background:#03021b; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0; }
+  .pa .db.hl { background:var(--accent); }
+  .pa .db-n { font-family:var(--font-display); font-weight:800; font-size:15px; line-height:1; color:#fff; }
+  .pa .db.hl .db-n { color:#03021b; }
+  .pa .db-d { font-size:5.5px; font-weight:700; color:rgba(255,255,255,0.35); text-transform:uppercase; letter-spacing:0.08em; margin-top:1px; }
+  .pa .db.hl .db-d { color:rgba(3,2,27,0.4); }
+  .pa .ev-inf { flex:1; min-width:0; }
+  .pa .ev-cat { font-size:6.5px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:0.1em; }
+  .pa .ev-t { font-size:9.5px; font-weight:700; color:#fff; line-height:1.2; }
+  .pa .ev-v { font-size:7.5px; color:rgba(255,255,255,0.4); margin-top:1px; }
+  .pa .feat { background:#221d55; border-radius:7px; padding:6px 8px; margin:3px 0; }
+  .pa .feat-badge { font-size:6px; font-weight:800; color:#03021b; background:var(--accent); border-radius:99px; padding:2px 6px; text-transform:uppercase; letter-spacing:0.1em; display:inline-block; margin-bottom:3px; }
+  .pa .footer { margin-top:12px; display:flex; align-items:center; justify-content:space-between; }
+  .pa .qr { width:36px; height:36px; border-radius:5px; background:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .pa .qr-inner { width:28px; height:28px; background: repeating-linear-gradient(0deg,#03021b 0px,#03021b 3px,#fff 3px,#fff 6px), repeating-linear-gradient(90deg,#03021b 0px,#03021b 3px,#fff 3px,#fff 6px); background-blend-mode:multiply; border-radius:2px; }
+  .pa .footer-text { text-align:right; }
+  .pa .footer-url { font-family:var(--font-display); font-weight:800; font-size:13px; color:var(--accent); letter-spacing:-0.01em; }
+  .pa .footer-handle { font-size:7.5px; color:rgba(255,255,255,0.35); font-weight:500; margin-top:1px; }
+
+  .lbl { text-align:center; font-size:9px; font-weight:600; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:0.12em; margin-top:8px; }
+  .lbl strong { color:var(--accent); }
+</style>
+</head>
+<body>
+
+<div style="display:flex;flex-direction:column;align-items:center;">
+  <div class="poster pa">
+    <img class="wm" src="../assets/logos/logo-iso-white.svg">
+    <div class="header">
+      <img class="logo" src="../assets/logos/logo-horizontal-color-dark.svg">
+      <span class="header-tag">Agenda Cultural</span>
+    </div>
+    <div class="pill">15 — 21 junio</div>
+    <div class="hero"><span class="w">Tu semana<br></span><span class="a">cultural</span></div>
+    <div class="divider"></div>
+    <div class="events">
+      <div class="ev">
+        <div class="db"><div class="db-n">20</div><div class="db-d">SÁB</div></div>
+        <div class="ev-inf"><div class="ev-cat">Música</div><div class="ev-t">4sure en casa elisa pizza bar, peñaflor</div><div class="ev-v">Casa Elisa Pizzabar · 22:00 · $6.000</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-badge">Destacado · Música</div>
+        <div class="ev" style="border:none;padding:2px 0 0;">
+          <div class="db hl"><div class="db-n">20</div><div class="db-d">SÁB</div></div>
+          <div class="ev-inf"><div class="ev-t">Leo quinteros vuelve al bar de rené</div><div class="ev-v">Bar de René · 21:30 · desde $6.000</div></div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="db"><div class="db-n">21</div><div class="db-d">DOM</div></div>
+        <div class="ev-inf"><div class="ev-cat">Música</div><div class="ev-t">Concierto Homenaje a los Ídolos de América</div><div class="ev-v">Teatro Oriente · 20:00 · $15.000</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-badge">Destacado · Gratis</div>
+        <div class="ev" style="border:none;padding:2px 0 0;">
+          <div class="db hl"><div class="db-n">20</div><div class="db-d">SÁB</div></div>
+          <div class="ev-inf"><div class="ev-t">Schwenke y nilo en la casona de la florida</div><div class="ev-v">La Casona de La Florida · 18:30</div></div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="db"><div class="db-n">22</div><div class="db-d">LUN</div></div>
+        <div class="ev-inf"><div class="ev-cat">Música</div><div class="ev-t">Temporada de Cámara UC: Granados y Maslíah</div><div class="ev-v">Centro de Extensión Oriente · 19:30</div></div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="qr"><div class="qr-inner"></div></div>
+      <div class="footer-text">
+        <div class="footer-url">mooza.cl</div>
+        <div class="footer-handle">@mooza_cl</div>
+      </div>
+    </div>
+  </div>
+  <div class="lbl">Afiche A3 · <strong>Agenda semanal</strong></div>
+</div>
+
+</body>
+</html>
