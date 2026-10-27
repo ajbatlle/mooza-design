@@ -1,0 +1,27 @@
+/* Mooza · grilla
+   Siete columnas, una por día. Todo se mide en % del ancho del cartel (unidad cqw),
+   así que la misma regla sirve en cualquier formato.
+
+   --mz-m  margen, de 3 a 14. Estándar 6.
+   --mz-g  medianil, de 0,6 a 4. Estándar 1,2. Máximo la mitad del margen.
+   --mz-col  ancho de columna = (100 − 2·margen − 6·medianil) ÷ 7
+   --mz-mv-story  el margen vertical de 9:16 es 2,2 veces el margen: deja libre la interfaz.
+
+   Los tamaños de texto grande se definen como múltiplos de la columna, no en px:
+   cuando el margen o el medianil cambian, el texto se reajusta y la composición se mantiene. */
+:root{
+  --mz-m: 6;
+  --mz-g: 1.2;
+  --mz-col: calc((100 - 2*var(--mz-m) - 6*var(--mz-g)) / 7);
+  --mz-mv-story: 2.2;
+
+  --mz-fs-titular: calc(var(--mz-col) * 1.52 * 1cqw);  /* titular serif del cartel "foto" */
+  --mz-fs-titular-largo: calc(var(--mz-col) * 1.1 * 1cqw);  /* titular editorial de varias líneas */
+  --mz-fs-story: calc(var(--mz-col) * 1.05 * 1cqw);
+  --mz-fs-numero: calc(var(--mz-col) * 2.17 * 1cqw);   /* número grande, grotesca */
+  --mz-fs-dato: calc(var(--mz-col) * .3 * 1cqw);       /* fecha, hora */
+  --mz-fs-meta: calc(var(--mz-col) * .33 * 1cqw);      /* lugar y precio en story */
+  --mz-fs-etiqueta: calc(var(--mz-col) * .28 * 1cqw);
+
+  --mz-radio: 0;   /* todo es celda: sin bordes redondeados */
+}

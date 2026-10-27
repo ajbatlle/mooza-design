@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sistema de diseño Mooza</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+/* Esta página documenta el sistema. Solo usa sus tokens y componentes. */
+*{box-sizing:border-box}
+body{margin:0;background:var(--mz-noche);color:var(--mz-blanco);font-family:var(--mz-grot);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,p,ul,dl,dd,figure,figcaption{margin:0;padding:0}
+ul{list-style:none}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--mz-naranja);outline-offset:3px}
+.wrap{width:100%;max-width:1240px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top{padding-block:clamp(24px,4vw,48px);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.top svg{width:128px;display:block;color:var(--mz-blanco);--mz-iso:var(--mz-blanco)}
+.top nav{display:flex;gap:6px 22px;flex-wrap:wrap;font-size:13px}
+.top nav a{text-decoration:none;color:var(--mz-fg-suave);padding:6px 0}
+.top nav a:hover{color:var(--mz-blanco)}
+.intro{padding-block:clamp(32px,6vw,88px) clamp(36px,5vw,64px);display:grid;gap:clamp(20px,3vw,32px)}
+h1{font-family:var(--mz-serif);font-weight:500;letter-spacing:-.03em;line-height:.96;font-size:clamp(46px,8.6vw,120px);text-wrap:balance;max-width:13ch}
+.lead{max-width:52ch;font-size:clamp(16px,1.4vw,19px);color:var(--mz-fg-suave);line-height:1.6}
+.sec{padding-block:clamp(40px,6vw,88px);border-top:1px solid var(--mz-linea)}
+h2{font-family:var(--mz-serif);font-weight:500;letter-spacing:-.025em;line-height:1;font-size:clamp(32px,4.4vw,56px);margin-bottom:clamp(24px,3vw,40px);text-wrap:balance}
+.k{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mz-fg-tenue);display:block;margin-bottom:14px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:clamp(20px,3vw,48px)}
+.cols p,.nota{font-size:15px;color:var(--mz-fg-suave);max-width:38ch}
+.nota{max-width:60ch}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:rgba(255,255,255,.1);padding:1px 6px}
+
+/* grilla: controles y carteles */
+.ctl{display:flex;flex-wrap:wrap;gap:18px 36px;align-items:end;padding-block:18px;border-top:1px solid var(--mz-linea);border-bottom:1px solid var(--mz-linea);margin-bottom:clamp(28px,4vw,48px)}
+.ctl label{display:grid;gap:6px;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mz-fg-suave);min-width:min(100%,200px)}
+.ctl output{font-weight:500;color:var(--mz-blanco);letter-spacing:.04em;margin-left:6px}
+input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:0}
+.chk{display:flex!important;align-items:center;gap:10px;min-width:0!important;cursor:pointer}
+.chk input{width:18px;height:18px;accent-color:var(--mz-amarillo);margin:0}
+.math{font-size:12px;color:var(--mz-fg-tenue);font-variant-numeric:tabular-nums;margin-left:auto;max-width:36ch;line-height:1.4}
+.pgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(28px,4vw,56px) clamp(16px,2.4vw,32px);align-items:start}
+.fig{grid-column:span 2;display:grid;gap:12px;align-content:start}
+.fig figcaption{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:13px;color:var(--mz-fg-suave);line-height:1.45}
+.fig figcaption b{font-weight:600;color:var(--mz-blanco);font-size:14px}
+.fig figcaption span{grid-column:2}
+.fig figcaption i{font-style:normal;color:var(--mz-amarillo);font-weight:600;grid-row:span 2;font-size:14px}
+.reglas{grid-column:span 2;display:grid;gap:14px;align-content:start;border-top:1px solid var(--mz-linea);padding-top:14px;font-size:14px;color:var(--mz-fg-suave)}
+.reglas dt{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mz-amarillo);margin-bottom:2px}
+
+/* color */
+.sw{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr))}
+.sw div{aspect-ratio:1;padding:14px;display:flex;flex-direction:column;justify-content:space-between}
+.sw b{font-family:var(--mz-serif);font-weight:500;font-size:26px;letter-spacing:-.02em;line-height:1}
+.sw code{background:none;padding:0;font-size:12px;letter-spacing:.04em}
+.sw small{font-size:12px;line-height:1.35}
+.c-noche{background:var(--mz-noche);color:var(--mz-blanco);box-shadow:inset 0 0 0 1px var(--mz-linea)}
+.c-azul{background:var(--mz-azul);color:var(--mz-blanco)}
+.c-amarillo{background:var(--mz-amarillo);color:var(--mz-noche)}
+.c-naranja{background:var(--mz-naranja);color:var(--mz-noche)}
+.c-blanco{background:var(--mz-blanco);color:var(--mz-noche)}
+.c-claro{background:var(--mz-claro);color:var(--mz-noche)}
+.pares{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:10px;margin-top:28px}
+.par{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.06);padding:10px}
+.par i{width:56px;height:44px;display:grid;place-items:center;font-style:normal;font-weight:600;font-size:20px;flex:none}
+.par p{font-size:13px;line-height:1.3;color:var(--mz-fg-suave)}
+.par p b{display:block;font-size:15px;color:var(--mz-blanco)}
+.par.no{opacity:.65}
+
+/* tipo */
+.tipo{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,4vw,64px);align-items:start}
+.muestra{background:var(--mz-claro);color:var(--mz-noche);padding:clamp(20px,3vw,40px);display:grid;gap:18px}
+.muestra .s{font-family:var(--mz-serif);font-weight:500;letter-spacing:-.035em;line-height:.93;font-size:clamp(48px,7vw,96px)}
+.muestra .n{font-weight:600;letter-spacing:-.05em;line-height:.8;font-size:clamp(64px,10vw,140px);font-variant-numeric:tabular-nums}
+.muestra .d{font-size:14px;color:rgba(3,2,27,.72)}
+.estilos li{display:grid;grid-template-columns:1fr auto;gap:2px 16px;padding:12px 0;border-top:1px solid var(--mz-linea);align-items:baseline}
+.estilos li:last-child{border-bottom:1px solid var(--mz-linea)}
+.estilos .a{font-size:24px;line-height:1}
+.estilos .m{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mz-amarillo)}
+.estilos .s2{grid-column:1/-1;font-size:13px;color:var(--mz-fg-tenue)}
+
+/* interfaz */
+.ui{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:clamp(24px,4vw,64px);align-items:start}
+.ui .fila{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:22px}
+
+/* voz */
+.voz li{display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr);gap:4px 20px;padding:14px 0;border-top:1px solid var(--mz-linea);align-items:baseline}
+.voz li:last-child{border-bottom:1px solid var(--mz-linea)}
+.voz .e{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mz-amarillo)}
+.voz .v{font-size:19px;line-height:1.25}
+.voz .v.sr{font-family:var(--mz-serif);font-size:24px}
+.voz .r{grid-column:2;font-size:13px;color:var(--mz-fg-tenue)}
+
+/* kit */
+.kit{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(20px,3vw,40px)}
+.kit li{border-top:1px solid var(--mz-linea);padding-top:14px;display:grid;gap:6px;align-content:start;font-size:14px;color:var(--mz-fg-suave)}
+.kit b{font-family:var(--mz-serif);font-weight:500;font-size:24px;color:var(--mz-blanco);letter-spacing:-.02em}
+.kit code{word-break:break-all}
+.miniaturas{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:14px;margin-top:clamp(24px,3vw,40px)}
+.miniaturas img{width:100%;height:auto;display:block}
+.pie{padding-block:clamp(40px,6vw,72px);font-size:13px;color:var(--mz-fg-tenue)}
+
+@media (max-width:900px){.fig,.reglas{grid-column:span 3}.tipo,.ui{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:620px){.fig,.reglas{grid-column:span 6}.math{margin-left:0}.voz li{grid-template-columns:minmax(0,1fr)}.voz .r{grid-column:1}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<script src="../components/grid/poster.js"></script>
+<script>document.body.insertAdjacentHTML('afterbegin',MoozaPoster.sprite())</script>
+
+<header class="wrap top">
+  <svg viewBox="0 0 629.21 159.59" role="img" aria-label="Mooza"><use href="#mz-lockup"/></svg>
+  <nav aria-label="Secciones"><a href="#grilla">Grilla</a><a href="#color">Color</a><a href="#tipo">Tipo</a><a href="#interfaz">Interfaz</a><a href="#voz">Voz</a><a href="#kit">Kit</a></nav>
+</header>
+
+<main class="wrap">
+  <section class="intro">
+    <h1>sistema de diseño Mooza</h1>
+    <p class="lead">La semana es la grilla: siete columnas, una por día. Cada cartel, story y pantalla se arma sobre ella, con color plano, palabras en serif y números en grotesca.</p>
+  </section>
+
+  <section class="sec" id="grilla">
+    <span class="k">Grilla</span>
+    <h2>Siete columnas, margen y medianil ajustables</h2>
+    <p class="nota" style="margin-bottom:28px">Margen y medianil son un porcentaje del ancho, así que escalan con cualquier formato. Los titulares y los números se miden en columnas: si cambias el margen o el medianil, el texto se reajusta y la composición se mantiene. Prueba los controles.</p>
+
+    <div class="ctl" role="group" aria-label="Ajustes de la grilla">
+      <label for="m">Margen<output id="mv"></output><input id="m" type="range" min="3" max="14" step=".5" value="6"></label>
+      <label for="g">Medianil<output id="gv"></output><input id="g" type="range" min=".6" max="4" step=".2" value="1.2"></label>
+      <label class="chk" for="ver"><input id="ver" type="checkbox"> Ver grilla</label>
+      <button class="mz-btn mz-btn--linea" id="reset" type="button">Restablecer</button>
+      <p class="math" id="math"></p>
+    </div>
+
+    <div class="pgrid" id="pgrid">
+      <figure class="fig"><div id="pa" role="img" aria-label="Cartel semana"></div>
+        <figcaption><i>semana</i><b>Cada celda, un día y una franja</b><span>Franjas de 1,5 h desde las 12:00. Amarillo: destacado. Blanco: gratis. Noche: de pago.</span></figcaption></figure>
+      <figure class="fig"><div id="pb" role="img" aria-label="Cartel foto"></div>
+        <figcaption><i>foto</i><b>Una foto, en celdas completas</b><span>Dos guías cruzadas a la vista. El titular va en serif y cierra el cartel.</span></figcaption></figure>
+      <figure class="fig"><div id="pc" role="img" aria-label="Cartel gráfico"></div>
+        <figcaption><i>gráfico</i><b>La semana como horario</b><span>Cada bloque es un evento y su alto es la duración. Escala de 10:00 a 24:00.</span></figcaption></figure>
+      <figure class="fig"><div id="pd" role="img" aria-label="Cartel editorial"></div>
+        <figcaption><i>editorial</i><b>El titular se escribe con lo que pasa</b><span>Cada cuadrado marca el lugar de la foto de un evento.</span></figcaption></figure>
+      <figure class="fig"><div id="pe" role="img" aria-label="Story"></div>
+        <figcaption><i>story</i><b>La misma grilla en 9:16</b><span>16 filas. El margen vertical sube 2,2 veces para dejar libre la interfaz de la app.</span></figcaption></figure>
+      <dl class="reglas">
+        <div><dt>Columnas</dt><dd>Siete, siempre. Las filas cambian con el formato: 9 o 10 en 4:5 y 16 en 9:16.</dd></div>
+        <div><dt>Margen</dt><dd>Del 3 al 14 % del ancho. Estándar 6 %. Más margen da más aire, menos margen da más densidad.</dd></div>
+        <div><dt>Medianil</dt><dd>De 0,6 a 4 %, y como máximo la mitad del margen.</dd></div>
+        <div><dt>Imagen</dt><dd>Ocupa celdas completas y nunca llega al borde. En los ejemplos es un cuadrado azul.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sec" id="color">
+    <span class="k">Color</span>
+    <h2>Cinco colores planos y un neutro</h2>
+    <p class="nota" style="margin-bottom:28px">Un cartel tiene un solo campo de fondo. Las celdas llevan los demás. No hay degradados ni sombras.</p>
+    <div class="sw">
+      <div class="c-noche"><b>noche</b><span><code>#03021b</code><small>Tinta y fondo base.</small></span></div>
+      <div class="c-azul"><b>azul</b><span><code>#1b1444</code><small>Superficie oscura y lugar de las fotos de ejemplo.</small></span></div>
+      <div class="c-amarillo"><b>amarillo</b><span><code>#fcee21</code><small>Acento y fondo de cartel.</small></span></div>
+      <div class="c-naranja"><b>naranja</b><span><code>#fbb03b</code><small>Segundo campo de cartel.</small></span></div>
+      <div class="c-blanco"><b>blanco</b><span><code>#ffffff</code><small>Celdas gratis y fondo claro.</small></span></div>
+      <div class="c-claro"><b>claro</b><span><code>#f2f2f2</code><small>Neutro de story y de cartel editorial.</small></span></div>
+    </div>
+    <div class="pares" aria-label="Pares de color y su contraste">
+      <div class="par"><i class="c-amarillo">Aa</i><p><b>16,9 : 1</b>Noche sobre amarillo. AA</p></div>
+      <div class="par"><i class="c-naranja">Aa</i><p><b>11,1 : 1</b>Noche sobre naranja. AA</p></div>
+      <div class="par"><i class="c-claro">Aa</i><p><b>18,2 : 1</b>Noche sobre claro. AA</p></div>
+      <div class="par"><i class="c-blanco">Aa</i><p><b>20,4 : 1</b>Noche sobre blanco. AA</p></div>
+      <div class="par"><i class="c-azul" style="color:var(--mz-amarillo)">Aa</i><p><b>14,1 : 1</b>Amarillo sobre azul. AA</p></div>
+      <div class="par"><i class="c-azul">Aa</i><p><b>17,1 : 1</b>Blanco sobre azul. AA</p></div>
+      <div class="par"><i class="c-naranja" style="color:var(--mz-blanco)">Aa</i><p><b>1,8 : 1</b>Blanco sobre naranja. No usar como texto</p></div>
+      <div class="par no"><i class="c-amarillo" style="color:var(--mz-naranja)">Aa</i><p><b>1,5 : 1</b>Naranja sobre amarillo. No usar</p></div>
+    </div>
+  </section>
+
+  <section class="sec" id="tipo">
+    <span class="k">Tipo</span>
+    <h2>Las palabras en serif, los números en grotesca</h2>
+    <div class="tipo">
+      <div class="muestra">
+        <span class="s">tu semana cultural</span>
+        <span class="n">26–1</span>
+        <p class="d">Newsreader 500 para titulares y nombres. Inter Tight 500 a 600 para números, fechas, horas, precios y etiquetas. Ambas con licencia abierta (OFL) en Google Fonts.</p>
+      </div>
+      <ul class="estilos">
+        <li><span class="a" style="font-family:var(--mz-serif);font-weight:500;letter-spacing:-.035em">titular</span><span class="m">Newsreader 500</span><span class="s2">1,52 columnas de alto de letra • interlínea 0,9 a 0,93 • tracking −0,035 em • minúsculas de frase</span></li>
+        <li><span class="a" style="font-family:var(--mz-serif);font-weight:500">Cuarteto de jazz en vivo</span><span class="m">Newsreader 500</span><span class="s2">Nombre de evento, sala o artista • minúsculas de frase como hoy</span></li>
+        <li><span class="a" style="font-weight:600;letter-spacing:-.05em">26–1 • 21:00 • $6.000</span><span class="m">Inter Tight 600</span><span class="s2">Números y datos • cifras tabulares • tracking −0,05 em en tamaño grande</span></li>
+        <li><span class="a" style="font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase">Música • Teatro • Cine</span><span class="m">Inter Tight 600</span><span class="s2">Etiquetas de categoría • mayúsculas • tracking +0,14 em, igual que hoy</span></li>
+        <li><span class="a" style="font-size:16px;font-weight:400">Texto de cuerpo y de interfaz</span><span class="m">Inter Tight 400</span><span class="s2">16 px, interlínea 1,5 • ancho de línea máximo de 65 caracteres</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec mz-ui" id="interfaz">
+    <span class="k">Interfaz</span>
+    <h2>Ángulos rectos y sin sombras</h2>
+    <div class="ui">
+      <div>
+        <div class="fila"><button class="mz-btn" type="button">Ver agenda</button><button class="mz-btn mz-btn--linea" type="button">Guardar</button></div>
+        <div class="fila" id="chips" role="group" aria-label="Categorías"></div>
+        <div class="fila"><input class="mz-input" type="search" placeholder="Busca panoramas" aria-label="Buscar panoramas"></div>
+        <p class="nota">El botón principal es amarillo con texto noche. Al pasar el cursor se vuelve blanco. Los filtros activos se rellenan de amarillo.</p>
+      </div>
+      <div id="eventos" aria-label="Eventos de ejemplo"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="voz">
+    <span class="k">Voz</span>
+    <h2>Tú, directo y sin exclamaciones</h2>
+    <ul class="voz">
+      <li><span class="e">Titular</span><span class="v sr">hay jazz, teatro y cine</span><span class="r">Serif, minúsculas de frase y sin punto de exclamación.</span></li>
+      <li><span class="e">Fecha</span><span class="v">26 oct – 1 nov</span><span class="r">Mes abreviado en minúscula y raya corta con espacios. Rango corto en grande: 26–1.</span></li>
+      <li><span class="e">Lugar y hora</span><span class="v">Teatro del Parque • 21:00</span><span class="r">Punto medio entre lugar y hora. Hora en 24 horas.</span></li>
+      <li><span class="e">Precio</span><span class="v">$6.000 • desde $5.000 • Gratis</span><span class="r">Punto de miles, sin decimales. “Gratis” con mayúscula inicial, nunca “free” ni “GRATIS”.</span></li>
+      <li><span class="e">Tratamiento</span><span class="v">Mira, ven, guarda tu plan</span><span class="r">Tuteo. Sin voseo, sin emoji.</span></li>
+      <li><span class="e">Cierre</span><span class="v">Toda la agenda en mooza.cl</span><span class="r">Se conserva la frase actual.</span></li>
+    </ul>
+  </section>
+
+  <section class="sec" id="kit">
+    <span class="k">Kit de recursos gráficos</span>
+    <h2>Lo que hay en la carpeta kit</h2>
+    <ul class="kit">
+      <li><b>Plantillas</b><span>Los cinco formatos en SVG con texto editable, más una vista previa PNG de cada uno. <code>kit/plantillas/</code></span></li>
+      <li><b>Grillas</b><span>Las tres grillas vacías en SVG: 4:5 de 9 filas, 4:5 de 10 filas y 9:16 de 16 filas. <code>kit/grillas/</code></span></li>
+      <li><b>Celdas</b><span>Cuadrados rellenos y de contorno en los colores de la paleta, para armar composiciones a mano. <code>kit/celdas/</code></span></li>
+      <li><b>Marca</b><span>Logo horizontal e ícono en noche y en amarillo plano, además de los oficiales en <code>assets/logos/</code>. <code>kit/marca/</code></span></li>
+      <li><b>Fotos</b><span>Marcador de posición y reglas de recorte para las fotos de eventos. <code>kit/fotos/</code></span></li>
+      <li><b>Generador</b><span>Un script que regenera todo el kit desde los tokens. <code>kit/build-kit.mjs</code></span></li>
+    </ul>
+    <div class="miniaturas">
+      <img src="../kit/plantillas/semana.png" alt="Plantilla semana" loading="lazy">
+      <img src="../kit/plantillas/foto.png" alt="Plantilla foto" loading="lazy">
+      <img src="../kit/plantillas/grafico.png" alt="Plantilla gráfico" loading="lazy">
+      <img src="../kit/plantillas/editorial.png" alt="Plantilla editorial" loading="lazy">
+      <img src="../kit/plantillas/story.png" alt="Plantilla story" loading="lazy">
+    </div>
+  </section>
+</main>
+
+<footer class="wrap pie">Sistema de diseño Mooza v2 • los eventos, salas y precios son ejemplos.</footer>
+
+<script>
+(function(){
+  var $=function(s){return document.querySelector(s)};
+  var P=MoozaPoster;
+  P.mount($('#pa'),'semana');P.mount($('#pb'),'foto');P.mount($('#pc'),'grafico');P.mount($('#pd'),'editorial');P.mount($('#pe'),'story');
+
+  var G=$('#pgrid'),m=$('#m'),g=$('#g');
+  function fmt(n){return String(Math.round(n*10)/10).replace('.',',')}
+  function upd(){
+    var mv=+m.value,gv=+g.value;
+    G.style.setProperty('--mz-m',mv);G.style.setProperty('--mz-g',gv);
+    $('#mv').textContent=fmt(mv)+' %';$('#gv').textContent=fmt(gv)+' %';
+    $('#math').textContent='Columna = (100 − 2 × '+fmt(mv)+' − 6 × '+fmt(gv)+') ÷ 7 = '+fmt((100-2*mv-6*gv)/7)+' % del ancho';
+  }
+  m.addEventListener('input',upd);g.addEventListener('input',upd);
+  $('#ver').addEventListener('change',function(e){G.classList.toggle('mz-show-grid',e.target.checked)});
+  $('#reset').addEventListener('click',function(){m.value=6;g.value=1.2;upd()});
+  upd();
+
+  /* interfaz de ejemplo */
+  var CATS=['Todo','Música','Teatro','Cine','Arte'],sel='Todo';
+  var EV=[
+    {c:'Música',d:'vie',n:30,t:'Cuarteto de jazz en vivo',v:'Teatro del Parque',h:'21:00',p:'desde $8.000',f:1},
+    {c:'Teatro',d:'vie',n:30,t:'La casa de Matilde',v:'Sala Mapocho',h:'20:30',p:'$6.000'},
+    {c:'Cine',d:'sáb',n:31,t:'Ciclo de cine chileno de los 80',v:'Cine Arte Sur',h:'19:00',p:'Gratis'},
+    {c:'Arte',d:'sáb',n:31,t:'Paisajes de agua',v:'Galería Costanera',h:'12:00',p:'Gratis'}
+  ];
+  function chips(){$('#chips').innerHTML=CATS.map(function(c){return '<button type="button" class="mz-chip" aria-pressed="'+(c===sel)+'">'+c+'</button>'}).join('')}
+  function eventos(){
+    $('#eventos').innerHTML=EV.filter(function(e){return sel==='Todo'||e.c===sel}).map(function(e){
+      return '<div class="mz-evento"><div class="mz-fecha'+(e.f?' mz-fecha--destacado':'')+'"><span>'+e.d+'</span><b>'+e.n+'</b></div><div><span class="mz-cat">'+e.c+(e.f?' • Destacado':'')+'</span><h4>'+e.t+'</h4><p>'+e.v+' • '+e.h+'</p></div><span class="mz-precio'+(e.p==='Gratis'?' mz-precio--gratis':'')+'">'+e.p+'</span></div>';
+    }).join('');
+  }
+  $('#chips').addEventListener('click',function(e){var b=e.target.closest('.mz-chip');if(!b)return;sel=b.textContent;chips();eventos()});
+  chips();eventos();
+})();
+</script>
+</body>
+</html>

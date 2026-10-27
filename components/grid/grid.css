@@ -1,0 +1,70 @@
+/* Mooza · cartel sobre grilla de siete columnas.
+   Un cartel es un .mz-poster que contiene una .mz-grid. Cada hijo de la grilla se ubica
+   con grid-column y grid-row. Las filas se fijan por formato (--rows).
+   Requiere tokens/colors.css, tokens/typography.css y tokens/grid.css. */
+
+.mz-poster{
+  position:relative;aspect-ratio:4/5;container-type:inline-size;overflow:hidden;isolation:isolate;
+  background:var(--mz-claro);color:var(--mz-noche);
+  font-family:var(--mz-grot);--mz-line:var(--mz-linea-clara);
+}
+.mz-poster.mz-story{aspect-ratio:9/16}
+
+.mz-grid,.mz-overlay{
+  position:absolute;inset:0;display:grid;
+  padding:calc(var(--mz-m)*1cqw);gap:calc(var(--mz-g)*1cqw);
+  grid-template-columns:repeat(7,minmax(0,1fr));
+  grid-template-rows:repeat(var(--rows),minmax(0,1fr));
+}
+.mz-story .mz-grid,.mz-story .mz-overlay{padding-block:calc(var(--mz-m)*var(--mz-mv-story)*1cqw)}
+.mz-grid>*{min-width:0;min-height:0}
+
+/* grilla visible: se activa con .mz-show-grid en cualquier ancestro */
+.mz-overlay{display:none;pointer-events:none;z-index:9}
+.mz-show-grid .mz-overlay{display:grid}
+.mz-overlay i{box-shadow:inset 0 0 0 1px rgba(255,45,111,.6);background:rgba(255,45,111,.08)}
+
+/* piezas comunes */
+.mz-logo{width:100%;max-width:23cqw;height:auto;color:var(--mz-noche);align-self:end;--mz-iso:var(--mz-noche)}
+.mz-lt{fill:currentColor}
+.mz-li{fill:var(--mz-iso,var(--mz-noche))}
+.mz-dato{font-weight:var(--mz-peso-dato);font-size:var(--mz-fs-dato);line-height:1.1;font-variant-numeric:tabular-nums;letter-spacing:-.005em}
+.mz-ph{background:var(--mz-azul);color:rgba(255,255,255,.7);display:flex;align-items:flex-end;padding:2cqw;font-size:2.8cqw;font-weight:500;letter-spacing:.02em}
+
+/* semana: filas 1 días, 2 a 9 franjas, 10 pie */
+.mz-semana{background:var(--mz-naranja);--mz-line:var(--mz-linea-naranja)}
+.mz-semana .mz-tile{box-shadow:inset 0 0 0 1px var(--mz-line)}
+.mz-semana .mz-f-y{background:var(--mz-amarillo);box-shadow:none}
+.mz-semana .mz-f-w{background:var(--mz-blanco);box-shadow:none}
+.mz-semana .mz-f-n{background:var(--mz-noche);box-shadow:none}
+.mz-dia{font-weight:500;font-size:3.2cqw;display:flex;align-items:flex-end;justify-content:center;padding-bottom:.6cqw}
+
+/* foto */
+.mz-foto{background:var(--mz-blanco)}
+.mz-guia-v{border-left:1px solid var(--mz-line)}
+.mz-guia-h{border-bottom:1px solid var(--mz-line)}
+.mz-titular{font-family:var(--mz-serif);font-weight:var(--mz-peso-titular);letter-spacing:var(--mz-track-titular);line-height:.9;font-size:var(--mz-fs-titular);align-self:end}
+
+/* gráfico */
+.mz-grafico{background:var(--mz-amarillo)}
+.mz-numero{font-weight:var(--mz-peso-numero);letter-spacing:var(--mz-track-numero);font-size:var(--mz-fs-numero);line-height:.74;text-align:right;white-space:nowrap;align-self:end;font-variant-numeric:tabular-nums}
+.mz-col{position:relative;box-shadow:inset 0 0 0 1px var(--mz-line)}
+.mz-col i{position:absolute;left:12%;right:12%;background:var(--mz-noche)}
+.mz-col i.mz-w{background:var(--mz-blanco)}
+
+/* titular editorial */
+.mz-editorial{background:var(--mz-claro)}
+.mz-titular-largo{font-family:var(--mz-serif);font-weight:var(--mz-peso-titular);letter-spacing:var(--mz-track-titular);line-height:var(--mz-leading-titular);font-size:var(--mz-fs-titular-largo);text-align:center;align-self:center;z-index:1}
+.mz-sq{z-index:0}
+.mz-s-n{background:var(--mz-naranja)}.mz-s-y{background:var(--mz-amarillo)}.mz-s-a{background:var(--mz-azul)}.mz-s-k{background:var(--mz-noche)}
+.mz-pie{display:flex;align-items:flex-end;justify-content:center;font-size:3cqw;font-weight:500;letter-spacing:.01em}
+
+/* story */
+.mz-story-bg{background:var(--mz-claro)}
+.mz-punto{display:grid;place-items:center}
+.mz-punto b{width:1.1cqw;height:1.1cqw;border-radius:50%;background:var(--mz-noche);opacity:.5}
+.mz-punto.mz-on b{width:2.6cqw;height:2.6cqw;background:var(--mz-naranja);opacity:1}
+.mz-etiqueta{display:flex;align-items:center;gap:2cqw;font-size:var(--mz-fs-etiqueta);font-weight:var(--mz-peso-etiqueta);letter-spacing:var(--mz-track-etiqueta);text-transform:uppercase}
+.mz-etiqueta i{width:2.4cqw;height:2.4cqw;background:var(--mz-naranja)}
+.mz-titular-story{font-family:var(--mz-serif);font-weight:var(--mz-peso-titular);letter-spacing:-.03em;line-height:.95;font-size:var(--mz-fs-story);align-self:start}
+.mz-meta{font-size:var(--mz-fs-meta);line-height:1.3;color:rgba(3,2,27,.72);align-self:start}

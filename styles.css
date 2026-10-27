@@ -1,9 +1,6 @@
-/* ─────────────────────────────────────────────
-   Mooza Design System · Global Stylesheet
-   Entry point — import this file only.
-───────────────────────────────────────────── */
+/* Mooza · punto de entrada. Importa esto y nada más. */
 @import './tokens/colors.css';
 @import './tokens/typography.css';
-@import './tokens/spacing.css';
-@import './tokens/shadows.css';
-@import './tokens/icons.css';
+@import './tokens/grid.css';
+@import './components/grid/grid.css';
+@import './components/ui/ui.css';

@@ -1,20 +1,20 @@
 ---
 name: mooza-design
-description: Use this skill to generate well-branded interfaces and assets for Mooza — a Chilean cultural events discovery platform (mooza.cl). Contains essential design guidelines, color tokens, typography, logos, and UI components for prototyping or production design.
+description: Genera piezas y interfaces con la marca Mooza, plataforma de eventos culturales de Chile (mooza.cl). Contiene el sistema de diseño v2 (grilla de siete días, color plano, serif para palabras y grotesca para números), componentes, tokens y un kit de recursos gráficos.
 user-invocable: true
 ---
 
-Read the README.md file within this skill, and explore the other available files.
+Lee `readme.md` y revisa `guidelines/index.html` antes de diseñar.
 
-If creating visual artifacts (slides, mocks, throwaway prototypes, etc), copy assets out of `assets/` and create static HTML files for the user to view. Import `styles.css` for all color, type, and spacing tokens. Use the dark navy background (`--bg-base: #03021b`) and yellow accent (`--accent: #fcee21`) as the core visual identity.
+Si haces piezas visuales (carteles, stories, maquetas), parte de `kit/plantillas/` o usa `MoozaPoster` (`components/grid/poster.js`). Importa `styles.css` para color, tipo y grilla. Si trabajas código de producción, usa los tokens de `tokens/` y los componentes de `components/ui/`.
 
-If working on production code, copy assets and read the token files in `tokens/` to become an expert in designing with this brand.
+Decisiones de la marca:
+- La semana es la grilla: siete columnas, una por día. Margen 6 % y medianil 1,2 % del ancho como estándar. Margen entre 3 y 14 %, medianil entre 0,6 y 4 % y como máximo la mitad del margen.
+- Un campo de color plano por cartel (noche, amarillo, naranja, blanco o claro). Las celdas llevan los demás. Sin degradados, sombras ni iconos.
+- Las palabras van en Newsreader 500 y los números en Inter Tight. Titulares en minúsculas de frase.
+- Ángulos rectos, sin bordes redondeados.
+- Español con tuteo, sin voseo ni emoji. "Gratis", "$6.000", hora en 24 horas, "26 oct – 1 nov".
+- Imagen: una foto por pieza, en celdas completas y sin llegar al borde.
+- El logo oficial no se redibuja. Usa los archivos de `assets/logos/` o las variantes monocromas de `kit/marca/`.
 
-Key brand decisions:
-- Dark-first: deep navy/purple backgrounds, electric yellow accent
-- Spanish language, informal "tú" voice, sentence-case event names
-- Fully-rounded pills for buttons and badges
-- Event listings: DateBlock (left) + category badge + title + venue/time + PriceTag (right)
-- "Gratis" (not "Free") for free events; "$6.000" peso format
-
-If the user invokes this skill without any other guidance, ask them what they want to build or design, ask some questions, and act as an expert designer who outputs HTML artifacts _or_ production code, depending on the need.
+Si te invocan sin más indicaciones, pregunta qué pieza hay que hacer y para qué formato.
