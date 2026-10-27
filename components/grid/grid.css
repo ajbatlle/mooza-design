@@ -4,11 +4,10 @@
    Requiere tokens/colors.css, tokens/typography.css y tokens/grid.css. */
 
 .mz-poster{
-  position:relative;aspect-ratio:4/5;container-type:inline-size;overflow:hidden;isolation:isolate;
+  position:relative;aspect-ratio:var(--mz-ar,4/5);container-type:inline-size;overflow:hidden;isolation:isolate;
   background:var(--mz-claro);color:var(--mz-noche);
   font-family:var(--mz-grot);--mz-line:var(--mz-linea-clara);
 }
-.mz-poster.mz-story{aspect-ratio:9/16}
 
 .mz-grid,.mz-overlay{
   position:absolute;inset:0;display:grid;

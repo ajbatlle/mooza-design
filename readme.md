@@ -56,6 +56,15 @@ En el cartel "semana" el código de celdas es: amarillo para destacado, blanco p
 - Ambas fuentes tienen licencia abierta (OFL) y se cargan desde Google Fonts.
 - El titular lleva tracking −0,035 em e interlínea 0,9 a 0,93. El número grande, tracking −0,05 em.
 
+### Logo
+
+El logo oficial no se redibuja. Se usan los archivos de `assets/logos/` y las variantes monocromas de `kit/marca/`.
+
+- Colores: noche sobre claro, blanco, amarillo y naranja. Blanco sobre azul y noche. La versión oficial con degradé, solo sobre noche o azul.
+- Espacio libre: media altura del logo por los cuatro lados.
+- Tamaño mínimo: 96 px de ancho en pantalla y 25 mm en impresión. Por debajo se usa solo el ícono, de al menos 24 px.
+- No deformarlo ni girarlo, no usar el degradé sobre amarillo, naranja o blanco, no recolorearlo fuera de la paleta, no ponerlo sobre una foto sin duotono y no agregarle sombras ni efectos.
+
 ### Forma
 
 Ángulos rectos. Todo es celda, así que el radio de borde es 0. No hay sombras, degradados ni iconos: el único símbolo es el ícono de la marca.
@@ -90,11 +99,21 @@ Las fotos se convierten a dos colores de la paleta: las sombras toman el color o
 
 Transiciones de 0,15 s en estados interactivos y escala 0,98 al presionar. Sin rebotes, parallax ni marquesinas. Todo se desactiva con la preferencia de movimiento reducido.
 
-## Composiciones
+## Composiciones y formatos
 
-Cinco formatos, todos con la misma grilla. Los constructores están en `components/grid/poster.js` y las plantillas editables en `kit/plantillas/`.
+Cinco diseños sobre la misma grilla, en cinco formatos. Siempre son siete columnas y lo que cambia es el número de filas, elegido para que la celda quede casi cuadrada: alto de celda = (alto − 2 × margen − (filas − 1) × medianil) ÷ filas. Los constructores están en `components/grid/poster.js` y las plantillas editables en `kit/plantillas/`.
 
-| Formato | Proporción | Filas | Qué muestra |
+| Formato | Tamaño | Filas | Diseños | Uso |
+|---|---|---|---|---|
+| 4:5 | 1080 × 1350 px | 9 o 10 | semana (10), foto, gráfico y editorial (9) | Feed de Instagram, carrusel, afiche digital |
+| A3 vertical | 297 × 420 mm | 11 | semana, foto, gráfico y editorial | Afiche impreso y exterior |
+| 1:1 | 1080 × 1080 px | 8 | semana, foto y gráfico | Posts cuadrados |
+| 9:16 | 1080 × 1920 px | 16 | story | Stories y portada de reel |
+| 16:9 | 1920 × 1080 px | 4 | foto | Slides, pantallas, banner web y gran formato apaisado |
+
+Diseños:
+
+| Diseño | Proporción base | Filas base | Qué muestra |
 |---|---|---|---|
 | semana | 4:5 | 10 | Cada celda es un día y una franja horaria de 1,5 h desde las 12:00 |
 | foto | 4:5 | 9 | Una foto en celdas completas, dos guías cruzadas y titular serif |

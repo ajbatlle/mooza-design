@@ -1,11 +1,11 @@
 # Kit de recursos gráficos
 
-Todo está construido sobre la grilla de siete columnas, con margen 6 % y medianil 1,2 % del ancho. Los SVG vienen a 1080 de ancho: 1080 × 1350 para 4:5 y 1080 × 1920 para 9:16.
+Todo está construido sobre la grilla de siete columnas, con margen 6 % y medianil 1,2 % del ancho. Los SVG vienen a 1080 de ancho: 1080 × 1350 para 4:5, 1080 × 1527 para A3 (escala al tamaño real), 1080 × 1080 para 1:1, 1080 × 1920 para 9:16 y 1080 × 608 para 16:9.
 
 | Carpeta | Contenido |
 |---|---|
-| `plantillas/` | `semana`, `foto`, `grafico`, `editorial` y `story`, cada uno en SVG con texto editable y en PNG de vista previa |
-| `grillas/` | Capa de guías en SVG: 4:5 con 9 filas, 4:5 con 10 filas y 9:16 con 16 filas. Las guías son magenta y no se exportan |
+| `plantillas/` | Los diseños en SVG con texto editable y en PNG de vista previa: `semana`, `foto`, `grafico`, `editorial` y `story` en 4:5 y 9:16, y las variantes `-a3`, `-1x1` y `-16x9` |
+| `grillas/` | Capa de guías en SVG: 4:5 (9 y 10 filas), A3 (11), 1:1 (8), 9:16 (16) y 16:9 (4). Las guías son magenta y no se exportan |
 | `celdas/` | Cuadrados de 100 × 100 rellenos en los seis colores y de contorno en noche, blanco y amarillo |
 | `marca/` | Logo horizontal e ícono, monocromos en noche y en amarillo. Derivan del logo oficial: el original con degradé y el blanco están en `assets/logos/` |
 | `fotos/` | Marcador de foto de evento y reglas de recorte |

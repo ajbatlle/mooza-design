@@ -47,6 +47,26 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
 .reglas{grid-column:span 2;display:grid;gap:14px;align-content:start;border-top:1px solid var(--mz-linea);padding-top:14px;font-size:14px;color:var(--mz-fg-suave)}
 .reglas dt{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mz-amarillo);margin-bottom:2px}
 
+/* logo y formatos */
+.lgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.lg{aspect-ratio:16/10;display:grid;place-items:center;position:relative}
+.lg svg,.lg img{width:54%;height:auto;display:block}
+.lg small{position:absolute;left:12px;bottom:10px;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;opacity:.8}
+.libre{display:grid;place-items:center;padding:clamp(28px,5vw,64px);background:var(--mz-claro);color:var(--mz-noche)}
+.libre div{position:relative;outline:1.5px dashed rgba(255,45,111,.8);outline-offset:0;padding:calc(var(--w)*.1268);background:rgba(255,45,111,.07);--w:180px;width:calc(var(--w)*1.2536)}
+.libre svg{width:var(--w);display:block;color:var(--mz-noche);--mz-iso:var(--mz-noche)}
+.libre i{position:absolute;font:600 11px var(--mz-grot);color:rgba(255,45,111,1);font-style:normal}
+.minimos{display:flex;gap:28px;align-items:flex-end;flex-wrap:wrap;margin-top:8px}
+.minimos figure{margin:0;display:grid;gap:8px;font-size:12px;color:var(--mz-fg-suave)}
+.minimos svg{display:block;color:var(--mz-blanco);--mz-iso:var(--mz-blanco)}
+.tabla{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:32px}
+.tabla th,.tabla td{text-align:left;padding:10px 14px 10px 0;border-top:1px solid var(--mz-linea);vertical-align:top}
+.tabla th{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mz-fg-tenue)}
+.tabla td:first-child{font-weight:600;white-space:nowrap}
+.tabla-w{overflow-x:auto}
+.fig.w2{grid-column:span 4}
+@media (max-width:900px){.fig.w2{grid-column:span 6}}
+
 /* color */
 .sw{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr))}
 .sw div{aspect-ratio:1;padding:14px;display:flex;flex-direction:column;justify-content:space-between}
@@ -125,7 +145,7 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
 
 <header class="wrap top">
   <svg viewBox="0 0 629.21 159.59" role="img" aria-label="Mooza"><use href="#mz-lockup"/></svg>
-  <nav aria-label="Secciones"><a href="#grilla">Grilla</a><a href="#color">Color</a><a href="#tipo">Tipo</a><a href="#interfaz">Interfaz</a><a href="#ilustracion">Ilustración</a><a href="#fotos">Fotos</a><a href="#voz">Voz</a><a href="#kit">Kit</a></nav>
+  <nav aria-label="Secciones"><a href="#grilla">Grilla</a><a href="#formatos">Formatos</a><a href="#logo">Logo</a><a href="#color">Color</a><a href="#tipo">Tipo</a><a href="#interfaz">Interfaz</a><a href="#ilustracion">Ilustración</a><a href="#fotos">Fotos</a><a href="#voz">Voz</a><a href="#kit">Kit</a></nav>
 </header>
 
 <main class="wrap">
@@ -164,6 +184,61 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
         <div><dt>Medianil</dt><dd>De 0,6 a 4 %, y como máximo la mitad del margen.</dd></div>
         <div><dt>Imagen</dt><dd>Ocupa celdas completas y nunca llega al borde. En los ejemplos es un cuadrado azul.</dd></div>
       </dl>
+    </div>
+  </section>
+
+  <section class="sec" id="formatos">
+    <span class="k">Formatos</span>
+    <h2>La misma grilla en cada formato</h2>
+    <p class="nota" style="margin-bottom:28px">Siempre son siete columnas. Lo que cambia es el número de filas, que se elige para que la celda quede casi cuadrada: alto de celda = (alto − 2 × margen − (filas − 1) × medianil) ÷ filas. Medidas con margen 6 % y medianil 1,2 %.</p>
+    <div class="tabla-w"><table class="tabla">
+      <thead><tr><th>Formato</th><th>Tamaño</th><th>Filas</th><th>Alto de celda</th><th>Diseños</th><th>Uso</th></tr></thead>
+      <tbody>
+        <tr><td>4:5</td><td>1080 × 1350 px</td><td>9 o 10</td><td>11,5 % o 10,2 %</td><td>semana (10), foto, gráfico y editorial (9)</td><td>Feed de Instagram, carrusel, afiche digital</td></tr>
+        <tr><td>A3 vertical</td><td>297 × 420 mm</td><td>11</td><td>10,7 %</td><td>semana, foto, gráfico y editorial</td><td>Afiche impreso y exterior</td></tr>
+        <tr><td>1:1</td><td>1080 × 1080 px</td><td>8</td><td>9,9 %</td><td>semana, foto y gráfico</td><td>Posts cuadrados</td></tr>
+        <tr><td>9:16</td><td>1080 × 1920 px</td><td>16</td><td>8,3 %</td><td>story</td><td>Stories y portada de reel. Margen vertical × 2,2</td></tr>
+        <tr><td>16:9</td><td>1920 × 1080 px</td><td>4</td><td>10,2 %</td><td>foto</td><td>Slides, pantallas, banner web y gran formato apaisado</td></tr>
+      </tbody>
+    </table></div>
+    <div class="pgrid" id="pformatos">
+      <figure class="fig"><div id="fa" role="img" aria-label="Afiche A3 foto"></div><figcaption><i>A3</i><b>Afiche foto</b><span>11 filas. La foto crece y el titular conserva tres filas.</span></figcaption></figure>
+      <figure class="fig"><div id="fb" role="img" aria-label="Cuadrado semana"></div><figcaption><i>1:1</i><b>Semana</b><span>8 filas: días, seis franjas de dos horas y pie.</span></figcaption></figure>
+      <figure class="fig"><div id="fc" role="img" aria-label="Afiche A3 gráfico"></div><figcaption><i>A3</i><b>Afiche gráfico</b><span>Los bloques ganan altura y se leen mejor a distancia.</span></figcaption></figure>
+      <figure class="fig w2"><div id="fd" role="img" aria-label="Horizontal 16:9 foto"></div><figcaption><i>16:9</i><b>Horizontal</b><span>4 filas. Foto a la derecha en tres columnas y titular abajo en cuatro.</span></figcaption></figure>
+    </div>
+  </section>
+
+  <section class="sec" id="logo">
+    <span class="k">Logo</span>
+    <h2>El logo no se redibuja</h2>
+    <p class="nota" style="margin-bottom:28px">Se usan los archivos oficiales de <code>assets/logos/</code> y sus variantes monocromas de <code>kit/marca/</code>. El degradé del original solo aparece sobre noche o azul. En el resto, el logo va plano.</p>
+    <div class="lgs">
+      <div class="lg c-claro"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo noche" style="color:var(--mz-noche);--mz-iso:var(--mz-noche)"><use href="#mz-lockup"/></svg><small>Noche sobre claro</small></div>
+      <div class="lg c-blanco"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo noche" style="color:var(--mz-noche);--mz-iso:var(--mz-noche)"><use href="#mz-lockup"/></svg><small>Noche sobre blanco</small></div>
+      <div class="lg c-amarillo"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo noche" style="color:var(--mz-noche);--mz-iso:var(--mz-noche)"><use href="#mz-lockup"/></svg><small>Noche sobre amarillo</small></div>
+      <div class="lg c-naranja"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo noche" style="color:var(--mz-noche);--mz-iso:var(--mz-noche)"><use href="#mz-lockup"/></svg><small>Noche sobre naranja</small></div>
+      <div class="lg c-noche"><img src="../assets/logos/logo-horizontal-color-dark.svg" alt="Logo oficial con degradé"><small>Oficial sobre noche</small></div>
+      <div class="lg c-azul"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo blanco" style="color:var(--mz-blanco);--mz-iso:var(--mz-blanco)"><use href="#mz-lockup"/></svg><small>Blanco sobre azul</small></div>
+    </div>
+    <div class="cols" style="margin-top:36px;align-items:start">
+      <div>
+        <span class="k">Espacio libre</span>
+        <div class="libre"><div><svg viewBox="0 0 629.21 159.59" aria-hidden="true"><use href="#mz-lockup"/></svg></div></div>
+        <p class="nota" style="margin-top:12px">Media altura del logo por los cuatro lados.</p>
+      </div>
+      <div>
+        <span class="k">Tamaño mínimo</span>
+        <div class="minimos">
+          <figure><svg width="96" viewBox="0 0 629.21 159.59" aria-hidden="true"><use href="#mz-lockup"/></svg>96 px de ancho en pantalla, 25 mm en impresión</figure>
+          <figure><svg width="24" viewBox="0 0 168.34 163.27" aria-hidden="true" style="--mz-iso:var(--mz-amarillo)"><use href="#mz-iso"/></svg>24 px</figure>
+        </div>
+        <p class="nota" style="margin-top:12px">Por debajo de 96 px se usa solo el ícono, nunca el logo reducido.</p>
+      </div>
+      <div>
+        <span class="k">No</span>
+        <p class="nota">No deformarlo ni girarlo. No usar el degradé sobre amarillo, naranja o blanco. No recolorearlo con colores fuera de la paleta. No ponerlo sobre una foto sin duotono. No agregarle sombras, bordes ni efectos.</p>
+      </div>
     </div>
   </section>
 
@@ -305,6 +380,7 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
 (function(){
   var $=function(s){return document.querySelector(s)};
   var P=MoozaPoster;
+  P.mount($('#fa'),'foto',null,'a3');P.mount($('#fb'),'semana',null,'1x1');P.mount($('#fc'),'grafico',null,'a3');P.mount($('#fd'),'foto',null,'16x9');
   P.mount($('#pa'),'semana');P.mount($('#pb'),'foto');P.mount($('#pc'),'grafico');P.mount($('#pd'),'editorial');P.mount($('#pe'),'story');
 
   var G=$('#pgrid'),m=$('#m'),g=$('#g');

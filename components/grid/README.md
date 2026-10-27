@@ -6,13 +6,27 @@ Genera los cinco formatos de cartel de Mooza sobre la grilla de siete columnas. 
 
 ```js
 MoozaPoster.sprite()                        // texto SVG con el símbolo del logo (#mz-lockup). Insértalo una vez.
-MoozaPoster.html(formato, datos?)           // devuelve el HTML interno del cartel
-MoozaPoster.mount(elemento, formato, datos?) // agrega .mz-poster y la clase del formato, y escribe el HTML
+MoozaPoster.html(diseno, datos?, formato?)           // devuelve el HTML interno del cartel
+MoozaPoster.mount(elemento, diseno, datos?, formato?) // agrega .mz-poster, la clase del diseño y la proporción, y escribe el HTML
+MoozaPoster.FORMATOS                         // proporción y alto relativo de cada formato
+MoozaPoster.ROWS                             // filas por diseño y formato
 MoozaPoster.EJEMPLO                         // datos de ejemplo
-MoozaPoster.franja(horaInicio)              // fila de la grilla (2 a 9) para una hora, en el cartel "semana"
+MoozaPoster.franja(horaInicio, filas)       // fila de la grilla (2 a filas − 1) para una hora, en el cartel "semana"
 ```
 
-Formatos: `semana`, `foto`, `grafico`, `editorial`, `story`.
+Diseños: `semana`, `foto`, `grafico`, `editorial`, `story`.
+
+Formatos (tercer parámetro, `4x5` por defecto y `9x16` para story):
+
+| Diseño | Formatos |
+|---|---|
+| semana | `4x5`, `a3`, `1x1` |
+| foto | `4x5`, `a3`, `1x1`, `16x9` |
+| grafico | `4x5`, `a3`, `1x1` |
+| editorial | `4x5`, `a3` |
+| story | `9x16` |
+
+Un diseño que no existe en un formato lanza un error.
 
 ## Datos
 

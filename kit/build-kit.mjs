@@ -67,47 +67,56 @@ const lines = s => s.split('<br>');
 // ── plantillas ──
 const T = {};
 
-T.semana = () => {
-  const g = geo(1350, 10), B = [];
+T.semana = (H = 1350, n = 10) => {
+  const g = geo(H, n), B = [];
   const fs = COL * .3, fd = 3.2 * CQ;
   'LMMJVSD'.split('').forEach((l, i) => B.push(text({ x: g.x(i + 1) + COL / 2, y: g.y(1) + g.rh - .6 * CQ - MET.grot.desc * fd, size: fd, w: 500, fam: 'grot', fill: C.noche, anchor: 'middle', t: l })));
   const F = {}; const PR = { y: 3, w: 2, n: 1 };
-  D.semana.forEach((dia, i) => dia.e.forEach(e => { const k = e.f ? 'y' : (/gratis/i.test(e.p) ? 'w' : 'n'), key = (i + 1) + '-' + P.franja(e.s); if (!F[key] || PR[k] > PR[F[key]]) F[key] = k; }));
+  D.semana.forEach((dia, i) => dia.e.forEach(e => { const k = e.f ? 'y' : (/gratis/i.test(e.p) ? 'w' : 'n'), key = (i + 1) + '-' + P.franja(e.s, n); if (!F[key] || PR[k] > PR[F[key]]) F[key] = k; }));
   const fill = { y: C.amarillo, w: C.blanco, n: C.noche };
-  for (let r = 2; r <= 9; r++) for (let c = 1; c <= 7; c++) {
+  for (let r = 2; r <= n - 1; r++) for (let c = 1; c <= 7; c++) {
     const k = F[c + '-' + r], x = g.x(c), y = g.y(r);
     B.push(k ? `<rect x="${f2(x)}" y="${f2(y)}" width="${f2(COL)}" height="${f2(g.rh)}" fill="${fill[k]}"/>`
              : `<rect x="${f2(x + 1.25)}" y="${f2(y + 1.25)}" width="${f2(COL - 2.5)}" height="${f2(g.rh - 2.5)}" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="2.5"/>`);
   }
-  const lw = 23 * CQ, bottom = g.y(10) + g.rh;
+  const lw = 23 * CQ, bottom = g.y(n) + g.rh;
   B.push(logo(g.x(1), bottom - LH(lw), lw, C.noche, C.noche));
   const lh = 1.1 * fs;
   B.push(text({ x: g.x(7) + COL, y: base(bottom - lh, lh, fs, MET.grot), size: fs, w: 500, fam: 'grot', fill: C.noche, anchor: 'end', t: D.rango }));
-  return wrap(1350, B.join('\n'), C.naranja, 'Mooza · cartel semana');
+  return wrap(H, B.join('\n'), C.naranja, 'Mooza · cartel semana');
 };
 
-T.foto = () => {
-  const g = geo(1350, 9), B = [], fd = COL * .3;
-  B.push(`<line x1="${f2(g.x(3))}" y1="${f2(g.y(1))}" x2="${f2(g.x(3))}" y2="${f2(g.y(9) + g.rh)}" stroke="rgba(3,2,27,.5)" stroke-width="2.5"/>`);
-  B.push(`<line x1="${f2(M)}" y1="${f2(g.y(6) + g.rh)}" x2="${f2(W - M)}" y2="${f2(g.y(6) + g.rh)}" stroke="rgba(3,2,27,.5)" stroke-width="2.5"/>`);
-  const lw = 23 * CQ;
+T.foto = (H = 1350, n = 9) => {
+  const g = geo(H, n), B = [], fd = COL * .3, lw = 23 * CQ, fl = 2.8 * CQ;
+  if (n === 4) { // horizontal 16:9: foto a la derecha, titular abajo a la izquierda
+    B.push(logo(g.x(1), g.y(1) + g.rh - LH(lw), lw, C.noche, C.noche));
+    B.push(text({ x: g.x(4) + COL, y: base(g.y(1), 1.1 * fd, fd, MET.grot), size: fd, w: 500, fam: 'grot', fill: C.noche, anchor: 'end', t: D.rango }));
+    const px = g.x(5), py = g.y(1), pw = g.w(5, 7), ph = g.h(1, 4);
+    B.push(`<rect x="${f2(px)}" y="${f2(py)}" width="${f2(pw)}" height="${f2(ph)}" fill="${C.azul}"/>`);
+    B.push(text({ x: px + 2 * CQ, y: py + ph - 2 * CQ - MET.grot.desc * fl, size: fl, w: 500, fam: 'grot', fill: 'rgba(255,255,255,.7)', t: 'foto del evento' }));
+    const fs = COL * 1.52 * .62, lh = .9 * fs, ls = lines(D.titularFoto), bottom = g.y(4) + g.rh, top = bottom - ls.length * lh;
+    ls.forEach((l, i) => B.push(text({ x: M, y: base(top + i * lh, lh, fs, MET.serif), size: fs, w: 500, fam: 'serif', fill: C.noche, ls: f2(-.035 * fs), t: l })));
+    return wrap(H, B.join('\n'), C.blanco, 'Mooza · cartel foto 16:9');
+  }
+  B.push(`<line x1="${f2(g.x(3))}" y1="${f2(g.y(1))}" x2="${f2(g.x(3))}" y2="${f2(g.y(n) + g.rh)}" stroke="rgba(3,2,27,.5)" stroke-width="2.5"/>`);
+  B.push(`<line x1="${f2(M)}" y1="${f2(g.y(n - 3) + g.rh)}" x2="${f2(W - M)}" y2="${f2(g.y(n - 3) + g.rh)}" stroke="rgba(3,2,27,.5)" stroke-width="2.5"/>`);
   B.push(logo(g.x(1), g.y(1) + g.rh - LH(lw), lw, C.noche, C.noche));
   B.push(text({ x: g.x(7) + COL, y: base(g.y(1), 1.1 * fd, fd, MET.grot), size: fd, w: 500, fam: 'grot', fill: C.noche, anchor: 'end', t: D.rango }));
-  const px = g.x(3), py = g.y(2), pw = g.w(3, 7), ph = g.h(2, 6), fl = 2.8 * CQ;
+  const px = g.x(3), py = g.y(2), pw = g.w(3, 7), ph = g.h(2, n - 3);
   B.push(`<rect x="${f2(px)}" y="${f2(py)}" width="${f2(pw)}" height="${f2(ph)}" fill="${C.azul}"/>`);
   B.push(text({ x: px + 2 * CQ, y: py + ph - 2 * CQ - MET.grot.desc * fl, size: fl, w: 500, fam: 'grot', fill: 'rgba(255,255,255,.7)', t: 'foto del evento' }));
-  const fs = COL * 1.52, lh = .9 * fs, ls = lines(D.titularFoto), bottom = g.y(9) + g.rh, top = bottom - ls.length * lh;
+  const fs = COL * 1.52, lh = .9 * fs, ls = lines(D.titularFoto), bottom = g.y(n) + g.rh, top = bottom - ls.length * lh;
   ls.forEach((l, i) => B.push(text({ x: M, y: base(top + i * lh, lh, fs, MET.serif), size: fs, w: 500, fam: 'serif', fill: C.noche, ls: f2(-.035 * fs), t: l })));
-  return wrap(1350, B.join('\n'), C.blanco, 'Mooza · cartel foto');
+  return wrap(H, B.join('\n'), C.blanco, 'Mooza · cartel foto');
 };
 
-T.grafico = () => {
-  const g = geo(1350, 9), B = [];
+T.grafico = (H = 1350, n = 9) => {
+  const g = geo(H, n), B = [];
   const lw = 23 * CQ, b2 = g.y(2) + g.rh;
   B.push(logo(g.x(1), b2 - LH(lw), lw, C.noche, C.noche));
   const fs = COL * 2.17, lh = .74 * fs;
   B.push(text({ x: g.x(7) + COL, y: base(b2 - lh, lh, fs, MET.grot), size: fs, w: 600, fam: 'grot', fill: C.noche, anchor: 'end', ls: f2(-.05 * fs), t: D.corto }));
-  const hh = g.h(3, 9);
+  const hh = g.h(3, n);
   D.semana.forEach((dia, i) => {
     const x = g.x(i + 1), y = g.y(3);
     B.push(`<rect x="${f2(x + 1.25)}" y="${f2(y + 1.25)}" width="${f2(COL - 2.5)}" height="${f2(hh - 2.5)}" fill="none" stroke="rgba(3,2,27,.5)" stroke-width="2.5"/>`);
@@ -116,17 +125,17 @@ T.grafico = () => {
       B.push(`<rect x="${f2(x + .12 * COL)}" y="${f2(y + t * hh)}" width="${f2(.76 * COL)}" height="${f2(h * hh)}" fill="${e.f ? C.blanco : C.noche}"/>`);
     });
   });
-  return wrap(1350, B.join('\n'), C.amarillo, 'Mooza · cartel gráfico');
+  return wrap(H, B.join('\n'), C.amarillo, 'Mooza · cartel gráfico');
 };
 
-T.editorial = () => {
-  const g = geo(1350, 9), B = [], SQ = { n: C.naranja, y: C.amarillo, a: C.azul, k: C.noche };
-  D.cuadrados.forEach(s => B.push(`<rect x="${f2(g.x(s[0]))}" y="${f2(g.y(s[2]))}" width="${f2(g.w(s[0], s[1]))}" height="${f2(g.h(s[2], s[3]))}" fill="${SQ[s[4]]}"/>`));
-  const fs = COL * 1.1, lh = .93 * fs, ls = lines(D.titularEditorial), rt = g.y(3), rh = g.h(3, 7), top = rt + (rh - ls.length * lh) / 2;
+T.editorial = (H = 1350, n = 9) => {
+  const g = geo(H, n), B = [], SQ = { n: C.naranja, y: C.amarillo, a: C.azul, k: C.noche };
+  D.cuadrados.forEach(s => { const a = s[2] >= 8 ? s[2] + (n - 9) : s[2], b = s[3] >= 8 ? s[3] + (n - 9) : s[3]; B.push(`<rect x="${f2(g.x(s[0]))}" y="${f2(g.y(a))}" width="${f2(g.w(s[0], s[1]))}" height="${f2(g.h(a, b))}" fill="${SQ[s[4]]}"/>`); });
+  const fs = COL * 1.1, lh = .93 * fs, ls = lines(D.titularEditorial), rt = g.y(3), rh = g.h(3, n - 2), top = rt + (rh - ls.length * lh) / 2;
   ls.forEach((l, i) => B.push(text({ x: W / 2, y: base(top + i * lh, lh, fs, MET.serif), size: fs, w: 500, fam: 'serif', fill: C.noche, anchor: 'middle', ls: f2(-.035 * fs), t: l })));
   const fp = 3 * CQ;
-  B.push(text({ x: W / 2, y: g.y(9) + g.rh - MET.grot.desc * fp, size: fp, w: 500, fam: 'grot', fill: C.noche, anchor: 'middle', t: 'mooza.cl' }));
-  return wrap(1350, B.join('\n'), C.claro, 'Mooza · cartel editorial');
+  B.push(text({ x: W / 2, y: g.y(n) + g.rh - MET.grot.desc * fp, size: fp, w: 500, fam: 'grot', fill: C.noche, anchor: 'middle', t: 'mooza.cl' }));
+  return wrap(H, B.join('\n'), C.claro, 'Mooza · cartel editorial');
 };
 
 T.story = () => {
@@ -161,6 +170,9 @@ function grilla(H, rows, story, name, label) {
 grilla(1350, 9, false, 'grilla-4x5-9filas', 'Grilla 4:5, 9 filas');
 grilla(1350, 10, false, 'grilla-4x5-10filas', 'Grilla 4:5, 10 filas');
 grilla(1920, 16, true, 'grilla-9x16-16filas', 'Grilla 9:16, 16 filas');
+grilla(1080 * 420 / 297, 11, false, 'grilla-a3-11filas', 'Grilla A3 vertical, 11 filas');
+grilla(1080, 8, false, 'grilla-1x1-8filas', 'Grilla 1:1, 8 filas');
+grilla(1080 * 9 / 16, 4, false, 'grilla-16x9-4filas', 'Grilla 16:9, 4 filas');
 
 // ── celdas ──
 for (const [n, v] of Object.entries(C))
@@ -180,16 +192,21 @@ for (const [n, v] of [['noche', C.noche], ['amarillo', C.amarillo]]) {
 out('kit/fotos/foto-placeholder.svg', `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><title>Marcador de foto de evento</title><rect width="100" height="100" fill="${C.azul}"/><text x="6" y="94" font-family="'Inter Tight',Arial,sans-serif" font-size="5" font-weight="500" fill="rgba(255,255,255,.7)">foto del evento</text></svg>\n`);
 
 // ── escribir plantillas y PNG ──
-const NAMES = { semana: 'semana', foto: 'foto', grafico: 'grafico', editorial: 'editorial', story: 'story' };
-for (const k of Object.keys(NAMES)) {
-  const svg = T[k]();
-  out(`kit/plantillas/${k}.svg`, svg);
-  const H = k === 'story' ? 1920 : 1350;
-  const pg = await browser.newPage({ viewport: { width: W, height: H } });
+const A3 = 1080 * 420 / 297, R169 = 1080 * 9 / 16;
+const LISTA = [
+  ['semana', 'semana', 1350, 10], ['foto', 'foto', 1350, 9], ['grafico', 'grafico', 1350, 9], ['editorial', 'editorial', 1350, 9], ['story', 'story', 1920, 16],
+  ['semana-a3', 'semana', A3, 11], ['foto-a3', 'foto', A3, 11], ['grafico-a3', 'grafico', A3, 11], ['editorial-a3', 'editorial', A3, 11],
+  ['semana-1x1', 'semana', 1080, 8], ['foto-1x1', 'foto', 1080, 8], ['grafico-1x1', 'grafico', 1080, 8],
+  ['foto-16x9', 'foto', R169, 4]
+];
+for (const [nombre, tipo, H, n] of LISTA) {
+  const svg = tipo === 'story' ? T.story() : T[tipo](H, n);
+  out(`kit/plantillas/${nombre}.svg`, svg);
+  const pg = await browser.newPage({ viewport: { width: W, height: Math.ceil(H) } });
   await pg.setContent(`<link rel="stylesheet" href="${FONTS}"><body style="margin:0;background:#fff">${svg.replace(/<\?xml[^>]*>\s*/, '')}</body>`, { waitUntil: 'networkidle' });
   await pg.evaluate(() => document.fonts.ready);
   await pg.waitForTimeout(300);
-  await pg.screenshot({ path: path.join(ROOT, `kit/plantillas/${k}.png`), clip: { x: 0, y: 0, width: W, height: H } });
+  await pg.screenshot({ path: path.join(ROOT, `kit/plantillas/${nombre}.png`), clip: { x: 0, y: 0, width: W, height: Math.ceil(H) } });
   await pg.close();
 }
 await browser.close();
