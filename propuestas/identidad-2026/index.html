@@ -1,0 +1,794 @@
+<title>Identidad Mooza</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&display=swap">
+<style>
+/* Concepto: el cartel de la semana. Tres bandas de color plano (papel, amarillo, cobalto),
+   una grotesca que habla en mayúsculas y una serif que nombra lo que pasa. Marca oscura por herencia, cartelera por reformulación. */
+:root{
+  --noche:#03021b; --azul:#1b1444; --amarillo:#fcee21; --naranja:#fbb03b; --cobalto:#2d2bff; --papel:#f5f5fa; --lila:#6a5fb8;
+  --voz:'Archivo','Helvetica Neue',Arial,sans-serif;
+  --nombre:'Newsreader',Georgia,'Times New Roman',serif;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--noche);color:var(--papel);font-family:var(--voz);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+img,svg{max-width:100%}
+h1,h2,h3,h4,p,ul,ol,figure{margin:0;padding:0}
+ul,ol{list-style:none}
+:focus-visible{outline:3px solid var(--naranja);outline-offset:3px}
+
+.band{padding-block:clamp(56px,9vw,128px)}
+.wrap{width:100%;max-width:1320px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.on-noche{background:var(--noche);color:var(--papel)}
+.on-azul{background:var(--azul);color:var(--papel)}
+.on-amarillo{background:var(--amarillo);color:var(--noche)}
+.on-papel{background:var(--papel);color:var(--noche)}
+.on-cobalto{background:var(--cobalto);color:var(--papel)}
+
+.d{font-family:var(--voz);font-weight:900;font-stretch:74%;text-transform:uppercase;letter-spacing:-.02em;line-height:.9;text-wrap:balance}
+.h2{font-size:clamp(40px,6.4vw,96px);margin-bottom:clamp(40px,5vw,72px)}
+.eyebrow{font-weight:700;font-stretch:100%;text-transform:uppercase;letter-spacing:.14em;font-size:12px;line-height:1.3}
+.lead{font-size:clamp(17px,1.5vw,21px);max-width:60ch;line-height:1.5}
+.serif{font-family:var(--nombre);font-weight:400}
+.btn{font:700 12px/1 var(--voz);letter-spacing:.14em;text-transform:uppercase;border:0;border-radius:999px;padding:14px 22px;cursor:pointer;background:var(--amarillo);color:var(--noche);transition:transform .15s ease,background .15s ease,box-shadow .15s ease}
+.btn:hover{background:#fdf060}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 1.5px currentColor}
+.btn.ghost[aria-pressed="true"]{background:var(--papel);color:var(--noche);box-shadow:none}
+.note{font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;opacity:.7}
+
+/* revelado ligado al scroll: solo desplaza, nunca oculta */
+@keyframes reveal{from{transform:translateY(14px)}}
+@supports (animation-timeline:view()){
+  .reveal{animation:reveal linear both;animation-timeline:view();animation-range:entry 0% entry 55%}
+}
+
+/* ── hero ── */
+.top{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:clamp(40px,6vw,88px)}
+.top .logo{width:132px;color:var(--papel)}
+.top ul{display:flex;gap:6px 22px;flex-wrap:wrap}
+.top a{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;padding:6px 0;background:linear-gradient(var(--amarillo),var(--amarillo)) 0 100%/0 2px no-repeat;transition:background-size .25s var(--ease)}
+.top a:hover{background-size:100% 2px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(32px,5vw,80px);align-items:end}
+.hero-copy{display:grid;gap:clamp(20px,2.4vw,32px);align-content:end}
+.hero-copy h1{font-size:clamp(52px,8.6vw,132px);color:var(--papel)}
+.hero-copy h1 em{font-style:normal;color:var(--amarillo)}
+.hero-copy .eyebrow{color:var(--amarillo)}
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.controls .name{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;opacity:.65;min-width:9ch}
+.poster-col{display:grid;justify-items:end;gap:14px}
+
+/* ── cartel (sistema de tres bandas) ── */
+.poster{position:relative;aspect-ratio:4/5;container-type:inline-size;width:100%;max-width:540px;overflow:hidden;background:var(--papel);color:var(--noche);box-shadow:0 30px 80px rgba(0,0,0,.5);cursor:pointer}
+.pw{position:absolute;left:0;top:0;width:100%;height:62%;background:var(--papel);overflow:hidden;animation:wipe-d .8s var(--ease) backwards}
+.py{position:absolute;left:0;top:62%;width:100%;height:7%;background:var(--amarillo);display:flex;align-items:center;justify-content:space-between;gap:3cqw;padding:0 4.5cqw;transform-origin:left;animation:wipe-x .7s var(--ease) .55s backwards}
+.py span{font-weight:800;font-size:3.5cqw;line-height:1;font-stretch:100%;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
+.py small{font-weight:600;font-size:1.9cqw;line-height:1.15;font-stretch:85%;text-transform:uppercase;letter-spacing:.06em;text-align:right}
+.pb{position:absolute;left:0;top:69%;width:100%;height:31%;background:var(--cobalto);color:var(--papel);padding:5cqw 4.5cqw;animation:wipe-u .8s var(--ease) .7s backwards}
+.pb .serif{font-size:9cqw;line-height:1;letter-spacing:-.01em}
+.plogo{position:absolute;left:4.5cqw;bottom:4.5cqw;width:24cqw;color:var(--papel);--iso:var(--amarillo)}
+.url{position:absolute;right:4.5cqw;bottom:4.5cqw;font-weight:700;font-size:2.6cqw;letter-spacing:.14em;text-transform:uppercase}
+.w{position:absolute;left:var(--x);top:var(--y);overflow:hidden;padding:.03em .02em .04em;font-weight:900;font-size:14.5cqw;line-height:.88;font-stretch:76%;letter-spacing:-.02em;white-space:nowrap;transform:skewX(var(--sk,0deg));transition:left 1s var(--ease),top 1s var(--ease),transform 1s var(--ease);transition-delay:calc(var(--i)*70ms)}
+.w i{display:block;font-style:normal;animation:rise .9s var(--ease) backwards;animation-delay:calc(950ms + var(--i)*110ms)}
+.grid-ov{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);pointer-events:none;opacity:0;transition:opacity .3s}
+.grid-ov span{border-left:1px solid rgba(45,43,255,.5)}
+.grid-ov span:last-child{border-right:1px solid rgba(45,43,255,.5)}
+.show-grid .grid-ov{opacity:1}
+.poster.static,.poster.static *{animation:none!important;transition:none!important;cursor:default}
+@keyframes wipe-d{from{clip-path:inset(0 0 100% 0)}}
+@keyframes wipe-u{from{clip-path:inset(100% 0 0 0)}}
+@keyframes wipe-x{from{transform:scaleX(0)}}
+@keyframes rise{from{transform:translateY(105%)}}
+
+/* ── referentes ── */
+.refs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:clamp(20px,2.4vw,36px)}
+.ref{display:grid;grid-template-rows:auto auto 1fr;gap:16px;align-content:start;border-top:3px solid var(--noche);padding-top:18px}
+.ref h3{font-family:var(--nombre);font-weight:500;font-size:clamp(24px,2.2vw,30px);line-height:1.1}
+.ref .meta{opacity:.65;min-height:2.7em}
+.ref dl{display:grid;gap:12px;font-size:15px;line-height:1.45}
+.ref dt{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:2px}
+.ref dd{margin:0}
+.ref a{font-weight:700}
+.mini{aspect-ratio:5/3;position:relative;overflow:hidden;background:var(--noche)}
+.mini.rialto{display:grid;grid-template-rows:56% 12% 32%}
+.mini.rialto div{display:flex;align-items:center;padding:0 12px;font-size:clamp(22px,2.4vw,34px)}
+.mini.rialto .a{box-shadow:inset 0 0 0 1.5px var(--noche);background:var(--papel);color:var(--noche);font-weight:900;font-stretch:76%;text-transform:uppercase;letter-spacing:-.02em;justify-content:space-between}
+.mini.rialto .b{background:var(--amarillo)}
+.mini.rialto .c{background:var(--cobalto);color:var(--papel);font-family:var(--nombre);font-style:italic}
+.mini.public{display:grid;grid-template-rows:repeat(3,1fr)}
+.mini.public div{display:flex;align-items:center;padding:0 14px;font-weight:900;font-stretch:70%;text-transform:uppercase;font-size:clamp(20px,2.2vw,30px);letter-spacing:-.01em}
+.mini.public div span{display:block;transform:skewX(-9deg)}
+.mini.public div:nth-child(2) span{transform:skewX(9deg)}
+.mini.public div:nth-child(1){background:var(--noche);color:var(--amarillo)}
+.mini.public div:nth-child(2){background:var(--amarillo);color:var(--noche)}
+.mini.public div:nth-child(3){background:var(--papel);color:var(--noche)}
+.mini.hannover{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,1fr);gap:0}
+.mini.hannover div{display:grid;place-items:center}
+.mini.hannover svg{width:44%}
+.mini.musa{background:repeating-linear-gradient(135deg,rgba(3,2,27,.06) 0 10px,transparent 10px 20px);border:1.5px dashed rgba(3,2,27,.45);display:grid;place-items:center;color:var(--noche);font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase;text-align:center;padding:12px}
+
+/* ── idea ── */
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(20px,3vw,44px);margin-bottom:clamp(48px,7vw,96px)}
+.rule{display:grid;gap:18px;align-content:start}
+.rule h3{font-family:var(--voz);font-weight:900;font-stretch:78%;text-transform:uppercase;letter-spacing:-.015em;line-height:.95;font-size:clamp(28px,3vw,42px);text-wrap:balance}
+.rule p{max-width:44ch;font-size:16px}
+.spec{background:var(--noche);color:var(--papel);min-height:170px;padding:20px;display:grid;align-content:center;gap:6px;overflow:hidden}
+.spec .big{font-weight:900;font-stretch:74%;text-transform:uppercase;font-size:clamp(46px,5.4vw,76px);line-height:.88;letter-spacing:-.02em;color:var(--amarillo)}
+.spec .nm{font-family:var(--nombre);font-size:clamp(22px,2vw,28px);line-height:1.1}
+.spec.gap .row{display:flex;gap:6px;font-weight:900;font-stretch:74%;text-transform:uppercase;font-size:clamp(40px,4.6vw,64px);line-height:.9;letter-spacing:-.02em;transition:gap .8s var(--ease)}
+.spec.gap:hover .row,.spec.gap:focus-visible .row{gap:clamp(40px,8vw,120px)}
+.spec.gap .row span:nth-child(2){color:var(--amarillo)}
+.prop{display:flex;height:100%;min-height:130px}
+.prop span{display:grid;align-content:end;padding:10px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;transform-origin:left;animation:wipe-x 1s var(--ease) backwards}
+.prop span:nth-child(1){flex:62;background:var(--papel);color:var(--noche)}
+.prop span:nth-child(2){flex:7;background:var(--amarillo);color:var(--amarillo);animation-delay:.12s}
+.prop span:nth-child(3){flex:31;background:var(--cobalto);color:var(--papel);animation-delay:.24s}
+.spec.pp{padding:0}
+
+.week{display:flex;flex-direction:column;background:var(--noche)}
+.day{flex:0 0 clamp(64px,7vw,84px);display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 clamp(16px,3vw,40px);overflow:hidden;transition:flex-basis .5s var(--ease);cursor:default}
+.day:hover,.day:focus-visible{flex-basis:clamp(110px,13vw,150px)}
+.day .t{display:flex;align-items:baseline;gap:14px;transform:skewX(-8deg);transition:transform .5s var(--ease);min-width:0}
+.day:nth-child(even) .t{transform:skewX(8deg)}
+.day:hover .t,.day:focus-visible .t{transform:skewX(0)}
+.day .t b{font-weight:900;font-stretch:72%;text-transform:uppercase;letter-spacing:-.02em;font-size:clamp(34px,5vw,68px);line-height:1;white-space:nowrap}
+.day .t span{font-family:var(--nombre);font-size:clamp(18px,2.2vw,30px);line-height:1.1}
+.day .p{font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.d1{background:var(--azul);color:var(--papel)}.d2{background:var(--amarillo);color:var(--noche)}.d3{background:var(--papel);color:var(--noche)}.d4{background:var(--cobalto);color:var(--papel)}.d5{background:var(--naranja);color:var(--noche)}.d6{background:var(--noche);color:var(--papel)}.d7{background:var(--amarillo);color:var(--noche)}
+
+/* ── sistema ── */
+.sub{font-size:12px;margin-bottom:18px;opacity:.7}
+.block{margin-bottom:clamp(56px,8vw,112px)}
+.swatches{display:flex;gap:0;min-height:clamp(260px,32vw,400px)}
+.sw{flex:1 1 0;min-width:0;padding:18px 16px;display:flex;flex-direction:column;justify-content:space-between;transition:flex-grow .5s var(--ease);position:relative;overflow:hidden}
+.sw:hover,.sw:focus-within{flex-grow:2.6}
+.sw b{font-weight:900;font-stretch:78%;text-transform:uppercase;font-size:clamp(20px,2.3vw,32px);letter-spacing:-.01em;line-height:1}
+.sw code{font:600 12px/1.4 var(--voz);letter-spacing:.08em;text-transform:uppercase;display:block}
+.sw small{font-size:12px;line-height:1.35;display:block;margin-top:6px;opacity:.85}
+.sw .nuevo{align-self:flex-start;background:var(--noche);color:var(--papel);font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:5px 9px;border-radius:999px}
+.sw .nuevo.x{visibility:hidden}
+.s-noche{background:var(--noche);color:var(--papel);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.s-azul{background:var(--azul);color:var(--papel);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.s-amarillo{background:var(--amarillo);color:var(--noche)}
+.s-naranja{background:var(--naranja);color:var(--noche)}
+.s-cobalto{background:var(--cobalto);color:var(--papel)}
+.s-papel{background:var(--papel);color:var(--noche)}
+.ratios{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:12px;margin-top:28px}
+.ratio{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.06);padding:12px}
+.ratio .aa{width:64px;height:48px;display:grid;place-items:center;font-weight:900;font-size:22px;flex:none}
+.ratio p{font-size:13px;line-height:1.3}
+.ratio p b{display:block;font-size:15px}
+.ratio .no{opacity:.6}
+.tipo{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:clamp(24px,4vw,64px);align-items:start}
+.specimen{background:var(--papel);color:var(--noche);padding:clamp(20px,3vw,40px);display:grid;gap:20px}
+#spec{font-weight:900;font-stretch:74%;text-transform:uppercase;font-size:clamp(44px,7.4vw,112px);line-height:.88;letter-spacing:-.02em;overflow-wrap:anywhere;transition:font-stretch .1s linear,font-weight .1s linear}
+.specimen .nm{font-family:var(--nombre);font-size:clamp(24px,2.6vw,36px);line-height:1.15;border-top:3px solid var(--noche);padding-top:16px}
+.sliders{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:16px 28px}
+.sliders label{display:grid;gap:6px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.sliders output{font-weight:500;opacity:.7;margin-left:6px}
+input[type=range]{width:100%;accent-color:var(--cobalto);height:28px}
+.scale{display:grid;gap:0}
+.scale li{display:grid;grid-template-columns:1fr auto;gap:4px 16px;padding:14px 0;border-top:1px solid rgba(255,255,255,.2);align-items:baseline}
+.scale li:last-child{border-bottom:1px solid rgba(255,255,255,.2)}
+.scale .s{grid-column:1/-1;font-size:13px;opacity:.7;line-height:1.35}
+.scale .a{font-size:clamp(22px,2.4vw,32px);line-height:1}
+.scale .k{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--amarillo)}
+.mot{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:clamp(16px,2vw,28px)}
+.mot figure{display:grid;gap:12px}
+.mot .stage{aspect-ratio:16/10;position:relative;overflow:hidden;background:var(--noche);display:grid;place-items:center}
+.mot figcaption{font-size:14px;line-height:1.4}
+.mot figcaption b{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--amarillo);margin-bottom:2px}
+.m1 .word{overflow:hidden;font-weight:900;font-stretch:74%;text-transform:uppercase;font-size:clamp(44px,5vw,70px);line-height:.95;letter-spacing:-.02em;padding:.04em .02em}
+.m1 .word i{display:block;font-style:normal;animation:loop-rise 3.6s var(--ease) infinite}
+@keyframes loop-rise{0%{transform:translateY(105%)}22%,80%{transform:none}100%{transform:translateY(-105%)}}
+.m2 .field{position:absolute;inset:0;background:var(--amarillo);transform-origin:left;animation:loop-wipe 3.6s var(--ease) infinite}
+.m2 .field.b{background:var(--cobalto);animation-delay:.18s}
+@keyframes loop-wipe{0%{transform:scaleX(0)}28%,72%{transform:scaleX(1)}100%{transform:scaleX(1);clip-path:inset(0 0 0 100%)}}
+.m2 .field.b{inset:auto 0 0 0;height:44%}
+.m3 .mc{position:absolute;font-weight:900;font-stretch:74%;text-transform:uppercase;font-size:clamp(26px,3vw,40px);letter-spacing:-.02em;line-height:1;animation:loop-move 5.2s var(--ease) infinite}
+.m3 .mc:nth-child(1){left:8%;top:12%}
+.m3 .mc:nth-child(2){left:44%;top:12%;color:var(--amarillo);animation-delay:.07s}
+.m3 .mc:nth-child(3){left:22%;top:44%;animation-delay:.14s}
+@keyframes loop-move{0%,38%{transform:translate(0,0)}50%,88%{transform:translate(18cqw,34cqh) skewX(-8deg)}100%{transform:translate(0,0)}}
+.m3 .stage{container-type:size}
+
+/* ── marca ── */
+.marca{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:clamp(20px,3vw,48px);align-items:stretch;margin-bottom:clamp(32px,5vw,64px)}
+.draw-box,.win-box{background:var(--azul);display:grid;place-items:center;padding:clamp(24px,4vw,56px);position:relative;min-height:320px}
+.draw-box svg,.win-box svg{width:min(100%,260px);height:auto;overflow:visible}
+.draw-box .iso-d{fill:url(#gm)}
+.draw-box.play .iso-d{animation:fillin 2.4s ease both}
+.draw-box.play .iso-s{animation:strokeout 2.4s var(--ease) both}
+.iso-s{fill:none;stroke:var(--papel);stroke-width:1.6;stroke-dasharray:1;stroke-dashoffset:1;opacity:0}
+.draw-box.play .iso-s{opacity:1}
+@keyframes strokeout{0%{stroke-dashoffset:1}60%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+@keyframes fillin{0%,45%{fill-opacity:0}100%{fill-opacity:1}}
+.box-cap{position:absolute;left:16px;bottom:14px;right:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px}
+.box-cap .btn{padding:9px 14px;font-size:11px}
+.win-bands{animation:slide 7s linear infinite}
+@keyframes slide{to{transform:translateX(-84px)}}
+.lock{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:12px}
+.lk{aspect-ratio:16/10;display:grid;place-items:center;position:relative}
+.lk svg{width:62%;transition:transform .5s var(--ease)}
+.lk:hover svg{transform:scale(1.06)}
+.lk figcaption{position:absolute;left:12px;bottom:10px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;opacity:.8}
+.l1{background:var(--noche);color:var(--papel)}
+.l2{background:var(--amarillo);color:var(--noche);--iso:var(--noche)}
+.l3{background:var(--papel);color:var(--noche);--iso:var(--cobalto)}
+.l4{background:var(--cobalto);color:var(--papel);--iso:var(--papel);box-shadow:inset 0 0 0 1.5px rgba(245,245,250,.55)}
+.lt{fill:currentColor}
+.li{fill:var(--iso,url(#gm))}
+
+/* ── aplicaciones ── */
+.app{margin-bottom:clamp(64px,9vw,128px)}
+.app-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:12px clamp(24px,4vw,64px);margin-bottom:28px;align-items:end}
+.app-head h3{font-weight:900;font-stretch:74%;text-transform:uppercase;letter-spacing:-.02em;line-height:.9;font-size:clamp(34px,4.6vw,64px);text-wrap:balance}
+.app-head p{font-size:16px;max-width:52ch}
+.car{display:flex;gap:clamp(12px,1.6vw,20px);overflow-x:auto;scroll-snap-type:x mandatory;padding:0 0 18px;scrollbar-color:var(--amarillo) transparent}
+.slide{flex:0 0 min(78vw,340px);aspect-ratio:4/5;scroll-snap-align:start;container-type:inline-size;position:relative;overflow:hidden}
+.slide .poster{max-width:none;box-shadow:none}
+.s2{background:var(--papel);color:var(--noche)}
+.s2 .a{position:absolute;left:0;top:0;width:100%;height:36%;background:var(--amarillo);display:flex;align-items:flex-end;padding:0 5cqw 2cqw;gap:3cqw;overflow:hidden}
+.s2 .a span{font-weight:900;font-stretch:72%;text-transform:uppercase;font-size:26cqw;line-height:.82;letter-spacing:-.03em;transform:skewX(-8deg);transform-origin:left bottom}
+.s2 .a em{font-style:normal;font-weight:700;font-size:3cqw;letter-spacing:.14em;text-transform:uppercase;padding-bottom:3cqw}
+.s2 ul{position:absolute;left:5cqw;right:5cqw;top:40%;display:grid;gap:3.4cqw}
+.s2 li{display:grid;grid-template-columns:auto 1fr;gap:0 3cqw;align-items:baseline;border-bottom:1px solid rgba(3,2,27,.25);padding-bottom:3cqw}
+.s2 li em{font-style:normal;font-weight:800;font-size:3.6cqw;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.s2 li span{font-family:var(--nombre);font-size:6.6cqw;line-height:1.05}
+.s2 li i{grid-column:2;font-style:normal;font-size:3.1cqw;opacity:.7;letter-spacing:.04em;margin-top:.8cqw}
+.s2 .f{position:absolute;left:0;bottom:0;width:100%;height:9%;background:var(--noche);color:var(--papel);display:flex;align-items:center;justify-content:space-between;padding:0 5cqw;font-size:2.8cqw;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.s2 .f svg{width:22cqw}
+.s3{background:var(--cobalto);color:var(--papel)}
+.s3 .g{position:absolute;right:-14cqw;top:-10cqw;width:62cqw;color:var(--amarillo);--iso:var(--naranja);opacity:1}
+.s3 .t{position:absolute;left:6cqw;bottom:6cqw;right:6cqw;display:grid;gap:3cqw}
+.s3 .t b{font-weight:900;font-stretch:74%;text-transform:uppercase;font-size:17cqw;line-height:.86;letter-spacing:-.02em}
+.s3 .t b span{display:block}
+.s3 .t b span:nth-child(2){margin-left:14cqw;color:var(--amarillo)}
+.s3 .t p{font-family:var(--nombre);font-size:5.6cqw}
+.scene{background:linear-gradient(#9fb3ff,#e9e2d0 62%,#cfc8b8);padding:clamp(24px,5vw,64px) clamp(16px,4vw,56px) 0;display:grid;justify-items:center;overflow:hidden;position:relative}
+.bld{width:min(100%,640px);min-height:clamp(420px,62vw,620px);position:relative;display:grid;justify-items:center;padding-top:clamp(20px,3vw,40px);
+  background:
+   linear-gradient(#36396a 0 16px,transparent 16px) 0 0/58px 72px,
+   linear-gradient(90deg,#36396a 0 34px,#12133a 34px) 0 0/58px 72px,
+   #36396a}
+.lit{position:absolute;width:24px;height:56px;background:var(--amarillo);animation:lit 6s steps(1) infinite;opacity:0}
+.lit:nth-of-type(1){left:34px;top:86px;animation-delay:0s}
+.lit:nth-of-type(2){right:34px;top:158px;animation-delay:2s}
+.lit:nth-of-type(3){left:92px;top:302px;animation-delay:4s}
+@keyframes lit{0%{opacity:.95}33%{opacity:0}100%{opacity:0}}
+.banner{width:clamp(170px,30vw,236px);aspect-ratio:1/2.3;position:relative;container-type:inline-size;transform-origin:50% 0;animation:sway 7s ease-in-out infinite alternate;box-shadow:0 24px 40px rgba(0,0,0,.35);background:var(--papel);color:var(--noche);overflow:hidden;border:4px solid #5a3a22}
+.banner::before{content:"";position:absolute;inset:0;border:0}
+@keyframes sway{from{transform:rotate(-.9deg)}to{transform:rotate(.9deg)}}
+.banner .bw{position:absolute;left:0;top:0;width:100%;height:58%;padding:7cqw 6cqw;display:grid;align-content:start;gap:0}
+.banner .bw span{display:block;font-weight:900;font-stretch:74%;text-transform:uppercase;font-size:21cqw;line-height:.88;letter-spacing:-.02em;white-space:nowrap}
+.banner .by{position:absolute;left:0;top:58%;width:100%;height:5%;background:var(--amarillo);display:flex;align-items:center;padding:0 6cqw;font-weight:800;font-size:5cqw;letter-spacing:.12em;text-transform:uppercase}
+.banner .bb{position:absolute;left:0;top:63%;width:100%;height:37%;background:var(--cobalto);color:var(--papel);padding:6cqw}
+.banner .bb p{font-family:var(--nombre);font-size:13cqw;line-height:1}
+.banner .bb svg{position:absolute;left:6cqw;bottom:6cqw;width:42cqw;--iso:var(--amarillo)}
+.web{background:var(--noche);box-shadow:0 0 0 1px rgba(255,255,255,.14)}
+.web-h{display:grid;gap:16px;padding:clamp(16px,2.4vw,28px) clamp(16px,2.4vw,28px) 8px}
+.web-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.web-top svg{width:116px;color:var(--papel)}
+.search{display:flex;align-items:center;gap:10px;border-radius:999px;background:rgba(255,255,255,.08);padding:11px 18px;font-size:14px;color:rgba(255,255,255,.65);min-width:min(100%,260px);flex:1 1 220px;max-width:340px;transition:box-shadow .15s}
+.search:focus-within{box-shadow:0 0 0 2px var(--amarillo)}
+.search input{all:unset;flex:1;min-width:0;color:var(--papel)}
+.search input::placeholder{color:rgba(255,255,255,.55)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font:700 11px/1 var(--voz);letter-spacing:.14em;text-transform:uppercase;border:0;border-radius:999px;padding:10px 15px;cursor:pointer;background:rgba(255,255,255,.08);color:var(--papel);transition:background .15s,color .15s,transform .15s}
+.chip:hover{background:rgba(255,255,255,.16)}
+.chip:active{transform:scale(.97)}
+.chip[aria-pressed="true"]{background:var(--amarillo);color:var(--noche)}
+.evs{padding:8px 0 12px}
+.ev{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:clamp(12px,2vw,24px);align-items:center;padding:14px clamp(16px,2.4vw,28px);border-top:1px solid rgba(255,255,255,.07);overflow:hidden;isolation:isolate;transition:color .25s;animation:rowin .5s var(--ease) backwards}
+.ev::before{content:"";position:absolute;inset:0;background:var(--f);transform:translateX(-118%) skewX(-12deg);transform-origin:left;transition:transform .5s var(--ease);z-index:-1}
+.ev:hover::before,.ev:focus-within::before{transform:translateX(-4%) skewX(-12deg)}
+.ev:hover,.ev:focus-within{color:var(--ft)}
+.ev[hidden]{display:none}
+@keyframes rowin{from{transform:translateY(14px)}}
+.date{width:56px;height:60px;border-radius:10px;background:var(--noche);color:var(--papel);display:grid;place-items:center;align-content:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+.date span{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.7;line-height:1}
+.date b{font-weight:800;font-size:24px;line-height:1.05}
+.ev.dest .date{background:var(--amarillo);color:var(--noche);box-shadow:none}
+.ev.dest .date span{opacity:.8}
+.cat{display:inline-flex;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:4px 9px;border-radius:999px;background:var(--f);color:var(--ft);margin-bottom:6px;gap:6px}
+.ev:hover .cat{background:var(--ft);color:var(--f)}
+.ev h4{font-family:var(--nombre);font-weight:400;font-size:clamp(20px,2.2vw,26px);line-height:1.12;overflow-wrap:anywhere}
+.ev p{font-size:13px;opacity:.7;margin-top:3px}
+.price{font-weight:700;font-size:13px;white-space:nowrap;border-radius:999px;padding:8px 14px;box-shadow:inset 0 0 0 1.5px currentColor;font-variant-numeric:tabular-nums}
+.price.g{background:var(--amarillo);color:var(--noche);box-shadow:none}
+.ev:hover .price.g{background:var(--noche);color:var(--amarillo)}
+.empty{padding:28px;font-size:14px;opacity:.7}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:clamp(24px,4vw,64px);align-items:start}
+.story{aspect-ratio:9/16;container-type:inline-size;position:relative;overflow:hidden;background:var(--cobalto);color:var(--papel);max-width:300px}
+.story .bars{position:absolute;left:4cqw;right:4cqw;top:4cqw;display:flex;gap:1.6cqw;z-index:2}
+.story .bars i{flex:1;height:.9cqw;background:rgba(255,255,255,.35);position:relative;overflow:hidden}
+.story .bars i::after{content:"";position:absolute;inset:0;background:var(--papel);transform-origin:left}
+.story .bars i:nth-child(1)::after{animation:prog 6s linear infinite}
+.story .bars i:nth-child(n+2)::after{transform:scaleX(0)}
+@keyframes prog{from{transform:scaleX(0)}}
+.story .hoy{position:absolute;left:0;top:11cqw;width:100%;padding:0 6cqw;color:var(--amarillo);font-weight:900;font-stretch:72%;text-transform:uppercase;font-size:50cqw;line-height:.8;letter-spacing:-.03em;transform:skewX(-8deg);transform-origin:left}
+.story .fecha{position:absolute;left:0;top:58cqw;width:100%;background:var(--amarillo);color:var(--noche);padding:2.4cqw 6cqw;font-weight:800;font-size:4.4cqw;letter-spacing:.08em;text-transform:uppercase;display:flex;justify-content:space-between;animation:wipe-x .7s var(--ease) backwards;transform-origin:left}
+.story ul{position:absolute;left:6cqw;right:6cqw;top:74cqw;display:grid;gap:4.4cqw}
+.story li{display:grid;gap:.6cqw;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:3.6cqw}
+.story li span{font-family:var(--nombre);font-size:7.6cqw;line-height:1.05}
+.story li em{font-style:normal;font-size:3.6cqw;font-weight:600;letter-spacing:.06em;opacity:.85;text-transform:uppercase}
+.story .pie{position:absolute;left:6cqw;bottom:6cqw;width:30cqw;color:var(--papel);--iso:var(--amarillo)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:0}
+.tile{aspect-ratio:1;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:16px;background:var(--f);color:var(--ft);--iso:var(--ft)}
+.tile svg{position:absolute;right:-14%;top:-8%;width:78%;opacity:.95;transition:transform .6s var(--ease)}
+.tile:hover svg{transform:translate(-14%,10%) rotate(-8deg) scale(1.12)}
+.tile b{font-weight:900;font-stretch:74%;text-transform:uppercase;font-size:clamp(26px,3vw,38px);letter-spacing:-.02em;line-height:.9;position:relative;transition:transform .5s var(--ease)}
+.tile:hover b{transform:translateY(-6px)}
+.tile small{position:absolute;left:16px;top:16px;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.8}
+
+/* ── voz ── */
+.voz{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:clamp(24px,5vw,80px);align-items:start}
+.voz ul{display:grid;gap:0}
+.voz li{display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr);gap:4px 20px;padding:16px 0;border-top:1.5px solid var(--noche);align-items:baseline}
+.voz li:last-child{border-bottom:1.5px solid var(--noche)}
+.voz li .k{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.voz li .v{font-size:clamp(20px,2vw,26px);line-height:1.2}
+.voz li .v.sf{font-weight:900;font-stretch:74%;text-transform:uppercase;letter-spacing:-.01em;font-size:clamp(28px,3vw,40px);line-height:.95}
+.voz li .v.sn{font-family:var(--nombre)}
+.voz li .r{grid-column:2;font-size:13px;opacity:.7}
+.no-list{margin-top:28px;display:grid;gap:6px;font-size:14px}
+.no-list b{font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+
+/* ── cierre ── */
+.next{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:clamp(20px,3vw,40px);margin-top:12px}
+.next li{border-top:3px solid var(--noche);padding-top:14px;display:grid;gap:6px;align-content:start}
+.next li b{font-weight:900;font-stretch:78%;text-transform:uppercase;font-size:clamp(22px,2.2vw,30px);line-height:1;letter-spacing:-.01em}
+.next li p{font-size:15px}
+.foot{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:center;margin-top:clamp(40px,6vw,80px);font-size:13px}
+.foot svg{width:120px;color:var(--noche);--iso:var(--noche)}
+
+@media (max-width:860px){
+  .hero-grid,.tipo,.two,.voz,.app-head{grid-template-columns:minmax(0,1fr)}
+  .poster-col{justify-items:center}
+  .swatches{flex-wrap:wrap}
+  .sw{flex:1 1 40%;min-height:180px}
+  .sw:hover,.sw:focus-within{flex-grow:1}
+  .story{max-width:260px}
+}
+@media (max-width:520px){
+  .sw{flex-basis:100%;min-height:130px}
+  .day .p{display:none}
+  .day .t span{display:none}
+  .voz li{grid-template-columns:minmax(0,1fr)}
+  .voz li .r{grid-column:1}
+  .ev{grid-template-columns:auto minmax(0,1fr)}
+  .ev .price{grid-column:2;justify-self:start}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="gm" x1="0" y1=".5" x2="1" y2=".5"><stop offset="0" stop-color="#f9ea32"/><stop offset="1" stop-color="#f9b03d"/></linearGradient>
+    <symbol id="lockup" viewBox="0 0 629.21 159.59"><g class="lt"><path d="M180.62,102.9c0-7.2-.18-13.4-.44-19.04-.1-2.26,1.71-4.14,3.98-4.14h8.98c2.08,0,3.8,1.6,3.97,3.67l.61,7.78h.46c3.76-6.05,10.85-13.21,24.01-13.21,10.32,0,18.27,5.74,21.63,14.38h.32c2.73-4.27,6.01-7.53,9.53-9.79,4.44-2.98,9.35-4.58,15.85-4.58,12.89,0,26.02,8.83,26.02,33.83v41.89c0,2.21-1.79,4-4,4h-11.22c-2.21,0-4-1.79-4-4v-39.12c0-13-4.5-20.62-13.91-20.62-6.74,0-11.68,4.75-13.71,10.38-.63,1.88-1,4.37-1,6.58v42.78c0,2.21-1.79,4-4,4h-11.22c-2.21,0-4-1.79-4-4v-41.07c0-10.98-4.39-18.66-13.45-18.66-7.39,0-12.33,5.79-14.18,11.13-.7,1.98-.98,4.31-.98,6.52v42.08c0,2.21-1.79,4-4,4h-11.22c-2.21,0-4-1.79-4-4v-50.77Z"/><path d="M390.48,117.93c0,28.65-20.11,41.5-40.05,41.5-21.99,0-39.01-15.18-39.01-40.16s16.84-41.32,40.34-41.32,38.72,16.34,38.72,39.98ZM331.68,118.78c0,15,7.49,26.34,19.38,26.34s19.15-10.91,19.15-26.6c0-12.25-5.42-26.24-19.02-26.24s-19.51,13.5-19.51,26.5Z"/><path d="M481.12,117.93c0,28.65-20.11,41.5-40.05,41.5-21.99,0-39.01-15.18-39.01-40.16s16.84-41.32,40.34-41.32,38.72,16.34,38.72,39.98ZM422.32,118.78c0,15,7.49,26.34,19.38,26.34s19.15-10.91,19.15-26.6c0-12.25-5.42-26.24-19.02-26.24s-19.51,13.5-19.51,26.5Z"/><path d="M488.69,147.67c0-.89.3-1.76.85-2.47l28.49-36.37c4.01-4.81,7.34-8.63,11.41-13.07v-.34h-33.84c-2.21,0-4-1.79-4-4v-7.69c0-2.21,1.79-4,4-4h53.87c2.22,0,4.01,1.8,4,4.02l-.03,6.63c0,.89-.3,1.75-.85,2.45l-27.73,35.5c-3.84,4.67-7.51,9.16-11.51,13.32v.34h37.06c2.21,0,4,1.79,4,4v7.69c0,2.21-1.79,4-4,4h-57.72c-2.21,0-4-1.79-4-4v-6Z"/><path d="M615.44,157.68c-1.97,0-3.65-1.44-3.96-3.39l-.82-5.29h-.47c-4.73,6.15-12.88,10.45-22.97,10.45-15.82,0-24.58-11.3-24.58-23.19,0-19.67,17.53-29.63,46.24-29.51v-1.29c0-5.12-2.03-13.64-15.83-13.59-5.85,0-11.92,1.44-16.83,3.63-2.24,1-4.83-.1-5.54-2.44l-1.53-5.01c-.58-1.9.29-3.94,2.09-4.8,6.04-2.9,14.85-5.28,25.21-5.28,25,0,32.14,15.77,32.14,32.87v28.07c0,5.14.19,10.16.62,14.38.24,2.37-1.59,4.4-3.97,4.4h-9.79ZM609.4,119.5c-13.91-.19-27.21,2.75-27.21,14.62,0,7.63,5.01,11.23,11.24,11.23,7.87,0,13.54-5.08,15.42-10.79.42-1.37.55-2.92.55-4.28v-10.77Z"/></g><path class="li" d="M152.67,5.56c-9.81-7.28-23.19-7.42-33.14-.33h0c-12.5,8.9-15.89,26.01-7.73,39.01l13.66,21.74c.44.7.43,1.6-.02,2.29l-8.68,13.25c-.84,1.28-2.73,1.28-3.56,0l-40.65-62.78C59.87-.87,33.03-5.22,14.8,9.36h0C-1.04,22.04-4.68,44.68,6.39,61.68l59.33,91.11c5.93,9.11,19.28,9.06,25.15-.09l69.02-107.64c8.35-13.02,5.19-30.28-7.23-39.51ZM80.18,145.84c-.44.69-1.09,1.04-1.91,1.04s-1.45-.35-1.9-1.03L17.04,54.75c-7.54-11.58-5.09-26.83,5.7-35.46,4.79-3.84,10.55-5.86,16.66-5.86,9.13,0,17.54,4.56,22.48,12.21l40.65,62.78c2.34,3.61,6.06,5.98,10.23,6.61l-32.59,50.82ZM149.2,38.2l-13.22,20.62-13.41-21.35c-4.58-7.29-2.67-16.91,4.34-21.9,2.63-1.88,5.74-2.87,8.97-2.87s6.54,1.05,9.22,3.05c7.03,5.22,8.83,15.08,4.1,22.44Z"/></symbol>
+    <symbol id="iso" viewBox="0 0 168.34 163.27"><path class="li" d="M156.19,5.68c-10.03-7.45-23.72-7.59-33.9-.34h0c-12.79,9.11-16.26,26.61-7.91,39.91l13.97,22.24c.45.72.44,1.64-.02,2.35l-8.88,13.56c-.86,1.31-2.79,1.31-3.64,0L74.22,19.16C61.25-.89,33.79-5.34,15.15,9.58h0C-1.07,22.55-4.79,45.71,6.54,63.11l60.7,93.2c6.07,9.32,19.73,9.27,25.73-.09l70.61-110.12c8.54-13.32,5.31-30.98-7.39-40.42ZM82.03,149.2c-.45.71-1.11,1.07-1.95,1.07s-1.49-.35-1.94-1.05L17.43,56.01c-7.72-11.85-5.21-27.45,5.83-36.28,4.9-3.92,10.8-6,17.04-6,9.34,0,17.94,4.67,23,12.49l41.58,64.23c2.39,3.69,6.2,6.12,10.47,6.76l-33.34,51.99ZM152.64,39.08l-13.53,21.1-13.72-21.84c-4.68-7.46-2.73-17.3,4.44-22.41,2.69-1.92,5.87-2.93,9.18-2.93s6.69,1.08,9.44,3.12c7.19,5.34,9.03,15.42,4.2,22.96Z"/></symbol>
+    <clipPath id="isoclip"><path d="M156.19,5.68c-10.03-7.45-23.72-7.59-33.9-.34h0c-12.79,9.11-16.26,26.61-7.91,39.91l13.97,22.24c.45.72.44,1.64-.02,2.35l-8.88,13.56c-.86,1.31-2.79,1.31-3.64,0L74.22,19.16C61.25-.89,33.79-5.34,15.15,9.58h0C-1.07,22.55-4.79,45.71,6.54,63.11l60.7,93.2c6.07,9.32,19.73,9.27,25.73-.09l70.61-110.12c8.54-13.32,5.31-30.98-7.39-40.42ZM82.03,149.2c-.45.71-1.11,1.07-1.95,1.07s-1.49-.35-1.94-1.05L17.43,56.01c-7.72-11.85-5.21-27.45,5.83-36.28,4.9-3.92,10.8-6,17.04-6,9.34,0,17.94,4.67,23,12.49l41.58,64.23c2.39,3.69,6.2,6.12,10.47,6.76l-33.34,51.99ZM152.64,39.08l-13.53,21.1-13.72-21.84c-4.68-7.46-2.73-17.3,4.44-22.41,2.69-1.92,5.87-2.93,9.18-2.93s6.69,1.08,9.44,3.12c7.19,5.34,9.03,15.42,4.2,22.96Z"/></clipPath>
+  </defs>
+</svg>
+
+<header class="band on-noche" id="inicio">
+  <div class="wrap">
+    <nav class="top" aria-label="Secciones">
+      <svg class="logo" viewBox="0 0 629.21 159.59" role="img" aria-label="Mooza"><use href="#lockup"/></svg>
+      <ul>
+        <li><a href="#referentes">Referentes</a></li>
+        <li><a href="#idea">Idea</a></li>
+        <li><a href="#sistema">Sistema</a></li>
+        <li><a href="#marca">Marca</a></li>
+        <li><a href="#aplicaciones">Aplicaciones</a></li>
+        <li><a href="#voz">Voz</a></li>
+      </ul>
+    </nav>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Propuesta de identidad • octubre 2026</p>
+        <h1 class="d">El cartel<br>de la <em>semana</em></h1>
+        <p class="lead">Mooza ya ordena lo que pasa en Chile cada semana. Esta propuesta convierte ese orden en identidad: la agenda se arma como un cartel de tres bandas, con una grotesca que habla y una serif que nombra.</p>
+        <div class="controls">
+          <button class="btn" id="recomponer" type="button">Recomponer</button>
+          <button class="btn ghost" id="grilla" type="button" aria-pressed="false">Ver grilla</button>
+          <span class="name" id="layoutName">Quiebre</span>
+        </div>
+      </div>
+      <div class="poster-col">
+        <div id="heroPoster" style="width:100%;max-width:540px"></div>
+        <p class="note">Cartel de ejemplo • toca para recomponer</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="band on-papel" id="referentes">
+  <div class="wrap">
+    <p class="eyebrow sub">Referentes</p>
+    <h2 class="d h2 reveal">Qué tomo de cada uno,<br>y qué dejo</h2>
+    <div class="refs">
+      <article class="ref reveal">
+        <div class="mini rialto" aria-hidden="true">
+          <div class="a"><span>Aa</span><span>Aa</span></div><div class="b"></div><div class="c">Aa</div>
+        </div>
+        <div><p class="eyebrow meta">Valencia • cartel que envió el dueño</p><h3>Teatre Rialto</h3></div>
+        <dl>
+          <div><dt>Tomo</dt><dd>Titular en grotesca negra, con espacios irregulares entre palabras. Tres campos de color plano apilados. Un nombre en serif.</dd></div>
+          <div><dt>Dejo</dt><dd>El serif azul oscuro sobre azul: en la foto casi no se lee. En Mooza el nombre va en papel o en tinta.</dd></div>
+        </dl>
+      </article>
+      <article class="ref reveal">
+        <div class="mini public" aria-hidden="true">
+          <div><span>Aa Aa</span></div><div><span>Aa Aa</span></div><div><span>Aa Aa</span></div>
+        </div>
+        <div><p class="eyebrow meta">Nueva York • Pentagram, 2014–2015</p><h3>The Public Theater</h3></div>
+        <dl>
+          <div><dt>Tomo</dt><dd>Tipografía inclinada en bandas que alternan la dirección. Color plano en negro, blanco y amarillo.</dd></div>
+          <div><dt>Dejo</dt><dd>La fotografía como protagonista. Mooza no tiene fotografía propia y no la necesita para funcionar. <a href="https://www.pentagram.com/work/the-public-theater-2014-2015-campaign/story" target="_blank" rel="noopener">Ver caso</a></dd></div>
+        </dl>
+      </article>
+      <article class="ref reveal">
+        <div class="mini hannover" aria-hidden="true">
+          <div style="background:var(--noche);--iso:var(--amarillo)"><svg viewBox="0 0 168.34 163.27"><use href="#iso"/></svg></div>
+          <div style="background:var(--amarillo);--iso:var(--noche)"><svg viewBox="0 0 168.34 163.27"><use href="#iso"/></svg></div>
+          <div style="background:var(--cobalto);--iso:var(--papel)"><svg viewBox="0 0 168.34 163.27"><use href="#iso"/></svg></div>
+          <div style="background:var(--papel);--iso:var(--noche)"><svg viewBox="0 0 168.34 163.27"><use href="#iso"/></svg></div>
+          <div style="background:var(--naranja);--iso:var(--noche)"><svg viewBox="0 0 168.34 163.27"><use href="#iso"/></svg></div>
+          <div style="background:var(--papel);--iso:var(--cobalto)"><svg viewBox="0 0 168.34 163.27"><use href="#iso"/></svg></div>
+          <div style="background:var(--noche);--iso:var(--naranja)"><svg viewBox="0 0 168.34 163.27"><use href="#iso"/></svg></div>
+          <div style="background:var(--cobalto);--iso:var(--amarillo)"><svg viewBox="0 0 168.34 163.27"><use href="#iso"/></svg></div>
+        </div>
+        <div><p class="eyebrow meta">Hannover • Bureau Hardy Seiler, 2014</p><h3>Freies Theater Hannover</h3></div>
+        <dl>
+          <div><dt>Tomo</dt><dd>Un solo código gráfico para muchas salas y programas, y la mezcla de sans con serif. Según BP&amp;O, el folleto bimestral funciona también como cartel.</dd></div>
+          <div><dt>Dejo</dt><dd>La ilustración geométrica. Mooza se mantiene tipográfica. <a href="https://bpando.org/2014/04/03/logo-freies-theater-hannover/" target="_blank" rel="noopener">Ver caso</a></dd></div>
+        </dl>
+      </article>
+      <article class="ref reveal">
+        <div class="mini musa">Pendiente de revisar con capturas</div>
+        <div><p class="eyebrow meta">Visuelle • enlace compartido</p><h3>MUSA</h3></div>
+        <dl>
+          <div><dt>Estado</dt><dd>La página no cargó desde mi entorno, así que no tomo nada de su diseño. Solo uso la cercanía del nombre: Mooza suena a musa. <a href="https://visuelle.co.uk/musa/" target="_blank" rel="noopener">Ver caso</a></dd></div>
+        </dl>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="band on-amarillo" id="idea">
+  <div class="wrap">
+    <p class="eyebrow sub">Idea</p>
+    <h2 class="d h2 reveal">Mooza es el cartel<br>de la semana</h2>
+    <div class="rules">
+      <article class="rule reveal">
+        <h3>La grotesca habla. La serif nombra.</h3>
+        <div class="spec"><span class="big">Hay plan</span><span class="nm">Cuarteto de jazz en vivo</span></div>
+        <p>Lo que dice Mooza va en grotesca y en mayúsculas. Lo que pasa, es decir eventos, salas y artistas, va en serif y en minúsculas de frase, como hoy.</p>
+      </article>
+      <article class="rule reveal">
+        <h3>El espacio vacío también informa.</h3>
+        <div class="spec gap" tabindex="0"><div class="row"><span>Esta</span><span>semana</span></div><span class="nm">Pasa el cursor para abrir el espacio</span></div>
+        <p>Las palabras del titular se reparten por la grilla y dejan huecos. En el cartel de Valencia esos huecos marcan el ritmo de lectura. Aquí marcan el lugar del tú.</p>
+      </article>
+      <article class="rule reveal">
+        <h3>Tres campos de color, más tinta.</h3>
+        <div class="spec pp"><div class="prop"><span>papel</span><span>amarillo</span><span>cobalto</span></div></div>
+        <p>Cada pieza se arma con tres bandas planas: 62 % papel con el titular, 7 % amarillo con la fecha, 31 % cobalto con el nombre. Sin degradados ni sombras en la gráfica.</p>
+      </article>
+    </div>
+    <p class="eyebrow sub">La semana en siete bandas • datos de ejemplo</p>
+    <div class="week reveal" role="list" aria-label="Ejemplo de la semana del 26 de octubre al 1 de noviembre">
+      <div class="day d1" role="listitem" tabindex="0"><div class="t"><b>Lun 26</b><span>Lectura de poemas en voz alta</span></div><span class="p">Gratis</span></div>
+      <div class="day d2" role="listitem" tabindex="0"><div class="t"><b>Mar 27</b><span>Microteatro: seis historias</span></div><span class="p">$4.000</span></div>
+      <div class="day d3" role="listitem" tabindex="0"><div class="t"><b>Mié 28</b><span>Cine en la plaza</span></div><span class="p">Gratis</span></div>
+      <div class="day d4" role="listitem" tabindex="0"><div class="t"><b>Jue 29</b><span>Jazz de jueves</span></div><span class="p">$5.000</span></div>
+      <div class="day d5" role="listitem" tabindex="0"><div class="t"><b>Vie 30</b><span>Cuarteto de jazz en vivo</span></div><span class="p">desde $8.000</span></div>
+      <div class="day d6" role="listitem" tabindex="0"><div class="t"><b>Sáb 31</b><span>Feria de grabado y edición</span></div><span class="p">Gratis</span></div>
+      <div class="day d7" role="listitem" tabindex="0"><div class="t"><b>Dom 1</b><span>Ensamble de cuerdas</span></div><span class="p">Gratis</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band on-azul" id="sistema">
+  <div class="wrap">
+    <p class="eyebrow sub">Sistema</p>
+    <h2 class="d h2 reveal">Color, tipo y movimiento</h2>
+
+    <div class="block">
+      <p class="eyebrow sub">Color • se mantiene el núcleo, se suma un cobalto</p>
+      <div class="swatches reveal">
+        <div class="sw s-noche" tabindex="0"><span class="nuevo x">.</span><div><b>Noche</b><code>#03021b</code><small>Fondo base y tinta. Sin cambios.</small></div></div>
+        <div class="sw s-azul" tabindex="0"><span class="nuevo x">.</span><div><b>Azul noche</b><code>#1b1444</code><small>Superficie oscura de la plataforma. Sin cambios.</small></div></div>
+        <div class="sw s-amarillo" tabindex="0"><span class="nuevo x">.</span><div><b>Amarillo</b><code>#fcee21</code><small>Fecha, destacados y llamada a la acción. Sin cambios.</small></div></div>
+        <div class="sw s-naranja" tabindex="0"><span class="nuevo x">.</span><div><b>Naranja</b><code>#fbb03b</code><small>Segundo acento y par del degradado del ícono. Sin cambios.</small></div></div>
+        <div class="sw s-cobalto" tabindex="0"><span class="nuevo">Nuevo</span><div><b>Cobalto</b><code>#2d2bff</code><small>Banda de nombre y de marca. Toma el lugar del azul del cartel de Valencia.</small></div></div>
+        <div class="sw s-papel" tabindex="0"><span class="nuevo">Ajuste</span><div><b>Papel</b><code>#f5f5fa</code><small>Reemplaza a #f2f2f2 con un tono más frío. Fondo de cartel.</small></div></div>
+      </div>
+      <ul class="ratios" aria-label="Pares de color y su contraste">
+        <li class="ratio"><span class="aa s-amarillo">Aa</span><p><b>16,9 : 1</b>Tinta sobre amarillo. AA</p></li>
+        <li class="ratio"><span class="aa s-azul" style="color:var(--amarillo)">Aa</span><p><b>14,1 : 1</b>Amarillo sobre azul noche. AA</p></li>
+        <li class="ratio"><span class="aa s-papel">Aa</span><p><b>18,8 : 1</b>Tinta sobre papel. AA</p></li>
+        <li class="ratio"><span class="aa s-naranja">Aa</span><p><b>11,1 : 1</b>Tinta sobre naranja. AA</p></li>
+        <li class="ratio"><span class="aa s-cobalto">Aa</span><p><b>6,7 : 1</b>Papel sobre cobalto. AA</p></li>
+        <li class="ratio"><span class="aa s-cobalto" style="color:var(--amarillo)">Aa</span><p><b>6,0 : 1</b>Amarillo sobre cobalto. AA</p></li>
+        <li class="ratio"><span class="aa s-cobalto" style="color:var(--naranja)">Aa</span><p><b>3,9 : 1</b>Naranja sobre cobalto. Solo texto grande</p></li>
+        <li class="ratio no"><span class="aa s-cobalto" style="color:var(--noche)">Aa</span><p><b>2,8 : 1</b>Tinta sobre cobalto. No usar</p></li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <p class="eyebrow sub">Tipografía • dos familias en lugar de tres</p>
+      <div class="tipo">
+        <div class="specimen reveal">
+          <div id="spec" aria-label="Muestra de tipografía">Tu semana cultural</div>
+          <p class="nm">Cuarteto de jazz en vivo en el Teatro del Parque</p>
+          <div class="sliders">
+            <label for="ancho">Ancho<output id="anchoV">74%</output><input id="ancho" type="range" min="62" max="125" step="1" value="74"></label>
+            <label for="peso">Peso<output id="pesoV">900</output><input id="peso" type="range" min="300" max="900" step="10" value="900"></label>
+          </div>
+        </div>
+        <ul class="scale">
+          <li><span class="a d" style="font-size:clamp(26px,2.8vw,38px)">Voz de cartel</span><span class="k">Archivo</span><span class="s">900 • ancho 70–80 % • mayúsculas • interlínea 0,88 • tracking −0,02 em</span></li>
+          <li><span class="a" style="font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:18px">Etiqueta • Música</span><span class="k">Archivo</span><span class="s">700 • ancho 100 % • mayúsculas • tracking +0,14 em. Igual que hoy.</span></li>
+          <li><span class="a serif">Nombre de evento o sala</span><span class="k">Newsreader</span><span class="s">400 • minúsculas de frase • tamaño óptico automático</span></li>
+          <li><span class="a" style="font-weight:500;font-size:17px">Cuerpo y datos de interfaz, $6.000</span><span class="k">Archivo</span><span class="s">400–700 • ancho 100 %. Reemplaza a DM Sans y a Sora.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block" style="margin-bottom:0">
+      <p class="eyebrow sub">Movimiento • compuesto y sin rebotes</p>
+      <div class="mot reveal">
+        <figure class="m1"><div class="stage"><div class="word"><i>Hay plan</i></div></div><figcaption><b>Aterrizaje</b>La palabra sube desde una máscara. 900 ms, curva de salida suave, 110 ms entre palabras.</figcaption></figure>
+        <figure class="m2"><div class="stage"><div class="field"></div><div class="field b"></div></div><figcaption><b>Banda</b>El campo de color entra con un barrido recto. 700 ms, sin escala ni rebote.</figcaption></figure>
+        <figure class="m3"><div class="stage"><span class="mc">Hay</span><span class="mc">plan</span><span class="mc">hoy</span></div><figcaption><b>Recomposición</b>Las mismas palabras cambian de lugar sobre la grilla. 1 s, con retraso escalonado.</figcaption></figure>
+      </div>
+      <p class="lead" style="margin-top:28px;font-size:15px;opacity:.8">Se mantiene la regla actual de la marca: nada de rebotes, parallax ni marquesinas. Lo que cambia es que el movimiento deja de ser solo un cambio de estado y pasa a componer el cartel. Todo se desactiva con la preferencia de movimiento reducido.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band on-cobalto" id="marca">
+  <div class="wrap">
+    <p class="eyebrow sub" style="color:var(--papel)">Marca</p>
+    <h2 class="d h2 reveal">El logo no se toca.<br>Cambia dónde vive.</h2>
+    <div class="marca">
+      <div class="draw-box" id="drawBox">
+        <svg viewBox="0 0 168.34 163.27" role="img" aria-label="Ícono de Mooza dibujándose"><path class="iso-d" d="M156.19,5.68c-10.03-7.45-23.72-7.59-33.9-.34h0c-12.79,9.11-16.26,26.61-7.91,39.91l13.97,22.24c.45.72.44,1.64-.02,2.35l-8.88,13.56c-.86,1.31-2.79,1.31-3.64,0L74.22,19.16C61.25-.89,33.79-5.34,15.15,9.58h0C-1.07,22.55-4.79,45.71,6.54,63.11l60.7,93.2c6.07,9.32,19.73,9.27,25.73-.09l70.61-110.12c8.54-13.32,5.31-30.98-7.39-40.42ZM82.03,149.2c-.45.71-1.11,1.07-1.95,1.07s-1.49-.35-1.94-1.05L17.43,56.01c-7.72-11.85-5.21-27.45,5.83-36.28,4.9-3.92,10.8-6,17.04-6,9.34,0,17.94,4.67,23,12.49l41.58,64.23c2.39,3.69,6.2,6.12,10.47,6.76l-33.34,51.99ZM152.64,39.08l-13.53,21.1-13.72-21.84c-4.68-7.46-2.73-17.3,4.44-22.41,2.69-1.92,5.87-2.93,9.18-2.93s6.69,1.08,9.44,3.12c7.19,5.34,9.03,15.42,4.2,22.96Z"/><path class="iso-s" pathLength="1" d="M156.19,5.68c-10.03-7.45-23.72-7.59-33.9-.34h0c-12.79,9.11-16.26,26.61-7.91,39.91l13.97,22.24c.45.72.44,1.64-.02,2.35l-8.88,13.56c-.86,1.31-2.79,1.31-3.64,0L74.22,19.16C61.25-.89,33.79-5.34,15.15,9.58h0C-1.07,22.55-4.79,45.71,6.54,63.11l60.7,93.2c6.07,9.32,19.73,9.27,25.73-.09l70.61-110.12c8.54-13.32,5.31-30.98-7.39-40.42ZM82.03,149.2c-.45.71-1.11,1.07-1.95,1.07s-1.49-.35-1.94-1.05L17.43,56.01c-7.72-11.85-5.21-27.45,5.83-36.28,4.9-3.92,10.8-6,17.04-6,9.34,0,17.94,4.67,23,12.49l41.58,64.23c2.39,3.69,6.2,6.12,10.47,6.76l-33.34,51.99ZM152.64,39.08l-13.53,21.1-13.72-21.84c-4.68-7.46-2.73-17.3,4.44-22.41,2.69-1.92,5.87-2.93,9.18-2.93s6.69,1.08,9.44,3.12c7.19,5.34,9.03,15.42,4.2,22.96Z"/></svg>
+        <div class="box-cap"><span>Aparición del ícono</span><button class="btn ghost" id="redibujar" type="button">Repetir</button></div>
+      </div>
+      <div class="win-box" style="background:var(--noche)">
+        <svg viewBox="0 0 168.34 163.27" role="img" aria-label="Ícono de Mooza como ventana con bandas en movimiento">
+          <g clip-path="url(#isoclip)"><g class="win-bands">
+            <polygon fill="#fcee21" points="-6,-10 22,-10 -12,175 -40,175"/>
+            <polygon fill="#fbb03b" points="22,-10 50,-10 16,175 -12,175"/>
+            <polygon fill="#f5f5fa" points="50,-10 78,-10 44,175 16,175"/>
+            <polygon fill="#fcee21" points="78,-10 106,-10 72,175 44,175"/>
+            <polygon fill="#fbb03b" points="106,-10 134,-10 100,175 72,175"/>
+            <polygon fill="#f5f5fa" points="134,-10 162,-10 128,175 100,175"/>
+            <polygon fill="#fcee21" points="162,-10 190,-10 156,175 128,175"/>
+            <polygon fill="#fbb03b" points="190,-10 218,-10 184,175 156,175"/>
+            <polygon fill="#f5f5fa" points="218,-10 246,-10 212,175 184,175"/>
+            <polygon fill="#fcee21" points="246,-10 274,-10 240,175 212,175"/>
+            <polygon fill="#fbb03b" points="274,-10 302,-10 268,175 240,175"/>
+            <polygon fill="#f5f5fa" points="302,-10 330,-10 296,175 268,175"/>
+            <polygon fill="#fcee21" points="330,-10 358,-10 324,175 296,175"/>
+          </g></g>
+        </svg>
+        <div class="box-cap"><span>El ícono como ventana de bandas</span></div>
+      </div>
+    </div>
+    <div class="lock">
+      <figure class="lk l1"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo horizontal"><use href="#lockup"/></svg><figcaption>Oficial • sobre noche</figcaption></figure>
+      <figure class="lk l2"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo horizontal monocromo"><use href="#lockup"/></svg><figcaption>Monocromo • sobre amarillo</figcaption></figure>
+      <figure class="lk l3"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo horizontal con ícono cobalto"><use href="#lockup"/></svg><figcaption>Nuevo • ícono cobalto sobre papel</figcaption></figure>
+      <figure class="lk l4"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo horizontal blanco"><use href="#lockup"/></svg><figcaption>Blanco • sobre cobalto</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="band on-noche" id="aplicaciones">
+  <div class="wrap">
+    <p class="eyebrow sub">Aplicaciones • contenido de ejemplo</p>
+    <h2 class="d h2 reveal">Una regla,<br>cinco formatos</h2>
+
+    <div class="app">
+      <div class="app-head"><h3>Agenda semanal en Instagram</h3><p>Portada con el cartel, un día con su lista en serif y un cierre con la dirección. Desliza para ver las tres láminas, en formato 4:5 como las actuales.</p></div>
+      <div class="car" tabindex="0" aria-label="Carrusel de ejemplo">
+        <div class="slide" id="slide1"></div>
+        <div class="slide s2">
+          <div class="a"><span>Vie 30</span></div>
+          <ul>
+            <li><em>21:00</em><span>Cuarteto de jazz en vivo</span><i>Teatro del Parque • desde $8.000</i></li>
+            <li><em>20:30</em><span>La casa de Matilde</span><i>Sala Mapocho • $6.000</i></li>
+            <li><em>19:00</em><span>Inauguración: paisajes de agua</span><i>Galería Costanera • Gratis</i></li>
+          </ul>
+          <div class="f"><span>Viernes 30</span><svg viewBox="0 0 629.21 159.59" aria-hidden="true"><use href="#lockup"/></svg></div>
+        </div>
+        <div class="slide s3">
+          <svg class="g" viewBox="0 0 168.34 163.27" aria-hidden="true"><use href="#iso"/></svg>
+          <div class="t"><b><span>Toda la</span><span>agenda</span><span>en mooza.cl</span></b><p>Tu semana cultural</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="app">
+      <div class="app-head"><h3>Gran formato en fachada</h3><p>El referente de Valencia es un lienzo colgado en un edificio. Mismo cartel, más alto: el titular se parte en cuatro líneas y la banda amarilla se reduce a la dirección.</p></div>
+      <div class="scene reveal" role="img" aria-label="Lienzo de ejemplo colgado en una fachada">
+        <div class="bld">
+          <span class="lit"></span><span class="lit"></span><span class="lit"></span>
+          <div class="banner">
+            <div class="bw"><span>Hay</span><span style="margin-left:30%">plan</span><span style="margin-left:4%">en tu</span><span style="margin-left:8%">ciudad</span></div>
+            <div class="by">mooza.cl</div>
+            <div class="bb"><p>Tu semana cultural</p><svg viewBox="0 0 629.21 159.59" aria-hidden="true"><use href="#lockup"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="app">
+      <div class="app-head"><h3>Plataforma web</h3><p>La lista conserva sus reglas: bloque de fecha, etiqueta, nombre, lugar y precio. Al pasar el cursor, la fila se inunda con el color de su categoría. Prueba los filtros.</p></div>
+      <div class="web">
+        <div class="web-h">
+          <div class="web-top">
+            <svg viewBox="0 0 629.21 159.59" role="img" aria-label="Mooza"><use href="#lockup"/></svg>
+            <label class="search"><span aria-hidden="true">⌕</span><input id="buscar" type="search" placeholder="Busca panoramas" aria-label="Buscar panoramas"></label>
+          </div>
+          <div class="chips" id="chips" role="group" aria-label="Filtrar por categoría"></div>
+        </div>
+        <ul class="evs" id="evs"></ul>
+      </div>
+    </div>
+
+    <div class="app" style="margin-bottom:0">
+      <div class="two">
+        <div>
+          <div class="app-head" style="grid-template-columns:minmax(0,1fr);margin-bottom:20px"><h3>Story del día</h3><p>Una sola pantalla, con el día en grande y tres planes.</p></div>
+          <div class="story">
+            <div class="bars"><i></i><i></i><i></i></div>
+            <div class="hoy">Hoy</div>
+            <div class="fecha"><span>Vie 30 oct</span><span>3 planes</span></div>
+            <ul>
+              <li><span>Cuarteto de jazz en vivo</span><em>Teatro del Parque • 21:00</em></li>
+              <li><span>La casa de Matilde</span><em>Sala Mapocho • 20:30</em></li>
+              <li><span>Paisajes de agua</span><em>Galería Costanera • 19:00</em></li>
+            </ul>
+            <svg class="pie" viewBox="0 0 629.21 159.59" aria-hidden="true"><use href="#lockup"/></svg>
+          </div>
+        </div>
+        <div>
+          <div class="app-head" style="grid-template-columns:minmax(0,1fr);margin-bottom:20px"><h3>Código de categorías</h3><p>Como en Hannover, un solo módulo con muchos colores. Cada categoría tiene un campo plano y el ícono como sello.</p></div>
+          <div class="tiles" id="tiles"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band on-papel" id="voz">
+  <div class="wrap">
+    <p class="eyebrow sub">Voz</p>
+    <h2 class="d h2 reveal">Tú, directo<br>y sin exclamaciones</h2>
+    <div class="voz">
+      <div>
+        <p class="lead">Mooza habla como alguien que conoce la ciudad y te cuenta qué hay. Tuteo, frases cortas, sin emoji y sin voseo. El cartel dice poco y el evento dice el resto.</p>
+        <div class="no-list"><b>Se evita</b><span>Signos de exclamación y emoji.</span><span>Voseo (“mirá”, “vení”). Se usa “mira”, “ven”.</span><span>“Free” o “GRATIS”. Siempre “Gratis”.</span><span>Títulos de evento en mayúsculas. Van en minúsculas de frase.</span></div>
+      </div>
+      <ul>
+        <li><span class="k">Titular</span><span class="v sf">Hay plan esta semana</span><span class="r">Mayúsculas, grotesca, sin punto final.</span></li>
+        <li><span class="k">Fecha</span><span class="v">26 oct – 1 nov</span><span class="r">Mes abreviado en minúscula y raya corta con espacios.</span></li>
+        <li><span class="k">Nombre</span><span class="v sn">Cuarteto de jazz en vivo</span><span class="r">Serif, minúsculas de frase.</span></li>
+        <li><span class="k">Lugar y hora</span><span class="v">Teatro del Parque • 21:00</span><span class="r">Punto medio y 24 horas.</span></li>
+        <li><span class="k">Precio</span><span class="v">$6.000 • desde $5.000 • Gratis</span><span class="r">Punto de miles, sin decimales.</span></li>
+        <li><span class="k">Cierre</span><span class="v">Toda la agenda en mooza.cl</span><span class="r">Se conserva la frase actual.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer class="band on-amarillo">
+  <div class="wrap">
+    <p class="eyebrow sub">Qué sigue</p>
+    <h2 class="d h2 reveal">Cuatro decisiones<br>para cerrar la base</h2>
+    <ul class="next">
+      <li><b>Tipografía</b><p>Confirmar Archivo y Newsreader. Ambas tienen licencia abierta (OFL) en Google Fonts, y reemplazan a Sora y DM Sans.</p></li>
+      <li><b>Imagen</b><p>Decidir si Mooza usa fotografía. Si la usa, la propuesta es que entre solo dentro de una banda y nunca a sangre.</p></li>
+      <li><b>MUSA</b><p>Revisar el caso con capturas y sumar lo que corresponda al sistema.</p></li>
+      <li><b>Prueba real</b><p>Armar cuatro semanas de agenda con datos reales y ver dónde se rompe la grilla.</p></li>
+    </ul>
+    <div class="foot">
+      <svg viewBox="0 0 629.21 159.59" role="img" aria-label="Mooza"><use href="#lockup"/></svg>
+      <span>Propuesta de identidad v1 • los eventos, salas y precios son ejemplos</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* cartel: tres composiciones sobre la misma grilla [x%, y%, inclinación] */
+  var WORDS=['HAY','PLAN','ESTA','SEMANA'];
+  var L=[
+    {n:'Quiebre',w:[[5,4,0],[52,4,0],[24,28,0],[36,52,0]]},
+    {n:'Escalera',w:[[4,3,-8],[16,26,8],[28,49,-8],[34,72,8]]},
+    {n:'Columna',w:[[6,3,0],[6,26,0],[6,49,0],[6,72,0]]}
+  ];
+  function poster(i,id,st){
+    var p=L[i].w;
+    return '<figure class="poster'+(st?' static':'')+'"'+(id?' id="'+id+'"':'')+' role="img" aria-label="Cartel de ejemplo: Hay plan esta semana">'+
+      '<div class="pw">'+WORDS.map(function(w,k){return '<span class="w" style="--i:'+k+';--x:'+p[k][0]+'%;--y:'+p[k][1]+'%;--sk:'+p[k][2]+'deg"><i>'+w+'</i></span>'}).join('')+
+      '<div class="grid-ov" aria-hidden="true">'+'<span></span>'.repeat(6)+'</div></div>'+
+      '<div class="py"><span>26 oct – 1 nov</span><small>Agenda cultural • semana 44 • Chile</small></div>'+
+      '<div class="pb"><p class="serif">Tu semana cultural</p><svg class="plogo" viewBox="0 0 629.21 159.59" aria-hidden="true"><use href="#lockup"/></svg><span class="url">mooza.cl</span></div></figure>';
+  }
+  $('#heroPoster').innerHTML=poster(0,'poster',false);
+  $('#slide1').innerHTML=poster(1,null,true);
+  var P=$('#poster'), cur=0, timer=null, manual=false, visible=true;
+  function apply(i){
+    cur=i; var ws=$$('.w',P);
+    L[i].w.forEach(function(q,k){ws[k].style.setProperty('--x',q[0]+'%');ws[k].style.setProperty('--y',q[1]+'%');ws[k].style.setProperty('--sk',q[2]+'deg')});
+    $('#layoutName').textContent=L[i].n;
+  }
+  function next(){apply((cur+1)%L.length)}
+  function start(){if(reduce||manual||timer||!visible)return;timer=setInterval(next,4800)}
+  function stop(){clearInterval(timer);timer=null}
+  function hand(){manual=true;stop();next()}
+  $('#recomponer').addEventListener('click',hand);
+  P.addEventListener('click',hand);
+  P.addEventListener('mouseenter',stop);
+  P.addEventListener('mouseleave',start);
+  $('#grilla').addEventListener('click',function(e){var on=P.classList.toggle('show-grid');e.currentTarget.setAttribute('aria-pressed',on?'true':'false')});
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){visible=es[0].isIntersecting;visible?setTimeout(start,2600):stop()},{threshold:.3}).observe(P);
+  }else{setTimeout(start,3400)}
+
+  /* tipografía viva */
+  var anc=$('#ancho'), pes=$('#peso'), spec=$('#spec');
+  function typo(){spec.style.fontStretch=anc.value+'%';spec.style.fontWeight=pes.value;$('#anchoV').textContent=anc.value+'%';$('#pesoV').textContent=pes.value}
+  anc.addEventListener('input',typo);pes.addEventListener('input',typo);
+
+  /* ícono dibujándose */
+  var box=$('#drawBox');
+  function draw(){box.classList.remove('play');void box.offsetWidth;box.classList.add('play')}
+  $('#redibujar').addEventListener('click',draw);
+  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){draw();io.disconnect()}},{threshold:.7});io.observe(box)}
+
+  /* lista de eventos con filtros */
+  var CAT={musica:['Música','var(--cobalto)','var(--papel)'],teatro:['Teatro','var(--amarillo)','var(--noche)'],cine:['Cine','var(--papel)','var(--noche)'],arte:['Arte','var(--naranja)','var(--noche)'],danza:['Danza','var(--lila)','var(--papel)']};
+  var E=[
+    {d:'vie',n:30,k:'musica',t:'Cuarteto de jazz en vivo',v:'Teatro del Parque',h:'21:00',p:'desde $8.000',f:1},
+    {d:'vie',n:30,k:'teatro',t:'La casa de Matilde',v:'Sala Mapocho',h:'20:30',p:'$6.000'},
+    {d:'vie',n:30,k:'arte',t:'Inauguración: paisajes de agua',v:'Galería Costanera',h:'19:00',p:'Gratis'},
+    {d:'sáb',n:31,k:'cine',t:'Ciclo de cine chileno de los 80',v:'Cine Arte Sur',h:'19:00',p:'Gratis'},
+    {d:'sáb',n:31,k:'danza',t:'La orilla, danza contemporánea',v:'Centro Cultural Norte',h:'18:00',p:'desde $5.000',f:1},
+    {d:'dom',n:1,k:'musica',t:'Ensamble de cuerdas',v:'Parroquia del Cerro',h:'12:30',p:'Gratis'}
+  ];
+  var flt='todo', q='';
+  function chips(){
+    var ks=['todo'].concat(Object.keys(CAT));
+    $('#chips').innerHTML=ks.map(function(k){return '<button type="button" class="chip" data-k="'+k+'" aria-pressed="'+(k===flt)+'">'+(k==='todo'?'Todo':CAT[k][0])+'</button>'}).join('');
+  }
+  function esc(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function list(){
+    var rows=E.filter(function(e){return (flt==='todo'||e.k===flt)&&(!q||(e.t+' '+e.v).toLowerCase().indexOf(q)>-1)});
+    $('#evs').innerHTML=rows.length?rows.map(function(e,i){var c=CAT[e.k];
+      return '<li class="ev'+(e.f?' dest':'')+'" tabindex="0" style="--f:'+c[1]+';--ft:'+c[2]+';animation-delay:'+(i*60)+'ms"><div class="date"><span>'+e.d+'</span><b>'+e.n+'</b></div><div><span class="cat">'+c[0]+(e.f?' • Destacado':'')+'</span><h4>'+esc(e.t)+'</h4><p>'+esc(e.v)+' • '+e.h+'</p></div><span class="price'+(e.p==='Gratis'?' g':'')+'">'+e.p+'</span></li>'}).join(''):'<li class="empty">No hay panoramas con esa búsqueda. Prueba con otra categoría.</li>';
+  }
+  $('#chips').addEventListener('click',function(e){var b=e.target.closest('.chip');if(!b)return;flt=b.getAttribute('data-k');chips();list()});
+  $('#buscar').addEventListener('input',function(e){q=e.target.value.trim().toLowerCase();list()});
+  chips();list();
+
+  /* tarjetas de categoría */
+  $('#tiles').innerHTML=Object.keys(CAT).map(function(k){var c=CAT[k];return '<div class="tile" style="--f:'+c[1]+';--ft:'+c[2]+'"><small>Categoría</small><svg viewBox="0 0 168.34 163.27" aria-hidden="true"><use href="#iso"/></svg><b>'+c[0]+'</b></div>'}).join('');
+})();
+</script>
