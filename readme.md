@@ -64,6 +64,28 @@ En el cartel "semana" el código de celdas es: amarillo para destacado, blanco p
 
 Una foto por pieza, encajada en celdas completas de la grilla y sin llegar nunca al borde. Mientras no haya fotografía de Mooza, el lugar de la foto lo ocupa un cuadrado azul con la etiqueta "foto del evento". Reglas de recorte en `kit/fotos/README.md`.
 
+### Ilustración
+
+Mooza suena a musa, y las ilustraciones lo dicen sin ser literales: nueve dibujos de trazo fino, a una tinta o en duotono, donde cada musa aparece por un objeto y no por una figura.
+
+| Dibujo | Musa | Categoría |
+|---|---|---|
+| lira | Erato | Música |
+| aulós (flauta doble) | Euterpe | Música |
+| máscaras | Melpómene y Talía | Teatro |
+| tela en movimiento | Terpsícore | Danza |
+| rollo y pluma | Calíope | Letras y arte |
+| ánfora con greca | Clío | Arte |
+| luna con estrellas | Urania | Ornamento |
+| ojo con rayos | Polimnia | Cine |
+| laurel | Sin musa | Ornamento y cierre |
+
+Cada dibujo tiene cuatro versiones: `tinta` (una sola tinta), `amarillo` y `naranja` (tinta noche con un campo de color desplazado unos píxeles, sobre fondos claros) y `noche` (tinta clara con campo amarillo, sobre noche y azul). Reglas: uno por pieza, de al menos 96 px de lado, y reemplaza a la foto cuando el evento no tiene una. Nunca va sobre una foto. Están en `kit/ilustraciones/`.
+
+### Fotos en duotono
+
+Las fotos se convierten a dos colores de la paleta: las sombras toman el color oscuro y las luces el claro. Hay seis paletas (`noche-amarillo`, `noche-naranja`, `azul-amarillo`, `azul-naranja`, `azul-claro` y `noche-claro`), una por pieza. El procedimiento, la herramienta en el navegador y el script por lotes están en `kit/duotono/`. Los filtros para web, en `components/duotono/duotono.js`.
+
 ### Movimiento
 
 Transiciones de 0,15 s en estados interactivos y escala 0,98 al presionar. Sin rebotes, parallax ni marquesinas. Todo se desactiva con la preferencia de movimiento reducido.
@@ -79,6 +101,10 @@ Cinco formatos, todos con la misma grilla. Los constructores están en `componen
 | gráfico | 4:5 | 9 | La semana como horario: cada bloque es un evento y su alto es la duración |
 | editorial | 4:5 | 9 | Titular escrito con lo que pasa y cuadrados donde irían las fotos |
 | story | 9:16 | 16 | Día activo, categoría, nombre, lugar y foto |
+
+## Propuesta web
+
+`guidelines/web.html` es una portada para mooza.cl: hero amarillo con el titular, la semana en siete columnas (un bloque por evento, amarillo si es destacado y blanco si es gratis), lista con filtros, destacado con foto en duotono y pie. Los eventos sin foto usan la ilustración de su categoría. Está hecha sin ver el sitio actual, que no estaba accesible: se apoya en lo que esta documentación dice de la plataforma (búsqueda, categorías y agenda semanal).
 
 ## Uso en código
 
@@ -102,8 +128,10 @@ Los datos tienen la forma de `MoozaPoster.EJEMPLO` (semana con eventos que traen
 | `tokens/` | `colors.css`, `typography.css`, `grid.css` y `tokens.json` |
 | `components/grid/` | Estilos y generador de carteles, con vista previa |
 | `components/ui/` | Botón, filtro, campo, fecha, precio y fila de evento, con vista previa |
+| `components/duotono/` | Duotono con los colores de la marca, para canvas y como filtros SVG |
 | `guidelines/index.html` | Referencia navegable del sistema, con la grilla ajustable |
-| `kit/` | Recursos gráficos: plantillas, grillas, celdas, marca y fotos |
+| `guidelines/web.html` | Propuesta de portada para mooza.cl con el sistema |
+| `kit/` | Recursos gráficos: plantillas, grillas, celdas, marca, fotos, ilustraciones y duotono |
 | `assets/logos/` | Logos oficiales |
 | `uploads/` | Archivos originales de la marca (logos editables, paleta y posts) |
 

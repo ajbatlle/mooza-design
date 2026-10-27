@@ -82,6 +82,21 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
 .ui{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:clamp(24px,4vw,64px);align-items:start}
 .ui .fila{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:22px}
 
+/* ilustración y fotos */
+.ilus{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;background:var(--mz-claro)}
+.ilus figure{margin:0;padding:clamp(8px,1.4vw,20px);display:grid;gap:6px;color:var(--mz-noche)}
+.ilus img{width:100%;height:auto;display:block}
+.ilus figcaption{font-size:12px;color:rgba(3,2,27,.7);padding:0 4px 8px}
+.ilus .osc{background:var(--mz-noche);color:var(--mz-blanco)}
+.ilus .osc figcaption{color:var(--mz-fg-suave)}
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px;margin-top:8px}
+.duo div{display:grid;gap:8px}
+.duo i{height:64px;display:block}
+.duo b{font-size:14px;font-weight:600}
+.duo span{font-size:12px;color:var(--mz-fg-suave)}
+.enlace{display:inline-block;margin-top:22px}
+@media (max-width:620px){.ilus{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 /* voz */
 .voz li{display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr);gap:4px 20px;padding:14px 0;border-top:1px solid var(--mz-linea);align-items:baseline}
 .voz li:last-child{border-bottom:1px solid var(--mz-linea)}
@@ -110,7 +125,7 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
 
 <header class="wrap top">
   <svg viewBox="0 0 629.21 159.59" role="img" aria-label="Mooza"><use href="#mz-lockup"/></svg>
-  <nav aria-label="Secciones"><a href="#grilla">Grilla</a><a href="#color">Color</a><a href="#tipo">Tipo</a><a href="#interfaz">Interfaz</a><a href="#voz">Voz</a><a href="#kit">Kit</a></nav>
+  <nav aria-label="Secciones"><a href="#grilla">Grilla</a><a href="#color">Color</a><a href="#tipo">Tipo</a><a href="#interfaz">Interfaz</a><a href="#ilustracion">Ilustración</a><a href="#fotos">Fotos</a><a href="#voz">Voz</a><a href="#kit">Kit</a></nav>
 </header>
 
 <main class="wrap">
@@ -209,6 +224,45 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
     </div>
   </section>
 
+  <section class="sec" id="ilustracion">
+    <span class="k">Ilustración</span>
+    <h2>Musas, sin figura</h2>
+    <p class="nota" style="margin-bottom:28px">Mooza suena a musa. Nueve dibujos de trazo fino, en una tinta o en duotono, que acompañan la marca sin ilustrarla de forma literal: cada musa aparece por un objeto, no por una figura. El duotono es la tinta más un campo plano desplazado unos píxeles, como en un grabado mal registrado.</p>
+    <div class="ilus">
+      <figure><img src="../kit/ilustraciones/svg/erato-lira-amarillo.svg" alt="Lira"><figcaption>Erato, la lira. Música.</figcaption></figure>
+      <figure><img src="../kit/ilustraciones/svg/euterpe-aulos-amarillo.svg" alt="Aulós, flauta doble"><figcaption>Euterpe, el aulós. Música.</figcaption></figure>
+      <figure><img src="../kit/ilustraciones/svg/melpomene-talia-mascaras-amarillo.svg" alt="Máscaras de teatro"><figcaption>Melpómene y Talía, las máscaras. Teatro.</figcaption></figure>
+      <figure><img src="../kit/ilustraciones/svg/terpsicore-tela-amarillo.svg" alt="Tela en movimiento"><figcaption>Terpsícore, la tela. Danza.</figcaption></figure>
+      <figure><img src="../kit/ilustraciones/svg/caliope-rollo-pluma-amarillo.svg" alt="Rollo y pluma"><figcaption>Calíope, el rollo y la pluma. Letras y arte.</figcaption></figure>
+      <figure><img src="../kit/ilustraciones/svg/clio-anfora-amarillo.svg" alt="Ánfora con greca"><figcaption>Clío, el ánfora. Memoria y arte.</figcaption></figure>
+      <figure class="osc"><img src="../kit/ilustraciones/svg/urania-luna-noche.svg" alt="Luna creciente con estrellas"><figcaption>Urania, la luna. Ornamento.</figcaption></figure>
+      <figure class="osc"><img src="../kit/ilustraciones/svg/polimnia-ojo-noche.svg" alt="Ojo con rayos"><figcaption>Polimnia, el ojo. Cine.</figcaption></figure>
+      <figure class="osc"><img src="../kit/ilustraciones/svg/laurel-noche.svg" alt="Rama de laurel"><figcaption>El laurel. Ornamento y cierre.</figcaption></figure>
+    </div>
+    <div class="cols" style="margin-top:32px">
+      <p>Cuatro versiones de cada dibujo: <code>tinta</code> (una sola tinta), <code>amarillo</code> y <code>naranja</code> (tinta noche con campo de color, sobre fondos claros) y <code>noche</code> (tinta clara con campo amarillo, sobre noche y azul).</p>
+      <p>Se usa un dibujo por pieza, de al menos 96 px de lado. Reemplaza a la foto cuando el evento no tiene una, según su categoría. Nunca va sobre una foto ni dentro de una celda de color que choque con su campo.</p>
+      <p>Los SVG usan un filtro de trazo a mano que se ve en navegadores. Para Figma o Illustrator están los PNG de la hoja de muestra en <code>kit/ilustraciones/</code>.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="fotos">
+    <span class="k">Fotos</span>
+    <h2>Duotono con los colores de Mooza</h2>
+    <p class="nota" style="margin-bottom:28px">Las fotos se convierten a dos colores de la paleta: las sombras toman el color oscuro y las luces el claro. Una paleta por pieza, y la foto entra en celdas completas de la grilla.</p>
+    <div class="duo">
+      <div><i style="background:linear-gradient(90deg,#03021b,#fcee21)"></i><b>noche-amarillo</b><span>La principal. Sobre noche o azul.</span></div>
+      <div><i style="background:linear-gradient(90deg,#03021b,#fbb03b)"></i><b>noche-naranja</b><span>Variante cálida.</span></div>
+      <div><i style="background:linear-gradient(90deg,#1b1444,#fcee21)"></i><b>azul-amarillo</b><span>Sombras más suaves.</span></div>
+      <div><i style="background:linear-gradient(90deg,#1b1444,#fbb03b)"></i><b>azul-naranja</b><span>La más cálida.</span></div>
+      <div><i style="background:linear-gradient(90deg,#1b1444,#f2f2f2)"></i><b>azul-claro</b><span>Un solo tono. Para fondos amarillos o naranjas.</span></div>
+      <div><i style="background:linear-gradient(90deg,#03021b,#f2f2f2)"></i><b>noche-claro</b><span>Blanco y negro de la marca.</span></div>
+    </div>
+    <p class="nota" style="margin-top:24px">Procedimiento: escala de grises por luminancia, niveles (punto negro y blanco en los percentiles 1 y 99, medios tonos y contraste) y mapa de degradado entre los dos colores, con un grano mínimo opcional. Se hace con la herramienta <code>kit/duotono/index.html</code> en el navegador, con <code>kit/duotono/duotono.py</code> por lotes o con los filtros de <code>components/duotono/</code> en una web.</p>
+    <a class="mz-btn mz-btn--linea enlace" href="../kit/duotono/index.html">Abrir la herramienta</a>
+    <a class="mz-btn mz-btn--linea enlace" href="web.html" style="margin-left:10px">Ver la propuesta web</a>
+  </section>
+
   <section class="sec" id="voz">
     <span class="k">Voz</span>
     <h2>Tú, directo y sin exclamaciones</h2>
@@ -231,14 +285,16 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
       <li><b>Celdas</b><span>Cuadrados rellenos y de contorno en los colores de la paleta, para armar composiciones a mano. <code>kit/celdas/</code></span></li>
       <li><b>Marca</b><span>Logo horizontal e ícono en noche y en amarillo plano, además de los oficiales en <code>assets/logos/</code>. <code>kit/marca/</code></span></li>
       <li><b>Fotos</b><span>Marcador de posición y reglas de recorte para las fotos de eventos. <code>kit/fotos/</code></span></li>
-      <li><b>Generador</b><span>Un script que regenera todo el kit desde los tokens. <code>kit/build-kit.mjs</code></span></li>
+      <li><b>Ilustraciones</b><span>Nueve dibujos de musas en cuatro versiones, en SVG, más hojas de muestra en PNG. <code>kit/ilustraciones/</code></span></li>
+      <li><b>Duotono</b><span>Herramienta en el navegador, script por lotes y reglas para convertir fotos. <code>kit/duotono/</code></span></li>
+      <li><b>Generadores</b><span>Scripts que regeneran las plantillas y las ilustraciones. <code>kit/build-kit.mjs</code> y <code>kit/ilustraciones/build-ilustraciones.mjs</code></span></li>
     </ul>
     <div class="miniaturas">
-      <img src="../kit/plantillas/semana.png" alt="Plantilla semana" loading="lazy">
-      <img src="../kit/plantillas/foto.png" alt="Plantilla foto" loading="lazy">
-      <img src="../kit/plantillas/grafico.png" alt="Plantilla gráfico" loading="lazy">
-      <img src="../kit/plantillas/editorial.png" alt="Plantilla editorial" loading="lazy">
-      <img src="../kit/plantillas/story.png" alt="Plantilla story" loading="lazy">
+      <img src="../kit/plantillas/semana.png" alt="Plantilla semana">
+      <img src="../kit/plantillas/foto.png" alt="Plantilla foto">
+      <img src="../kit/plantillas/grafico.png" alt="Plantilla gráfico">
+      <img src="../kit/plantillas/editorial.png" alt="Plantilla editorial">
+      <img src="../kit/plantillas/story.png" alt="Plantilla story">
     </div>
   </section>
 </main>

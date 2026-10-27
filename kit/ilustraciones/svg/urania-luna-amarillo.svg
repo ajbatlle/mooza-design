@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="800" height="800">
+<title>urania-luna (amarillo)</title>
+<defs><filter id="mano" x="-4%" y="-4%" width="108%" height="108%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3.4" xChannelSelector="R" yChannelSelector="G"/></filter><pattern id="trama" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(40)"><line x1="0" y1="0" x2="0" y2="5" stroke="#03021b" stroke-width="1.1"/></pattern></defs>
+<g filter="url(#mano)">
+<g transform="translate(6 5)" fill="#fcee21" stroke="none"><path d="M226.85,107.04 A100,100 0 1 0 259.77,271.64 A84,84 0 1 1 226.85,107.04 Z"/></g>
+<g fill="url(#trama)" stroke="none"><path d="M106,150 C96,190 102,230 122,262 C100,236 92,196 106,150 Z"/></g>
+<g fill="none" stroke="#03021b" stroke-linecap="round" stroke-linejoin="round"><path d="M226.85,107.04 A100,100 0 1 0 259.77,271.64 A84,84 0 1 1 226.85,107.04 Z" stroke-width="2.6"/><path d="M50,200 a150,150 0 1,0 300,0 a150,150 0 1,0 -300,0 Z" stroke-width="1.6" stroke-dasharray="0.1 9"/></g>
+<g fill="#03021b" stroke="none"></g>
+<g fill="none" stroke="#03021b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M300,95 Q302.34,105.66 313,108 Q302.34,110.34 300,121 Q297.66,110.34 287,108 Q297.66,105.66 300,95 Z"/><path d="M330,212 Q331.44,218.56 338,220 Q331.44,221.44 330,228 Q328.56,221.44 322,220 Q328.56,218.56 330,212 Z"/><path d="M262,313 Q263.62,320.38 271,322 Q263.62,323.62 262,331 Q260.38,323.62 253,322 Q260.38,320.38 262,313 Z"/><path d="M112,72 Q113.08,76.92 118,78 Q113.08,79.08 112,84 Q110.92,79.08 106,78 Q110.92,76.92 112,72 Z"/></g>
+</g>
+</svg>
