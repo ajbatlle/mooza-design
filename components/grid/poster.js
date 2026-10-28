@@ -59,10 +59,13 @@
   function zona(desde,n,fondo){return cell(1,7,desde,n,'mz-zona','','background:'+fondo)}
   /* mitad derecha de un cartel horizontal: del centro al borde */
   function mitad(fondo,cls){return '<div class="mz-mitad'+(cls?' '+cls:'')+'"'+(fondo?' style="background:'+fondo+'"':'')+'></div>'}
-  /* el color protagonista de la pieza: azul, o el que venga en datos.color */
-  function campo(d){return 'var(--mz-'+(d.color||'azul')+')'}
+  /* el color de la zona: el que venga en datos.color o el propio de cada diseño (azul, amarillo o naranja).
+     El azul es protagonista, no el único: en un conjunto de piezas los tres colores se reparten. */
+  function campo(d,def){return 'var(--mz-'+(d.color||def)+')'}
   /* sobre azul el texto va en blanco; sobre cualquier otro campo, en azul */
-  function tinta(d){var c=d.color||'azul';return c==='azul'?' mz-sobre-oscuro':''}
+  function tinta(d,def){return (d.color||def)==='azul'?' mz-sobre-oscuro':''}
+  /* el acento pequeño es amarillo, salvo que la zona ya sea amarilla: entonces es naranja */
+  function acento(d,def){return 'background:var(--mz-'+((d.color||def)==='amarillo'?'naranja':'amarillo')+')'}
 
   /* pie: la última fila de todo cartel. El logo mide dos columnas y va a la izquierda; el texto, a la derecha.
      Nada más entra en esa fila, así que el logo nunca choca. oscuro: el pie está sobre el color oscuro. */
@@ -73,21 +76,21 @@
 
   /* titular: arriba, el titular sobre el color. Abajo, sobre gris, la fecha. */
   function titular(d,n,f){
-    var k=tinta(d);
-    if(f==='16x9')return grid(n,mitad(campo(d))+cell(1,3,1,3,'mz-t-grande',d.titular)+cell(5,7,1,1,'mz-t-sub'+k,d.rango)+
+    var k=tinta(d,'azul');
+    if(f==='16x9')return grid(n,mitad(campo(d,'azul'))+cell(1,3,1,3,'mz-t-grande',d.titular)+cell(5,7,1,1,'mz-t-sub'+k,d.rango)+
       cell(1,2,n,n,'mz-pie-logo',LOGO)+cell(5,7,n,n,'mz-t-dato mz-fecha-pie'+k,'mooza.cl'));
     var s=ARRIBA_TITULAR[f];
-    return grid(n,zonaA(s,campo(d))+cell(1,7,1,s,'mz-t-grande'+k,d.titular)+
+    return grid(n,zonaA(s,campo(d,'azul'))+cell(1,7,1,s,'mz-t-grande'+k,d.titular)+
       cell(1,7,s+2,s+2,'mz-t-sub mz-abajo',d.rango)+pie(n,'mooza.cl'));
   }
 
   /* número: arriba, sobre gris, el rango de la semana, enorme. Abajo, sobre el color, qué es. */
   function numero(d,n,f){
-    var k=tinta(d);
-    if(f==='16x9')return grid(n,mitad(campo(d))+cell(1,3,1,2,'mz-t-grande','Esta<br>semana')+cell(5,7,1,3,'mz-t-display'+k,d.corto)+
+    var k=tinta(d,'amarillo');
+    if(f==='16x9')return grid(n,mitad(campo(d,'amarillo'))+cell(1,3,1,2,'mz-t-grande','Esta<br>semana')+cell(5,7,1,3,'mz-t-display'+k,d.corto)+
       cell(1,2,n,n,'mz-pie-logo',LOGO)+cell(5,7,n,n,'mz-t-dato mz-fecha-pie'+k,'mooza.cl'));
     var s=ARRIBA[f];
-    return grid(n,zona(s+1,n,campo(d))+cell(1,7,1,s,'mz-t-display',d.corto)+
+    return grid(n,zona(s+1,n,campo(d,'amarillo'))+cell(1,7,1,s,'mz-t-display',d.corto)+
       cell(1,7,s+2,s+2,'mz-t-titular mz-abajo'+k,'Esta semana')+pie(n,'mooza.cl',k));
   }
 
@@ -103,19 +106,19 @@
 
   /* semana: arriba, sobre el color, el titular. Abajo, sobre gris, siete días; el destacado lleva el acento. */
   function semana(d,n,f){
-    var s=ARRIBA[f],fila=n-2,h=zonaA(s,campo(d))+cell(1,7,1,s,'mz-t-grande'+tinta(d),'Esta<br>semana');
+    var s=ARRIBA[f],fila=n-2,h=zonaA(s,campo(d,'naranja'))+cell(1,7,1,s,'mz-t-grande'+tinta(d,'naranja'),'Esta<br>semana');
     d.dias.forEach(function(x,i){
-      h+=cell(i+1,i+1,fila,fila,'mz-dc'+(i===d.diaDestacado?' mz-dc-on':''),'<span class="mz-t-micro">'+x[0]+'</span><b>'+x[1]+'</b>');
+      h+=cell(i+1,i+1,fila,fila,'mz-dc'+(i===d.diaDestacado?' mz-dc-on':''),'<span class="mz-t-micro">'+x[0]+'</span><b>'+x[1]+'</b>',i===d.diaDestacado?acento(d,'naranja'):'');
     });
     return grid(n,h+pie(n,d.rango));
   }
 
   /* agenda: arriba, sobre el color, el día. Abajo, sobre gris, hasta dos eventos con una fila de aire entre ellos. */
   function agenda(d,n){
-    var a=d.agenda,h=zonaA(2,campo(d))+cell(1,7,1,2,'mz-cabeza'+tinta(d),'<span class="mz-t-grande mz-num">'+a.n+'</span><span class="mz-t-titular">'+a.dia+'</span>');
+    var a=d.agenda,h=zonaA(2,campo(d,'amarillo'))+cell(1,7,1,2,'mz-cabeza'+tinta(d,'amarillo'),'<span class="mz-t-grande mz-num">'+a.n+'</span><span class="mz-t-titular">'+a.dia+'</span>');
     a.eventos.slice(0,2).forEach(function(e,i){
       var r=4+i*3;
-      h+=cell(1,2,r,r,'mz-hora'+(e.f?' mz-hora-on':''),e.h||'')+
+      h+=cell(1,2,r,r,'mz-hora'+(e.f?' mz-hora-on':''),e.h||'',e.f?acento(d,'amarillo'):'')+
          cell(3,7,r,r+1,'mz-evento-t','<span class="mz-t-texto">'+e.t+'</span><span class="mz-t-dato">'+e.v+(e.p?' • '+e.p:'')+'</span>');
     });
     return grid(n,h+pie(n,a.pag||''));

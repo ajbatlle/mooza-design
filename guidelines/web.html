@@ -63,13 +63,15 @@ h2{font-family:var(--mz-palabra);font-weight:var(--mz-peso-titular);letter-spaci
 /* lista */
 .lista .f{display:grid;grid-template-columns:auto minmax(0,1fr) auto 96px;gap:clamp(12px,2vw,28px);align-items:center;padding:14px 0;border-top:1px solid var(--mz-linea)}
 .lista .f:last-child{border-bottom:1px solid var(--mz-linea)}
+.lista .cat::before{content:"";display:inline-block;width:8px;height:8px;background:var(--mz-naranja);margin-right:8px}
 .lista .cat{display:block;font-size:12px;font-weight:600;letter-spacing:.02em;color:var(--mz-fg-suave);margin-bottom:6px}
 .lista h3{font-family:var(--mz-palabra);font-weight:var(--mz-peso-titular);font-size:clamp(22px,2.6vw,34px);line-height:1.08;letter-spacing:-.02em}
 .lista .m{font-size:14px;color:var(--mz-fg-suave);margin-top:4px}
 .lista .thumb{width:96px;height:96px;display:block;justify-self:end}
 .vacio-l{padding:28px 0;color:var(--mz-fg-suave)}
 
-/* destacado: la foto es el color */
+/* destacado: segunda zona de color, en amarillo; la foto va en azul y gris */
+.dest-b{background:var(--mz-amarillo)}
 .dest-b .g7{padding-block:clamp(40px,6vw,88px);align-items:center}
 .dest-b .foto{grid-column:1/4}
 .dest-b .foto canvas{width:100%;height:auto;display:block;aspect-ratio:4/5;object-fit:cover}
@@ -79,6 +81,9 @@ h2{font-family:var(--mz-palabra);font-weight:var(--mz-peso-titular);letter-spaci
 .dest-b h2{font-size:clamp(40px,5.6vw,84px)}
 .dest-b .dato{font-weight:500;font-size:clamp(16px,1.6vw,20px);font-variant-numeric:tabular-nums}
 .dest-b .acc{display:flex;gap:10px;flex-wrap:wrap}
+.dest-b .mz-btn:hover{background:var(--mz-naranja);color:var(--mz-azul)}
+.dest-b .mz-btn--linea:hover{background:var(--mz-azul);color:var(--mz-blanco)}
+.dest-b .info .k,.dest-b .foto figcaption{color:var(--mz-azul)}
 
 /* pie */
 .pie{padding-block:clamp(40px,6vw,80px);border-top:1px solid var(--mz-linea)}

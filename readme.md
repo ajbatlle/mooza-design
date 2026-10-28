@@ -35,7 +35,7 @@ Las filas dependen del formato: 9 o 10 en 4:5 y 16 en 9:16. Los titulares y los 
 
 ### Color
 
-Cinco colores planos y un gris claro. Orden de importancia: gris claro (el "blanco" de la marca, fondo de todo cartel y de la web), azul (el color principal, en una sola zona que llega a los bordes) y amarillo o naranjo (solo como acentos pequeños: el día destacado, una hora, el punto de la categoría, el filtro activo). Los colores no compiten: nunca dos campos de color grandes en la misma pieza. No hay negro: el azul es el color más oscuro y es también la tinta de textos y logo sobre gris. Sobre azul, el texto va en blanco. No hay degradados ni sombras.
+Cinco colores planos y un gris claro. Orden de importancia: gris claro (el "blanco" de la marca, fondo de todo cartel y de la web), azul (el protagonista, pero no absoluto) y amarillo y naranjo. En cada pieza hay una sola zona de color, que puede ser azul, amarillo o naranjo; en un conjunto de piezas el azul es cerca de la mitad y el resto se reparte entre amarillo y naranjo (ver `kit/tablero/color-en-proporcion.png`). Además, los tres aparecen como acentos pequeños: el día destacado, una hora, el punto de la categoría, el filtro activo; si la zona ya es amarilla, el acento es naranjo. Los colores no compiten: nunca dos campos de color grandes en la misma pieza. No hay negro: el azul es el color más oscuro y es también la tinta de textos y logo sobre gris. Sobre azul, el texto va en blanco. No hay degradados ni sombras.
 
 | Token | Hex | Uso |
 |---|---|---|

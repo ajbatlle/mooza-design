@@ -23,7 +23,7 @@ Todo está construido sobre la grilla de siete columnas, con margen 6 % y median
 ## Reglas rápidas
 
 - Pie: la última fila de todo cartel. Logo de dos columnas a la izquierda y fecha a la derecha; nada más entra en esa fila.
-- Fondo gris claro. El azul es el color principal, en una sola zona por pieza; amarillo y naranjo solo como acentos pequeños.
+- Fondo gris claro. Una sola zona de color por pieza: azul, amarillo o naranjo. El azul es protagonista, no absoluto: en un conjunto, cerca de la mitad; el resto, amarillo y naranjo. Los acentos pequeños usan los otros colores.
 - Palabras en serif, números en grotesca.
 - Fotos en celdas completas y sin llegar al borde.
 - Logo en azul sobre gris claro, amarillo y naranja; en blanco sobre azul.
