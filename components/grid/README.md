@@ -52,3 +52,11 @@ Los titulares, nombres de evento y textos de lista usan `--mz-palabra` (por defe
 ## Color por pieza
 
 `MoozaPoster.mount(el, 'titular', {color: 'amarillo'})` cambia la zona de color de esa pieza (`azul`, `amarillo` o `naranja`). El texto se ajusta solo. Ver `kit/tablero/color-en-proporcion.png`.
+
+## Trama de esquina
+
+`MoozaPoster.mount(el, 'titular', {curvas: true})` dibuja una trama de líneas finas de acento (amarillo sobre azul y naranjo, naranjo sobre amarillo) en la esquina de la zona de color. Funciona en `titular`, `numero`, `semana` y `agenda`.
+
+La trama parte de una escalera de dos peldaños hecha con columnas enteras de la grilla. Su contorno se repite hacia afuera cada media columna y las esquinas se redondean más cuanto más lejos están. Las líneas llegan al borde del cartel y al de la zona, y se cortan donde hay texto o logo.
+
+Opciones: `esquina` (`br`, `bl`, `tr`, `tl`), `semilla` (número; cambia la altura del segundo peldaño), `anillos` (3 por defecto) y `escala: 'chico'` para zonas de dos filas. `MoozaPoster.contornos` y `MoozaPoster.contornosSvg` entregan las mismas líneas para otros soportes, como poleras. Ver `kit/tablero/trama-propuesta.png`.

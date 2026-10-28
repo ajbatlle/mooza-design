@@ -24,7 +24,7 @@
 .mz-overlay i{box-shadow:inset 0 0 0 1px rgba(255,45,111,.6);background:rgba(255,45,111,.08)}
 
 /* zona de abajo: llega a los bordes laterales e inferior del cartel */
-.mz-grid>.mz-zona{z-index:0;margin:calc(var(--mz-g)*-.5cqw) calc(var(--mz-m)*-1cqw) calc(var(--mz-pv)*-1)}
+.mz-grid>.mz-zona{z-index:0;overflow:hidden;margin:calc(var(--mz-g)*-.5cqw) calc(var(--mz-m)*-1cqw) calc(var(--mz-pv)*-1)}
 .mz-grid>.mz-zona-a{z-index:0;overflow:hidden;margin:calc(var(--mz-pv)*-1) calc(var(--mz-m)*-1cqw) calc(var(--mz-g)*-.5cqw)}
 
 /* mitad derecha de los horizontales: del centro al borde */
@@ -63,12 +63,8 @@
 
 .mz-foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 
-/* curvas de acento: delgadas, en celdas libres, dentro de la zona de color */
-.mz-grid>.mz-curva{z-index:0;pointer-events:none}
-.mz-arco{border-top:.3cqw solid currentColor;border-left:.3cqw solid currentColor;border-top-left-radius:100%}
-.mz-domo{border:.3cqw solid currentColor;border-bottom:0;border-radius:50% 50% 0 0 / 100% 100% 0 0}
-.mz-onda svg{display:block;width:100%;height:100%;overflow:visible}
-.mz-onda path{fill:none;stroke:currentColor;stroke-width:.3cqw;vector-effect:non-scaling-stroke}
+/* trama de esquina: contornos de acento que parten de la esquina de la zona y llegan a los bordes */
+.mz-trama{position:absolute;display:block;pointer-events:none}
 
 /* semana: tira de siete días */
 .mz-dc{box-shadow:inset 0 0 0 1px var(--mz-azul);display:flex;flex-direction:column;justify-content:space-between;padding:calc(var(--mz-col)*.06*1cqw)}
