@@ -54,38 +54,45 @@
   function overlay(rows){return '<div class="mz-overlay" style="--rows:'+rows+'">'+new Array(7*rows+1).join('<i></i>')+'</div>'}
   function grid(rows,inner){return '<div class="mz-grid" style="--rows:'+rows+'">'+inner+'</div>'+overlay(rows)}
 
-  /* campo de color: la zona que llega a los bordes. El resto del cartel es blanco.
+  /* campo de color: la zona que llega a los bordes. El resto del cartel es gris claro.
      zonaA: el campo está arriba y termina en la fila indicada. zona: el campo está abajo y empieza en la fila indicada. */
   function zonaA(hasta,fondo){return cell(1,7,1,hasta,'mz-zona-a','','background:'+fondo)}
   function zona(desde,n,fondo){return cell(1,7,desde,n,'mz-zona','','background:'+fondo)}
   /* mitad derecha de un cartel horizontal: del centro al borde */
   function mitad(fondo,cls){return '<div class="mz-mitad'+(cls?' '+cls:'')+'"'+(fondo?' style="background:'+fondo+'"':'')+'></div>'}
-  /* el color de la pieza: el que venga en datos.color o el del diseño */
-  function campo(d,def){return 'var(--mz-'+(d.color||def)+')'}
+  /* el color protagonista de la pieza: azul, o el que venga en datos.color */
+  function campo(d){return 'var(--mz-'+(d.color||'azul')+')'}
+  /* sobre azul o noche el texto va en blanco; sobre cualquier otro campo, en noche */
+  function tinta(d){var c=d.color||'azul';return (c==='azul'||c==='noche')?' mz-sobre-oscuro':''}
 
   /* pie: la última fila de todo cartel. El logo mide dos columnas y va a la izquierda; el texto, a la derecha.
-     Nada más entra en esa fila, así que el logo nunca choca. Todo va en tinta (noche), sobre blanco o sobre el color. */
-  function pie(n,texto){
-    return cell(1,2,n,n,'mz-pie-logo',LOGO)+(texto?cell(5,7,n,n,'mz-t-dato mz-fecha-pie',texto):'');
+     Nada más entra en esa fila, así que el logo nunca choca. oscuro: el pie está sobre el color oscuro. */
+  function pie(n,texto,oscuro){
+    var k=oscuro?' mz-sobre-oscuro':'';
+    return cell(1,2,n,n,'mz-pie-logo'+k,LOGO)+(texto?cell(5,7,n,n,'mz-t-dato mz-fecha-pie'+k,texto):'');
   }
 
-  /* titular: arriba, el titular sobre el color. Abajo, sobre blanco, la fecha. */
+  /* titular: arriba, el titular sobre el color. Abajo, sobre gris, la fecha. */
   function titular(d,n,f){
-    if(f==='16x9')return grid(n,mitad(campo(d,'amarillo'))+cell(1,3,1,3,'mz-t-grande',d.titular)+cell(5,7,1,1,'mz-t-sub',d.rango)+pie(n,'mooza.cl'));
+    var k=tinta(d);
+    if(f==='16x9')return grid(n,mitad(campo(d))+cell(1,3,1,3,'mz-t-grande',d.titular)+cell(5,7,1,1,'mz-t-sub'+k,d.rango)+
+      cell(1,2,n,n,'mz-pie-logo',LOGO)+cell(5,7,n,n,'mz-t-dato mz-fecha-pie'+k,'mooza.cl'));
     var s=ARRIBA_TITULAR[f];
-    return grid(n,zonaA(s,campo(d,'amarillo'))+cell(1,7,1,s,'mz-t-grande',d.titular)+
+    return grid(n,zonaA(s,campo(d))+cell(1,7,1,s,'mz-t-grande'+k,d.titular)+
       cell(1,7,s+2,s+2,'mz-t-sub mz-abajo',d.rango)+pie(n,'mooza.cl'));
   }
 
-  /* número: arriba, sobre blanco, el rango de la semana, enorme. Abajo, sobre el color, qué es. */
+  /* número: arriba, sobre gris, el rango de la semana, enorme. Abajo, sobre el color, qué es. */
   function numero(d,n,f){
-    if(f==='16x9')return grid(n,mitad(campo(d,'naranja'))+cell(1,3,1,2,'mz-t-grande','Esta<br>semana')+cell(5,7,1,3,'mz-t-display',d.corto)+pie(n,'mooza.cl'));
+    var k=tinta(d);
+    if(f==='16x9')return grid(n,mitad(campo(d))+cell(1,3,1,2,'mz-t-grande','Esta<br>semana')+cell(5,7,1,3,'mz-t-display'+k,d.corto)+
+      cell(1,2,n,n,'mz-pie-logo',LOGO)+cell(5,7,n,n,'mz-t-dato mz-fecha-pie'+k,'mooza.cl'));
     var s=ARRIBA[f];
-    return grid(n,zona(s+1,n,campo(d,'naranja'))+cell(1,7,1,s,'mz-t-display',d.corto)+
-      cell(1,7,s+2,s+2,'mz-t-titular mz-abajo','Esta semana')+pie(n,'mooza.cl'));
+    return grid(n,zona(s+1,n,campo(d))+cell(1,7,1,s,'mz-t-display',d.corto)+
+      cell(1,7,s+2,s+2,'mz-t-titular mz-abajo'+k,'Esta semana')+pie(n,'mooza.cl',k));
   }
 
-  /* foto: arriba, la foto (es el color de la pieza). Abajo, sobre blanco, el nombre del evento y sus datos. */
+  /* foto: arriba, la foto (es el color de la pieza). Abajo, sobre gris, el nombre del evento y sus datos. */
   function foto(d,n,f){
     var txt='<span class="mz-t-titular">'+d.evento.nombre+'</span><span class="mz-t-dato">'+d.evento.meta+'</span>';
     /* en horizontal el texto tiene tres columnas: el precio pasa a su propia línea */
@@ -95,18 +102,18 @@
       cell(1,7,s+2,n-1,'mz-evento-t',txt)+pie(n,d.rango));
   }
 
-  /* semana: arriba, sobre el color, el titular. Abajo, sobre blanco, siete días; el destacado lleva el acento. */
+  /* semana: arriba, sobre el color, el titular. Abajo, sobre gris, siete días; el destacado lleva el acento. */
   function semana(d,n,f){
-    var s=ARRIBA[f],fila=n-2,h=zonaA(s,campo(d,'naranja'))+cell(1,7,1,s,'mz-t-grande','Esta<br>semana');
+    var s=ARRIBA[f],fila=n-2,h=zonaA(s,campo(d))+cell(1,7,1,s,'mz-t-grande'+tinta(d),'Esta<br>semana');
     d.dias.forEach(function(x,i){
       h+=cell(i+1,i+1,fila,fila,'mz-dc'+(i===d.diaDestacado?' mz-dc-on':''),'<span class="mz-t-micro">'+x[0]+'</span><b>'+x[1]+'</b>');
     });
     return grid(n,h+pie(n,d.rango));
   }
 
-  /* agenda: arriba, sobre el color, el día. Abajo, sobre blanco, hasta dos eventos con una fila de aire entre ellos. */
+  /* agenda: arriba, sobre el color, el día. Abajo, sobre gris, hasta dos eventos con una fila de aire entre ellos. */
   function agenda(d,n){
-    var a=d.agenda,h=zonaA(2,campo(d,'amarillo'))+cell(1,7,1,2,'mz-cabeza','<span class="mz-t-grande mz-num">'+a.n+'</span><span class="mz-t-titular">'+a.dia+'</span>');
+    var a=d.agenda,h=zonaA(2,campo(d))+cell(1,7,1,2,'mz-cabeza'+tinta(d),'<span class="mz-t-grande mz-num">'+a.n+'</span><span class="mz-t-titular">'+a.dia+'</span>');
     a.eventos.slice(0,2).forEach(function(e,i){
       var r=4+i*3;
       h+=cell(1,2,r,r,'mz-hora'+(e.f?' mz-hora-on':''),e.h||'')+
@@ -115,7 +122,7 @@
     return grid(n,h+pie(n,a.pag||''));
   }
 
-  /* story 9:16: arriba, la foto. Abajo, sobre blanco, la categoría (con su acento), el nombre y los datos. */
+  /* story 9:16: arriba, la foto. Abajo, sobre gris, la categoría (con su acento), el nombre y los datos. */
   function story(d,n,f){
     var s=ARRIBA[f],t=d.story;
     return grid(16,cell(1,7,1,s,'mz-ph','foto del evento')+

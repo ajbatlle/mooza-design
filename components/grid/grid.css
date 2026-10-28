@@ -5,7 +5,7 @@
 
 .mz-poster{
   position:relative;aspect-ratio:var(--mz-ar,4/5);container-type:inline-size;overflow:hidden;isolation:isolate;
-  background:var(--mz-blanco);color:var(--mz-noche);font-family:var(--mz-grot);
+  background:var(--mz-claro);color:var(--mz-noche);font-family:var(--mz-grot);
 }
 
 .mz-grid,.mz-overlay{
@@ -32,7 +32,7 @@
 .mz-f-16x9{--mz-t-display:calc(var(--mz-col)*1.2*1cqw);--mz-t-grande:calc(var(--mz-col)*.8*1cqw);--mz-t-titular:calc(var(--mz-col)*.5*1cqw);--mz-t-sub:calc(var(--mz-col)*.46*1cqw);--mz-t-dato:calc(var(--mz-col)*.24*1cqw)}
 .mz-f-1x1{--mz-t-grande:calc(var(--mz-col)*1.5*1cqw);--mz-t-titular:calc(var(--mz-col)*.9*1cqw)}
 
-/* el fondo es siempre blanco; el color vive en una zona (ver arriba) */
+/* el fondo es siempre el gris claro; el color vive en una zona (ver arriba) */
 .mz-sobre-oscuro{color:var(--mz-blanco)}
 .mz-sobre-claro{color:var(--mz-noche)}
 

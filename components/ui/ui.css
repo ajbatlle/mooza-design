@@ -1,7 +1,7 @@
 /* Mooza · componentes de interfaz (plataforma mooza.cl)
    Ángulos rectos, color plano, sin sombras. Las palabras van en serif y los datos en grotesca.
-   El tema por defecto es oscuro (fondo noche). Con la clase .mz-ui--claro pasan a fondo blanco, que es la regla de la marca:
-   blanco predominante, tinta noche y el amarillo solo como acento (el destacado, el filtro activo). */
+   El tema por defecto es oscuro (fondo noche). Con la clase .mz-ui--claro pasan a fondo gris claro, que es la regla de la marca:
+   gris predominante, azul como color principal y amarillo o naranjo solo como acento (el destacado, el filtro activo). */
 
 .mz-ui :focus-visible,.mz-btn:focus-visible,.mz-chip:focus-visible,.mz-input:focus-visible{outline:3px solid var(--mz-naranja);outline-offset:3px}
 
@@ -39,16 +39,16 @@
 .mz-evento p{margin:3px 0 0;font:400 13px/1.3 var(--mz-grot);color:var(--mz-fg-suave)}
 @media (max-width:520px){.mz-evento{grid-template-columns:auto minmax(0,1fr)}.mz-evento .mz-precio{grid-column:2;justify-self:start}}
 
-/* tema claro: fondo blanco, tinta noche; el amarillo es el único acento */
-.mz-ui--claro{--mz-linea:rgba(3,2,27,.22);--mz-fg-suave:rgba(3,2,27,.72);--mz-fg-tenue:rgba(3,2,27,.55);background:var(--mz-blanco);color:var(--mz-noche)}
+/* tema claro: fondo gris claro, tinta noche, el azul como color principal y el amarillo como acento */
+.mz-ui--claro{--mz-linea:rgba(3,2,27,.22);--mz-fg-suave:rgba(3,2,27,.72);--mz-fg-tenue:rgba(3,2,27,.55);background:var(--mz-claro);color:var(--mz-noche)}
 .mz-ui--claro :focus-visible,.mz-ui--claro .mz-btn:focus-visible,.mz-ui--claro .mz-chip:focus-visible,.mz-ui--claro .mz-input:focus-visible{outline-color:var(--mz-noche)}
-.mz-ui--claro .mz-btn{background:var(--mz-noche);color:var(--mz-blanco)}
+.mz-ui--claro .mz-btn{background:var(--mz-azul);color:var(--mz-blanco)}
 .mz-ui--claro .mz-btn:hover{background:var(--mz-amarillo);color:var(--mz-noche)}
 .mz-ui--claro .mz-btn--linea{background:transparent;color:var(--mz-noche)}
-.mz-ui--claro .mz-btn--linea:hover{background:var(--mz-noche);color:var(--mz-blanco);box-shadow:none}
+.mz-ui--claro .mz-btn--linea:hover{background:var(--mz-azul);color:var(--mz-blanco);box-shadow:none}
 .mz-ui--claro .mz-chip:hover{background:rgba(3,2,27,.06)}
 .mz-ui--claro .mz-chip[aria-pressed="true"]{background:var(--mz-amarillo);color:var(--mz-noche)}
 .mz-ui--claro .mz-input:focus{box-shadow:inset 0 0 0 2px var(--mz-noche)}
 .mz-ui--claro .mz-fecha{background:transparent;color:var(--mz-noche);box-shadow:inset 0 0 0 1px var(--mz-noche)}
 .mz-ui--claro .mz-fecha--destacado{background:var(--mz-amarillo);box-shadow:none}
-.mz-ui--claro .mz-precio--gratis{background:var(--mz-noche);color:var(--mz-blanco)}
+.mz-ui--claro .mz-precio--gratis{background:var(--mz-azul);color:var(--mz-blanco)}

@@ -1,14 +1,14 @@
 /* Mooza · colores
    Cinco colores planos y un neutro. Sin degradados, sin sombras.
-   El blanco predomina y es el fondo de todo cartel. Cada pieza tiene un color protagonista en una zona,
-   y como mucho otro como acento pequeño. Los colores nunca compiten. Noche es la tinta de textos y logo. */
+   Orden de importancia: gris claro (fondo de todo cartel y de la web), azul (el color principal, en una zona),
+   amarillo y naranjo (solo acentos pequeños). Los colores nunca compiten. Noche es la tinta de textos y logo. */
 :root{
   --mz-noche:    #03021b;  /* tinta y fondo base */
-  --mz-azul:     #1b1444;  /* superficie oscura, lugar de las fotos de ejemplo */
-  --mz-amarillo: #fcee21;  /* acento: destacados, llamadas a la acción */
-  --mz-naranja:  #fbb03b;  /* segundo campo de color */
-  --mz-blanco:   #ffffff;  /* celdas "gratis", fondo claro de cartel */
-  --mz-claro:    #f2f2f2;  /* neutro claro: fondo de story y de página clara */
+  --mz-azul:     #1b1444;  /* color principal: la zona de color de cada pieza y el lugar de las fotos de ejemplo */
+  --mz-amarillo: #fcee21;  /* acento: destacados, filtro activo */
+  --mz-naranja:  #fbb03b;  /* acento alternativo: puntos de categoría */
+  --mz-blanco:   #ffffff;  /* texto sobre azul y noche */
+  --mz-claro:    #f2f2f2;  /* el "blanco" de la marca: fondo de todo cartel y de la web */
 
   /* alias de uso */
   --mz-bg:        var(--mz-noche);

@@ -6,10 +6,10 @@
 <title>Propuesta web Mooza</title>
 <link rel="stylesheet" href="../styles.css">
 <style>
-/* Propuesta de portada para mooza.cl con la regla de la marca: fondo blanco, un color protagonista (amarillo) en una zona
-   y la grilla de siete columnas. Eventos y lugares son ejemplos. */
+/* Propuesta de portada para mooza.cl con la regla de la marca: fondo gris claro, el azul como color principal en una zona,
+   el amarillo como acento y la grilla de siete columnas. Eventos y lugares son ejemplos. */
 *{box-sizing:border-box}
-body{margin:0;background:var(--mz-blanco);color:var(--mz-noche);font-family:var(--mz-grot);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{margin:0;background:var(--mz-claro);color:var(--mz-noche);font-family:var(--mz-grot);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 h1,h2,h3,h4,p,ul,figure{margin:0;padding:0}
 ul{list-style:none}
 a{color:inherit}
@@ -20,11 +20,12 @@ a{color:inherit}
 h2{font-family:var(--mz-serif);font-weight:500;letter-spacing:-.03em;line-height:.95;font-size:clamp(36px,5vw,72px)}
 
 /* zona de color: cabecera y portada */
-.zona{background:var(--mz-amarillo)}
+.zona{background:var(--mz-azul);color:var(--mz-blanco)}
+.zona :focus-visible{outline-color:var(--mz-blanco)}
 .cab{display:flex;align-items:center;justify-content:space-between;gap:16px 28px;flex-wrap:wrap;padding-block:clamp(16px,2vw,28px)}
-.cab svg{width:124px;display:block;color:var(--mz-noche);--mz-iso:var(--mz-noche)}
+.cab svg{width:124px;display:block;color:var(--mz-blanco);--mz-iso:var(--mz-blanco)}
 .cab nav{display:flex;gap:4px 22px;flex-wrap:wrap;font-size:14px;font-weight:500}
-.cab nav a{text-decoration:none;padding:6px 0;background:linear-gradient(var(--mz-noche),var(--mz-noche)) 0 100%/0 2px no-repeat;transition:background-size .2s ease}
+.cab nav a{text-decoration:none;padding:6px 0;background:linear-gradient(var(--mz-amarillo),var(--mz-amarillo)) 0 100%/0 2px no-repeat;transition:background-size .2s ease}
 .cab nav a:hover,.cab nav a[aria-current]{background-size:100% 2px}
 .hero .g7{padding-block:clamp(24px,4vw,56px) clamp(40px,6vw,88px);align-items:end}
 .hero .txt{grid-column:1/6;display:grid;gap:clamp(18px,2.4vw,32px)}
@@ -35,7 +36,7 @@ h2{font-family:var(--mz-serif);font-weight:500;letter-spacing:-.03em;line-height
 .hero .ilu{grid-column:6/8;display:grid;place-items:end center}
 .hero .ilu img{width:100%;max-width:420px;height:auto;display:block}
 
-/* buscador: zona blanca bajo la portada */
+/* buscador: zona gris bajo la portada */
 .buscar{padding-block:clamp(24px,3vw,40px)}
 .buscar .mz-input{max-width:560px}
 .filtros{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
@@ -51,7 +52,7 @@ h2{font-family:var(--mz-serif);font-weight:500;letter-spacing:-.03em;line-height
 .dia-h b{font-weight:600;letter-spacing:-.04em;font-size:clamp(28px,3.2vw,48px);line-height:1;font-variant-numeric:tabular-nums}
 .dia-h[aria-pressed="true"]{background:var(--mz-amarillo);padding-inline:10px}
 .dia-h[aria-pressed="true"] span{color:var(--mz-noche)}
-.bloque{display:grid;gap:6px;align-content:space-between;padding:12px;min-height:118px;background:var(--mz-blanco);color:var(--mz-noche);box-shadow:inset 0 0 0 1px var(--mz-noche);text-decoration:none;transition:transform .15s ease}
+.bloque{display:grid;gap:6px;align-content:space-between;padding:12px;min-height:118px;background:transparent;color:var(--mz-noche);box-shadow:inset 0 0 0 1px var(--mz-noche);text-decoration:none;transition:transform .15s ease}
 .bloque:hover{transform:translateY(-2px)}
 .bloque.dest{background:var(--mz-amarillo);box-shadow:none}
 .bloque .h{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
@@ -123,7 +124,7 @@ h2{font-family:var(--mz-serif);font-weight:500;letter-spacing:-.03em;line-height
         <h1>Tu semana<br>cultural</h1>
         <p class="rango"><b>26 oct – 1 nov</b><span>Semana 44</span></p>
       </div>
-      <div class="ilu"><img src="../kit/ilustraciones/svg/erato-lira-tinta.svg" alt="Dibujo de una lira, para música"></div>
+      <div class="ilu"><img src="../kit/ilustraciones/svg/erato-lira-noche.svg" alt="Dibujo de una lira, para música"></div>
     </div>
   </div>
 </section>
@@ -229,7 +230,7 @@ h2{font-family:var(--mz-serif);font-weight:500;letter-spacing:-.03em;line-height
     var g=x.createRadialGradient(420,120,10,420,120,640);g.addColorStop(0,'#d8d4cf');g.addColorStop(1,'#3c3a38');x.fillStyle=g;x.fillRect(0,0,560,700);
     function el(cx,cy,rx,ry){var q=x.createRadialGradient(cx+rx*.35,cy-ry*.3,5,cx+rx*.2,cy-ry*.2,Math.max(rx,ry)*1.1);q.addColorStop(0,'#f4f1ee');q.addColorStop(.55,'#9d9a97');q.addColorStop(1,'#25232a');x.fillStyle=q;x.beginPath();x.ellipse(cx,cy,rx,ry,0,0,7);x.fill()}
     el(280,560,230,190);el(280,250,120,150);
-    MoozaDuotono.aplicar(c,$('#foto'),'noche-amarillo',{contraste:1.2,grano:.02});
+    MoozaDuotono.aplicar(c,$('#foto'),'azul-claro',{contraste:1.2,grano:.02});
   })();
 })();
 </script>

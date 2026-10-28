@@ -1,6 +1,6 @@
 # Componentes de interfaz
 
-Piezas de la plataforma mooza.cl, en CSS puro (`ui.css`). Ángulos rectos, color plano y sin sombras. El tema por defecto es oscuro; con la clase `mz-ui--claro` en el contenedor pasan a fondo blanco, que es la regla de la marca (blanco predominante, tinta noche y el amarillo solo como acento). Requiere `styles.css`.
+Piezas de la plataforma mooza.cl, en CSS puro (`ui.css`). Ángulos rectos, color plano y sin sombras. El tema por defecto es oscuro; con la clase `mz-ui--claro` en el contenedor pasan a fondo gris claro, que es la regla de la marca (gris claro predominante, azul como color principal y el amarillo solo como acento). Requiere `styles.css`.
 
 | Clase | Qué es | Notas |
 |---|---|---|

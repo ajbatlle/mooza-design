@@ -35,7 +35,7 @@ Las filas dependen del formato: 9 o 10 en 4:5 y 16 en 9:16. Los titulares y los 
 
 ### Color
 
-Cinco colores planos y un neutro. El blanco predomina: todo cartel es blanco y el color es secundario. Cada pieza tiene un solo color protagonista, en una zona que llega a los bordes, y como mucho un segundo color como acento pequeño (el día destacado, una hora, el punto de la categoría). Los colores no compiten: nunca dos campos de color grandes en la misma lámina. La tinta de todo texto y logo es noche. No hay degradados ni sombras.
+Cinco colores planos y un gris claro. Orden de importancia: gris claro (el "blanco" de la marca, fondo de todo cartel y de la web), azul (el color principal, en una sola zona que llega a los bordes) y amarillo o naranjo (solo como acentos pequeños: el día destacado, una hora, el punto de la categoría, el filtro activo). Los colores no compiten: nunca dos campos de color grandes en la misma pieza. La tinta de textos y logo es noche, y blanco sobre azul. No hay degradados ni sombras.
 
 | Token | Hex | Uso |
 |---|---|---|
@@ -46,9 +46,9 @@ Cinco colores planos y un neutro. El blanco predomina: todo cartel es blanco y e
 | azul | `#1b1444` | Lugar de la foto de ejemplo. No es un campo de cartel |
 | claro | `#f2f2f2` | Neutro de interfaz |
 
-Pares de texto verificados (contraste WCAG): noche sobre blanco 20,4, sobre claro 18,2, sobre amarillo 16,9 y sobre naranja 11,1. Blanco sobre azul 17,1 y amarillo sobre azul 14,1. No usar blanco como texto sobre naranja (1,8) ni naranja sobre amarillo (1,5).
+Pares de texto verificados (contraste WCAG): noche sobre gris 20,4, sobre claro 18,2, sobre amarillo 16,9 y sobre naranja 11,1. Blanco sobre azul 17,1 y amarillo sobre azul 14,1. No usar blanco como texto sobre naranja (1,8) ni naranja sobre amarillo (1,5).
 
-En el cartel "semana" el día destacado lleva el acento (amarillo) sobre blanco.
+En el cartel "semana" el día destacado lleva el acento (amarillo) sobre gris.
 
 ### Tipografía
 
@@ -105,24 +105,24 @@ Transiciones de 0,15 s en estados interactivos y escala 0,98 al presionar. Sin r
 
 ## Carteles
 
-Una idea por cartel y mucho blanco. Cada cartel se parte en dos zonas, una arriba y otra abajo (en 16:9, izquierda y derecha), y cada zona dice una sola cosa. Una de las zonas es blanca y la otra lleva el color. Seis diseños sobre la misma grilla. Siempre son siete columnas, y la última fila es el pie (logo a la izquierda, fecha a la derecha). Los constructores están en `components/grid/poster.js` y las plantillas editables en `kit/plantillas/`.
+Una idea por cartel y mucho espacio libre. Cada cartel se parte en dos zonas, una arriba y otra abajo (en 16:9, izquierda y derecha), y cada zona dice una sola cosa. Una de las zonas es gris claro y la otra lleva el azul. Seis diseños sobre la misma grilla. Siempre son siete columnas, y la última fila es el pie (logo a la izquierda, fecha a la derecha). Los constructores están en `components/grid/poster.js` y las plantillas editables en `kit/plantillas/`.
 
 | Diseño | Qué muestra | Formatos |
 |---|---|---|
-| titular | Arriba, el titular sobre el color. Abajo, sobre blanco, la fecha | 4:5, A3, 1:1, 16:9 |
-| número | Arriba, sobre blanco, el rango de la semana, enorme. Abajo, sobre el color, qué es | 4:5, A3, 1:1, 16:9 |
-| foto | Arriba, la foto. Abajo, sobre blanco, el nombre del evento y sus datos | 4:5, A3, 1:1, 16:9 |
-| semana | Arriba, sobre el color, el titular. Abajo, sobre blanco, siete días con el destacado en acento | 4:5, A3, 1:1 |
-| agenda | Arriba, sobre el color, el día. Abajo, sobre blanco, hasta dos eventos. Para el carrusel semanal | 4:5, A3 |
-| story | Arriba, la foto. Abajo, sobre blanco, categoría, nombre y datos | 9:16 |
+| titular | Arriba, el titular sobre el color. Abajo, sobre gris, la fecha | 4:5, A3, 1:1, 16:9 |
+| número | Arriba, sobre gris, el rango de la semana, enorme. Abajo, sobre el color, qué es | 4:5, A3, 1:1, 16:9 |
+| foto | Arriba, la foto. Abajo, sobre gris, el nombre del evento y sus datos | 4:5, A3, 1:1, 16:9 |
+| semana | Arriba, sobre el color, el titular. Abajo, sobre gris, siete días con el destacado en acento | 4:5, A3, 1:1 |
+| agenda | Arriba, sobre el color, el día. Abajo, sobre gris, hasta dos eventos. Para el carrusel semanal | 4:5, A3 |
+| story | Arriba, la foto. Abajo, sobre gris, categoría, nombre y datos | 9:16 |
 
-Filas por formato: 9 en 4:5, 11 en A3, 8 en 1:1, 4 en 16:9 y 16 en 9:16. En 16:9 la mitad izquierda es blanca y la derecha lleva el color o la foto; la columna 4 queda sobre el centro y va vacía.
+Filas por formato: 9 en 4:5, 11 en A3, 8 en 1:1, 4 en 16:9 y 16 en 9:16. En 16:9 la mitad izquierda es gris y la derecha lleva el azul o la foto; la columna 4 queda sobre el centro y va vacía.
 
 Escala tipográfica, en múltiplos del ancho de columna: número 3, titular 1,8, nombre 1,12, fecha en bloque 0,7, texto de lista 0,44, dato 0,28 y etiqueta 0,2. Cada paso es cerca de 1,6 veces el anterior y un cartel usa tres como máximo. En 1:1 y 16:9 el titular y el número bajan para caber en la zona. El carrusel semanal de Instagram se arma con una portada (titular), una o más láminas de agenda por día y un cierre (titular).
 
 ## Propuesta web
 
-`guidelines/web.html` es una portada para mooza.cl: fondo blanco con una sola zona de color (el amarillo de la cabecera y la portada), buscador y filtros en la zona blanca, la semana en siete columnas (un bloque por evento, con el amarillo como acento para los destacados), lista, destacado con foto en duotono y pie. Usa el tema claro de la interfaz (`.mz-ui--claro`). Los eventos sin foto usan la ilustración de su categoría. Está hecha sin ver el sitio actual, que no estaba accesible: se apoya en lo que esta documentación dice de la plataforma (búsqueda, categorías y agenda semanal).
+`guidelines/web.html` es una portada para mooza.cl: fondo gris claro con una sola zona de color (el azul de la cabecera y la portada), buscador y filtros en la zona gris, la semana en siete columnas (un bloque por evento, con el amarillo como acento para los destacados), lista, destacado con foto en duotono y pie. Usa el tema claro de la interfaz (`.mz-ui--claro`). Los eventos sin foto usan la ilustración de su categoría. Está hecha sin ver el sitio actual, que no estaba accesible: se apoya en lo que esta documentación dice de la plataforma (búsqueda, categorías y agenda semanal).
 
 ## Uso en código
 

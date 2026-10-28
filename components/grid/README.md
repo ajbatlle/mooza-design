@@ -28,7 +28,7 @@ Un diseño que no existe en un formato lanza un error.
 
 ## Datos
 
-Los campos que no pases se toman de `MoozaPoster.EJEMPLO`: `color` (`amarillo` o `naranja`, el protagonista de la pieza), `rango`, `corto`, `titular`, `dias` y `diaDestacado` (semana), `evento` (foto), `agenda` (`dia`, `n`, `pag` y `eventos` con `h`, `t`, `v`, `p`, `f`) y `story`.
+Los campos que no pases se toman de `MoozaPoster.EJEMPLO`: `color` (`azul` por defecto; `amarillo` o `naranja` si la pieza lo pide, con texto en noche), `rango`, `corto`, `titular`, `dias` y `diaDestacado` (semana), `evento` (foto), `agenda` (`dia`, `n`, `pag` y `eventos` con `h`, `t`, `v`, `p`, `f`) y `story`.
 
 ## Reglas
 
