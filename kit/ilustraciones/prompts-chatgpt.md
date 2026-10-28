@@ -86,3 +86,34 @@ Now draw an empty tarot-card frame, as a flat graphic for a screen print. A vert
 Pure black ink only on a pure white background, high contrast, no grey, no shading, no color, no texture, no text, no letters, no numbers, no shadow. Generous margin of white around the card. Vertical format 2:3.
 
 Para el mockup con persona (prompt 2), si se adjunta la foto como referencia, agregar: "Use the attached photo only as a reference for framing, pose and lighting; show a different person, and do not copy the face or the print."
+
+## Nueva dirección: polera tipográfica con personaje (referencia "EASY LIVING")
+
+Cambio de estilo: tipografía enorme y pesada, un personaje simple de línea gruesa y pareja, y textos chicos alrededor. Se le pide a ChatGPT solo el personaje; el texto se compone aparte, exacto.
+
+Composición propuesta (tinta azul `#1b1444` sobre polera gris claro `#f2f2f2`):
+
+- Arriba, chico: `MUSAS 01/04 . MOOZA`.
+- Grande, dos líneas: `TU SEMANA / CULTURAL`, en Geist negrita extra, letras apretadas.
+- Centro: la musa; a la izquierda la categoría en chico, a la derecha su nombre.
+- Debajo: `(AGENDA CULTURAL DE CHILE)`; al pie, el logo y `mooza.cl`.
+
+Pendiente de decidir: mayúsculas y negrita extra solo para poleras (la marca usa minúscula con inicial mayúscula y pesos 400 y 500) y el texto exacto de los textos chicos.
+
+### Mensaje 1: estilo
+
+I'm going to ask you for four illustrations of single characters, all in exactly the same style. Don't generate anything yet; just reply "ready".
+
+Style: a modern, playful, editorial cartoon. Every character is drawn with one uniform, confident black outline of medium-thick weight, like a felt-tip or brush pen: clean, a little imperfect, slightly rounded at the corners. Flat white fill. No shading, no hatching, no texture, no gradients, no patterns. Very few details: a few lines for hair, simple dot eyes, a small curved mouth, clothes with only a handful of simple folds. Relaxed, joyful, slightly exaggerated poses, with a small head, long limbs and big hands, in the spirit of a skater-culture sticker or a modern zine illustration. The figure is complete, shown full body, and its pose reads clearly from the outline alone.
+
+Technical rules for every image: pure black ink only on a pure white background, high contrast, no grey, no color, no text, no letters, no numbers, no frame, no border, no shadow, no scenery. At most one short curved line under the feet to suggest the ground. Centered, with a generous empty margin all around. Vertical format 2:3.
+
+### Mensajes 2 a 5: una musa cada uno
+
+Illustration 1: Euterpe, muse of music. A young woman in a simple tunic with a laurel wreath, mid-step as if dancing, playing a double flute (an aulos: two slim pipes played together), eyes closed, a big relaxed smile. Same style and rules as before.
+
+Illustration 2: Thalia, muse of comedy and theater. A young woman in a simple tunic with an ivy wreath, in a playful pose, holding a comic mask with a wide smiling mouth at arm's length in one hand and a shepherd's crook in the other. A mischievous half smile. Same style and rules as before.
+
+Illustration 3: Terpsichore, muse of dance. A young woman in a short tunic with her hair tied up in a ribbon, barefoot, in the middle of a big leap, both hands holding the ends of a very long scarf that swirls around her. Joyful, head thrown back. Same style and rules as before.
+
+Illustration 4: Calliope, muse of epic poetry and letters. A young woman in a simple tunic with a laurel wreath, one arm raised holding a quill pen, the other hand holding an open scroll that unrolls down in a long curl. Serious and inspired, looking up. Same style and rules as before.
