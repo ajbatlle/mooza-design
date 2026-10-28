@@ -53,10 +53,15 @@ Los titulares, nombres de evento y textos de lista usan `--mz-palabra` (por defe
 
 `MoozaPoster.mount(el, 'titular', {color: 'amarillo'})` cambia la zona de color de esa pieza (`azul`, `amarillo` o `naranja`). El texto se ajusta solo. Ver `kit/tablero/color-en-proporcion.png`.
 
-## Trama de esquina
+## Esquina
 
-`MoozaPoster.mount(el, 'titular', {curvas: true})` dibuja una trama de líneas finas de acento (amarillo sobre azul y naranjo, naranjo sobre amarillo) en la esquina de la zona de color. Funciona en `titular`, `numero`, `semana` y `agenda`.
+`MoozaPoster.mount(el, 'titular', {curvas: true})` dibuja un módulo de celdas de la grilla en la esquina de la zona de color. Funciona en `titular`, `numero`, `semana` y `agenda`. Va en el color de acento: amarillo sobre azul y naranjo, naranjo sobre amarillo.
 
-La trama parte de una escalera de dos peldaños hecha con columnas enteras de la grilla. Su contorno se repite hacia afuera cada media columna y las esquinas se redondean más cuanto más lejos están. Las líneas llegan al borde del cartel y al de la zona, y se cortan donde hay texto o logo.
+El módulo se arma así:
 
-Opciones: `esquina` (`br`, `bl`, `tr`, `tl`), `semilla` (número; cambia la altura del segundo peldaño), `anillos` (3 por defecto) y `escala: 'chico'` para zonas de dos filas. `MoozaPoster.contornos` y `MoozaPoster.contornosSvg` entregan las mismas líneas para otros soportes, como poleras. Ver `kit/tablero/trama-propuesta.png`.
+1. Las líneas de la grilla se ven dentro del módulo y salen hasta el borde del cartel y el borde de la zona.
+2. La celda de la esquina se pinta con un cuarto de disco que sale del margen. Es el bloque de color, con una esquina redonda.
+3. Las celdas vecinas pueden llevar un arco fino de un radio de celda, centrado en una de sus esquinas. La semilla decide cuáles y hacia dónde. Cuanto más lejos de la esquina, menos probable. Los arcos se tocan en los nodos de la grilla.
+4. Una celda con texto o logo encima se vacía sola y las líneas se cortan alrededor.
+
+Opciones: `esquina` (`br`, `bl`, `tr`, `tl`), `semilla` (número), `escala: 'chico'` (una fila de celdas, para zonas de dos filas), `cols` y `filas` (3 y 2 por defecto). `MoozaPoster.esquina` y `MoozaPoster.esquinaSvg` entregan las mismas formas para otros soportes, como poleras. Ver `kit/tablero/trama-propuesta.png`.

@@ -90,57 +90,59 @@
   /* el acento pequeño es amarillo, salvo que la zona ya sea amarilla: entonces es naranja */
   function acento(d,def){return 'background:var(--mz-'+((d.color||def)==='amarillo'?'naranja':'amarillo')+')'}
 
-  /* trama de esquina: contornos que envuelven un bloque en escalera hecho con celdas de la grilla.
-     datos.curvas = true. Opciones: datos.esquina ('br','bl','tr','tl'), datos.semilla (número), datos.anillos (cantidad), datos.escala ('chico' para zonas bajas).
+  /* esquina: un módulo de celdas de la grilla en la esquina de la zona de color. datos.curvas = true.
+     Opciones: datos.esquina ('br','bl','tr','tl'), datos.semilla (número), datos.escala ('chico' para zonas de dos filas),
+               datos.cols y datos.filas (celdas del módulo; 3 y 2 por defecto).
      Procedimiento:
-       1. Desde la esquina de la zona de color se arma una escalera de dos peldaños (uno en la escala chica). Cada peldaño mide un número entero de
-          columnas de ancho y de alto, así que sus bordes caen sobre las líneas de la grilla. La semilla decide qué altura tiene el segundo.
-       2. El contorno de la escalera se repite hacia afuera cada media celda. El primero tiene esquinas rectas; cada anillo siguiente
-          las redondea un poco más (el radio crece con la distancia), hasta que el cuadrado se vuelve curva.
-       3. Las líneas llegan al borde del cartel y al borde de la zona. Donde hay texto o logo, la línea se corta con un margen de aire.
-     La línea es del color de acento: amarillo sobre azul y naranjo, naranjo sobre amarillo. */
+       1. Las líneas de la grilla se ven dentro del módulo y salen hasta el borde del cartel y el borde de la zona.
+       2. La celda de la esquina se pinta con un cuarto de disco, que sale del margen: es el bloque de color, con una esquina redonda.
+       3. Cada celda vecina puede llevar un arco fino de un radio de celda, centrado en una de sus esquinas. La semilla decide cuáles
+          y hacia dónde; cuanto más lejos de la esquina, menos probable. Los arcos se tocan en los nodos de la grilla.
+       4. Una celda con texto o logo encima se vacía sola, y las líneas se cortan alrededor, con aire.
+     Todo va en el color de acento: amarillo sobre azul y naranjo, naranjo sobre amarillo. */
   function rng(sem){var a=sem>>>0;return function(){a=(a+0x6D2B79F5)|0;var t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296}}
   function r2(x){return Math.round(x*100)/100}
-  /* contornos: devuelve las líneas en coordenadas locales (u: desde el borde del cartel; v: desde el borde de la zona), en cqw */
-  function contornos(o){
-    var m=o.m,g=o.g,p=(100-2*m-6*g)/7+g,e=m-g/2,R=rng(o.semilla||1),S=o.pasos||2,K=o.anillos||3,paso=o.paso||p/2,i,pasos=[],h=1;
-    for(i=0;i<S;i++){pasos.push([e+(S-i)*p,h*p]);h+=1+Math.floor(R()*2)}
-    var umax=pasos[0][0],vmax=pasos[S-1][1],lineas=[],k;
-    for(k=0;k<=K;k++){
-      var r=k*paso,pts=[];
-      if(!r){pts.push([0,vmax]);for(i=S-1;i>=0;i--){pts.push([pasos[i][0],pasos[i][1]]);if(i>0)pts.push([pasos[i][0],pasos[i-1][1]])}pts.push([umax,0])}
-      else{
-        var us=[],u,t;
-        for(u=0;u<=umax+r;u+=.25)us.push(u);
-        pasos.forEach(function(P){for(t=0;t<=24;t++)us.push(P[0]+r*Math.sin(t/24*Math.PI/2))});
-        us.sort(function(a,b){return a-b});
-        us.forEach(function(u){
-          var f=-1;
-          pasos.forEach(function(P){var dx=Math.max(0,u-P[0]);if(dx<=r)f=Math.max(f,P[1]+Math.sqrt(Math.max(0,r*r-dx*dx)))});
-          if(f>=0)pts.push([u,f]);
-        });
-        pts.push([umax+r,0]);
+  /* esquina: arma el módulo en coordenadas locales (u desde el borde del cartel, v desde el borde de la zona), en cqw */
+  function esquina(o){
+    var m=o.m,g=o.g,p=(100-2*m-6*g)/7+g,e=m-g/2,R=rng(o.semilla||1),N=o.cols||3,F=o.filas||2,k,r,i,t,
+        W=e+N*p,H=F*p,lineas=[],arcos=[],disco=[];
+    for(i=0;i<=N;i++)lineas.push([[e+i*p,0],[e+i*p,H]]);
+    for(i=1;i<=F;i++)lineas.push([[0,i*p],[W,i*p]]);
+    disco.push([0,0],[0,p]);
+    for(t=0;t<=24;t++)disco.push([e+p*Math.cos(Math.PI/2*(1-t/24)),p*Math.sin(Math.PI/2*(1-t/24))]);
+    disco.push([e+p,0]);
+    for(k=0;k<N;k++)for(r=0;r<F;r++){
+      var d=k+r,u0=e+k*p,v0=r*p;
+      if(!d)continue;
+      if(R()<.9-d*.16){
+        var cc=R()<.5?2:(R()<.5?1:3),cu=(cc===1||cc===2)?u0+p:u0,cv=(cc>=2)?v0+p:v0,pts=[];
+        for(t=0;t<=32;t++){var a=(cc+t/32)*Math.PI/2;pts.push([cu+p*Math.cos(a),cv+p*Math.sin(a)])}
+        arcos.push({pts:pts,celda:[u0,v0,u0+p,v0+p]});
       }
-      lineas.push(pts);
     }
-    return {p:p,e:e,lineas:lineas,u:umax+K*paso,v:vmax+K*paso};
+    return {p:p,e:e,W:W,H:H,lineas:lineas,arcos:arcos,disco:disco};
   }
-  /* sobre cualquier lienzo: las mismas líneas como trazos de SVG, ya llevadas a la esquina (W y H del lienzo, en cqw) */
-  function contornosSvg(c,esq,W,H){
+  /* las mismas formas como SVG, llevadas a la esquina esq ('br','bl','tr','tl') de un lienzo de W × H */
+  function esquinaSvg(c,esq,W,H,k){
+    k=k||1;
     var ox=/l/.test(esq),oy=/t/.test(esq);
-    return c.lineas.map(function(pts){
-      return '<path d="M'+pts.map(function(q){return r2(ox?q[0]:W-q[0])+','+r2(oy?q[1]:H-q[1])}).join('L')+'"/>';
-    }).join('');
+    function X(u){return ox?u:W-u}
+    function Y(v){return oy?v:H-v}
+    function poli(pts){return pts.map(function(q){return r2(X(q[0]))+','+r2(Y(q[1]))}).join('L')}
+    function caja(q){var x=[X(q[0]),X(q[2])],y=[Y(q[1]),Y(q[3])];return r2(Math.min(x[0],x[1]))+','+r2(Math.min(y[0],y[1]))+','+r2(Math.max(x[0],x[1]))+','+r2(Math.max(y[0],y[1]))}
+    return '<path d="M'+poli(c.disco)+'Z" fill="currentColor" stroke="none"/>'+
+      '<g fill="none" stroke="currentColor" stroke-width="'+r2(.3*k)+'" stroke-linecap="round">'+
+      '<g stroke-width="'+r2(.17*k)+'">'+c.lineas.map(function(l){return '<path data-r="l" d="M'+poli(l)+'"/>'}).join('')+'</g>'+
+      c.arcos.map(function(a){return '<path data-r="a" data-celda="'+caja(a.celda)+'" d="M'+poli(a.pts)+'"/>'}).join('')+'</g>';
   }
   function trama(d,esq,zona){
     if(!d.curvas)return '';
-    var c=contornos({m:d._m||6,g:d._g||1.2,semilla:d.semilla,pasos:d.escala==='chico'?1:2,anillos:d.anillos||(d.escala==='chico'?2:3)}),W=r2(c.u+1),H=r2(c.v+1),z=d.color||zona,
+    var chico=d.escala==='chico',c=esquina({m:d._m||6,g:d._g||1.2,semilla:d.semilla,cols:d.cols||3,filas:d.filas||(chico?1:2)}),W=r2(c.W),H=r2(c.H),z=d.color||zona,
         pos=(/l/.test(esq=d.esquina||esq)?'left':'right')+':0;'+(/t/.test(esq)?'top':'bottom')+':0';
     return '<svg class="mz-trama" viewBox="0 0 '+W+' '+H+'" data-w="'+W+'" style="width:'+W+'cqw;height:'+H+'cqw;'+pos+';color:var(--mz-'+(z==='amarillo'?'naranja':'amarillo')+')" aria-hidden="true">'+
-           '<g fill="none" stroke="currentColor" stroke-width=".35" stroke-linejoin="round" stroke-linecap="butt">'+contornosSvg(c,esq,W,H)+'</g></svg>';
+           esquinaSvg(c,esq,W,H,z==='azul'?1:1.5)+'</svg>';
   }
-  /* retirar: corta las líneas donde hay texto o logo, con aire alrededor, y descarta los tramos sueltos muy cortos.
-     Se llama cuando la tipografía ya cargó. */
+  /* retirar: vacía las celdas que tienen texto o logo encima y corta las líneas alrededor, con aire. Se llama cuando la tipografía ya cargó. */
   function retirar(el){
     var tr=el.querySelectorAll('svg.mz-trama');
     if(!tr.length||!el.ownerDocument)return;
@@ -151,20 +153,21 @@
     });
     el.querySelectorAll('.mz-grid .mz-logo, .mz-grid .mz-dc').forEach(function(t){rects.push(t.getBoundingClientRect())});
     Array.prototype.forEach.call(tr,function(sv){
-      var sb=sv.getBoundingClientRect(),W=+sv.getAttribute('data-w'),sc=sb.width/W,pad=2.2,paso=.5,minimo=6,
+      var sb=sv.getBoundingClientRect(),W=+sv.getAttribute('data-w'),sc=sb.width/W,pad=1.6,paso=.5,minimo=4,
           cajas=rects.map(function(b){return [(b.left-sb.left)/sc-pad,(b.top-sb.top)/sc-pad,(b.right-sb.left)/sc+pad,(b.bottom-sb.top)/sc+pad]});
       function dentro(x,y){return cajas.some(function(c){return x>=c[0]&&x<=c[2]&&y>=c[1]&&y<=c[3]})}
-      Array.prototype.forEach.call(sv.querySelectorAll('path'),function(pa){
-        var n=pa.getAttribute('d').slice(1).split('L').map(function(q){return q.split(',').map(Number)}),pts=[n[0]],a,b,k,j,i;
-        for(i=1;i<n.length;i++){
-          a=n[i-1];b=n[i];k=Math.max(1,Math.ceil(Math.hypot(b[0]-a[0],b[1]-a[1])/paso));
-          for(j=1;j<=k;j++)pts.push([a[0]+(b[0]-a[0])*j/k,a[1]+(b[1]-a[1])*j/k]);
-        }
-        var tramos=[],cur=[];
+      Array.prototype.forEach.call(sv.querySelectorAll('path[data-r="a"]'),function(pa){
+        var q=pa.getAttribute('data-celda').split(',').map(Number);
+        if(cajas.some(function(c){return q[0]<c[2]&&q[2]>c[0]&&q[1]<c[3]&&q[3]>c[1]}))pa.remove();
+      });
+      Array.prototype.forEach.call(sv.querySelectorAll('path[data-r="l"]'),function(pa){
+        var n=pa.getAttribute('d').slice(1).split('L').map(function(q){return q.split(',').map(Number)}),a=n[0],b=n[1],
+            k=Math.max(1,Math.ceil(Math.hypot(b[0]-a[0],b[1]-a[1])/paso)),j,pts=[a],tramos=[],cur=[];
+        for(j=1;j<=k;j++)pts.push([a[0]+(b[0]-a[0])*j/k,a[1]+(b[1]-a[1])*j/k]);
         pts.forEach(function(q){if(dentro(q[0],q[1])){if(cur.length)tramos.push(cur);cur=[]}else cur.push(q)});
         if(cur.length)tramos.push(cur);
         pa.setAttribute('d',tramos.filter(function(t){return t.length*paso>=minimo}).map(function(t){
-          return 'M'+t.map(function(q){return r2(q[0])+','+r2(q[1])}).join('L');
+          return 'M'+r2(t[0][0])+','+r2(t[0][1])+'L'+r2(t[t.length-1][0])+','+r2(t[t.length-1][1]);
         }).join(''));
       });
     });
@@ -264,7 +267,7 @@
     return el;
   }
 
-  var api={FORMATOS:FORMATOS,ROWS:ROWS,ARRIBA:ARRIBA,ARRIBA_TITULAR:ARRIBA_TITULAR,EJEMPLO:EJEMPLO,sprite:sprite,html:html,mount:mount,contornos:contornos,contornosSvg:contornosSvg};
+  var api={FORMATOS:FORMATOS,ROWS:ROWS,ARRIBA:ARRIBA,ARRIBA_TITULAR:ARRIBA_TITULAR,EJEMPLO:EJEMPLO,sprite:sprite,html:html,mount:mount,esquina:esquina,esquinaSvg:esquinaSvg};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
   root.MoozaPoster=api;
 })(typeof window!=='undefined'?window:globalThis);
