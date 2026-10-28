@@ -416,5 +416,17 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
   chips();eventos();
 })();
 </script>
+<script>
+/* En el visor de artefactos las descargas pasan por la capacidad downloads; fuera de él, el enlace funciona normal. */
+document.addEventListener('click',async function(e){
+  var a=e.target.closest&&e.target.closest('a[download]'); if(!a||!window.claude||!claude.use)return;
+  e.preventDefault();
+  try{
+    var d=await claude.use('downloads'); if(!d){location.href=a.href;return}
+    var r=await fetch(a.href), b=await r.blob();
+    await d.save({filename:a.getAttribute('download')||a.pathname.split('/').pop(),data:b});
+  }catch(err){}
+},true);
+</script>
 </body>
 </html>
