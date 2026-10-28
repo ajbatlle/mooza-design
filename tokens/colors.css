@@ -1,5 +1,5 @@
 /* Mooza · colores
-   Cinco colores planos y un neutro. Sin degradados, sin sombras.
+   Cinco colores planos y un neutro. Sin degradados ni sombras, salvo el borde suave y el grano del fondo de marca (ver components/grid/README.md).
    Orden de importancia: gris claro (fondo de todo cartel y de la web), azul (el color principal, en una zona),
    amarillo y naranjo (solo acentos pequeños). Los colores nunca compiten. Azul es el color más oscuro y también la tinta de textos y logo. No hay negro. */
 :root{

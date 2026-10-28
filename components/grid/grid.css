@@ -65,6 +65,9 @@
 
 /* trama de esquina: contornos de acento que parten de la esquina de la zona y llegan a los bordes */
 .mz-trama{position:absolute;display:block;pointer-events:none}
+/* grano: película de ruido sobre todo el cartel */
+.mz-grano{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:8;mix-blend-mode:overlay}
+
 /* fondo de marca: el logo gigante, a toda la lámina, bajo el texto */
 .mz-grid>.mz-fondo{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden}
 

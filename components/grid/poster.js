@@ -91,7 +91,7 @@
   function acento(d,def){return 'background:var(--mz-'+((d.color||def)==='amarillo'?'naranja':'amarillo')+')'}
 
   /* fondo de marca: el logo a una escala tan grande que ya no se lee como logo; quedan arcos y bandas que cruzan el cartel.
-     datos.fondo = 'tono' (forma plana de un tono apenas distinto del fondo de cada zona), 'lineas' (línea fina) o 'relleno' (forma plana del color de acento). datos.semilla cambia la composición.
+     datos.fondo = 'tono' (forma plana de un tono apenas distinto del fondo de cada zona), 'lineas' (línea fina) o 'relleno' (forma plana del color de acento). datos.semilla cambia la composición. datos.difuminado (número, en cqw) suaviza el borde de las formas; 0 lo deja nítido.
      Procedimiento:
        1. Se ponen tres símbolos del logo (dos veces las "o" juntas y una vez el ícono) a una escala en que una "o" mide más que el
           cartel. Solo se usan las partes curvas: así no aparecen letras ni diagonales.
@@ -118,17 +118,30 @@
     if(!d.fondo)return '';
     var Hc=altura(f),id='mzf'+(++_fid),z=d.color||def,acento='var(--mz-'+(z==='amarillo'?'naranja':'amarillo')+')',lleno=d.fondo==='relleno',
         tono=d.fondo==='tono',it=fondoLogo(f,d.semilla,tono),zr='M'+zona[0]+','+zona[1]+'h'+zona[2]+'v'+zona[3]+'h-'+zona[2]+'Z';
+    var sg=+d.difuminado||0,fil=sg?'<filter id="'+id+'f" filterUnits="userSpaceOnUse" x="-10" y="-10" width="120" height="'+r2(Hc+20)+'"><feGaussianBlur stdDeviation="'+sg+'"/></filter>':'';
     function usos(lw,col){
-      return it.map(function(t){
+      return (sg?'<g filter="url(#'+id+'f)">':'')+it.map(function(t){
         return '<use href="#'+t.id+'" x="'+r2(t.x)+'" y="'+r2(t.y)+'" width="'+r2(t.w)+'" height="'+r2(t.h)+'" transform="rotate('+t.rot+' '+r2(t.tx)+' '+r2(t.ty)+')" '+
                'style="--mz-lt-fill:'+(lleno||tono?'currentColor':'none')+';--mz-lt-stroke:'+(lleno||tono?'none':'currentColor')+';--mz-lt-w:'+r2(lw/t.k)+'"/>';
-      }).join('');
+      }).join('')+(sg?'</g>':'');
     }
     return '<svg class="mz-fondo" viewBox="0 0 100 '+r2(Hc)+'" data-h="'+r2(Hc)+'" aria-hidden="true"><defs>'+
       '<clipPath id="'+id+'z"><path d="'+zr+'"/></clipPath>'+
-      '<clipPath id="'+id+'g"><path clip-rule="evenodd" d="M0,0h100v'+r2(Hc)+'h-100Z'+zr+'"/></clipPath></defs>'+
+      '<clipPath id="'+id+'g"><path clip-rule="evenodd" d="M0,0h100v'+r2(Hc)+'h-100Z'+zr+'"/></clipPath>'+fil+'</defs>'+
       '<g'+(tono?'':' data-m')+' clip-path="url(#'+id+'z)" style="color:'+(tono?'var(--mz-tono-'+z+')':acento)+'">'+usos(.3)+'</g>'+
       (lleno?'':'<g'+(tono?'':' data-m')+' clip-path="url(#'+id+'g)" style="color:'+(tono?'var(--mz-tono-claro)':'var(--mz-azul)')+'">'+usos(.22)+'</g>')+'</svg>';
+  }
+  /* grano: una película de ruido fino sobre todo el cartel, texto incluido, para darle unidad y textura.
+     datos.grano = true (fuerza 1) o un número entre 0 y 2. Se mezcla en "superponer": aclara y oscurece sin cambiar el color.
+     El tamaño del grano es fijo en píxeles, no crece con el cartel. */
+  function grano(d){
+    if(!d.grano)return '';
+    var f=d.grano===true?1:+d.grano,sem=Math.floor((d.semilla||1)*7)%97+1;
+    return '<svg class="mz-grano" aria-hidden="true" style="opacity:'+r2(.34*f)+'"><filter id="mzg'+(++_fid)+'" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">'+
+      '<feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="'+sem+'" stitchTiles="stitch"/>'+
+      '<feColorMatrix values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1"/>'+
+      '<feComponentTransfer><feFuncR type="linear" slope="1.7" intercept="-.35"/><feFuncG type="linear" slope="1.7" intercept="-.35"/><feFuncB type="linear" slope="1.7" intercept="-.35"/></feComponentTransfer></filter>'+
+      '<rect width="100%" height="100%" filter="url(#mzg'+_fid+')"/></svg>';
   }
   /* y del borde de la zona de color, en cqw: arriba termina en la fila s; abajo empieza después de la fila s */
   function yZona(d,f,n,s,arriba){
@@ -307,7 +320,8 @@
   function html(tipo,datos,formato){
     if(!BUILD[tipo])throw new Error('Diseño desconocido: '+tipo);
     var f=formatoDe(tipo,formato);
-    return BUILD[tipo](merge(datos),filas(tipo,f),f);
+    var d=merge(datos);
+    return BUILD[tipo](d,filas(tipo,f),f)+grano(d);
   }
   /* mount: pone el cartel dentro de un elemento. Agrega .mz-poster, la clase del diseño y la proporción. */
   function mount(el,tipo,datos,formato){
