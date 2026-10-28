@@ -70,3 +70,19 @@ Print the attached artwork on the shirt as a single-color screen print, centered
 IMPORTANT: reproduce the artwork exactly, line for line and letter for letter. Do not redraw, simplify, restyle, retype or add anything to it, and do not move or resize the logo or the web address. Matte, fully opaque plastisol ink with a very slight texture that follows the weave of the fabric. No gradients, no glow, no shadow around the artwork, no second color.
 
 Variante con persona: cambiar solo la primera frase por "A photo of a smiling person wearing a plain crew-neck cotton t-shirt in light grey, three-quarter portrait, standing outdoors in natural daylight in front of an old metal gate."
+
+### Prompt 1, variante con la foto de referencia
+
+Adjuntar la foto de la polera con la carta de tarot, recortada a la carta y lo más recta posible (imagen 1), y una musa (imagen 2).
+
+I'm attaching two images.
+
+Image 1 is a photo of a t-shirt with a tarot-card print. Use it ONLY as a reference for the structure of the card frame: the rectangular double border, the small label panel at the top center, the ribbon banner at the bottom center, and the small stars around the corners. Do NOT copy anything else from it: no sun, no face, no flowers, no text, no numerals, no shirt, no person.
+
+Image 2 is an illustration. Its ONLY role is to define the style of the linework: hand-inked, early 20th-century, confident and slightly uneven pen-and-ink lines. Do not copy or include its figure.
+
+Now draw an empty tarot-card frame, as a flat graphic for a screen print. A vertical card with the proportions of a tarot card (about 2:3), perfectly straight and symmetrical, centered on a pure white background. A bold dark outer border and a thinner inner border parallel to it, with small decorative details in the corners (tiny four-pointed stars and dots). At the top center, a small rectangular label panel built into the inner border, completely empty. At the bottom center, a ribbon-shaped banner with folded, swallow-tailed ends overlapping the lower border, completely empty. Add two small laurel sprigs in the lower corners, hugging the border. Keep the entire middle of the card completely empty, pure white, because a figure will be placed there later.
+
+Pure black ink only on a pure white background, high contrast, no grey, no shading, no color, no texture, no text, no letters, no numbers, no shadow. Generous margin of white around the card. Vertical format 2:3.
+
+Para el mockup con persona (prompt 2), si se adjunta la foto como referencia, agregar: "Use the attached photo only as a reference for framing, pose and lighting; show a different person, and do not copy the face or the print."
