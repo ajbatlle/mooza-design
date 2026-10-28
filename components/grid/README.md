@@ -82,8 +82,8 @@ Opciones de `fondo`: `'tono'` (forma plana de tono sobre tono), `'lineas'` (solo
 
 `grano: true` cubre todo el cartel, texto incluido, con una película de ruido fino. Aclara y oscurece sin cambiar el color, así que sirve igual sobre azul, amarillo, naranjo y gris. Da unidad entre piezas y textura a los tonos planos. `grano` acepta también un número de 0 a 2 para la fuerza (1 es la normal). El tamaño del grano es fijo en píxeles: no crece con el cartel.
 
-`difuminado: 0.9` suaviza el borde de las formas del fondo de marca (el valor está en cqw). El borde entre zonas y los textos siguen nítidos. Con 1,8 ya parece desenfocado, así que no pasar de ahí.
+`difuminado` suaviza el borde de las formas del fondo de marca (el valor está en cqw). El borde entre zonas y los textos siguen nítidos. Por defecto es 1,8 y `0` lo deja nítido.
 
-Combinados: `{fondo: 'tono', grano: true, difuminado: 0.9}`. Ver `kit/tablero/grano-y-borde.png`.
+Con `fondo` activo, el grano y el difuminado van encendidos por defecto: `{fondo: 'tono'}` equivale a `{fondo: 'tono', grano: true, difuminado: 1.8}`. Para quitarlos, `grano: false` y `difuminado: 0`. Ver `kit/tablero/grano-y-borde.png`.
 
 El grano es un filtro SVG: funciona en el navegador y al exportar a imagen. No viaja dentro de las plantillas SVG editables.

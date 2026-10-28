@@ -91,7 +91,7 @@
   function acento(d,def){return 'background:var(--mz-'+((d.color||def)==='amarillo'?'naranja':'amarillo')+')'}
 
   /* fondo de marca: el logo a una escala tan grande que ya no se lee como logo; quedan arcos y bandas que cruzan el cartel.
-     datos.fondo = 'tono' (forma plana de un tono apenas distinto del fondo de cada zona), 'lineas' (línea fina) o 'relleno' (forma plana del color de acento). datos.semilla cambia la composición. datos.difuminado (número, en cqw) suaviza el borde de las formas; 0 lo deja nítido.
+     datos.fondo = 'tono' (forma plana de un tono apenas distinto del fondo de cada zona), 'lineas' (línea fina) o 'relleno' (forma plana del color de acento). datos.semilla cambia la composición. datos.difuminado (número, en cqw) suaviza el borde de las formas: 1,8 por defecto, 0 lo deja nítido. Con fondo, el grano va activo por defecto (grano: false lo quita).
      Procedimiento:
        1. Se ponen tres símbolos del logo (dos veces las "o" juntas y una vez el ícono) a una escala en que una "o" mide más que el
           cartel. Solo se usan las partes curvas: así no aparecen letras ni diagonales.
@@ -321,6 +321,7 @@
     if(!BUILD[tipo])throw new Error('Diseño desconocido: '+tipo);
     var f=formatoDe(tipo,formato);
     var d=merge(datos);
+    if(d.fondo){if(d.difuminado===undefined)d.difuminado=1.8;if(d.grano===undefined)d.grano=true}
     return BUILD[tipo](d,filas(tipo,f),f)+grano(d);
   }
   /* mount: pone el cartel dentro de un elemento. Agrega .mz-poster, la clase del diseño y la proporción. */
