@@ -4,6 +4,7 @@ Todo está construido sobre la grilla de siete columnas, con margen 6 % y median
 
 | Carpeta | Contenido |
 |---|---|
+| `mooza-carteles.svg` | Todas las plantillas en un solo archivo, una fila por formato y cada una en un grupo con id (`titular-4x5`, `foto-a3`, etc.). Vista previa en `mooza-carteles.png` |
 | `plantillas/` | Los seis diseños en SVG con texto editable y en PNG de vista previa, en 4:5 y en las variantes `-a3`, `-1x1` y `-16x9` donde existen |
 | `grillas/` | Capa de guías en SVG: 4:5, A3, 1:1, 9:16 y 16:9. Las guías son magenta y no se exportan |
 | `celdas/` | Cuadrados de 100 × 100 rellenos en los seis colores y de contorno en noche, blanco y amarillo |

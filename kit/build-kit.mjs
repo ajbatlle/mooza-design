@@ -153,18 +153,50 @@ for (const [n, v] of [['noche', C.noche], ['amarillo', C.amarillo]]) {
 out('kit/fotos/foto-placeholder.svg', `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><title>Marcador de foto de evento</title><rect width="100" height="100" fill="${C.azul}"/><text x="6" y="94" font-family="'Inter Tight',Arial,sans-serif" font-size="5" font-weight="500" fill="rgba(255,255,255,.7)">foto del evento</text></svg>\n`);
 
 // ── escribir plantillas y PNG ──
-const LISTA = [];
+const LISTA = [], HOJA = [];
 const SUF = { '4x5': '', a3: '-a3', '1x1': '-1x1', '16x9': '-16x9', '9x16': '' };
 for (const [tipo, fs] of Object.entries(P.ROWS)) for (const f of Object.keys(fs)) LISTA.push([tipo + SUF[f], tipo, f]);
 for (const f of fs.readdirSync(path.join(ROOT, 'kit/plantillas'))) fs.unlinkSync(path.join(ROOT, 'kit/plantillas', f));
 for (const [nombre, tipo, f] of LISTA) {
   const { H, svg } = await plantilla(tipo, f);
   out(`kit/plantillas/${nombre}.svg`, svg);
+  HOJA.push({ nombre, tipo, f, H, W: f === '16x9' ? 1920 : 1080, svg });
   const pg = await browser.newPage({ viewport: { width: W, height: Math.ceil(H) } });
   await pg.setContent(`<link rel="stylesheet" href="${FONTS}"><body style="margin:0;background:#fff">${svg.replace(/<\?xml[^>]*>\s*/, '')}</body>`, { waitUntil: 'networkidle' });
   await pg.evaluate(() => document.fonts.ready);
   await pg.waitForTimeout(300);
   await pg.screenshot({ path: path.join(ROOT, `kit/plantillas/${nombre}.png`), clip: { x: 0, y: 0, width: W, height: Math.ceil(H) } });
+  await pg.close();
+}
+
+// ── un solo archivo con todas las plantillas, para trabajar en Illustrator, Figma o Inkscape ──
+// Una fila por formato; cada plantilla es un grupo con id (por ejemplo "titular-4x5") y su rótulo encima.
+const FILAS = [['4x5', 'Instagram 4:5'], ['a3', 'A3 vertical'], ['1x1', 'Cuadrado 1:1'], ['16x9', 'Horizontal 16:9'], ['9x16', 'Story 9:16']];
+const GAP = 140, ROT = 96, MARG = 100;
+let y = MARG, ancho = 0, G_ = [];
+for (const [f, rotulo] of FILAS) {
+  const fila = HOJA.filter(h => h.f === f); if (!fila.length) continue;
+  const alto = Math.max(...fila.map(h => h.H));
+  G_.push(`<text x="${MARG}" y="${y + 34}" font-family="'Inter Tight', 'Helvetica Neue', Arial, sans-serif" font-size="34" font-weight="600" fill="${C.noche}">${rotulo}</text>`);
+  let x = MARG;
+  for (const h of fila) {
+    const cuerpo = h.svg.slice(h.svg.indexOf('</style>') + 8, h.svg.lastIndexOf('</svg>')).trim();
+    G_.push(`<g id="${h.tipo}-${f}" transform="translate(${x} ${f2(y + ROT)})">\n<text x="0" y="-14" font-family="'Inter Tight', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="500" fill="${C.noche}" fill-opacity=".6">${h.tipo} · ${f}</text>\n${cuerpo}\n</g>`);
+    x += h.W + GAP;
+  }
+  ancho = Math.max(ancho, x - GAP + MARG);
+  y += ROT + alto + GAP;
+}
+const hojaSvg = `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${ancho} ${f2(y - GAP + MARG)}" width="${ancho}" height="${f2(y - GAP + MARG)}">\n<title>Mooza · todas las plantillas</title>\n<style>@import url('${FONTS.replace(/&/g, '&amp;')}');</style>\n<rect width="${ancho}" height="${f2(y - GAP + MARG)}" fill="#e6e6e6"/>\n${G_.join('\n')}\n</svg>\n`;
+out('kit/mooza-carteles.svg', hojaSvg);
+{
+  const pg = await browser.newPage({ viewport: { width: 2400, height: 1200 } });
+  await pg.setContent(`<link rel="stylesheet" href="${FONTS}"><body style="margin:0;background:#e6e6e6"><img id="i" style="width:2400px;display:block" src="data:image/svg+xml;base64,${Buffer.from(hojaSvg).toString('base64')}">`, { waitUntil: 'networkidle' });
+  await pg.waitForTimeout(500);
+  await pg.evaluate(() => document.fonts.ready);
+  const box = await (await pg.$('#i')).boundingBox();
+  await pg.setViewportSize({ width: 2400, height: Math.ceil(box.height) });
+  await pg.screenshot({ path: path.join(ROOT, 'kit/mooza-carteles.png'), clip: { x: 0, y: 0, width: 2400, height: Math.ceil(box.height) } });
   await pg.close();
 }
 await browser.close();
