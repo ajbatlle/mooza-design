@@ -1,12 +1,11 @@
 /* Mooza · cartel sobre grilla de siete columnas.
    Un cartel es un .mz-poster que contiene una .mz-grid. Cada hijo de la grilla se ubica
-   con grid-column y grid-row. Las filas se fijan por formato (--rows).
-   Requiere tokens/colors.css, tokens/typography.css y tokens/grid.css. */
+   con grid-column y grid-row. Las filas se fijan por formato (--rows) y la última es siempre el pie.
+   Una idea por cartel y mucho blanco. Requiere tokens/colors.css, tokens/typography.css y tokens/grid.css. */
 
 .mz-poster{
   position:relative;aspect-ratio:var(--mz-ar,4/5);container-type:inline-size;overflow:hidden;isolation:isolate;
-  background:var(--mz-claro);color:var(--mz-noche);
-  font-family:var(--mz-grot);--mz-line:var(--mz-linea-clara);
+  background:var(--mz-claro);color:var(--mz-noche);font-family:var(--mz-grot);
 }
 
 .mz-grid,.mz-overlay{
@@ -15,7 +14,7 @@
   grid-template-columns:repeat(7,minmax(0,1fr));
   grid-template-rows:repeat(var(--rows),minmax(0,1fr));
 }
-.mz-story .mz-grid,.mz-story .mz-overlay{padding-block:min(calc(var(--mz-m)*var(--mz-mv-story)*1cqw),18cqw)}
+.mz-story-p .mz-grid,.mz-d-story .mz-grid,.mz-d-story .mz-overlay{padding-block:min(calc(var(--mz-m)*var(--mz-mv-story)*1cqw),18cqw)}
 .mz-grid>*{min-width:0;min-height:0}
 
 /* grilla visible: se activa con .mz-show-grid en cualquier ancestro */
@@ -23,46 +22,52 @@
 .mz-show-grid .mz-overlay{display:grid}
 .mz-overlay i{box-shadow:inset 0 0 0 1px rgba(255,45,111,.6);background:rgba(255,45,111,.08)}
 
-/* piezas comunes */
+/* fondos: un campo plano por cartel */
+.mz-d-titular{background:var(--mz-amarillo)}
+.mz-d-numero{background:var(--mz-noche);color:var(--mz-blanco)}
+.mz-d-foto{background:var(--mz-blanco)}
+.mz-d-semana{background:var(--mz-naranja)}
+.mz-d-agenda{background:var(--mz-noche);color:var(--mz-blanco)}
+.mz-d-story{background:var(--mz-claro)}
+
+/* pie: logo de dos columnas a la izquierda, fecha a la derecha */
 .mz-pie-logo{display:flex;align-items:flex-end}
-.mz-logo{display:block;width:100%;height:auto;max-height:100%;color:var(--mz-noche);align-self:end;--mz-iso:var(--mz-noche)}
+.mz-logo{display:block;width:100%;height:auto;max-height:100%;color:var(--mz-noche);--mz-iso:var(--mz-noche)}
+.mz-d-numero .mz-logo,.mz-d-agenda .mz-logo{color:var(--mz-blanco);--mz-iso:var(--mz-blanco)}
 .mz-lt{fill:currentColor}
 .mz-li{fill:var(--mz-iso,var(--mz-noche))}
-.mz-fecha-pie{text-align:right;align-self:end;transform:translateY(.186em)}
 .mz-dato{font-weight:var(--mz-peso-dato);font-size:var(--mz-fs-dato);line-height:1.1;font-variant-numeric:tabular-nums;letter-spacing:-.005em}
+.mz-fecha-pie{text-align:right;align-self:end;transform:translateY(.186em)}
+
+/* palabras: serif, minúsculas de frase */
+.mz-titular{font-family:var(--mz-serif);font-weight:var(--mz-peso-titular);letter-spacing:var(--mz-track-titular);line-height:.9;font-size:var(--mz-fs-titular);align-self:start}
+.mz-titular-s{font-size:calc(var(--mz-col)*1.05*1cqw)}
+.mz-nombre{display:block;font-family:var(--mz-serif);font-weight:var(--mz-peso-titular);letter-spacing:-.03em;line-height:.95;font-size:calc(var(--mz-col)*.72*1cqw)}
+.mz-evento-t{align-self:start;display:grid;gap:calc(var(--mz-col)*.18*1cqw);align-content:start}
+.mz-meta{display:block;font-size:var(--mz-fs-meta);line-height:1.3;color:rgba(3,2,27,.72)}
+.mz-d-agenda .mz-meta{color:rgba(255,255,255,.7)}
+
+/* números: grotesca */
+.mz-numero{font-weight:var(--mz-peso-numero);letter-spacing:var(--mz-track-numero);font-size:var(--mz-fs-numero);line-height:.74;white-space:nowrap;align-self:start;font-variant-numeric:tabular-nums}
+
+/* agenda: hora y evento */
+.mz-dia-t{align-self:end;padding-bottom:calc(var(--mz-col)*.05*1cqw)}
+.mz-d-agenda .mz-numero{font-size:calc(var(--mz-col)*2.4*1cqw)}
+.mz-d-agenda .mz-nombre{font-size:calc(var(--mz-col)*.46*1cqw);line-height:1}
+.mz-d-agenda .mz-evento-t{gap:calc(var(--mz-col)*.14*1cqw)}
+.mz-hora{font-size:calc(var(--mz-col)*.42*1cqw);font-weight:600;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;padding:calc(var(--mz-col)*.1*1cqw) calc(var(--mz-col)*.12*1cqw);align-self:start;height:calc(var(--mz-col)*.8*1cqw);display:flex;align-items:center}
+.mz-hora-on{background:var(--mz-amarillo);color:var(--mz-noche)}
+
+/* foto: celdas completas, nunca al borde */
 .mz-ph{background:var(--mz-azul);color:rgba(255,255,255,.7);display:flex;align-items:flex-end;padding:2cqw;font-size:2.8cqw;font-weight:500;letter-spacing:.02em}
 
-/* semana: filas 1 días, 2 a 9 franjas, 10 pie */
-.mz-semana{background:var(--mz-naranja);--mz-line:var(--mz-linea-naranja)}
-.mz-semana .mz-tile{box-shadow:inset 0 0 0 1px var(--mz-line)}
-.mz-semana .mz-f-y{background:var(--mz-amarillo);box-shadow:none}
-.mz-semana .mz-f-w{background:var(--mz-blanco);box-shadow:none}
-.mz-semana .mz-f-n{background:var(--mz-noche);box-shadow:none}
-.mz-dia{font-weight:500;font-size:3.2cqw;display:flex;align-items:flex-end;justify-content:center;padding-bottom:.6cqw}
-
-/* foto */
-.mz-foto{background:var(--mz-blanco)}
-.mz-titular{font-family:var(--mz-serif);font-weight:var(--mz-peso-titular);letter-spacing:var(--mz-track-titular);line-height:.9;font-size:var(--mz-fs-titular);align-self:end}
-
-/* gráfico */
-.mz-grafico{background:var(--mz-amarillo)}
-.mz-numero{font-weight:var(--mz-peso-numero);letter-spacing:var(--mz-track-numero);font-size:var(--mz-fs-numero);line-height:.74;text-align:left;white-space:nowrap;align-self:start;font-variant-numeric:tabular-nums}
-.mz-col{position:relative;box-shadow:inset 0 0 0 1px var(--mz-line)}
-.mz-col i{position:absolute;left:12%;right:12%;background:var(--mz-noche)}
-.mz-col i.mz-w{background:var(--mz-blanco)}
-
-/* titular editorial */
-.mz-editorial{background:var(--mz-claro)}
-.mz-titular-largo{font-family:var(--mz-serif);font-weight:var(--mz-peso-titular);letter-spacing:var(--mz-track-titular);line-height:var(--mz-leading-titular);font-size:var(--mz-fs-titular-largo);text-align:center;align-self:center;z-index:1}
-.mz-sq{z-index:0}
-.mz-s-n{background:var(--mz-naranja)}.mz-s-y{background:var(--mz-amarillo)}.mz-s-a{background:var(--mz-azul)}.mz-s-k{background:var(--mz-noche)}
+/* semana: tira de siete días */
+.mz-dc{box-shadow:inset 0 0 0 1px rgba(255,255,255,.9);display:flex;flex-direction:column;justify-content:space-between;padding:calc(var(--mz-col)*.09*1cqw)}
+.mz-dc span{font-size:calc(var(--mz-col)*.22*1cqw);font-weight:500;line-height:1}
+.mz-dc b{font-size:calc(var(--mz-col)*.46*1cqw);font-weight:600;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.mz-dc-on{background:var(--mz-amarillo);box-shadow:none}
 
 /* story */
-.mz-story-bg{background:var(--mz-claro)}
-.mz-punto{display:grid;place-items:center}
-.mz-punto b{width:1.1cqw;height:1.1cqw;border-radius:50%;background:var(--mz-noche);opacity:.5}
-.mz-punto.mz-on b{width:2.6cqw;height:2.6cqw;background:var(--mz-naranja);opacity:1}
-.mz-etiqueta{display:flex;align-items:center;gap:2cqw;font-size:var(--mz-fs-etiqueta);font-weight:var(--mz-peso-etiqueta);letter-spacing:var(--mz-track-etiqueta);text-transform:uppercase}
+.mz-etiqueta{display:flex;align-items:center;gap:2cqw;font-size:var(--mz-fs-etiqueta);font-weight:var(--mz-peso-etiqueta);letter-spacing:var(--mz-track-etiqueta);text-transform:uppercase;align-self:end}
 .mz-etiqueta i{width:2.4cqw;height:2.4cqw;background:var(--mz-naranja)}
 .mz-titular-story{font-family:var(--mz-serif);font-weight:var(--mz-peso-titular);letter-spacing:-.03em;line-height:.95;font-size:var(--mz-fs-story);align-self:start}
-.mz-meta{font-size:var(--mz-fs-meta);line-height:1.3;color:rgba(3,2,27,.72);align-self:start}

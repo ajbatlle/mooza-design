@@ -170,18 +170,14 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
     </div>
 
     <div class="pgrid" id="pgrid">
-      <figure class="fig"><div id="pa" role="img" aria-label="Cartel semana"></div>
-        <figcaption><i>semana</i><b>Cada celda, un día y una franja</b><span>Franjas de 1,5 h desde las 12:00. Amarillo: destacado. Blanco: gratis. Noche: de pago.</span></figcaption></figure>
-      <figure class="fig"><div id="pb" role="img" aria-label="Cartel foto"></div>
-        <figcaption><i>foto</i><b>Una foto, en celdas completas</b><span>Cinco columnas por cinco filas de foto, y el titular serif en las tres filas de abajo.</span></figcaption></figure>
-      <figure class="fig"><div id="pc" role="img" aria-label="Cartel gráfico"></div>
-        <figcaption><i>gráfico</i><b>La semana como horario</b><span>Cada bloque es un evento y su alto es la duración. Escala de 10:00 a 24:00.</span></figcaption></figure>
-      <figure class="fig"><div id="pd" role="img" aria-label="Cartel editorial"></div>
-        <figcaption><i>editorial</i><b>El titular se escribe con lo que pasa</b><span>Cada cuadrado marca el lugar de la foto de un evento.</span></figcaption></figure>
-      <figure class="fig"><div id="pe" role="img" aria-label="Story"></div>
-        <figcaption><i>story</i><b>La misma grilla en 9:16</b><span>16 filas. El margen vertical sube 2,2 veces para dejar libre la interfaz de la app.</span></figcaption></figure>
+      <figure class="fig"><div id="pa" role="img" aria-label="Cartel titular"></div><figcaption><i>titular</i><b>Solo el titular</b><span>El resto es blanco.</span></figcaption></figure>
+      <figure class="fig"><div id="pb" role="img" aria-label="Cartel número"></div><figcaption><i>número</i><b>El rango de la semana</b><span>Enorme, arriba a la izquierda.</span></figcaption></figure>
+      <figure class="fig"><div id="pc" role="img" aria-label="Cartel foto"></div><figcaption><i>foto</i><b>Una foto y el evento</b><span>Nombre y una línea de datos.</span></figcaption></figure>
+      <figure class="fig"><div id="pd" role="img" aria-label="Cartel semana"></div><figcaption><i>semana</i><b>Siete días en una tira</b><span>El día destacado, relleno.</span></figcaption></figure>
+      <figure class="fig"><div id="pe" role="img" aria-label="Cartel agenda"></div><figcaption><i>agenda</i><b>Un día por lámina</b><span>Hasta tres eventos. Para el carrusel.</span></figcaption></figure>
+      <figure class="fig"><div id="pf" role="img" aria-label="Story"></div><figcaption><i>story</i><b>La misma grilla en 9:16</b><span>El margen vertical sube 2,2 veces, con tope de 18 %.</span></figcaption></figure>
       <dl class="reglas">
-        <div><dt>Columnas</dt><dd>Siete, siempre. Las filas cambian con el formato: 9 o 10 en 4:5 y 16 en 9:16.</dd></div>
+        <div><dt>Columnas</dt><dd>Siete, siempre. Las filas cambian con el formato: 9 en 4:5 y 16 en 9:16.</dd></div>
         <div><dt>Margen</dt><dd>Del 3 al 12 % del ancho. Estándar 6 %. Más margen da más aire, menos margen da más densidad.</dd></div>
         <div><dt>Medianil</dt><dd>De 0,6 a 3,5 %, y como máximo la mitad del margen.</dd></div>
         <div><dt>Pie</dt><dd>La última fila de todo cartel. El logo, de dos columnas, a la izquierda; la fecha, a la derecha. Nada más entra ahí.</dd></div>
@@ -197,17 +193,17 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
     <div class="tabla-w"><table class="tabla">
       <thead><tr><th>Formato</th><th>Tamaño</th><th>Filas</th><th>Alto de celda</th><th>Diseños</th><th>Uso</th></tr></thead>
       <tbody>
-        <tr><td>4:5</td><td>1080 × 1350 px</td><td>9 o 10</td><td>11,5 % o 10,2 %</td><td>semana (10), foto, gráfico y editorial (9)</td><td>Feed de Instagram, carrusel, afiche digital</td></tr>
-        <tr><td>A3 vertical</td><td>297 × 420 mm</td><td>11</td><td>10,7 %</td><td>semana, foto, gráfico y editorial</td><td>Afiche impreso y exterior</td></tr>
-        <tr><td>1:1</td><td>1080 × 1080 px</td><td>8</td><td>9,9 %</td><td>semana, foto y gráfico</td><td>Posts cuadrados</td></tr>
-        <tr><td>9:16</td><td>1080 × 1920 px</td><td>16</td><td>8,3 %</td><td>story</td><td>Stories y portada de reel. Margen vertical × 2,2</td></tr>
-        <tr><td>16:9</td><td>1920 × 1080 px</td><td>4</td><td>10,2 %</td><td>foto</td><td>Slides, pantallas, banner web y gran formato apaisado</td></tr>
+        <tr><td>4:5</td><td>1080 × 1350 px</td><td>9</td><td>11,5 %</td><td>titular, número, foto, semana, agenda</td><td>Feed de Instagram y carrusel</td></tr>
+        <tr><td>A3 vertical</td><td>297 × 420 mm</td><td>11</td><td>10,7 %</td><td>titular, número, foto, semana, agenda</td><td>Afiche impreso y exterior</td></tr>
+        <tr><td>1:1</td><td>1080 × 1080 px</td><td>8</td><td>9,9 %</td><td>titular, número, foto, semana</td><td>Posts cuadrados</td></tr>
+        <tr><td>9:16</td><td>1080 × 1920 px</td><td>16</td><td>8,3 %</td><td>story</td><td>Stories y portada de reel</td></tr>
+        <tr><td>16:9</td><td>1920 × 1080 px</td><td>4</td><td>10,2 %</td><td>titular, número, foto, semana</td><td>Slides, pantallas y banner web</td></tr>
       </tbody>
     </table></div>
     <div class="pgrid" id="pformatos">
       <figure class="fig"><div id="fa" role="img" aria-label="Afiche A3 foto"></div><figcaption><i>A3</i><b>Afiche foto</b><span>11 filas. La foto crece y el titular conserva tres filas.</span></figcaption></figure>
       <figure class="fig"><div id="fb" role="img" aria-label="Cuadrado semana"></div><figcaption><i>1:1</i><b>Semana</b><span>8 filas: días, seis franjas de dos horas y pie.</span></figcaption></figure>
-      <figure class="fig"><div id="fc" role="img" aria-label="Afiche A3 gráfico"></div><figcaption><i>A3</i><b>Afiche gráfico</b><span>Los bloques ganan altura y se leen mejor a distancia.</span></figcaption></figure>
+      <figure class="fig"><div id="fc" role="img" aria-label="Afiche A3 número"></div><figcaption><i>A3</i><b>Afiche número</b><span>El número ocupa el ancho entero.</span></figcaption></figure>
       <figure class="fig w2"><div id="fd" role="img" aria-label="Horizontal 16:9 foto"></div><figcaption><i>16:9</i><b>Horizontal</b><span>4 filas. Foto a la derecha en tres columnas y titular abajo en cuatro.</span></figcaption></figure>
     </div>
   </section>
@@ -257,7 +253,7 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
       <div class="c-amarillo"><b>amarillo</b><span><code>#fcee21</code><small>Acento y fondo de cartel.</small></span></div>
       <div class="c-naranja"><b>naranja</b><span><code>#fbb03b</code><small>Segundo campo de cartel.</small></span></div>
       <div class="c-blanco"><b>blanco</b><span><code>#ffffff</code><small>Celdas gratis y fondo claro.</small></span></div>
-      <div class="c-claro"><b>claro</b><span><code>#f2f2f2</code><small>Neutro de story y de cartel editorial.</small></span></div>
+      <div class="c-claro"><b>claro</b><span><code>#f2f2f2</code><small>Neutro de story.</small></span></div>
     </div>
     <div class="pares" aria-label="Pares de color y su contraste">
       <div class="par"><i class="c-amarillo">Aa</i><p><b>16,9 : 1</b>Noche sobre amarillo. AA</p></div>
@@ -361,7 +357,7 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
     <h2>Lo que hay en la carpeta kit</h2>
     <ul class="kit">
       <li><b>Plantillas</b><span>Los cinco formatos en SVG con texto editable, más una vista previa PNG de cada uno. <code>kit/plantillas/</code></span></li>
-      <li><b>Grillas</b><span>Las tres grillas vacías en SVG: 4:5 de 9 filas, 4:5 de 10 filas y 9:16 de 16 filas. <code>kit/grillas/</code></span></li>
+      <li><b>Grillas</b><span>Las cinco grillas vacías en SVG: 4:5, A3, 1:1, 9:16 y 16:9. <code>kit/grillas/</code></span></li>
       <li><b>Celdas</b><span>Cuadrados rellenos y de contorno en los colores de la paleta, para armar composiciones a mano. <code>kit/celdas/</code></span></li>
       <li><b>Marca</b><span>Logo horizontal e ícono en noche y en amarillo plano, además de los oficiales en <code>assets/logos/</code>. <code>kit/marca/</code></span></li>
       <li><b>Fotos</b><span>Marcador de posición y reglas de recorte para las fotos de eventos. <code>kit/fotos/</code></span></li>
@@ -370,10 +366,11 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
       <li><b>Generadores</b><span>Scripts que regeneran las plantillas y las ilustraciones. <code>kit/build-kit.mjs</code> y <code>kit/ilustraciones/build-ilustraciones.mjs</code></span></li>
     </ul>
     <div class="miniaturas">
-      <img src="../kit/plantillas/semana.png" alt="Plantilla semana">
+      <img src="../kit/plantillas/titular.png" alt="Plantilla titular">
+      <img src="../kit/plantillas/numero.png" alt="Plantilla número">
       <img src="../kit/plantillas/foto.png" alt="Plantilla foto">
-      <img src="../kit/plantillas/grafico.png" alt="Plantilla gráfico">
-      <img src="../kit/plantillas/editorial.png" alt="Plantilla editorial">
+      <img src="../kit/plantillas/semana.png" alt="Plantilla semana">
+      <img src="../kit/plantillas/agenda.png" alt="Plantilla agenda">
       <img src="../kit/plantillas/story.png" alt="Plantilla story">
     </div>
   </section>
@@ -385,8 +382,8 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
 (function(){
   var $=function(s){return document.querySelector(s)};
   var P=MoozaPoster;
-  P.mount($('#fa'),'foto',null,'a3');P.mount($('#fb'),'semana',null,'1x1');P.mount($('#fc'),'grafico',null,'a3');P.mount($('#fd'),'foto',null,'16x9');
-  P.mount($('#pa'),'semana');P.mount($('#pb'),'foto');P.mount($('#pc'),'grafico');P.mount($('#pd'),'editorial');P.mount($('#pe'),'story');
+  P.mount($('#fa'),'foto',null,'a3');P.mount($('#fb'),'semana',null,'1x1');P.mount($('#fc'),'numero',null,'a3');P.mount($('#fd'),'foto',null,'16x9');
+  P.mount($('#pa'),'titular');P.mount($('#pb'),'numero');P.mount($('#pc'),'foto');P.mount($('#pd'),'semana');P.mount($('#pe'),'agenda');P.mount($('#pf'),'story');
 
   var G=$('#pgrid'),m=$('#m'),g=$('#g');
   function fmt(n){return String(Math.round(n*10)/10).replace('.',',')}

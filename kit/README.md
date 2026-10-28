@@ -4,8 +4,8 @@ Todo está construido sobre la grilla de siete columnas, con margen 6 % y median
 
 | Carpeta | Contenido |
 |---|---|
-| `plantillas/` | Los diseños en SVG con texto editable y en PNG de vista previa: `semana`, `foto`, `grafico`, `editorial` y `story` en 4:5 y 9:16, y las variantes `-a3`, `-1x1` y `-16x9` |
-| `grillas/` | Capa de guías en SVG: 4:5 (9 y 10 filas), A3 (11), 1:1 (8), 9:16 (16) y 16:9 (4). Las guías son magenta y no se exportan |
+| `plantillas/` | Los seis diseños en SVG con texto editable y en PNG de vista previa, en 4:5 y en las variantes `-a3`, `-1x1` y `-16x9` donde existen |
+| `grillas/` | Capa de guías en SVG: 4:5, A3, 1:1, 9:16 y 16:9. Las guías son magenta y no se exportan |
 | `celdas/` | Cuadrados de 100 × 100 rellenos en los seis colores y de contorno en noche, blanco y amarillo |
 | `marca/` | Logo horizontal e ícono, monocromos en noche y en amarillo. Derivan del logo oficial: el original con degradé y el blanco están en `assets/logos/` |
 | `fotos/` | Marcador de foto de evento y reglas de recorte |

@@ -67,94 +67,106 @@ const lines = s => s.split('<br>');
 // ── plantillas ──
 const T = {};
 
-// pie: la última fila de todo cartel. El logo mide dos columnas, va a la izquierda y se alinea al borde inferior de la fila;
-// la fecha va a la derecha, con su línea base en ese mismo borde. Nada más entra en esa fila.
-function pie(g, n, fecha) {
-  const B = [], bottom = g.y(n) + g.rh;
-  let lw = 2 * COL + G; if (LH(lw) > g.rh) lw = g.rh / (159.59 / 629.21);
-  B.push(logo(g.x(1), bottom - LH(lw), lw, C.noche, C.noche));
-  if (fecha) B.push(text({ x: g.x(7) + COL, y: bottom, size: COL * .3, w: 500, fam: 'grot', fill: C.noche, anchor: 'end', t: fecha }));
-  return B;
+// medición de texto en el navegador, para cortar líneas como lo haría el cartel en HTML
+async function medir(fuente, textos) { return page.evaluate(([f, ts]) => { const c = document.createElement('canvas').getContext('2d'); c.font = f; return ts.map(t => c.measureText(t).width); }, [fuente, textos]); }
+async function cortar(t, fuente, ancho, extra = 0) { // extra: tracking en px por letra
+  const palabras = t.split(' '), out = []; let linea = '';
+  for (const p of palabras) { const prueba = linea ? linea + ' ' + p : p; const [w] = await medir(fuente, [prueba]); if (w + extra * prueba.length > ancho && linea) { out.push(linea); linea = p; } else linea = prueba; }
+  if (linea) out.push(linea); return out;
 }
 
-T.semana = (H = 1350, n = 10) => {
-  const g = geo(H, n), B = [];
-  const fd = 3.2 * CQ;
-  'LMMJVSD'.split('').forEach((l, i) => B.push(text({ x: g.x(i + 1) + COL / 2, y: g.y(1) + g.rh - .6 * CQ - MET.grot.desc * fd, size: fd, w: 500, fam: 'grot', fill: C.noche, anchor: 'middle', t: l })));
-  const F = {}; const PR = { y: 3, w: 2, n: 1 };
-  D.semana.forEach((dia, i) => dia.e.forEach(e => { const k = e.f ? 'y' : (/gratis/i.test(e.p) ? 'w' : 'n'), key = (i + 1) + '-' + P.franja(e.s, n); if (!F[key] || PR[k] > PR[F[key]]) F[key] = k; }));
-  const fill = { y: C.amarillo, w: C.blanco, n: C.noche };
-  for (let r = 2; r <= n - 1; r++) for (let c = 1; c <= 7; c++) {
-    const k = F[c + '-' + r], x = g.x(c), y = g.y(r);
-    B.push(k ? `<rect x="${f2(x)}" y="${f2(y)}" width="${f2(COL)}" height="${f2(g.rh)}" fill="${fill[k]}"/>`
-             : `<rect x="${f2(x + 1.25)}" y="${f2(y + 1.25)}" width="${f2(COL - 2.5)}" height="${f2(g.rh - 2.5)}" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="2.5"/>`);
-  }
+// pie: la última fila de todo cartel. El logo mide dos columnas, va a la izquierda y se alinea al borde inferior de la fila;
+// el texto va a la derecha, con su línea base en ese mismo borde. Nada más entra en esa fila.
+function pie(g, n, fecha, tinta = C.noche) {
+  const B = [], bottom = g.y(n) + g.rh;
+  let lw = 2 * COL + G; if (LH(lw) > g.rh) lw = g.rh / (159.59 / 629.21);
+  B.push(logo(g.x(1), bottom - LH(lw), lw, tinta, tinta));
+  if (fecha) B.push(text({ x: g.x(7) + COL, y: bottom, size: COL * .3, w: 500, fam: 'grot', fill: tinta, anchor: 'end', t: fecha }));
+  return B;
+}
+const serif = (x, y, fs, t, fill, o = {}) => text({ x, y, size: fs, w: 500, fam: 'serif', fill, ls: f2((o.ls ?? -.035) * fs), anchor: o.anchor, t });
+
+T.titular = (H = 1350, n = 9) => {
+  const g = geo(H, n), B = [], fs = COL * 1.52 * (n === 4 ? .62 : 1), lh = .9 * fs;
+  lines(D.titular).forEach((l, i) => B.push(serif(M, base(g.y(1) + i * lh, lh, fs, MET.serif), fs, l, C.noche)));
   B.push(...pie(g, n, D.rango));
-  return wrap(H, B.join('\n'), C.naranja, 'Mooza · cartel semana');
+  return wrap(H, B.join('\n'), C.amarillo, 'Mooza · cartel titular');
 };
 
-T.foto = (H = 1350, n = 9) => {
+T.numero = (H = 1350, n = 9) => {
+  const g = geo(H, n), B = [], fs = COL * 3, lh = .74 * fs;
+  B.push(text({ x: M, y: base(g.y(1), lh, fs, MET.grot), size: fs, w: 600, fam: 'grot', fill: C.blanco, ls: f2(-.05 * fs), t: D.corto }));
+  B.push(...pie(g, n, 'mooza.cl', C.blanco));
+  return wrap(H, B.join('\n'), C.noche, 'Mooza · cartel número');
+};
+
+T.foto = async (H = 1350, n = 9) => {
   const g = geo(H, n), B = [], fl = 2.8 * CQ;
   const foto = (px, py, pw, ph) => {
     B.push(`<rect x="${f2(px)}" y="${f2(py)}" width="${f2(pw)}" height="${f2(ph)}" fill="${C.azul}"/>`);
     B.push(text({ x: px + 2 * CQ, y: py + ph - 2 * CQ - MET.grot.desc * fl, size: fl, w: 500, fam: 'grot', fill: 'rgba(255,255,255,.7)', t: 'foto del evento' }));
   };
-  const titulo = (bottom, factor) => {
-    const fs = COL * 1.52 * factor, lh = .9 * fs, ls = lines(D.titularFoto), top = bottom - ls.length * lh;
-    ls.forEach((l, i) => B.push(text({ x: M, y: base(top + i * lh, lh, fs, MET.serif), size: fs, w: 500, fam: 'serif', fill: C.noche, ls: f2(-.035 * fs), t: l })));
-  };
-  if (n === 4) { // horizontal 16:9: titular a la izquierda, foto a la derecha
+  const fn = COL * (n === 4 ? .52 : .72), ln = .95 * fn;
+  if (n === 4) {
     foto(g.x(5), g.y(1), g.w(5, 7), g.h(1, 3));
-    titulo(g.y(3) + g.rh, .62);
+    const ls = lines(D.evento.nombre), bottom = g.y(3) + g.rh, top = bottom - ls.length * ln;
+    ls.forEach((l, i) => B.push(serif(M, base(top + i * ln, ln, fn, MET.serif), fn, l, C.noche, { ls: -.03 })));
   } else {
     foto(g.x(3), g.y(1), g.w(3, 7), g.h(1, n - 4));
-    titulo(g.y(n - 1) + g.rh, n === 8 ? .82 : (n === 11 ? .92 : 1));
+    const top = g.y(n - 3), ls = lines(D.evento.nombre);
+    ls.forEach((l, i) => B.push(serif(g.x(3), base(top + i * ln, ln, fn, MET.serif), fn, l, C.noche, { ls: -.03 })));
+    const fm = COL * .33, lm = 1.3 * fm, y0 = top + ls.length * ln + COL * .18;
+    lines(D.evento.meta).forEach((l, i) => B.push(text({ x: g.x(3), y: base(y0 + i * lm, lm, fm, MET.grot), size: fm, w: 400, fam: 'grot', fill: 'rgba(3,2,27,.72)', t: l })));
   }
   B.push(...pie(g, n, D.rango));
-  return wrap(H, B.join('\n'), C.blanco, n === 4 ? 'Mooza · cartel foto 16:9' : 'Mooza · cartel foto');
+  return wrap(H, B.join('\n'), C.blanco, 'Mooza · cartel foto');
 };
 
-T.grafico = (H = 1350, n = 9) => {
-  const g = geo(H, n), B = [];
-  const fs = COL * 2.17, lh = .74 * fs;
-  B.push(text({ x: M, y: base(g.y(1), lh, fs, MET.grot), size: fs, w: 600, fam: 'grot', fill: C.noche, ls: f2(-.05 * fs), t: D.corto }));
-  const hh = g.h(3, n - 1);
-  D.semana.forEach((dia, i) => {
-    const x = g.x(i + 1), y = g.y(3);
-    B.push(`<rect x="${f2(x + 1.25)}" y="${f2(y + 1.25)}" width="${f2(COL - 2.5)}" height="${f2(hh - 2.5)}" fill="none" stroke="rgba(3,2,27,.5)" stroke-width="2.5"/>`);
-    dia.e.forEach(e => {
-      const t = (e.s - 10) / 14, h = (e.e - e.s) / 14;
-      B.push(`<rect x="${f2(x + .12 * COL)}" y="${f2(y + t * hh)}" width="${f2(.76 * COL)}" height="${f2(h * hh)}" fill="${e.f ? C.blanco : C.noche}"/>`);
-    });
+T.semana = (H = 1350, n = 9) => {
+  const g = geo(H, n), B = [], row = n - 2;
+  if (n !== 4) { const fs = COL * 1.05, lh = .9 * fs; B.push(serif(M, base(g.y(1), lh, fs, MET.serif), fs, 'esta semana', C.noche)); }
+  const fl = COL * .22, fn = COL * .46, pad = COL * .09;
+  D.dias.forEach((d, i) => {
+    const x = g.x(i + 1), y = g.y(row), on = i === D.diaDestacado;
+    B.push(on ? `<rect x="${f2(x)}" y="${f2(y)}" width="${f2(COL)}" height="${f2(g.rh)}" fill="${C.amarillo}"/>`
+              : `<rect x="${f2(x + 1.25)}" y="${f2(y + 1.25)}" width="${f2(COL - 2.5)}" height="${f2(g.rh - 2.5)}" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.5"/>`);
+    B.push(text({ x: x + pad, y: base(y + pad, fl, fl, MET.grot), size: fl, w: 500, fam: 'grot', fill: C.noche, t: d[0] }));
+    B.push(text({ x: x + pad, y: base(y + g.rh - pad - fn, fn, fn, MET.grot), size: fn, w: 600, fam: 'grot', fill: C.noche, ls: f2(-.04 * fn), t: String(d[1]) }));
   });
   B.push(...pie(g, n, D.rango));
-  return wrap(H, B.join('\n'), C.amarillo, 'Mooza · cartel gráfico');
+  return wrap(H, B.join('\n'), C.naranja, 'Mooza · cartel semana');
 };
 
-T.editorial = (H = 1350, n = 9) => {
-  const g = geo(H, n), B = [], SQ = { n: C.naranja, y: C.amarillo, a: C.azul, k: C.noche };
-  const cc = Math.floor((3 + n - 2) / 2), fila = v => v === 'c' ? cc : v === 'c+1' ? cc + 1 : (v < 0 ? n + v : v);
-  D.cuadrados.forEach(s => { const a = fila(s[2]), b = fila(s[3]); B.push(`<rect x="${f2(g.x(s[0]))}" y="${f2(g.y(a))}" width="${f2(g.w(s[0], s[1]))}" height="${f2(g.h(a, b))}" fill="${SQ[s[4]]}"/>`); });
-  const fs = COL * 1.04, lh = .93 * fs, ls = lines(D.titularEditorial), rt = g.y(3), rh = g.h(3, n - 2), top = rt + (rh - ls.length * lh) / 2;
-  ls.forEach((l, i) => B.push(text({ x: W / 2, y: base(top + i * lh, lh, fs, MET.serif), size: fs, w: 500, fam: 'serif', fill: C.noche, anchor: 'middle', ls: f2(-.035 * fs), t: l })));
-  B.push(...pie(g, n, 'mooza.cl'));
-  return wrap(H, B.join('\n'), C.claro, 'Mooza · cartel editorial');
+T.agenda = async (H = 1350, n = 9) => {
+  const g = geo(H, n), B = [], a = D.agenda, max = Math.floor((n - 3) / 2);
+  const fnum = COL * 2.4, lnum = .74 * fnum;
+  B.push(text({ x: M, y: base(g.y(1), lnum, fnum, MET.grot), size: fnum, w: 600, fam: 'grot', fill: C.blanco, ls: f2(-.05 * fnum), t: String(a.n) }));
+  const fd = COL * .5, bd = g.y(2) + g.rh - COL * .05;
+  B.push(serif(g.x(5), base(bd - fd, fd, fd, MET.serif), fd, a.dia, C.blanco, { ls: -.03 }));
+  const fh = COL * .42, hh = COL * .8, fnm = COL * .46, fm = COL * .33, lm = 1.3 * fm;
+  const ancho = g.w(3, 7);
+  for (const [i, e] of a.eventos.slice(0, max).entries()) {
+    const r = 3 + i * 2, y = g.y(r);
+    if (e.f) B.push(`<rect x="${f2(g.x(1))}" y="${f2(y)}" width="${f2(g.w(1, 2))}" height="${f2(hh)}" fill="${C.amarillo}"/>`);
+    if (e.h) B.push(text({ x: g.x(1) + COL * .12, y: base(y + (hh - fh) / 2, fh, fh, MET.grot), size: fh, w: 600, fam: 'grot', fill: e.f ? C.noche : C.blanco, ls: f2(-.02 * fh), t: e.h }));
+    const ls = await cortar(e.t, `500 ${fnm}px Newsreader`, ancho, -.03 * fnm);
+    ls.forEach((l, k) => B.push(serif(g.x(3), base(y + k * fnm, fnm, fnm, MET.serif), fnm, l, C.blanco, { ls: -.03 })));
+    B.push(text({ x: g.x(3), y: base(y + ls.length * fnm + COL * .14, lm, fm, MET.grot), size: fm, w: 400, fam: 'grot', fill: 'rgba(255,255,255,.7)', t: e.v + (e.p ? ' • ' + e.p : '') }));
+  }
+  B.push(...pie(g, n, a.pag || '', C.blanco));
+  return wrap(H, B.join('\n'), C.noche, 'Mooza · cartel agenda');
 };
 
 T.story = () => {
   const g = geo(1920, 16, true), B = [], s = D.story;
-  for (let r = 1; r <= 2; r++) for (let c = 1; c <= 7; c++) {
-    const on = r === 2 && c === s.dia + 1, cx = g.x(c) + COL / 2, cy = g.y(r) + g.rh / 2;
-    B.push(`<circle cx="${f2(cx)}" cy="${f2(cy)}" r="${on ? f2(1.3 * CQ) : f2(.55 * CQ)}" fill="${on ? C.naranja : C.noche}"${on ? '' : ' fill-opacity=".5"'}/>`);
-  }
-  const fe = COL * .28, lbh = (MET.grot.asc + MET.grot.desc) * fe, ty = g.y(4) + (g.rh - lbh) / 2, sq = 2.4 * CQ;
-  B.push(`<rect x="${f2(M)}" y="${f2(g.y(4) + (g.rh - sq) / 2)}" width="${f2(sq)}" height="${f2(sq)}" fill="${C.naranja}"/>`);
+  const fe = COL * .28, lbh = (MET.grot.asc + MET.grot.desc) * fe, sq = 2.4 * CQ, bottom = g.y(3) + g.rh, ty = bottom - lbh;
+  B.push(`<rect x="${f2(M)}" y="${f2(ty + (lbh - sq) / 2)}" width="${f2(sq)}" height="${f2(sq)}" fill="${C.naranja}"/>`);
   B.push(text({ x: M + sq + 2 * CQ, y: ty + MET.grot.asc * fe, size: fe, w: 600, fam: 'grot', fill: C.noche, ls: f2(.14 * fe), t: s.categoria.toUpperCase() }));
   const fs = COL * 1.05, lh = .95 * fs;
-  lines(s.titulo).forEach((l, i) => B.push(text({ x: M, y: base(g.y(5) + i * lh, lh, fs, MET.serif), size: fs, w: 500, fam: 'serif', fill: C.noche, ls: f2(-.03 * fs), t: l })));
+  lines(s.titulo).forEach((l, i) => B.push(serif(M, base(g.y(4) + i * lh, lh, fs, MET.serif), fs, l, C.noche, { ls: -.03 })));
   const fm = COL * .33, lm = 1.3 * fm;
-  lines(s.meta).forEach((l, i) => B.push(text({ x: M, y: base(g.y(8) + i * lm, lm, fm, MET.grot), size: fm, w: 400, fam: 'grot', fill: 'rgba(3,2,27,.72)', t: l })));
-  const px = g.x(1), py = g.y(10), pw = g.w(1, 7), ph = g.h(10, 14), fl = 2.8 * CQ;
+  lines(s.meta).forEach((l, i) => B.push(text({ x: M, y: base(g.y(7) + i * lm, lm, fm, MET.grot), size: fm, w: 400, fam: 'grot', fill: 'rgba(3,2,27,.72)', t: l })));
+  const px = g.x(1), py = g.y(9), pw = g.w(1, 7), ph = g.h(9, 13), fl = 2.8 * CQ;
   B.push(`<rect x="${f2(px)}" y="${f2(py)}" width="${f2(pw)}" height="${f2(ph)}" fill="${C.azul}"/>`);
   B.push(text({ x: px + 2 * CQ, y: py + ph - 2 * CQ - MET.grot.desc * fl, size: fl, w: 500, fam: 'grot', fill: 'rgba(255,255,255,.7)', t: 'foto del evento' }));
   B.push(...pie(g, 16, null));
@@ -170,7 +182,6 @@ function grilla(H, rows, story, name, label) {
   out(`kit/grillas/${name}.svg`, `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">\n<title>${label}. Margen 6 %, medianil 1,2 %, siete columnas. Usar como capa de guías.</title>\n${B.join('\n')}\n</svg>\n`);
 }
 grilla(1350, 9, false, 'grilla-4x5-9filas', 'Grilla 4:5, 9 filas');
-grilla(1350, 10, false, 'grilla-4x5-10filas', 'Grilla 4:5, 10 filas');
 grilla(1920, 16, true, 'grilla-9x16-16filas', 'Grilla 9:16, 16 filas');
 grilla(1080 * 420 / 297, 11, false, 'grilla-a3-11filas', 'Grilla A3 vertical, 11 filas');
 grilla(1080, 8, false, 'grilla-1x1-8filas', 'Grilla 1:1, 8 filas');
@@ -195,14 +206,14 @@ out('kit/fotos/foto-placeholder.svg', `<?xml version="1.0" encoding="UTF-8"?>\n<
 
 // ── escribir plantillas y PNG ──
 const A3 = 1080 * 420 / 297, R169 = 1080 * 9 / 16;
-const LISTA = [
-  ['semana', 'semana', 1350, 10], ['foto', 'foto', 1350, 9], ['grafico', 'grafico', 1350, 9], ['editorial', 'editorial', 1350, 9], ['story', 'story', 1920, 16],
-  ['semana-a3', 'semana', A3, 11], ['foto-a3', 'foto', A3, 11], ['grafico-a3', 'grafico', A3, 11], ['editorial-a3', 'editorial', A3, 11],
-  ['semana-1x1', 'semana', 1080, 8], ['foto-1x1', 'foto', 1080, 8], ['grafico-1x1', 'grafico', 1080, 8],
-  ['foto-16x9', 'foto', R169, 4]
-];
+const FOR = { '': [1350, 9], '-a3': [A3, 11], '-1x1': [1080, 8], '-16x9': [R169, 4] };
+const LISTA = [];
+for (const t of ['titular', 'numero', 'foto', 'semana']) for (const [suf, [H, n]] of Object.entries(FOR)) LISTA.push([t + suf, t, H, n]);
+for (const suf of ['', '-a3']) LISTA.push(['agenda' + suf, 'agenda', FOR[suf][0], FOR[suf][1]]);
+LISTA.push(['story', 'story', 1920, 16]);
+for (const f of fs.readdirSync(path.join(ROOT, 'kit/plantillas'))) fs.unlinkSync(path.join(ROOT, 'kit/plantillas', f));
 for (const [nombre, tipo, H, n] of LISTA) {
-  const svg = tipo === 'story' ? T.story() : T[tipo](H, n);
+  const svg = tipo === 'story' ? await T.story() : await T[tipo](H, n);
   out(`kit/plantillas/${nombre}.svg`, svg);
   const pg = await browser.newPage({ viewport: { width: W, height: Math.ceil(H) } });
   await pg.setContent(`<link rel="stylesheet" href="${FONTS}"><body style="margin:0;background:#fff">${svg.replace(/<\?xml[^>]*>\s*/, '')}</body>`, { waitUntil: 'networkidle' });
@@ -212,4 +223,4 @@ for (const [nombre, tipo, H, n] of LISTA) {
   await pg.close();
 }
 await browser.close();
-console.log('Kit generado en', path.join(ROOT, 'kit'));
+console.log('Kit generado en', path.join(ROOT, 'kit'), LISTA.length, 'plantillas');

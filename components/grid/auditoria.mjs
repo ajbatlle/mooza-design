@@ -28,8 +28,8 @@ const PREVIEW = 'file://' + path.resolve(path.dirname(fileURLToPath(import.meta.
     const box=rect(el), W=box.r-box.l, mm=m/100*W, pad=mm;
     const inner={l:box.l+pad,r:box.r-pad,t:box.t+(tipo==='story'?Math.min(m*2.2,18)/100*W:pad),b:box.b-(tipo==='story'?Math.min(m*2.2,18)/100*W:pad)};
     const logo=el.querySelector('.mz-logo'), fecha=el.querySelector('.mz-fecha-pie');
-    const textos=[...el.querySelectorAll('.mz-titular,.mz-titular-largo,.mz-numero,.mz-titular-story,.mz-meta,.mz-etiqueta')];
-    const bloques=[...el.querySelectorAll('.mz-ph,.mz-sq,.mz-col,.mz-tile')];
+    const textos=[...el.querySelectorAll('.mz-titular,.mz-numero,.mz-nombre,.mz-hora,.mz-titular-story,.mz-meta,.mz-etiqueta')];
+    const bloques=[...el.querySelectorAll('.mz-ph,.mz-dc')];
     const tag=`${tipo}/${f} m${m} g${g}`;
     const L=logo&&rect(logo);
     if(L){

@@ -44,7 +44,7 @@ Cinco colores planos y un neutro. Un cartel tiene un solo campo de fondo, y las 
 | amarillo | `#fcee21` | Acento y fondo de cartel |
 | naranja | `#fbb03b` | Segundo campo de cartel |
 | blanco | `#ffffff` | Celdas "gratis" y fondo claro |
-| claro | `#f2f2f2` | Neutro de story y de cartel editorial |
+| claro | `#f2f2f2` | Neutro de story |
 
 Pares de texto verificados (contraste WCAG): noche sobre blanco 20,4, sobre claro 18,2, sobre amarillo 16,9 y sobre naranja 11,1. Blanco sobre azul 17,1 y amarillo sobre azul 14,1. No usar blanco como texto sobre naranja (1,8) ni naranja sobre amarillo (1,5).
 
@@ -103,27 +103,20 @@ Las fotos se convierten a dos colores de la paleta: las sombras toman el color o
 
 Transiciones de 0,15 s en estados interactivos y escala 0,98 al presionar. Sin rebotes, parallax ni marquesinas. Todo se desactiva con la preferencia de movimiento reducido.
 
-## Composiciones y formatos
+## Carteles
 
-Cinco diseños sobre la misma grilla, en cinco formatos. Siempre son siete columnas y lo que cambia es el número de filas, elegido para que la celda quede casi cuadrada: alto de celda = (alto − 2 × margen − (filas − 1) × medianil) ÷ filas. Los constructores están en `components/grid/poster.js` y las plantillas editables en `kit/plantillas/`.
+Una idea por cartel y mucho blanco. Seis diseños sobre la misma grilla. Siempre son siete columnas, y la última fila es el pie (logo a la izquierda, fecha a la derecha). Los constructores están en `components/grid/poster.js` y las plantillas editables en `kit/plantillas/`.
 
-| Formato | Tamaño | Filas | Diseños | Uso |
-|---|---|---|---|---|
-| 4:5 | 1080 × 1350 px | 9 o 10 | semana (10), foto, gráfico y editorial (9) | Feed de Instagram, carrusel, afiche digital |
-| A3 vertical | 297 × 420 mm | 11 | semana, foto, gráfico y editorial | Afiche impreso y exterior |
-| 1:1 | 1080 × 1080 px | 8 | semana, foto y gráfico | Posts cuadrados |
-| 9:16 | 1080 × 1920 px | 16 | story | Stories y portada de reel |
-| 16:9 | 1920 × 1080 px | 4 | foto | Slides, pantallas, banner web y gran formato apaisado |
+| Diseño | Qué muestra | Formatos |
+|---|---|---|
+| titular | Solo el titular, arriba a la izquierda | 4:5, A3, 1:1, 16:9 |
+| número | El rango de la semana, enorme | 4:5, A3, 1:1, 16:9 |
+| foto | Una foto, el nombre del evento y una línea de datos | 4:5, A3, 1:1, 16:9 |
+| semana | Siete días en una tira, el destacado relleno | 4:5, A3, 1:1, 16:9 |
+| agenda | Un día por lámina y hasta tres eventos. Para el carrusel semanal | 4:5, A3 |
+| story | Categoría, nombre, datos y foto | 9:16 |
 
-Diseños:
-
-| Diseño | Proporción base | Filas base | Qué muestra |
-|---|---|---|---|
-| semana | 4:5 | 10 | Cada celda es un día y una franja horaria de 1,5 h desde las 12:00 |
-| foto | 4:5 | 9 | Una foto en celdas completas y el titular serif debajo |
-| gráfico | 4:5 | 9 | La semana como horario: cada bloque es un evento y su alto es la duración |
-| editorial | 4:5 | 9 | Titular escrito con lo que pasa y cuadrados donde irían las fotos |
-| story | 9:16 | 16 | Día activo, categoría, nombre, lugar y foto |
+Filas por formato: 9 en 4:5, 11 en A3, 8 en 1:1, 4 en 16:9 y 16 en 9:16. El carrusel semanal de Instagram se arma con una portada (titular), una o más láminas de agenda por día y un cierre (titular).
 
 ## Propuesta web
 

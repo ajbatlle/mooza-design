@@ -21,7 +21,7 @@ label{display:inline-flex;gap:8px;align-items:center;margin:0 20px 20px 0;font-s
 </div>
 <script>
 var fila=document.getElementById('fila'),esc=document.getElementById('escena');
-['semana','foto','grafico','editorial','story'].forEach(function(t){var d=document.createElement('div');fila.appendChild(d);MoozaPoster.mount(d,t)});
+['titular','numero','foto','semana','agenda','story'].forEach(function(t){var d=document.createElement('div');fila.appendChild(d);MoozaPoster.mount(d,t)});
 document.getElementById('ver').onchange=function(e){esc.classList.toggle('mz-show-grid',e.target.checked)};
 document.getElementById('m').oninput=function(e){esc.style.setProperty('--mz-m',e.target.value)};
 </script>

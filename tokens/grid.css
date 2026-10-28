@@ -18,7 +18,7 @@
   --mz-fs-titular: calc(var(--mz-col) * 1.52 * 1cqw);  /* titular serif del cartel "foto" */
   --mz-fs-titular-largo: calc(var(--mz-col) * 1.04 * 1cqw);  /* titular editorial de varias líneas */
   --mz-fs-story: calc(var(--mz-col) * 1.05 * 1cqw);
-  --mz-fs-numero: calc(var(--mz-col) * 2.17 * 1cqw);   /* número grande, grotesca */
+  --mz-fs-numero: calc(var(--mz-col) * 3 * 1cqw);   /* número grande, grotesca: ocupa casi todo el ancho */
   --mz-fs-dato: calc(var(--mz-col) * .3 * 1cqw);       /* fecha, hora */
   --mz-fs-meta: calc(var(--mz-col) * .33 * 1cqw);      /* lugar y precio en story */
   --mz-fs-etiqueta: calc(var(--mz-col) * .28 * 1cqw);
