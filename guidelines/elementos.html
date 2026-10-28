@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Elementos Mooza</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:var(--mz-claro);color:var(--mz-azul);font-family:var(--mz-grot);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{width:100%;max-width:1240px;margin-inline:auto;padding:clamp(20px,4vw,48px) max(16px,env(safe-area-inset-left,0px))}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:clamp(20px,3vw,36px)}
+.top svg{width:120px;color:var(--mz-azul);--mz-iso:var(--mz-azul);display:block}
+.top a{font-size:13px;color:var(--mz-azul);text-decoration:none}
+.fila{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(20px,3vw,44px)}
+.pz{width:100%;box-shadow:0 0 0 1px rgba(27,20,68,.14)}
+.nota{margin:clamp(20px,3vw,36px) 0 0;font-family:var(--mz-palabra);font-size:clamp(20px,2.4vw,32px);letter-spacing:-.02em;line-height:1.15}
+
+/* cada elemento, con su contorno y su rótulo */
+.etq .mz-ph,.etq .mz-t-grande,.etq .mz-t-titular,.etq .mz-t-sub,.etq .mz-t-display,.etq .mz-pie-logo,.etq .mz-fecha-pie,.etq .mz-dc-on{outline:2px solid #ff2d6f;outline-offset:2px;position:relative}
+.etq .mz-ph::after,.etq .mz-t-grande::after,.etq .mz-t-titular::after,.etq .mz-t-sub::after,.etq .mz-t-display::after,.etq .mz-pie-logo::after,.etq .mz-fecha-pie::after,.etq .mz-dc-on::after{
+  position:absolute;left:-2px;top:-2px;transform:translateY(-100%);background:#ff2d6f;color:#fff;font:600 2.6cqw/1 var(--mz-grot);padding:.7cqw 1.2cqw;white-space:nowrap;letter-spacing:.02em;z-index:5}
+.etq .mz-ph::after{content:"foto";top:auto;bottom:-2px;transform:none;left:auto;right:-2px}
+.etq .mz-t-grande::after{content:"titular";top:auto;bottom:-2px;transform:translateY(100%)}
+.etq .mz-t-sub::after{content:"fecha";top:auto;bottom:-2px;transform:translateY(100%)}
+.etq .mz-t-titular::after{content:"nombre"}
+#b .mz-t-titular::after{content:"título"}
+.etq .mz-t-display::after{content:"número";top:auto;bottom:-2px;left:auto;right:-2px;transform:translateY(100%)}
+.etq .mz-pie-logo::after{content:"logo";top:-2px;transform:translateY(-130%)}
+.etq .mz-fecha-pie::after{content:"fecha";left:auto;right:-2px;top:-2px;transform:translateY(-130%)}
+.etq .mz-dc-on::after{content:"día";top:auto;bottom:-2px;transform:translateY(100%)}
+#b .mz-pie-logo,#b .mz-fecha-pie,#c .mz-pie-logo,#c .mz-fecha-pie,#d .mz-pie-logo,#d .mz-fecha-pie{outline:none}
+#b .mz-pie-logo::after,#b .mz-fecha-pie::after,#c .mz-pie-logo::after,#c .mz-fecha-pie::after,#d .mz-pie-logo::after,#d .mz-fecha-pie::after{display:none}
+.etq .mz-overlay{display:grid}
+.etq .mz-overlay i{background:rgba(255,45,111,.04)}
+@media (max-width:980px){.fila{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.fila{grid-template-columns:minmax(0,1fr)}.pz{max-width:360px}}
+</style>
+</head>
+<body>
+<script src="../components/grid/poster.js"></script>
+<script>document.body.insertAdjacentHTML('afterbegin',MoozaPoster.sprite())</script>
+<main class="wrap">
+  <div class="top"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Mooza"><use href="#mz-lockup"/></svg><a href="index.html">Volver al sistema</a></div>
+  <div class="fila" id="fila">
+    <div><div class="pz etq" id="a"></div></div>
+    <div><div class="pz etq" id="b"></div></div>
+    <div><div class="pz etq" id="c"></div></div>
+    <div><div class="pz etq" id="d"></div></div>
+  </div>
+  <p class="nota">Cada cartel se parte en dos zonas. Cada elemento ocupa sus celdas y nada las comparte.</p>
+</main>
+<script>
+MoozaPoster.mount(document.getElementById('a'),'titular',{fondo:false});
+MoozaPoster.mount(document.getElementById('b'),'numero',{fondo:false});
+MoozaPoster.mount(document.getElementById('c'),'foto',{fondo:false});
+MoozaPoster.mount(document.getElementById('d'),'semana',{fondo:false});
+</script>
+</body>
+</html>

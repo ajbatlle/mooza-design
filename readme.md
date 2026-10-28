@@ -1,200 +1,143 @@
-# Mooza Design System
+# Sistema de diseño Mooza
 
-## Company
+Mooza (mooza.cl, @mooza_cl) reúne y ordena los panoramas y eventos culturales de Chile en una agenda semanal. Este es el sistema de diseño vigente. No hay otro: lo anterior quedó fuera y solo vive en el historial de git.
 
-**Mooza** (mooza.cl · @mooza_cl) is a Chilean cultural events discovery platform. It aggregates and curates *panoramas y eventos culturales en Chile* — concerts, jazz, theater, dance, exhibitions, cinema, and more — organized into weekly cultural agendas. The product tagline is **"Tu semana cultural"** (Your cultural week).
+La semana es la grilla: siete columnas, una por día. Cada pieza se arma sobre ella, con color plano, una sola familia tipográfica y, detrás de todo, el logo a una escala en que ya no se lee como logo.
 
-The platform serves a Chilean audience discovering what to do in their city, with a strong focus on Santiago's cultural scene.
+## Contenido
 
----
+- Español, con tuteo ("mira", "ven", "guarda tu plan"). Sin voseo y sin emoji.
+- Directo, seco y simple. Frases cortas: la pieza dice poco y el evento dice el resto. Sin exclamaciones, sin tecnicismos y sin eslóganes.
+- Titulares con mayúscula inicial y el resto en minúscula salvo nombres propios: "Agenda cultural", "Esta semana pasan cosas", "Esta semana sales".
+- Nombres de evento, sala y artista con mayúscula inicial: "Cuarteto de jazz en vivo", "Bar La Otra Casa", "Alejandro Sanz".
+- Etiquetas de categoría con mayúscula inicial: Música, Teatro, Danza, Letras. Los días también: "Sábado".
+- Fechas: "26 oct – 1 nov", con mes abreviado en minúscula y raya corta con espacios. El rango corto grande se escribe "26–1".
+- Hora en 24 horas ("21:00") y lugar con punto medio: "Teatro del Parque • 21:00".
+- Precios con punto de miles y sin decimales: "$6.000", "desde $5.000". Gratis se escribe "Gratis".
+- Cierre de piezas: "Toda la agenda en mooza.cl".
 
-## Products
+## Fundamentos visuales
 
-1. **mooza.cl** — Web platform for event discovery, search, and browsing by category, location, and date
-2. **Weekly Social Agenda** — Instagram carousel posts (@mooza_cl) curated weekly with the cultural agenda
+### Grilla
 
----
+Cada elemento ocupa celdas completas y ninguno comparte celdas con otro. Los seis elementos (logo, fecha, titular, número, celda y foto) están medidos en `guidelines/elementos.html`. Siete columnas. Todo se mide en porcentaje del ancho de la pieza, así que la regla sirve en cualquier formato.
 
-## Sources
-
-- `uploads/Logo Mooza Editable_*.svg` — Official logo files (9 variants: horizontal/vertical/iso × color/white/B&W)
-- `uploads/Paleta de colores-10.svg` / `.png` — Official brand color palette document
-- `uploads/mooza rrss.jpeg` — Social media post (weekly agenda, 15–21 June)
-- `uploads/mooza rrss1.jpeg` — Social media post (weekly agenda, 15 March)
-- Website: mooza.cl (domain from brand assets; not crawled)
-- Instagram: @mooza_cl
-
----
-
-## CONTENT FUNDAMENTALS
-
-### Voice & Tone
-Mooza speaks **in Spanish** with the warm, knowledgeable energy of a culturally plugged-in friend who knows your city's hidden gems. The tone is **friendly, accessible, and insider** — never corporate.
-
-- **Language**: Spanish. No English except in brand context (mooza.cl URL, handle).
-- **Pronouns**: Informal "tú/tus" — "Tu semana cultural", "Toda la agenda en mooza.cl". Personal and direct.
-- **Personality**: Curator-as-friend. Enthusiastic but understated — lets the events speak for themselves.
-
-### Casing & Typography Conventions
-- **Event titles**: Sentence case, lowercase-dominant — `"4sure (no doubt) en casa elisa pizza bar, peñaflor"`. Not title-cased.
-- **Category labels**: ALL CAPS — `MÚSICA`, `TEATRO`, `CINE`, `ARTE`, `DANZA`.
-- **Composite badges**: Dot-separated — `DESTACADO • MÚSICA`, `DESTACADO • EVENTO`.
-- **Section labels**: ALL CAPS — `AGENDA CULTURAL`.
-- **Platform copy**: Lowercase CTA — `"Toda la agenda en mooza.cl"`.
-
-### Numbers & Pricing
-- **Chilean peso format**: `$6.000` (period as thousands separator, no decimals).
-- **Range pricing**: `"desde $5.000"` (lowercase "desde").
-- **Free events**: `"Gratis"` (not "Free", not "GRATIS").
-- **Week ranges**: `"15 — 21 junio"` (en-dash with spaces, month lowercase).
-- **Time format**: `"22:00"` (24h).
-- **Venue format**: `"Venue • HH:MM"` (bullet separator between name and time).
-
-### No emoji
-The Mooza brand uses **no emoji** in UI contexts. Category labels and status indicators use text pills only.
-
----
-
-## VISUAL FOUNDATIONS
-
-### Color System
-Mooza is **dark-first**. The entire visual identity is built on a rich dark navy/purple backdrop with electric yellow as the dominant accent and warm orange as a complement.
-
-| Token | Hex | Role |
+| Variable | Valor | Rango |
 |---|---|---|
-| `--color-yellow` | `#fcee21` | Primary accent — CTAs, featured, logo icon, highlights |
-| `--color-orange` | `#fbb03b` | Warm accent — gradient pair, secondary warmth |
-| `--color-navy` | `#1b1444` | Primary surface — event cards, nav backgrounds |
-| `--color-dark` | `#03021b` | Base background — deepest dark |
-| `--color-light` | `#f2f2f2` | Light neutral — light-mode base, subtle light fills |
+| `--mz-m` margen | 6 | 3 a 12 |
+| `--mz-g` medianil | 1,2 | 0,6 a 3,5, y como máximo la mitad del margen |
+| `--mz-col` columna | (100 − 2 × margen − 6 × medianil) ÷ 7 | 11,5 con los valores estándar |
+| `--mz-mv-story` | 2,2 | El margen vertical de 9:16 es 2,2 veces el margen, con tope de 18 % |
 
-**Background treatment**: Social posts show a subtle radial gradient from `#221d42` (center) to `#0a0c18` (edges) — not flat black, but a deep purple-navy depth. In the app icon (logo-icon-gradient.svg), the gradient is `#221d42 → #17152f → #0d0e1e → #0a0c18`.
+Filas por formato: 9 en 4:5, 11 en A3, 8 en 1:1, 4 en 16:9 y 16 en 9:16. Los textos grandes se miden en columnas (ver `tokens/grid.css`): al cambiar el margen o el medianil el texto se reajusta y la composición se mantiene. La grilla se muestra sobre cualquier pieza agregando `.mz-show-grid` a un contenedor.
 
-### Typography
-Two Google Fonts families — one for display impact, one for legibility:
+### Color
 
-| Token | Family | Role |
+Cinco colores planos y un gris claro. Orden de importancia: gris claro (el "blanco" de la marca, fondo de todo), azul (protagonista, pero no absoluto) y amarillo y naranjo. En cada pieza hay una sola zona de color: azul, amarillo o naranjo. En un conjunto de piezas el azul es cerca de la mitad y el resto se reparte entre amarillo y naranjo. Los colores no compiten: nunca dos zonas de color grandes en la misma pieza. No hay negro: el azul es el color más oscuro y es también la tinta de textos y logo sobre gris. Sobre azul, el texto va en blanco.
+
+| Token | Hex | Uso |
 |---|---|---|
-| `--font-display` | **Sora** | Headlines, hero copy, large titles. Use 700–800. |
-| `--font-sans` | **DM Sans** | UI text, body copy, labels, metadata. Use 400–600. |
-| `--font-mono` | **JetBrains Mono** | Code, technical content. Use 400–500. |
+| azul | `#1b1444` | Zona de color, tinta de textos y logo, tinta de las fotos |
+| amarillo | `#fcee21` | Zona de color o acento |
+| naranja | `#fbb03b` | Zona de color o acento |
+| claro | `#f2f2f2` | El "blanco" de la marca: fondo de todo |
+| blanco | `#ffffff` | Texto y logo sobre azul |
 
-- **Display / Headlines**: Sora ExtraBold 800, tracking `−0.015em`, line-height `1.15`.
-- **Body / UI**: DM Sans, weight 400–600, optimised for long-form readability and small sizes.
-- **Category labels**: DM Sans Bold 700, uppercase, letter-spacing `0.14em`.
-- **Metadata / secondary**: DM Sans Regular 400, `rgba(255,255,255,0.65)`.
+Cuatro tonos derivados, solo para las formas del fondo: `--mz-tono-azul`, `--mz-tono-amarillo`, `--mz-tono-naranja` y `--mz-tono-claro`. Son mezclas de la propia paleta, un paso más claras o más cálidas.
 
-### Cards & Surfaces
-- **Regular event rows**: No card background — float on base surface with `1px rgba(255,255,255,0.07)` dividers.
-- **Featured events ("DESTACADO")**: Rounded card `border-radius: 14px`, lighter navy bg (`--bg-surface-raised: #221d55`).
-- **Date blocks**: Dark inset squares (`--bg-base`), `border-radius: 10px`, large white ExtraBold day number.
-- **Featured date blocks**: Yellow fill (`--accent`), dark text.
+Pares de texto verificados (contraste WCAG): azul sobre gris claro 15,2, sobre amarillo 14,1 y sobre naranja 9,2. Blanco sobre azul 17,1. No usar blanco como texto sobre naranja ni naranja sobre amarillo.
 
-### Border Radius
-- Buttons & pills: `border-radius: 9999px` (fully round)
-- Cards: `12–14px`
-- Date blocks: `10px`
-- Inputs: `9999px` (pill)
-- Avatar: `9999px`
+Si la zona es amarilla, el acento pequeño es naranja. En los demás casos es amarillo.
 
-### Shadows
-Dark-on-dark elevation system. Shadows use `rgba(3, 2, 27, …)` — very subtle on dark backgrounds. No aggressive drop shadows.
+### Tipografía
 
-### Animation & Motion
-- **Transitions**: `0.15s ease` for most interactive states (hover, focus, active).
-- **Hover (buttons)**: Slightly brighter accent color (`--accent-hover: #fdf060`).
-- **Press states**: Scale down `0.97` for tactile feel.
-- **No aggressive motion**: Brand assets show no bounces, parallax, or marquees.
-- **Reduced motion**: Always respect `prefers-reduced-motion`.
+Una sola familia, Geist (licencia OFL, Google Fonts). La jerarquía sale del tamaño, en múltiplos del ancho de columna.
 
-### Backgrounds & Imagery
-- Brand assets are **purely typographic** — no photography or illustration.
-- The logo mark (double-arc location pin / heart) appears as a large ghost watermark (`~15% opacity`) in social post backgrounds.
-- Event photography (venue/performance photos) would be warm-toned where used, but is not part of the core brand assets.
+- Peso 400 en palabras: titulares, nombres de evento, sala y artista.
+- Peso 500 en números, fechas, horas, precios y etiquetas, con cifras tabulares.
+- Escala: número 2,2, titular 1,4, nombre 0,95, fecha en bloque 0,62, texto de lista 0,44, dato 0,28 y etiqueta 0,2. Una pieza usa tres pasos como máximo.
+- Titular con tracking −0,05 em e interlínea 0,92. Etiquetas con +0,02 em.
+- Sin negritas. La agenda usa un tamaño de 0,38 columnas para la hora y el nombre, porque lleva hasta tres eventos.
 
-### Layout
-- **Mobile-first**: Social posts are 1080×1350 portrait; platform is likely mobile-optimized.
-- **Horizontal padding**: `24px` (`--pad-page`).
-- **List rhythm**: Events separated by `1px` dividers, `14px` vertical padding per row.
-- **Header**: logo left-aligned, metadata/controls right-aligned.
+### Logo
 
----
+El logo oficial no se redibuja. La geometría está en `kit/logo/base/` y todas las variantes (azul, blanco, amarillo y naranjo; horizontal, vertical e ícono) están en `kit/logo/`, en SVG, PNG sin fondo y PDF, y también sobre cada fondo.
 
-## ICONOGRAPHY
+- Posición: la última fila de la grilla es el pie. El logo va ahí, a la izquierda, con el ancho exacto de dos columnas. La fecha o la web va a la derecha. Nada más entra en esa fila.
+- Colores: azul sobre gris claro, amarillo y naranjo; blanco sobre azul.
+- Espacio libre: media altura del logo por los cuatro lados. Tamaño mínimo: 96 px de ancho en pantalla y 25 mm en impresión. Por debajo, solo el ícono, de al menos 24 px.
+- No deformarlo ni girarlo, no recolorearlo fuera de la paleta, no ponerlo sobre una foto y no agregarle sombras ni efectos.
 
-### Material Symbols Outlined
-The design system uses **[Material Symbols Outlined](https://fonts.google.com/icons)** (Google Fonts) as the standard icon library — variable font, thin/outline style (`wght 200`, `FILL 0`).
+### Fondo de marca
 
-**Load via `styles.css`** (already included in `tokens/icons.css`) — no extra `<link>` needed.
+El logo a una escala tan grande que ya no se lee como logo es la manera de comunicar de Mooza. Va siempre, detrás del texto, en todas las piezas.
 
-**Usage — HTML:**
+1. Se usan solo las partes curvas del logo: las dos "o" juntas y el ícono. Así no aparecen letras ni diagonales.
+2. Cada símbolo se ancla por un punto de interés (el centro de una "o", la lente entre las dos, un lóbulo del ícono) cerca de una esquina y se gira en múltiplos de 90°. La semilla decide cuál y dónde.
+3. Las formas cruzan el límite entre la zona de color y el gris. Cada zona lleva la forma en un tono apenas distinto de su color, para que el texto no pierda contraste.
+4. El borde de las formas se suaviza (1,8 en unidades de ancho de pieza) y sobre toda la pieza va un grano fino, que le da unidad y textura. Son la única excepción a la regla de "sin degradados".
+
+En el generador va por defecto: `fondo: 'tono'`, `difuminado: 1.8` y `grano: true`. Para quitarlo, `fondo: false`. Las plantillas SVG del kit no lo llevan, porque el grano y el borde suave no viajan dentro de un SVG editable.
+
+### Fotos
+
+Las fotografías se muestran de un solo modo: una tinta azul con transparencia. El procedimiento, tal como está en `kit/fotos/ejemplo/procedimiento-foto-mooza.psd`: sobre la foto va una capa de relleno sólido azul `#1b1444` y su máscara de capa es el canal verde de la foto, invertido. El resultado es un PNG de un solo color con el alfa igual a 255 menos el canal verde: las sombras quedan opacas y las luces transparentes. Esa imagen se apoya sobre una zona lisa amarilla o naranja, que asoma por las luces.
+
+Puede ir en la celda de foto (diseños `foto` y `story`, y la mitad derecha del horizontal) o a sangre en la zona de color de `titular` y `semana`; sobre una foto oscura el titular puede ir en blanco. El generador convierte una foto normal al vuelo o usa tal cual un PNG ya convertido (`foto.listo`). Para convertirla: `kit/tinta/index.html` (navegador) o `python3 kit/tinta/tinta.py foto.jpg` (por lotes). Para verla en los carteles: `guidelines/fotos.html`. Las fotos de eventos son de sus organizadores: confirma los derechos antes de publicarlas.
+
+### Ilustración: las musas
+
+Cuatro musas, dibujadas como grabado de línea fina en tinta azul con transparencia, flotando, sin escena ni marco: Euterpe (música), Talía (teatro), Terpsícore (danza) y Calíope (letras). Se usan solo sobre una zona de color o sobre el corte entre dos colores, nunca sobre una foto. Los dibujos y sus prompts están en `kit/ilustraciones/`.
+
+### Poleras
+
+Estampa en serigrafía de dos tintas sobre polera gris claro: un círculo de color, naranjo o amarillo alternados entre musas, y las líneas azules encima, en multiplicar. El círculo va en el centro de los cuatro bloques (titular arriba, categoría y nombre a los lados, logo con mooza.cl abajo) y la musa completa queda centrada entre el titular y el logo. Titular en Geist 400 y mucho blanco. Frases: "Esta semana pasan cosas." y "Esta semana sales." Capas de impresión y maquetas en `kit/poleras/`.
+
+### Forma y movimiento
+
+Ángulos rectos: todo es celda, así que el radio de borde es 0. No hay iconos; el único símbolo es el ícono de la marca. Transiciones de 0,15 s en estados interactivos y escala 0,98 al presionar, sin rebotes ni parallax, y todo se desactiva con la preferencia de movimiento reducido.
+
+## Piezas
+
+Cada pieza se parte en dos zonas, una arriba y otra abajo (en 16:9, izquierda y derecha), y cada zona dice una sola cosa. Una es gris claro y la otra lleva el color o la foto. Siempre son siete columnas y la última fila es el pie. Los constructores están en `components/grid/poster.js` y las plantillas editables en `kit/plantillas/`.
+
+| Diseño | Qué muestra | Formatos |
+|---|---|---|
+| titular | Arriba, el titular sobre el color. Abajo, sobre gris, la fecha | 4:5, A3, 1:1, 16:9 |
+| número | Arriba, sobre gris, el rango de la semana, enorme. Abajo, sobre el color, qué es | 4:5, A3, 1:1, 16:9 |
+| foto | Arriba, la foto. Abajo, sobre gris, el nombre del evento y sus datos | 4:5, A3, 1:1, 16:9 |
+| semana | Arriba, sobre el color, el titular. Abajo, sobre gris, siete días con el destacado en acento | 4:5, A3, 1:1 |
+| agenda | Arriba, sobre el color, el día. Abajo, sobre gris, hasta tres eventos con una línea fina entre ellos | 4:5, A3 |
+| story | Arriba, la foto. Abajo, sobre gris, categoría, nombre y datos | 9:16 |
+| musa | Una musa cruzando el corte entre dos colores, con el logo y mooza.cl en el pie | Carta |
+
+El carrusel semanal de Instagram se arma con una portada (titular), una o más láminas de agenda por día y un cierre (titular). En 16:9 la columna 4 queda sobre el centro y va vacía.
+
+## Uso en código
+
 ```html
-<span class="icon">search</span>
-<span class="icon icon-lg">location_on</span>
+<link rel="stylesheet" href="styles.css">
+<script src="components/grid/poster.js"></script>
+<script>
+  document.body.insertAdjacentHTML('afterbegin', MoozaPoster.sprite()); // símbolos del logo, una vez
+  MoozaPoster.mount(document.querySelector('#cartel'), 'semana');       // con los datos de ejemplo
+  // MoozaPoster.mount(el, 'story', { story: { categoria: 'Teatro', titulo: '…', meta: '…' } });
+</script>
 ```
 
-**Usage — React/JSX:**
-```jsx
-<span style={{
-  fontFamily: "'Material Symbols Outlined'",
-  fontSize: 22,
-  fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24",
-  lineHeight: 1,
-}}>search</span>
-```
+Los datos tienen la forma de `MoozaPoster.EJEMPLO`. Los eventos, salas y precios de ejemplo son inventados. Opciones y detalles en `components/grid/README.md`.
 
-**Icon vocabulary** (see `guidelines/icons-material.card.html` for full showcase):
+## Índice de archivos
 
-| Icon name | Use |
+| Ruta | Contenido |
 |---|---|
-| `search` | Search input |
-| `location_on` | Venue / address |
-| `schedule` | Event time |
-| `calendar_today` | Date |
-| `confirmation_number` | Ticket / entry |
-| `arrow_back` | Back navigation |
-| `close` | Dismiss / close |
-| `favorite` | Save event |
-| `share` | Share event |
-| `music_note` | Música category |
-| `theater_comedy` | Teatro category |
-| `movie` | Cine category |
-| `palette` | Arte category |
-
-**The Mooza brand mark** (double-arc location-pin) is a separate custom icon — see `assets/logos/logo-iso-color.svg`.
-
----
-
-## FILE INDEX
-
-### Tokens (`tokens/`)
-| File | Contents |
-|---|---|
-| `tokens/colors.css` | Brand palette + semantic aliases (bg, text, accent, border) |
-| `tokens/typography.css` | Google Fonts import, font families, size scale, weights, tracking |
-| `tokens/spacing.css` | 4px-grid spacing scale, semantic gaps/pads, border-radius, layout |
-| `tokens/shadows.css` | Elevation shadows, yellow/orange glow tokens, inner shadows |
-
-### Foundation Cards (`guidelines/`)
-Brand + token specimen cards shown in the Design System tab.
-
-### Components (`components/core/`)
-| Component | Description |
-|---|---|
-| `Button` | Primary/secondary/ghost/warm — fully-rounded, uppercase |
-| `Badge` | Category + status labels (MÚSICA, DESTACADO, Gratis) |
-| `DateBlock` | Day number + abbreviated day name block |
-| `PriceTag` | Event price pill — outlined for paid, yellow fill for Gratis |
-| `EventCard` | Full event row — composes DateBlock + Badge + PriceTag |
-| `Input` | Search/text input — pill shape, yellow focus ring |
-| `CategoryChip` | Filter chip for category rows |
-
-### UI Kit (`ui_kits/platform/`)
-Interactive recreation of the Mooza event discovery platform — home feed, event detail, category filtering.
-
-### Assets (`assets/`)
-| Path | Contents |
-|---|---|
-| `assets/logos/` | 9 logo SVG variants (horizontal/vertical/iso × color/white/B&W + gradient icon) |
-| `assets/mooza-rrss.jpeg` | Social media sample (June agenda) |
-| `assets/mooza-rrss1.jpeg` | Social media sample (March agenda) |
+| `styles.css` | Punto de entrada: importa tokens y componentes |
+| `tokens/` | `colors.css`, `typography.css`, `grid.css` y `tokens.json` |
+| `components/grid/` | Estilos y generador de piezas, con vista previa y auditoría |
+| `components/ui/` | Botón, filtro, campo, fecha, precio y fila de evento |
+| `components/tinta/` | Fotos en tinta azul con transparencia, para canvas y como filtro SVG |
+| `guidelines/index.html` | Referencia navegable del sistema, con la grilla ajustable |
+| `guidelines/elementos.html` | Los seis elementos: tamaño, posición y qué pueden tocar |
+| `guidelines/fotos.html` | Probar fotos en los carteles y descargar la tinta |
+| `caso-de-estudio/` | La presentación del rebrand, en página y en PDF |
+| `kit/` | La entrega de recursos gráficos: logo, plantillas, fondos, grillas, celdas, ilustraciones, poleras y fotos, en SVG, PNG y PDF. Ver `kit/README.md` |

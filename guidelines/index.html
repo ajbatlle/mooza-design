@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sistema de diseño Mooza</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+/* Esta página documenta el sistema. Solo usa sus tokens y componentes. */
+*{box-sizing:border-box}
+body{margin:0;background:var(--mz-azul);color:var(--mz-blanco);font-family:var(--mz-grot);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,p,ul,dl,dd,figure,figcaption{margin:0;padding:0}
+ul{list-style:none}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--mz-naranja);outline-offset:3px}
+.wrap{width:100%;max-width:1240px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top{padding-block:clamp(24px,4vw,48px);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.top svg{width:128px;display:block;color:var(--mz-blanco);--mz-iso:var(--mz-blanco)}
+.top nav{display:flex;gap:6px 22px;flex-wrap:wrap;font-size:13px}
+.top nav a{text-decoration:none;color:var(--mz-fg-suave);padding:6px 0}
+.top nav a:hover{color:var(--mz-blanco)}
+.intro{padding-block:clamp(32px,6vw,88px) clamp(36px,5vw,64px);display:grid;gap:clamp(20px,3vw,32px)}
+h1{font-family:var(--mz-palabra);font-weight:var(--mz-peso-titular);letter-spacing:-.03em;line-height:.96;font-size:clamp(46px,8.6vw,120px);text-wrap:balance;max-width:13ch}
+.lead{max-width:52ch;font-size:clamp(16px,1.4vw,19px);color:var(--mz-fg-suave);line-height:1.6}
+.sec{padding-block:clamp(40px,6vw,88px);border-top:1px solid var(--mz-linea)}
+h2{font-family:var(--mz-palabra);font-weight:var(--mz-peso-titular);letter-spacing:-.025em;line-height:1;font-size:clamp(32px,4.4vw,56px);margin-bottom:clamp(24px,3vw,40px);text-wrap:balance}
+.k{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mz-fg-tenue);display:block;margin-bottom:14px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:clamp(20px,3vw,48px)}
+.cols p,.nota{font-size:15px;color:var(--mz-fg-suave);max-width:38ch}
+.nota{max-width:60ch}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:rgba(255,255,255,.1);padding:1px 6px}
+
+/* grilla: controles y carteles */
+.ctl{display:flex;flex-wrap:wrap;gap:18px 36px;align-items:end;padding-block:18px;border-top:1px solid var(--mz-linea);border-bottom:1px solid var(--mz-linea);margin-bottom:clamp(28px,4vw,48px)}
+.ctl label{display:grid;gap:6px;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mz-fg-suave);min-width:min(100%,200px)}
+.ctl output{font-weight:500;color:var(--mz-blanco);letter-spacing:.04em;margin-left:6px}
+input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:0}
+.chk{display:flex!important;align-items:center;gap:10px;min-width:0!important;cursor:pointer}
+.chk input{width:18px;height:18px;accent-color:var(--mz-amarillo);margin:0}
+.math{font-size:12px;color:var(--mz-fg-tenue);font-variant-numeric:tabular-nums;margin-left:auto;max-width:36ch;line-height:1.4}
+.pgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(28px,4vw,56px) clamp(16px,2.4vw,32px);align-items:start}
+.fig{grid-column:span 2;display:grid;gap:12px;align-content:start}
+.fig figcaption{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:13px;color:var(--mz-fg-suave);line-height:1.45}
+.fig figcaption b{font-weight:600;color:var(--mz-blanco);font-size:14px}
+.fig figcaption span{grid-column:2}
+.fig figcaption i{font-style:normal;color:var(--mz-amarillo);font-weight:600;grid-row:span 2;font-size:14px}
+.reglas{grid-column:span 2;display:grid;gap:14px;align-content:start;border-top:1px solid var(--mz-linea);padding-top:14px;font-size:14px;color:var(--mz-fg-suave)}
+.reglas dt{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mz-amarillo);margin-bottom:2px}
+
+/* logo y formatos */
+.lgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.lg{aspect-ratio:16/10;display:grid;place-items:center;position:relative}
+.lg svg,.lg img{width:54%;height:auto;display:block}
+.lg small{position:absolute;left:12px;bottom:10px;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;opacity:.8}
+.libre{display:grid;place-items:center;padding:clamp(28px,5vw,64px);background:var(--mz-claro);color:var(--mz-azul)}
+.libre div{position:relative;outline:1.5px dashed rgba(255,45,111,.8);outline-offset:0;padding:calc(var(--w)*.1268);background:rgba(255,45,111,.07);--w:180px;width:calc(var(--w)*1.2536)}
+.libre svg{width:var(--w);display:block;color:var(--mz-azul);--mz-iso:var(--mz-azul)}
+.libre i{position:absolute;font:600 11px var(--mz-grot);color:rgba(255,45,111,1);font-style:normal}
+.minimos{display:flex;gap:28px;align-items:flex-end;flex-wrap:wrap;margin-top:8px}
+.minimos figure{margin:0;display:grid;gap:8px;font-size:12px;color:var(--mz-fg-suave)}
+.minimos svg{display:block;color:var(--mz-blanco);--mz-iso:var(--mz-blanco)}
+.tabla{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:32px}
+.tabla th,.tabla td{text-align:left;padding:10px 14px 10px 0;border-top:1px solid var(--mz-linea);vertical-align:top}
+.tabla th{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mz-fg-tenue)}
+.tabla td:first-child{font-weight:600;white-space:nowrap}
+.tabla-w{overflow-x:auto}
+.fig.w2{grid-column:span 4}
+@media (max-width:900px){.fig.w2{grid-column:span 6}}
+
+/* color */
+.sw{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr))}
+.sw div{aspect-ratio:1;padding:14px;display:flex;flex-direction:column;justify-content:space-between}
+.sw b{font-family:var(--mz-palabra);font-weight:var(--mz-peso-titular);font-size:26px;letter-spacing:-.02em;line-height:1}
+.sw code{background:none;padding:0;font-size:12px;letter-spacing:.04em}
+.sw small{font-size:12px;line-height:1.35}
+.c-azul{background:var(--mz-azul);color:var(--mz-blanco)}
+.c-amarillo{background:var(--mz-amarillo);color:var(--mz-azul)}
+.c-naranja{background:var(--mz-naranja);color:var(--mz-azul)}
+.c-blanco{background:var(--mz-blanco);color:var(--mz-azul)}
+.c-claro{background:var(--mz-claro);color:var(--mz-azul)}
+.pares{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:10px;margin-top:28px}
+.par{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.06);padding:10px}
+.par i{width:56px;height:44px;display:grid;place-items:center;font-style:normal;font-weight:600;font-size:20px;flex:none}
+.par p{font-size:13px;line-height:1.3;color:var(--mz-fg-suave)}
+.par p b{display:block;font-size:15px;color:var(--mz-blanco)}
+.par.no{opacity:.65}
+
+/* tipo */
+.tipo{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,4vw,64px);align-items:start}
+.muestra{background:var(--mz-claro);color:var(--mz-azul);padding:clamp(20px,3vw,40px);display:grid;gap:18px}
+.muestra .s{font-family:var(--mz-palabra);font-weight:var(--mz-peso-titular);letter-spacing:-.035em;line-height:.93;font-size:clamp(48px,7vw,96px)}
+.muestra .n{font-weight:600;letter-spacing:-.05em;line-height:.8;font-size:clamp(64px,10vw,140px);font-variant-numeric:tabular-nums}
+.muestra .d{font-size:14px;color:rgba(27,20,68,.72)}
+.estilos li{display:grid;grid-template-columns:1fr auto;gap:2px 16px;padding:12px 0;border-top:1px solid var(--mz-linea);align-items:baseline}
+.estilos li:last-child{border-bottom:1px solid var(--mz-linea)}
+.estilos .a{font-size:24px;line-height:1}
+.estilos .m{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mz-amarillo)}
+.estilos .s2{grid-column:1/-1;font-size:13px;color:var(--mz-fg-tenue)}
+
+/* interfaz */
+.ui{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:clamp(24px,4vw,64px);align-items:start}
+.ui .fila{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:22px}
+
+/* ilustración y fotos */
+.ilus{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;background:var(--mz-claro)}
+.ilus figure{margin:0;padding:clamp(8px,1.4vw,20px);display:grid;gap:6px;color:var(--mz-azul)}
+.ilus img{width:100%;height:auto;display:block}
+.ilus figcaption{font-size:12px;color:rgba(27,20,68,.7);padding:0 4px 8px}
+.ilus .osc{background:var(--mz-azul);color:var(--mz-blanco)}
+.ilus .osc figcaption{color:var(--mz-fg-suave)}
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px;margin-top:8px}
+.duo div{display:grid;gap:8px}
+.duo i{height:64px;display:block}
+.duo b{font-size:14px;font-weight:600}
+.duo span{font-size:12px;color:var(--mz-fg-suave)}
+.enlace{display:inline-block;margin-top:22px}
+@media (max-width:620px){.ilus{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* voz */
+.voz li{display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr);gap:4px 20px;padding:14px 0;border-top:1px solid var(--mz-linea);align-items:baseline}
+.voz li:last-child{border-bottom:1px solid var(--mz-linea)}
+.voz .e{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mz-amarillo)}
+.voz .v{font-size:19px;line-height:1.25}
+.voz .v.sr{font-size:24px}
+.voz .r{grid-column:2;font-size:13px;color:var(--mz-fg-tenue)}
+
+/* kit */
+.kit{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(20px,3vw,40px)}
+.kit li{border-top:1px solid var(--mz-linea);padding-top:14px;display:grid;gap:6px;align-content:start;font-size:14px;color:var(--mz-fg-suave)}
+.kit b{font-family:var(--mz-palabra);font-weight:var(--mz-peso-titular);font-size:24px;color:var(--mz-blanco);letter-spacing:-.02em}
+.kit code{word-break:break-all}
+.miniaturas{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:14px;margin-top:clamp(24px,3vw,40px)}
+.miniaturas img{width:100%;height:auto;display:block}
+.pie{padding-block:clamp(40px,6vw,72px);font-size:13px;color:var(--mz-fg-tenue)}
+
+@media (max-width:900px){.fig,.reglas{grid-column:span 3}.tipo,.ui{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:620px){.fig,.reglas{grid-column:span 6}.math{margin-left:0}.voz li{grid-template-columns:minmax(0,1fr)}.voz .r{grid-column:1}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<script src="../components/grid/poster.js"></script>
+<script>document.body.insertAdjacentHTML('afterbegin',MoozaPoster.sprite())</script>
+
+<header class="wrap top">
+  <svg viewBox="0 0 629.21 159.59" role="img" aria-label="Mooza"><use href="#mz-lockup"/></svg>
+  <nav aria-label="Secciones"><a href="#grilla">Grilla</a><a href="#formatos">Formatos</a><a href="#logo">Logo</a><a href="#color">Color</a><a href="#tipo">Tipo</a><a href="#interfaz">Interfaz</a><a href="#fondo">Fondo</a><a href="#fotos">Fotos</a><a href="#ilustracion">Musas</a><a href="#poleras">Poleras</a><a href="#voz">Voz</a><a href="#kit">Kit</a></nav>
+</header>
+
+<main class="wrap">
+  <section class="intro">
+    <h1>Sistema de diseño Mooza</h1>
+    <p class="lead">La semana es la grilla: siete columnas, una por día. Cada pieza se arma sobre ella, con color plano, una sola familia tipográfica y, detrás de todo, el logo a una escala en que ya no se lee como logo. Este es el único sistema vigente.</p>
+  </section>
+
+  <section class="sec" id="grilla">
+    <span class="k">Grilla</span>
+    <h2>Siete columnas, margen y medianil ajustables</h2>
+    <p class="nota" style="margin-bottom:28px">Margen y medianil son un porcentaje del ancho, así que escalan con cualquier formato. Los titulares y los números se miden en columnas: si cambias el margen o el medianil, el texto se reajusta y la composición se mantiene. Prueba los controles.</p>
+
+    <a class="mz-btn mz-btn--linea enlace" href="elementos.html" style="margin:0 0 28px">Ver los elementos</a>
+
+    <div class="ctl" role="group" aria-label="Ajustes de la grilla">
+      <label for="m">Margen<output id="mv"></output><input id="m" type="range" min="3" max="12" step=".5" value="6"></label>
+      <label for="g">Medianil<output id="gv"></output><input id="g" type="range" min=".6" max="3.5" step=".2" value="1.2"></label>
+      <label class="chk" for="ver"><input id="ver" type="checkbox"> Ver grilla</label>
+      <button class="mz-btn mz-btn--linea" id="reset" type="button">Restablecer</button>
+      <p class="math" id="math"></p>
+    </div>
+
+    <div class="pgrid" id="pgrid">
+      <figure class="fig"><div id="pa" role="img" aria-label="Cartel titular"></div><figcaption><i>titular</i><b>Solo el titular</b><span>El resto es gris.</span></figcaption></figure>
+      <figure class="fig"><div id="pb" role="img" aria-label="Cartel número"></div><figcaption><i>número</i><b>El rango de la semana</b><span>Enorme, arriba a la izquierda.</span></figcaption></figure>
+      <figure class="fig"><div id="pc" role="img" aria-label="Cartel foto"></div><figcaption><i>foto</i><b>Una foto y el evento</b><span>Nombre y una línea de datos.</span></figcaption></figure>
+      <figure class="fig"><div id="pd" role="img" aria-label="Cartel semana"></div><figcaption><i>semana</i><b>Siete días en una tira</b><span>El día destacado, relleno.</span></figcaption></figure>
+      <figure class="fig"><div id="pe" role="img" aria-label="Cartel agenda"></div><figcaption><i>agenda</i><b>Un día por lámina</b><span>Hasta tres eventos. Para el carrusel.</span></figcaption></figure>
+      <figure class="fig"><div id="pf" role="img" aria-label="Story"></div><figcaption><i>story</i><b>La misma grilla en 9:16</b><span>El margen vertical sube 2,2 veces, con tope de 18 %.</span></figcaption></figure>
+      <dl class="reglas">
+        <div><dt>Columnas</dt><dd>Siete, siempre. Las filas cambian con el formato: 9 en 4:5 y 16 en 9:16.</dd></div>
+        <div><dt>Margen</dt><dd>Del 3 al 12 % del ancho. Estándar 6 %. Más margen da más aire, menos margen da más densidad.</dd></div>
+        <div><dt>Medianil</dt><dd>De 0,6 a 3,5 %, y como máximo la mitad del margen.</dd></div>
+        <div><dt>Pie</dt><dd>La última fila de todo cartel. El logo, de dos columnas, a la izquierda; la fecha, a la derecha. Nada más entra ahí.</dd></div>
+        <div><dt>Imagen</dt><dd>Ocupa celdas completas y nunca llega al borde. En los ejemplos es un cuadrado azul.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sec" id="formatos">
+    <span class="k">Formatos</span>
+    <h2>La misma grilla en cada formato</h2>
+    <p class="nota" style="margin-bottom:28px">Siempre son siete columnas. Lo que cambia es el número de filas, que se elige para que la celda quede casi cuadrada: alto de celda = (alto − 2 × margen − (filas − 1) × medianil) ÷ filas. Medidas con margen 6 % y medianil 1,2 %.</p>
+    <div class="tabla-w"><table class="tabla">
+      <thead><tr><th>Formato</th><th>Tamaño</th><th>Filas</th><th>Alto de celda</th><th>Diseños</th><th>Uso</th></tr></thead>
+      <tbody>
+        <tr><td>4:5</td><td>1080 × 1350 px</td><td>9</td><td>11,5 %</td><td>titular, número, foto, semana, agenda</td><td>Feed de Instagram y carrusel</td></tr>
+        <tr><td>A3 vertical</td><td>297 × 420 mm</td><td>11</td><td>10,7 %</td><td>titular, número, foto, semana, agenda</td><td>Afiche impreso y exterior</td></tr>
+        <tr><td>1:1</td><td>1080 × 1080 px</td><td>8</td><td>9,9 %</td><td>titular, número, foto, semana</td><td>Posts cuadrados</td></tr>
+        <tr><td>9:16</td><td>1080 × 1920 px</td><td>16</td><td>8,3 %</td><td>story</td><td>Stories y portada de reel</td></tr>
+        <tr><td>16:9</td><td>1920 × 1080 px</td><td>4</td><td>10,2 %</td><td>titular, número, foto</td><td>Slides, pantallas y banner web</td></tr>
+      </tbody>
+    </table></div>
+    <div class="pgrid" id="pformatos">
+      <figure class="fig"><div id="fa" role="img" aria-label="Afiche A3 foto"></div><figcaption><i>A3</i><b>Afiche foto</b><span>11 filas. Arriba la foto, abajo sobre gris el nombre y los datos.</span></figcaption></figure>
+      <figure class="fig"><div id="fb" role="img" aria-label="Cuadrado semana"></div><figcaption><i>1:1</i><b>Semana</b><span>8 filas. Arriba el titular sobre el color; abajo, siete días con el destacado en acento.</span></figcaption></figure>
+      <figure class="fig"><div id="fc" role="img" aria-label="Afiche A3 número"></div><figcaption><i>A3</i><b>Afiche número</b><span>El número ocupa el ancho entero.</span></figcaption></figure>
+      <figure class="fig w2"><div id="fd" role="img" aria-label="Horizontal 16:9 foto"></div><figcaption><i>16:9</i><b>Horizontal</b><span>4 filas. Mitad izquierda gris con el nombre y los datos; mitad derecha, la foto. La columna 4 queda sobre el centro.</span></figcaption></figure>
+    </div>
+  </section>
+
+  <section class="sec" id="logo">
+    <span class="k">Logo</span>
+    <h2>El logo no se redibuja</h2>
+    <p class="nota" style="margin-bottom:28px">Los archivos están en <code>kit/logo/</code>: horizontal, vertical e ícono en azul, blanco, amarillo y naranjo, en SVG, PNG sin fondo y PDF. El logo va siempre plano, en un solo color.</p>
+    <div class="lgs">
+      <div class="lg c-claro"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo azul" style="color:var(--mz-azul);--mz-iso:var(--mz-azul)"><use href="#mz-lockup"/></svg><small>Azul sobre claro</small></div>
+      <div class="lg c-blanco"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo azul" style="color:var(--mz-azul);--mz-iso:var(--mz-azul)"><use href="#mz-lockup"/></svg><small>Azul sobre blanco</small></div>
+      <div class="lg c-amarillo"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo azul" style="color:var(--mz-azul);--mz-iso:var(--mz-azul)"><use href="#mz-lockup"/></svg><small>Azul sobre amarillo</small></div>
+      <div class="lg c-naranja"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo azul" style="color:var(--mz-azul);--mz-iso:var(--mz-azul)"><use href="#mz-lockup"/></svg><small>Azul sobre naranja</small></div>
+      <div class="lg c-azul"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo blanco" style="color:var(--mz-blanco);--mz-iso:var(--mz-blanco)"><use href="#mz-lockup"/></svg><small>Blanco sobre azul</small></div>
+    </div>
+    <div class="cols" style="margin-top:36px;align-items:start">
+      <div>
+        <span class="k">Posición</span>
+        <p class="nota" style="margin-bottom:22px">En los carteles el logo vive en el pie: la última fila, a la izquierda, con el ancho exacto de dos columnas.</p>
+        <span class="k">Espacio libre</span>
+        <div class="libre"><div><svg viewBox="0 0 629.21 159.59" aria-hidden="true"><use href="#mz-lockup"/></svg></div></div>
+        <p class="nota" style="margin-top:12px">Media altura del logo por los cuatro lados.</p>
+      </div>
+      <div>
+        <span class="k">Tamaño mínimo</span>
+        <div class="minimos">
+          <figure><svg width="96" viewBox="0 0 629.21 159.59" aria-hidden="true"><use href="#mz-lockup"/></svg>96 px de ancho en pantalla, 25 mm en impresión</figure>
+          <figure><svg width="24" viewBox="0 0 168.34 163.27" aria-hidden="true" style="--mz-iso:var(--mz-amarillo)"><use href="#mz-iso"/></svg>24 px</figure>
+        </div>
+        <p class="nota" style="margin-top:12px">Por debajo de 96 px se usa solo el ícono, nunca el logo reducido.</p>
+      </div>
+      <div>
+        <span class="k">No</span>
+        <p class="nota">No deformarlo ni girarlo. No recolorearlo con colores fuera de la paleta. No ponerlo sobre una foto. No agregarle sombras, bordes ni efectos.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="color">
+    <span class="k">Color</span>
+    <h2>Cinco colores planos y un neutro</h2>
+    <p class="nota" style="margin-bottom:28px">Orden de importancia: gris claro (el "blanco" de la marca, fondo de todo), azul (protagonista, pero no absoluto) y amarillo y naranjo. Cada pieza tiene una sola zona de color: en un conjunto, cerca de la mitad es azul y el resto se reparte entre amarillo y naranjo. Los colores nunca compiten. No hay degradados ni sombras.</p>
+    <div class="sw">
+      <div class="c-azul"><b>azul</b><span><code>#1b1444</code><small>Color principal: zona de color, tinta de textos y de fotos.</small></span></div>
+      <div class="c-amarillo"><b>amarillo</b><span><code>#fcee21</code><small>Zona de color o acento.</small></span></div>
+      <div class="c-naranja"><b>naranja</b><span><code>#fbb03b</code><small>Zona de color o acento alternativo.</small></span></div>
+      <div class="c-blanco"><b>blanco</b><span><code>#ffffff</code><small>Texto y logo sobre azul.</small></span></div>
+      <div class="c-claro"><b>claro</b><span><code>#f2f2f2</code><small>El "blanco" de la marca: fondo de todo.</small></span></div>
+    </div>
+    <p class="nota" style="margin-top:28px">Cuatro tonos derivados, solo para las formas del fondo de marca, mezclas de la propia paleta:</p>
+    <div class="sw" style="margin-top:14px">
+      <div style="background:var(--mz-tono-azul);color:var(--mz-blanco)"><b>tono azul</b><span><code>--mz-tono-azul</code></span></div>
+      <div style="background:var(--mz-tono-amarillo);color:var(--mz-azul)"><b>tono amarillo</b><span><code>--mz-tono-amarillo</code></span></div>
+      <div style="background:var(--mz-tono-naranja);color:var(--mz-azul)"><b>tono naranja</b><span><code>--mz-tono-naranja</code></span></div>
+      <div style="background:var(--mz-tono-claro);color:var(--mz-azul)"><b>tono claro</b><span><code>--mz-tono-claro</code></span></div>
+    </div>
+    <div class="pares" aria-label="Pares de color y su contraste">
+      <div class="par"><i class="c-amarillo">Aa</i><p><b>14,1 : 1</b>Azul sobre amarillo. AA</p></div>
+      <div class="par"><i class="c-naranja">Aa</i><p><b>9,2 : 1</b>Azul sobre naranja. AA</p></div>
+      <div class="par"><i class="c-claro">Aa</i><p><b>15,2 : 1</b>Azul sobre gris claro. AA</p></div>
+      <div class="par"><i class="c-blanco">Aa</i><p><b>17,1 : 1</b>Azul sobre blanco. AA</p></div>
+      <div class="par"><i class="c-azul" style="color:var(--mz-amarillo)">Aa</i><p><b>14,1 : 1</b>Amarillo sobre azul. AA</p></div>
+      <div class="par"><i class="c-azul">Aa</i><p><b>17,1 : 1</b>Blanco sobre azul. AA</p></div>
+      <div class="par"><i class="c-naranja" style="color:var(--mz-blanco)">Aa</i><p><b>1,8 : 1</b>Blanco sobre naranja. No usar como texto</p></div>
+      <div class="par no"><i class="c-amarillo" style="color:var(--mz-naranja)">Aa</i><p><b>1,5 : 1</b>Naranja sobre amarillo. No usar</p></div>
+    </div>
+  </section>
+
+  <section class="sec" id="tipo">
+    <span class="k">Tipo</span>
+    <h2>Una sola familia, la jerarquía en el tamaño</h2>
+    <div class="tipo">
+      <div class="muestra">
+        <span class="s">Agenda cultural</span>
+        <span class="n">26–1</span>
+        <p class="d">Geist para todo. Peso 400 en titulares, nombres y textos; peso 500 en números, fechas, horas, precios y etiquetas. Licencia abierta (OFL) en Google Fonts. Lo que ordena la lectura es el tamaño, no el peso.</p>
+      </div>
+      <ul class="estilos">
+        <li><span class="a" style="font-weight:var(--mz-peso-titular);letter-spacing:-.05em">Titular</span><span class="m">Geist 400</span><span class="s2">1,4 columnas de alto de letra • interlínea 0,92 • tracking −0,05 em • mayúscula inicial</span></li>
+        <li><span class="a" style="font-weight:var(--mz-peso-titular);letter-spacing:-.03em">Cuarteto de jazz en vivo</span><span class="m">Geist 400</span><span class="s2">Nombre de evento, sala o artista • 0,95 columnas • mayúscula inicial</span></li>
+        <li><span class="a" style="font-weight:500;letter-spacing:-.04em">26–1 • 21:00 • $6.000</span><span class="m">Geist 500</span><span class="s2">Números y datos • 2,2 columnas el número • cifras tabulares • tracking −0,04 em</span></li>
+        <li><span class="a" style="font-size:14px;font-weight:500">Música • Teatro • Cine</span><span class="m">Geist 500</span><span class="s2">Etiquetas de categoría • 0,2 columnas • mayúscula inicial</span></li>
+        <li><span class="a" style="font-size:16px;font-weight:400">Texto de cuerpo y de interfaz</span><span class="m">Geist 400</span><span class="s2">16 px, interlínea 1,5 • ancho de línea máximo de 65 caracteres</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec mz-ui" id="interfaz">
+    <span class="k">Interfaz</span>
+    <h2>Ángulos rectos y sin sombras</h2>
+    <div class="ui">
+      <div>
+        <div class="fila"><button class="mz-btn" type="button">Ver agenda</button><button class="mz-btn mz-btn--linea" type="button">Guardar</button></div>
+        <div class="fila" id="chips" role="group" aria-label="Categorías"></div>
+        <div class="fila"><input class="mz-input" type="search" placeholder="Busca panoramas" aria-label="Buscar panoramas"></div>
+        <p class="nota">En el tema claro el botón principal es azul con texto blanco y se vuelve amarillo al pasar el cursor. Los filtros activos y el destacado llevan el amarillo como acento. En el tema oscuro el botón principal es amarillo con texto azul.</p>
+      </div>
+      <div id="eventos" aria-label="Eventos de ejemplo"></div>
+    </div>
+  </section>
+
+
+  <section class="sec" id="fondo">
+    <span class="k">Fondo</span>
+    <h2>El logo como fondo</h2>
+    <p class="nota" style="margin-bottom:28px">El logo a una escala tan grande que ya no se lee como logo es la manera de comunicar de Mooza. Va siempre, detrás del texto, en todas las piezas. Se usan solo las partes curvas, las dos "o" y el ícono; cada zona lleva la forma en un tono apenas distinto de su color, con el borde suave y un grano fino encima.</p>
+    <div class="ilus" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+      <figure><img src="img/f1-logo.jpg" alt="El logo de Mooza en azul sobre gris claro"><figcaption>1. Logo</figcaption></figure>
+      <figure><img src="img/f2-escala.jpg" alt="Las dos o y el ícono del logo a una escala mayor que el cartel, en contorno"><figcaption>2. A gran escala</figcaption></figure>
+      <figure><img src="img/f3-forma.jpg" alt="Las mismas formas en azul plano"><figcaption>3. Forma plana</figcaption></figure>
+      <figure><img src="img/f4-cartel.jpg" alt="Cartel con las formas en tono sobre tono, con grano y borde suave"><figcaption>4. En la pieza</figcaption></figure>
+    </div>
+    <img src="img/d-fondo4.jpg" alt="Cuatro carteles con el fondo de marca: titular, número, semana y agenda" style="width:100%;height:auto;display:block;margin-top:clamp(16px,2vw,28px)">
+    <div class="cols" style="margin-top:32px">
+      <p>Va por defecto en el generador: <code>fondo: 'tono'</code>, <code>difuminado: 1.8</code> y <code>grano: true</code>. La semilla cambia la composición. <code>fondo: false</code> lo quita.</p>
+      <p>Las plantillas SVG del kit no lo llevan, porque el grano y el borde suave no viajan dentro de un SVG editable.</p>
+      <p>Es la única excepción a la regla de "sin degradados ni sombras".</p>
+    </div>
+  </section>
+
+  <section class="sec" id="fotos">
+    <span class="k">Fotos</span>
+    <h2>Fotos en tinta azul con transparencia</h2>
+    <p class="nota" style="margin-bottom:28px">La foto se convierte a un PNG de un solo color, el azul, con las sombras opacas y las luces transparentes. Se apoya sobre una zona lisa amarilla o naranja, que asoma por las luces. Va en la celda de foto o a sangre en la zona de color, y sobre una foto oscura el titular puede ir en blanco.</p>
+    <a class="mz-btn mz-btn--linea enlace" href="fotos.html" style="margin:0 0 28px">Probar con tus fotos</a>
+    <div class="duo" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+      <figure style="margin:0"><div style="background:var(--mz-amarillo)"><img src="../kit/fotos/ejemplo/saxofon-tinta.png" alt="Músico con saxofón en tinta azul sobre fondo amarillo" style="width:100%;display:block"></div><figcaption style="font-size:13px;margin-top:8px">Sobre amarillo</figcaption></figure>
+      <figure style="margin:0"><div style="background:var(--mz-naranja)"><img src="../kit/fotos/ejemplo/saxofon-tinta.png" alt="Músico con saxofón en tinta azul sobre fondo naranja" style="width:100%;display:block"></div><figcaption style="font-size:13px;margin-top:8px">Sobre naranja</figcaption></figure>
+    </div>
+    <p class="nota" style="margin-top:24px">Procedimiento (el del PSD de ejemplo): una capa de relleno sólido azul cuya máscara es el canal verde de la foto, invertido. El alfa es 255 menos el canal verde, así que las sombras quedan opacas y las luces transparentes. Se hace con la herramienta <code>kit/tinta/index.html</code> en el navegador, con <code>kit/tinta/tinta.py</code> por lotes o con <code>components/tinta/</code> en una web.</p>
+    <a class="mz-btn mz-btn--linea enlace" href="../kit/tinta/index.html">Abrir la herramienta</a>
+  </section>
+
+  <section class="sec" id="ilustracion">
+    <span class="k">Ilustración</span>
+    <h2>Las cuatro musas</h2>
+    <p class="nota" style="margin-bottom:28px">Mooza suena a musa. Euterpe (música), Talía (teatro), Terpsícore (danza) y Calíope (letras): grabado de línea fina en tinta azul con transparencia, flotando, sin escena ni marco. Van sobre una zona de color o sobre el corte entre dos colores, con el color pasando por la figura; nunca sobre una foto.</p>
+    <div class="ilus" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+      <figure><img src="img/musa-euterpe.jpg" alt="Euterpe, musa de la música"><figcaption>Música: Euterpe</figcaption></figure>
+      <figure><img src="img/musa-talia.jpg" alt="Talía, musa del teatro"><figcaption>Teatro: Talía</figcaption></figure>
+      <figure><img src="img/musa-terpsicore.jpg" alt="Terpsícore, musa de la danza"><figcaption>Danza: Terpsícore</figcaption></figure>
+      <figure><img src="img/musa-caliope.jpg" alt="Calíope, musa de las letras"><figcaption>Letras: Calíope</figcaption></figure>
+    </div>
+    <div class="cols" style="margin-top:32px">
+      <p>Una musa por pieza. Con el logo y mooza.cl en el pie, es el diseño <code>musa</code> del generador, en formato carta.</p>
+      <p>Los dibujos, sus versiones en tinta azul y los prompts con que se hicieron están en <code>kit/ilustraciones/</code>.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="poleras">
+    <span class="k">Productos</span>
+    <h2>Poleras</h2>
+    <p class="nota" style="margin-bottom:28px">Estampa en serigrafía de dos tintas sobre polera gris claro: un círculo naranjo o amarillo, alternados entre musas, y las líneas azules encima. El círculo va en el centro de los cuatro bloques (titular, categoría, nombre y logo), y la musa queda centrada entre el titular y el logo. Titular en Geist 400 y mucho blanco.</p>
+    <div class="ilus" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+      <figure><img src="img/euterpe-pasan-cosas.jpg" alt="Polera gris con Esta semana pasan cosas, Euterpe sobre un círculo naranjo, el logo y mooza.cl"><figcaption>Esta semana pasan cosas.</figcaption></figure>
+      <figure><img src="img/euterpe-sales.jpg" alt="Polera gris con Esta semana sales, Euterpe sobre un círculo naranjo, el logo y mooza.cl"><figcaption>Esta semana sales.</figcaption></figure>
+    </div>
+    <p class="nota" style="margin-top:24px">Las maquetas son simuladas, no fotografías. Las capas de impresión (una por tinta) están en <code>kit/poleras/</code>.</p>
+  </section>
+
+  <section class="sec" id="voz">
+    <span class="k">Voz</span>
+    <h2>Tú, directo y sin exclamaciones</h2>
+    <ul class="voz">
+      <li><span class="e">Titular</span><span class="v sr">Esta semana pasan cosas</span><span class="r">Directo, con mayúscula inicial y sin punto de exclamación. Sin eslóganes.</span></li>
+      <li><span class="e">Fecha</span><span class="v">26 oct – 1 nov</span><span class="r">Mes abreviado en minúscula y raya corta con espacios. Rango corto en grande: 26–1.</span></li>
+      <li><span class="e">Lugar y hora</span><span class="v">Teatro del Parque • 21:00</span><span class="r">Punto medio entre lugar y hora. Hora en 24 horas.</span></li>
+      <li><span class="e">Precio</span><span class="v">$6.000 • desde $5.000 • Gratis</span><span class="r">Punto de miles, sin decimales. “Gratis” con mayúscula inicial, nunca “free” ni “GRATIS”.</span></li>
+      <li><span class="e">Tratamiento</span><span class="v">Mira, ven, guarda tu plan</span><span class="r">Tuteo. Sin voseo, sin emoji.</span></li>
+      <li><span class="e">Cierre</span><span class="v">Toda la agenda en mooza.cl</span><span class="r">Se conserva la frase actual.</span></li>
+    </ul>
+  </section>
+
+  <section class="sec" id="kit">
+    <span class="k">Kit de recursos gráficos</span>
+    <h2>Lo que hay en la carpeta kit</h2>
+    <ul class="kit">
+      <li><b>Plantillas</b><span>Las 18 plantillas, con fondo de marca y sin él, en SVG editable, PNG y PDF. Todas juntas en un solo SVG: <a href="../kit/plantillas/mooza-carteles.svg" download>mooza-carteles.svg</a> (<a href="../kit/plantillas/mooza-carteles.png" download>vista previa</a>). <code>kit/</code><details style="margin-top:8px"><summary style="cursor:pointer">Cada plantilla por separado</summary><p style="line-height:2"><a href="../kit/plantillas/sin-fondo/svg/agenda-a3.svg" download>agenda-a3.svg</a> · <a href="../kit/plantillas/sin-fondo/svg/agenda.svg" download>agenda.svg</a> · <a href="../kit/plantillas/sin-fondo/svg/foto-16x9.svg" download>foto-16x9.svg</a> · <a href="../kit/plantillas/sin-fondo/svg/foto-1x1.svg" download>foto-1x1.svg</a> · <a href="../kit/plantillas/sin-fondo/svg/foto-a3.svg" download>foto-a3.svg</a> · <a href="../kit/plantillas/sin-fondo/svg/foto.svg" download>foto.svg</a> · <a href="../kit/plantillas/sin-fondo/svg/numero-16x9.svg" download>numero-16x9.svg</a> · <a href="../kit/plantillas/sin-fondo/svg/numero-1x1.svg" download>numero-1x1.svg</a> · <a href="../kit/plantillas/sin-fondo/svg/numero-a3.svg" download>numero-a3.svg</a> · <a href="../kit/plantillas/sin-fondo/svg/numero.svg" download>numero.svg</a> · <a href="../kit/plantillas/sin-fondo/svg/semana-1x1.svg" download>semana-1x1.svg</a> · <a href="../kit/plantillas/sin-fondo/svg/semana-a3.svg" download>semana-a3.svg</a> · <a href="../kit/plantillas/sin-fondo/svg/semana.svg" download>semana.svg</a> · <a href="../kit/plantillas/sin-fondo/svg/story.svg" download>story.svg</a> · <a href="../kit/plantillas/sin-fondo/svg/titular-16x9.svg" download>titular-16x9.svg</a> · <a href="../kit/plantillas/sin-fondo/svg/titular-1x1.svg" download>titular-1x1.svg</a> · <a href="../kit/plantillas/sin-fondo/svg/titular-a3.svg" download>titular-a3.svg</a> · <a href="../kit/plantillas/sin-fondo/svg/titular.svg" download>titular.svg</a></p></details></span></li>
+      <li><b>Grillas</b><span>Las cinco grillas vacías en SVG: 4:5, A3, 1:1, 9:16 y 16:9. <code>kit/grillas/</code><details style="margin-top:8px"><summary style="cursor:pointer">Descargar</summary><p style="line-height:2"><a href="../kit/grillas/grilla-16x9-4filas.svg" download>grilla-16x9-4filas.svg</a> · <a href="../kit/grillas/grilla-1x1-8filas.svg" download>grilla-1x1-8filas.svg</a> · <a href="../kit/grillas/grilla-4x5-9filas.svg" download>grilla-4x5-9filas.svg</a> · <a href="../kit/grillas/grilla-9x16-16filas.svg" download>grilla-9x16-16filas.svg</a> · <a href="../kit/grillas/grilla-a3-11filas.svg" download>grilla-a3-11filas.svg</a></p></details></span></li>
+      <li><b>Celdas</b><span>Cuadrados rellenos y de contorno en los colores de la paleta, para armar composiciones a mano. <code>kit/celdas/</code></span></li>
+      <li><b>Logo</b><span>Horizontal, vertical e ícono en azul, blanco, amarillo y naranjo, en SVG, PNG sin fondo y PDF, y sobre cada fondo. <code>kit/logo/</code></span></li>
+      <li><b>Fondos</b><span>El fondo de marca solo, en cada color y formato: SVG con las formas, y PNG y PDF con grano y borde suave. <code>kit/fondos/</code></span></li>
+      <li><b>Fotos</b><span>Marcador de posición y reglas de recorte para las fotos de eventos. <code>kit/fotos/</code></span></li>
+      <li><b>Tinta</b><span>Herramienta en el navegador y script por lotes para convertir fotos a tinta azul con transparencia. <code>kit/tinta/</code></span></li>
+      <li><b>Ilustraciones</b><span>Las cuatro musas, sus versiones en tinta azul y los prompts con que se hicieron. <code>kit/ilustraciones/</code></span></li>
+      <li><b>Poleras</b><span>Capas de impresión y maquetas. <code>kit/poleras/</code></span></li>
+      <li><b>Generador</b><span>Regenera las plantillas del kit. <code>kit/build-kit.mjs</code></span></li>
+    </ul>
+    <div class="miniaturas">
+      <img src="../kit/plantillas/sin-fondo/png/titular.png" alt="Plantilla titular">
+      <img src="../kit/plantillas/sin-fondo/png/numero.png" alt="Plantilla número">
+      <img src="../kit/plantillas/sin-fondo/png/foto.png" alt="Plantilla foto">
+      <img src="../kit/plantillas/sin-fondo/png/semana.png" alt="Plantilla semana">
+      <img src="../kit/plantillas/sin-fondo/png/agenda.png" alt="Plantilla agenda">
+      <img src="../kit/plantillas/sin-fondo/png/story.png" alt="Plantilla story">
+    </div>
+  </section>
+</main>
+
+<footer class="wrap pie">Sistema de diseño Mooza • los eventos, salas y precios son ejemplos.</footer>
+
+<script>
+(function(){
+  var $=function(s){return document.querySelector(s)};
+  var P=MoozaPoster;
+  P.mount($('#fa'),'foto',null,'a3');P.mount($('#fb'),'semana',null,'1x1');P.mount($('#fc'),'numero',null,'a3');P.mount($('#fd'),'foto',null,'16x9');
+  P.mount($('#pa'),'titular');P.mount($('#pb'),'numero');P.mount($('#pc'),'foto');P.mount($('#pd'),'semana');P.mount($('#pe'),'agenda');P.mount($('#pf'),'story');
+
+  var G=$('#pgrid'),m=$('#m'),g=$('#g');
+  function fmt(n){return String(Math.round(n*10)/10).replace('.',',')}
+  function upd(){
+    var mv=+m.value,gv=+g.value;
+    G.style.setProperty('--mz-m',mv);G.style.setProperty('--mz-g',gv);
+    $('#mv').textContent=fmt(mv)+' %';$('#gv').textContent=fmt(gv)+' %';
+    $('#math').textContent='Columna = (100 − 2 × '+fmt(mv)+' − 6 × '+fmt(gv)+') ÷ 7 = '+fmt((100-2*mv-6*gv)/7)+' % del ancho';
+  }
+  m.addEventListener('input',upd);g.addEventListener('input',upd);
+  $('#ver').addEventListener('change',function(e){G.classList.toggle('mz-show-grid',e.target.checked)});
+  $('#reset').addEventListener('click',function(){m.value=6;g.value=1.2;upd()});
+  upd();
+
+  /* interfaz de ejemplo */
+  var CATS=['Todo','Música','Teatro','Danza','Letras'],sel='Todo';
+  var EV=[
+    {c:'Música',d:'vie',n:30,t:'Cuarteto de jazz en vivo',v:'Teatro del Parque',h:'21:00',p:'desde $8.000',f:1},
+    {c:'Teatro',d:'vie',n:30,t:'La casa de Matilde',v:'Sala Mapocho',h:'20:30',p:'$6.000'},
+    {c:'Danza',d:'sáb',n:31,t:'Noche de tango en la plaza',v:'Plaza Ñuñoa',h:'19:00',p:'Gratis'},
+    {c:'Letras',d:'sáb',n:31,t:'Lectura de poesía chilena',v:'Biblioteca Santiago',h:'12:00',p:'Gratis'}
+  ];
+  function chips(){$('#chips').innerHTML=CATS.map(function(c){return '<button type="button" class="mz-chip" aria-pressed="'+(c===sel)+'">'+c+'</button>'}).join('')}
+  function eventos(){
+    $('#eventos').innerHTML=EV.filter(function(e){return sel==='Todo'||e.c===sel}).map(function(e){
+      return '<div class="mz-evento"><div class="mz-fecha'+(e.f?' mz-fecha--destacado':'')+'"><span>'+e.d+'</span><b>'+e.n+'</b></div><div><span class="mz-cat">'+e.c+(e.f?' • Destacado':'')+'</span><h4>'+e.t+'</h4><p>'+e.v+' • '+e.h+'</p></div><span class="mz-precio'+(e.p==='Gratis'?' mz-precio--gratis':'')+'">'+e.p+'</span></div>';
+    }).join('');
+  }
+  $('#chips').addEventListener('click',function(e){var b=e.target.closest('.mz-chip');if(!b)return;sel=b.textContent;chips();eventos()});
+  chips();eventos();
+})();
+</script>
+<script>
+/* En el visor de artefactos las descargas pasan por la capacidad downloads; fuera de él, el enlace funciona normal. */
+document.addEventListener('click',async function(e){
+  var a=e.target.closest&&e.target.closest('a[download]'); if(!a||!window.claude||!claude.use)return;
+  e.preventDefault();
+  try{
+    var d=await claude.use('downloads'); if(!d){location.href=a.href;return}
+    var r=await fetch(a.href), b=await r.blob();
+    await d.save({filename:a.getAttribute('download')||a.pathname.split('/').pop(),data:b});
+  }catch(err){}
+},true);
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+/* Mooza · grilla
+   Siete columnas, una por día. Todo se mide en % del ancho del cartel (unidad cqw),
+   así que la misma regla sirve en cualquier formato.
+
+   --mz-m  margen, de 3 a 12. Estándar 6.
+   --mz-g  medianil, de 0,6 a 3,5. Estándar 1,2. Máximo la mitad del margen.
+   --mz-col  ancho de columna = (100 − 2·margen − 6·medianil) ÷ 7
+   --mz-mv-story  el margen vertical de 9:16 es 2,2 veces el margen, con tope de 18 %: deja libre la interfaz.
+
+   Los tamaños de texto grande se definen como múltiplos de la columna, no en px:
+   cuando el margen o el medianil cambian, el texto se reajusta y la composición se mantiene. */
+:root{
+  --mz-m: 6;
+  --mz-g: 1.2;
+  --mz-mv-story: 2.2;
+}
+
+/* se repite en cada cartel para que el texto siga al margen y al medianil que se le asignen ahí */
+:root,.mz-poster{
+  --mz-col: calc((100 - 2*var(--mz-m) - 6*var(--mz-g)) / 7);
+
+  /* escala tipográfica: siete pasos, cada uno cerca de 1,6 veces el anterior, medidos en columnas.
+     Un cartel usa tres pasos como máximo, con saltos claros entre ellos. */
+  --mz-t-display: calc(var(--mz-col) * 2.2 * 1cqw);     /* el número del cartel. Uno por pieza */
+  --mz-t-grande: calc(var(--mz-col) * 1.4 * 1cqw);    /* el titular. Ocupa casi todo el ancho */
+  --mz-t-titular: calc(var(--mz-col) * .95 * 1cqw);   /* nombre del evento o segundo titular */
+  --mz-t-sub: calc(var(--mz-col) * .62 * 1cqw);       /* fecha en bloque */
+  --mz-t-texto: calc(var(--mz-col) * .44 * 1cqw);     /* nombres en listas y horas */
+  --mz-t-dato: calc(var(--mz-col) * .28 * 1cqw);       /* fechas, lugares, precios y pie */
+  --mz-t-micro: calc(var(--mz-col) * .2 * 1cqw);     /* etiquetas y letras de día */
+
+  --mz-radio: 0;   /* todo es celda: sin bordes redondeados */
+}

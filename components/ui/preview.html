@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Componentes de interfaz</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+body{margin:0;padding:24px;background:var(--mz-azul);color:var(--mz-blanco);font-family:var(--mz-grot);display:grid;gap:22px;max-width:760px}
+.fila{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+</style>
+</head>
+<body class="mz-ui">
+<div class="fila"><button class="mz-btn" type="button">Ver agenda</button><button class="mz-btn mz-btn--linea" type="button">Guardar</button></div>
+<div class="fila"><button class="mz-chip" type="button" aria-pressed="true">Todo</button><button class="mz-chip" type="button" aria-pressed="false">Música</button><button class="mz-chip" type="button" aria-pressed="false">Teatro</button></div>
+<div class="fila"><input class="mz-input" type="search" placeholder="Busca panoramas" aria-label="Buscar panoramas"></div>
+<div>
+  <div class="mz-evento"><div class="mz-fecha mz-fecha--destacado"><span>vie</span><b>30</b></div><div><span class="mz-cat">Música • Destacado</span><h4>Cuarteto de jazz en vivo</h4><p>Teatro del Parque • 21:00</p></div><span class="mz-precio">desde $8.000</span></div>
+  <div class="mz-evento"><div class="mz-fecha"><span>sáb</span><b>31</b></div><div><span class="mz-cat">Arte</span><h4>Paisajes de agua</h4><p>Galería Costanera • 12:00</p></div><span class="mz-precio mz-precio--gratis">Gratis</span></div>
+</div>
+</body>
+</html>
