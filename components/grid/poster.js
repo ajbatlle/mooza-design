@@ -90,6 +90,22 @@
   /* el acento pequeño es amarillo, salvo que la zona ya sea amarilla: entonces es naranja */
   function acento(d,def){return 'background:var(--mz-'+((d.color||def)==='amarillo'?'naranja':'amarillo')+')'}
 
+  /* curvas: línea fina de acento que suaviza la grilla. datos.curvas = 'arcos' | 'onda' | 'domo'.
+     Siempre en celdas libres de la zona de color y en el color de acento (amarillo sobre azul y naranjo; naranjo sobre amarillo).
+       arcos: cuartos de círculo concéntricos que parten de una esquina, de una, dos y tres celdas de radio.
+       onda: una línea ondulada que cruza una fila vacía.
+       domo: semicírculos concéntricos apoyados en una fila.
+     A = [col1, col2, fila1, fila2] (arcos), O = [col1, col2, fila] (onda), M = [col1, col2, fila1, fila2] (domo). */
+  var ONDA='<svg viewBox="0 0 100 24" preserveAspectRatio="none" aria-hidden="true"><path d="M0,12 C12,0 24,0 36,12 S60,24 72,12 S96,0 100,8"/></svg>';
+  function curvas(d,zona,A,O,M){
+    var e=d.curvas;if(!e)return '';
+    var c=d.color||zona,st='color:var(--mz-'+(c==='amarillo'?'naranja':'amarillo')+')',h='',i;
+    if(e==='arcos'){var n=Math.min(A[1]-A[0]+1,A[3]-A[2]+1);for(i=1;i<=n;i++)h+=cell(A[1]-i+1,A[1],A[3]-i+1,A[3],'mz-curva mz-arco','',st);return h}
+    if(e==='onda')return cell(O[0],O[1],O[2],O[2],'mz-curva mz-onda',ONDA,st);
+    if(e==='domo'){h=cell(M[0],M[1],M[2],M[3],'mz-curva mz-domo','',st);var w=M[1]-M[0]+1;if(w>=4)h+=cell(M[0]+1,M[1]-1,M[3],M[3],'mz-curva mz-domo','',st);return h}
+    return '';
+  }
+
   /* pie: la última fila de todo cartel. El logo mide dos columnas y va a la izquierda; el texto, a la derecha.
      Nada más entra en esa fila, así que el logo nunca choca. oscuro: el pie está sobre el color oscuro. */
   function pie(n,texto,oscuro){
@@ -103,7 +119,7 @@
     if(f==='16x9')return grid(n,mitad(campo(d,'azul'))+cell(1,3,1,3,'mz-t-grande',d.titular)+cell(5,7,1,1,'mz-t-sub'+k,d.rango)+
       cell(1,2,n,n,'mz-pie-logo',LOGO)+cell(5,7,n,n,'mz-t-dato mz-fecha-pie'+k,'mooza.cl'));
     var s=ARRIBA_TITULAR[f];
-    return grid(n,zonaA(s,hayFoto(d)?campoFoto(d,'amarillo'):campo(d,'azul'),hayFoto(d)?fotoHtml(d):'')+cell(1,7,1,s,'mz-t-grande'+(hayFoto(d)?sobreFoto(d):k),d.titular)+
+    return grid(n,zonaA(s,hayFoto(d)?campoFoto(d,'amarillo'):campo(d,'azul'),hayFoto(d)?fotoHtml(d):'')+curvas(d,'azul',[5,7,s-2,s],[1,7,s],[4,7,s-1,s])+cell(1,7,1,s,'mz-t-grande'+(hayFoto(d)?sobreFoto(d):k),d.titular)+
       cell(1,7,s+2,s+2,'mz-t-sub mz-abajo',d.rango)+pie(n,'mooza.cl'));
   }
 
@@ -113,7 +129,7 @@
     if(f==='16x9')return grid(n,mitad(campo(d,'amarillo'))+cell(1,3,1,2,'mz-t-grande','Esta<br>semana')+cell(5,7,1,3,'mz-t-display'+k,d.corto)+
       cell(1,2,n,n,'mz-pie-logo',LOGO)+cell(5,7,n,n,'mz-t-dato mz-fecha-pie'+k,'mooza.cl'));
     var s=ARRIBA[f];
-    return grid(n,zona(s+1,n,campo(d,'amarillo'))+cell(1,7,1,s,'mz-t-display',d.corto)+
+    return grid(n,zona(s+1,n,campo(d,'amarillo'))+curvas(d,'amarillo',[5,7,n-3,n-1],[1,7,n-2],[4,7,n-2,n-1])+cell(1,7,1,s,'mz-t-display',d.corto)+
       cell(1,7,s+2,s+2,'mz-t-titular mz-abajo'+k,'Esta semana')+pie(n,'mooza.cl',k));
   }
 
@@ -129,7 +145,7 @@
 
   /* semana: arriba, sobre el color, el titular. Abajo, sobre gris, siete días; el destacado lleva el acento. */
   function semana(d,n,f){
-    var s=ARRIBA[f],fila=n-2,h=zonaA(s,hayFoto(d)?campoFoto(d,'naranja'):campo(d,'naranja'),hayFoto(d)?fotoHtml(d):'')+cell(1,7,1,s,'mz-t-grande'+(hayFoto(d)?sobreFoto(d):tinta(d,'naranja')),'Esta<br>semana');
+    var s=ARRIBA[f],fila=n-2,h=zonaA(s,hayFoto(d)?campoFoto(d,'naranja'):campo(d,'naranja'),hayFoto(d)?fotoHtml(d):'')+curvas(d,'naranja',[5,7,s-1,s],[1,7,s],[4,7,s-1,s])+cell(1,7,1,s,'mz-t-grande'+(hayFoto(d)?sobreFoto(d):tinta(d,'naranja')),'Esta<br>semana');
     d.dias.forEach(function(x,i){
       h+=cell(i+1,i+1,fila,fila,'mz-dc'+(i===d.diaDestacado?' mz-dc-on':''),'<span class="mz-t-micro">'+x[0]+'</span><b>'+x[1]+'</b>',i===d.diaDestacado?acento(d,'naranja'):'');
     });
