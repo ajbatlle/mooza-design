@@ -142,4 +142,4 @@ Los datos tienen la forma de `MoozaPoster.EJEMPLO`. Los eventos, salas y precios
 | `caso-de-estudio/` | La presentación del rebrand, en página y en PDF |
 | `kit/` | Plantillas, grillas, celdas, marca, fotos, tinta, ilustraciones y poleras |
 | `assets/logos/` | Logos oficiales |
-| `uploads/` | Archivos originales de la marca |
+| `uploads/` | Logos editables originales de la marca |
