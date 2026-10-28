@@ -27,6 +27,6 @@
   <image width="1024" height="1536" transform="translate(710.9 55.4) scale(.4)" xlink:href="Talia.png"/>
   <rect class="cls-3" x="1372" y="288" width="396" height="612" transform="translate(976 2164) rotate(-90)"/>
   <rect class="cls-1" x="2004" y="-108" width="396" height="612" transform="translate(2004 2400) rotate(-90)"/>
-  <image width="1024" height="1536" transform="translate(1341.9 53.9) scale(.4)" xlink:href="danza.png"/>
-  <image width="1024" height="1536" transform="translate(1973.6 53.5) scale(.4)" xlink:href="poesía.png"/>
+  <image width="1024" height="1536" transform="translate(1341.9 53.9) scale(.4)" xlink:href="Terpsicore.png"/>
+  <image width="1024" height="1536" transform="translate(1973.6 53.5) scale(.4)" xlink:href="Caliope.png"/>
 </svg>

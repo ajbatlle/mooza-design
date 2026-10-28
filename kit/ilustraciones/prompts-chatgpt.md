@@ -1,6 +1,6 @@
 # Prompts para las cuatro musas
 
-Se usan en una sola conversación de ChatGPT. Primero el mensaje de estilo, y después un mensaje por musa. Si aparece color o gris, pedir: "Redraw it in pure black ink on a pure white background, no grey, no color."
+Se usan en una sola conversación de ChatGPT, en este orden. Primero el mensaje de estilo, y después un mensaje por musa. Si aparece color o gris, pedir: "Redraw it in pure black ink on a pure white background, no grey, no color."
 
 ## Mensaje 1: estilo
 
@@ -28,61 +28,16 @@ Illustration 3: Terpsichore, muse of dance. A young woman with her hair tied up 
 
 Illustration 4: Calliope, muse of epic poetry and letters. A young woman with a laurel wreath in her hair, wearing a long, loose classical gown. In one hand an open scroll that unrolls and trails downward in a long loose curl; in the other hand a stylus (or quill pen) raised as if about to write in the air. Her expression is serious and inspired, gaze lifted. Same style, pose and technical rules as before.
 
-## Poleras azules con una musa al centro
+## Maqueta fotográfica de una polera
 
-Se adjunta el archivo `<musa>-sobre-azul.png` de `kit/ilustraciones/estampados/` (la musa con el logo y mooza.cl debajo, en gris claro `#f2f2f2` sobre el azul de la polera) y se pega este prompt. Una polera por musa. La tinta es el gris claro `#f2f2f2`.
-
-Create a photorealistic product photo of a plain crew-neck cotton t-shirt in deep indigo navy blue (hex #1b1444), front view, laid flat on a pure light grey (#d6d6d6) surface and photographed from directly above. Soft, diffuse studio light, subtle natural cotton texture and a few soft folds. No model, no hanger, no props, no label, no other logo, no other text.
-
-Print the attached artwork on the shirt as a single-color screen print, centered on the chest, horizontally centered, with its top edge about 8 cm below the collar and a total height of about 34 cm, keeping the proportions of the attached image. The attached image shows the final artwork as off-white (#f2f2f2) lines on a flat indigo field: the indigo field is just the fabric and must NOT be printed. Only the off-white lines are printed: the figure, the small logo and the web address "mooza.cl" under the figure.
-
-IMPORTANT: reproduce the artwork exactly, line for line and letter for letter. Do not redraw, simplify, restyle, retype or add anything to it, and do not move or resize the logo or the web address. Matte, fully opaque plastisol ink in off-white light grey (#f2f2f2), with a very slight texture that follows the weave of the fabric. No gradients, no glow, no shadow around the artwork, no second color.
-
-## Estampado en forma de carta de tarot (polera gris, tinta azul)
-
-Referencia: una carta de tarot estampada en una polera, con el número arriba y el nombre en una cinta abajo. Aquí la polera es gris claro `#f2f2f2` y la tinta es el azul `#1b1444`.
-
-Composición de cada carta:
-
-- Arriba, en la etiqueta: la categoría (MÚSICA, TEATRO, DANZA, LETRAS).
-- En el centro: la musa exacta, de `musas/tinta/`.
-- Abajo, en la cinta: el nombre de la musa (EUTERPE, TALÍA, TERPSÍCORE, CALÍOPE).
-- Fuera del marco: el logo a la izquierda y mooza.cl a la derecha, como en los carteles.
-
-Se le pide a ChatGPT solo el marco vacío. Si se le pide todo junto, tiende a redibujar la figura y a escribir mal los textos. La musa, los textos y el pie se componen aparte, con las líneas y el texto exactos.
-
-### Prompt 1: marco vacío
-
-Adjuntar cualquier musa solo como referencia de estilo.
-
-Draw an empty tarot-card frame, as a flat graphic for a screen print. A vertical card with the proportions of a tarot card (about 2:3), centered on a pure white background. Hand-inked in the same early 20th-century style as the attached illustration (use the attachment only as a style reference for the linework; do not copy or include its figure): confident, slightly uneven pen-and-ink lines, a bold dark outer border, a thinner inner border parallel to it, and small decorative details in the corners (tiny four-pointed stars and dots). At the top center, a small rectangular label panel built into the inner border, completely empty. At the bottom center, a ribbon-shaped banner with folded, swallow-tailed ends overlapping the lower border, completely empty. Add a few tiny stars and dots near the upper corners and two small laurel sprigs in the lower corners, all hugging the border. Keep the entire middle of the card completely empty, pure white, because a figure will be placed there later.
-
-Pure black ink only on a pure white background, high contrast, no grey, no shading, no color, no texture, no text, no letters, no numbers, no shadow. The card is centered with a generous margin of white around it. Vertical format 2:3.
-
-### Prompt 2: mockup en polera gris
-
-Se adjunta el archivo compuesto de la carta, en azul sobre blanco.
+Se adjunta la estampa en plano de `kit/poleras/maquetas/` (la musa con su círculo, el titular, el logo y mooza.cl, sobre gris claro) y se pega este prompt. ChatGPT tiende a redibujar lo que recibe y a cambiar el texto pequeño: si pasa, pídele que "no cambie ni una letra". Las maquetas simuladas de `kit/poleras/maquetas/` no necesitan ChatGPT.
 
 Create a photorealistic product photo of a plain crew-neck cotton t-shirt in light grey (hex #f2f2f2), front view, laid flat on a mid-grey (#bdbdbd) surface and photographed from directly above. Soft, diffuse studio light, subtle natural cotton texture and a few soft folds. No model, no hanger, no props, no label, no other logo, no other text.
 
-Print the attached artwork on the shirt as a single-color screen print, centered on the chest, horizontally centered, with its top edge about 8 cm below the collar and a total height of about 34 cm, keeping the proportions of the attached image. The artwork is deep indigo (#1b1444) line work on white: only the lines are printed, in deep indigo; everything that is white in the attachment is not printed, so the grey fabric shows through.
+Reproduce the attached artwork exactly on the chest as a two-ink screen print, centered, with its top edge about 8 cm below the collar and a total height of about 34 cm, keeping its proportions. The print has two inks: a flat circle in [COLOR] and fine deep indigo (#1b1444) line work on top, which lets the circle show through the figure (multiply). Everything else in the attachment is the fabric and is not printed.
 
-IMPORTANT: reproduce the artwork exactly, line for line and letter for letter. Do not redraw, simplify, restyle, retype or add anything to it, and do not move or resize the logo or the web address. Matte, fully opaque plastisol ink with a very slight texture that follows the weave of the fabric. No gradients, no glow, no shadow around the artwork, no second color.
+IMPORTANT: do not redraw, simplify, restyle, retype or add anything. Do not move or resize the logo or the web address. Matte plastisol ink with a very slight texture that follows the weave of the fabric. No gradients, no glow, no shadow around the artwork.
+
+Reemplazar [COLOR] por "warm orange (#fbb03b)" o "bright yellow (#fcee21)", según la musa.
 
 Variante con persona: cambiar solo la primera frase por "A photo of a smiling person wearing a plain crew-neck cotton t-shirt in light grey, three-quarter portrait, standing outdoors in natural daylight in front of an old metal gate."
-
-### Prompt 1, variante con la foto de referencia
-
-Adjuntar la foto de la polera con la carta de tarot, recortada a la carta y lo más recta posible (imagen 1), y una musa (imagen 2).
-
-I'm attaching two images.
-
-Image 1 is a photo of a t-shirt with a tarot-card print. Use it ONLY as a reference for the structure of the card frame: the rectangular double border, the small label panel at the top center, the ribbon banner at the bottom center, and the small stars around the corners. Do NOT copy anything else from it: no sun, no face, no flowers, no text, no numerals, no shirt, no person.
-
-Image 2 is an illustration. Its ONLY role is to define the style of the linework: hand-inked, early 20th-century, confident and slightly uneven pen-and-ink lines. Do not copy or include its figure.
-
-Now draw an empty tarot-card frame, as a flat graphic for a screen print. A vertical card with the proportions of a tarot card (about 2:3), perfectly straight and symmetrical, centered on a pure white background. A bold dark outer border and a thinner inner border parallel to it, with small decorative details in the corners (tiny four-pointed stars and dots). At the top center, a small rectangular label panel built into the inner border, completely empty. At the bottom center, a ribbon-shaped banner with folded, swallow-tailed ends overlapping the lower border, completely empty. Add two small laurel sprigs in the lower corners, hugging the border. Keep the entire middle of the card completely empty, pure white, because a figure will be placed there later.
-
-Pure black ink only on a pure white background, high contrast, no grey, no shading, no color, no texture, no text, no letters, no numbers, no shadow. Generous margin of white around the card. Vertical format 2:3.
-
-Para el mockup con persona (prompt 2), si se adjunta la foto como referencia, agregar: "Use the attached photo only as a reference for framing, pose and lighting; show a different person, and do not copy the face or the print."

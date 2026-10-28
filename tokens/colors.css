@@ -1,13 +1,13 @@
 /* Mooza · colores
    Cinco colores planos y un neutro. Sin degradados ni sombras, salvo el borde suave y el grano del fondo de marca (ver components/grid/README.md).
-   Orden de importancia: gris claro (fondo de todo cartel y de la web), azul (el color principal, en una zona),
-   amarillo y naranjo (solo acentos pequeños). Los colores nunca compiten. Azul es el color más oscuro y también la tinta de textos y logo. No hay negro. */
+   Orden de importancia: gris claro (fondo de todo), azul (el color principal, en una zona),
+   amarillo y naranjo (zonas de color y acentos). Los colores nunca compiten. Azul es el color más oscuro y también la tinta de textos y logo. No hay negro. */
 :root{
   --mz-azul:     #1b1444;  /* el color más oscuro: zona de color, tinta de textos y logo, lugar de las fotos */
-  --mz-amarillo: #fcee21;  /* acento: destacados, filtro activo */
-  --mz-naranja:  #fbb03b;  /* acento alternativo: puntos de categoría */
+  --mz-amarillo: #fcee21;  /* zona de color o acento: destacados, filtro activo */
+  --mz-naranja:  #fbb03b;  /* zona de color o acento alternativo */
   --mz-blanco:   #ffffff;  /* texto sobre azul */
-  --mz-claro:    #f2f2f2;  /* el "blanco" de la marca: fondo de todo cartel y de la web */
+  --mz-claro:    #f2f2f2;  /* el "blanco" de la marca: fondo de todo */
 
   /* tonos para el fondo de marca: el mismo color un paso más claro o más cálido. Solo para formas muy grandes detrás del texto. */
   --mz-tono-azul:     color-mix(in srgb, var(--mz-azul) 90%, #fff);

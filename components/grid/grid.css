@@ -36,7 +36,7 @@
 .mz-sobre-oscuro{color:var(--mz-blanco)}
 .mz-sobre-claro{color:var(--mz-azul)}
 
-/* escala tipográfica (tokens/grid.css). Palabras en serif, números y datos en grotesca. */
+/* escala tipográfica (tokens/grid.css). Todo en Geist: 400 en palabras, 500 en números y datos. */
 .mz-t-display{font-weight:var(--mz-peso-numero);letter-spacing:var(--mz-track-numero);font-size:var(--mz-t-display);line-height:.74;white-space:nowrap;align-self:start;font-variant-numeric:tabular-nums}
 .mz-t-grande{font-family:var(--mz-palabra);font-weight:var(--mz-palabra-peso,var(--mz-peso-titular));letter-spacing:var(--mz-palabra-track,var(--mz-track-titular));font-variation-settings:var(--mz-palabra-var,normal);line-height:var(--mz-palabra-lh,.9);font-size:var(--mz-t-grande);align-self:start;margin-top:.075em}
 .mz-t-titular{font-family:var(--mz-palabra);font-weight:var(--mz-palabra-peso,var(--mz-peso-titular));letter-spacing:var(--mz-palabra-track,var(--mz-track-titular));font-variation-settings:var(--mz-palabra-var,normal);line-height:calc(var(--mz-palabra-lh,.9) + .05);font-size:var(--mz-t-titular);display:block}
@@ -63,8 +63,6 @@
 
 .mz-foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 
-/* trama de esquina: contornos de acento que parten de la esquina de la zona y llegan a los bordes */
-.mz-trama{position:absolute;display:block;pointer-events:none}
 /* lámina de musa: dos colores a pantalla completa y una ilustración encima, bajo el pie */
 .mz-grid>.mz-musa-a,.mz-grid>.mz-musa-b,.mz-grid>.mz-musa-img{position:absolute;z-index:0}
 .mz-musa-a{left:0;top:0;width:50%;height:100%}

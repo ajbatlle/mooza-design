@@ -1,24 +1,25 @@
 ---
 name: mooza-design
-description: Genera piezas y interfaces con la marca Mooza, plataforma de eventos culturales de Chile (mooza.cl). Contiene el sistema de diseño v2 (grilla de siete días, color plano, serif para palabras y grotesca para números), componentes, tokens y un kit de recursos gráficos.
+description: Genera piezas con la marca Mooza, plataforma de eventos culturales de Chile (mooza.cl). Contiene el sistema de diseño vigente: grilla de siete días, color plano, Geist, fondo de logo a gran escala, fotos en tinta azul y las cuatro musas.
 user-invocable: true
 ---
 
-Lee `readme.md` y revisa `guidelines/index.html` antes de diseñar.
+Lee `readme.md` y revisa `guidelines/index.html` antes de diseñar. Este es el único sistema vigente.
 
-Si haces piezas visuales (carteles, stories, maquetas), parte de `kit/plantillas/` o usa `MoozaPoster` (`components/grid/poster.js`). Importa `styles.css` para color, tipo y grilla. Si trabajas código de producción, usa los tokens de `tokens/` y los componentes de `components/ui/`.
+Si haces piezas visuales (carteles, stories, maquetas), parte de `kit/plantillas/` o usa `MoozaPoster` (`components/grid/poster.js`). Importa `styles.css` para color, tipo y grilla. Los tokens están en `tokens/` y los componentes de interfaz en `components/ui/`.
 
 Decisiones de la marca:
-- Regla de base: cada elemento ocupa celdas completas y ninguno comparte celdas con otro. Los seis elementos (logo, fecha, titular, número, celda y foto) están medidos en `guidelines/elementos.html`. Corre `components/grid/auditoria.mjs` después de cambiar un diseño.
-- La semana es la grilla: siete columnas, una por día. Margen 6 % y medianil 1,2 % del ancho como estándar. Margen entre 3 y 12 %, medianil entre 0,6 y 3,5 % y como máximo la mitad del margen.
-- Orden de importancia del color: gris claro (#f2f2f2, el "blanco" de la marca, fondo de todo), azul (protagonista, no absoluto: cerca de la mitad de las piezas) y amarillo y naranjo (el resto de las zonas, y acentos pequeños). Cada pieza tiene una sola zona de color: azul, amarillo o naranjo. Cada cartel se parte en dos zonas (arriba y abajo; en 16:9, izquierda y derecha): una gris y otra azul (o la foto). Los colores nunca compiten. Texto y logo en azul sobre gris y en blanco sobre azul. No hay negro: el azul es el color más oscuro. Sin degradados, sombras ni iconos.
+- Regla de base: cada elemento ocupa celdas completas y ninguno comparte celdas con otro. Corre `components/grid/auditoria.mjs` después de cambiar un diseño.
+- La semana es la grilla: siete columnas. Margen 6 % y medianil 1,2 % del ancho como estándar (margen de 3 a 12 %, medianil de 0,6 a 3,5 % y como máximo la mitad del margen).
+- Color: gris claro `#f2f2f2` de fondo, azul `#1b1444` como color principal (no absoluto) y amarillo `#fcee21` y naranjo `#fbb03b`. Una sola zona de color por pieza. No hay negro. Texto y logo azules sobre gris y blancos sobre azul.
 - Una sola familia, Geist: peso 400 en palabras y 500 en números y datos. La jerarquía sale del tamaño. Titulares con mayúscula inicial: "Agenda cultural".
-- Formatos: 4:5, A3 vertical, 1:1, 9:16 y 16:9, todos con siete columnas. Las filas se eligen para que la celda sea casi cuadrada (tabla en `readme.md`).
-- Pie: la última fila de todo cartel. Logo de dos columnas a la izquierda y fecha a la derecha; nada más entra en esa fila.
-- Logo: nunca redibujado, con media altura de espacio libre y 96 px de ancho mínimo. En carteles va en azul sobre gris. Degradé solo sobre azul.
-- Ángulos rectos, sin bordes redondeados.
-- Español con tuteo, sin voseo ni emoji. "Gratis", "$6.000", hora en 24 horas, "26 oct – 1 nov".
-- Imagen: una foto por pieza, en celdas completas y sin llegar al borde. Las fotos son una tinta azul con transparencia (sombras opacas, luces transparentes) apoyada sobre una zona lisa amarilla o naranja (`kit/duotono/`, `guidelines/fotos.html`). Si el evento no tiene foto, usa la ilustración de su categoría (`kit/ilustraciones/`, musas representadas por objetos).
-- El logo oficial no se redibuja. Usa los archivos de `assets/logos/` o las variantes monocromas de `kit/marca/`.
+- Fondo de marca: el logo a gran escala, tono sobre tono, con borde suave y grano, detrás de todo y siempre. Es la manera de comunicar de Mooza (`fondo: false` solo para plantillas editables).
+- Formatos: 4:5, A3, 1:1, 9:16 y 16:9, todos con siete columnas. Pie: la última fila, con el logo de dos columnas a la izquierda y fecha o web a la derecha.
+- Logo: nunca redibujado, con media altura de espacio libre y 96 px de ancho mínimo.
+- Ángulos rectos. Sin iconos.
+- Fotos: una sola manera. Tinta azul con transparencia sobre una zona lisa amarilla o naranja (`kit/tinta/`, `guidelines/fotos.html`).
+- Ilustración: las cuatro musas (Euterpe, Talía, Terpsícore y Calíope), grabado de línea fina en tinta azul, sin escena ni marco (`kit/ilustraciones/`).
+- Poleras: estampa de dos tintas sobre gris claro, con círculo naranjo o amarillo (`kit/poleras/`).
+- Español con tuteo, directo y seco, sin voseo, emoji ni eslóganes. "Gratis", "$6.000", hora en 24 horas, "26 oct – 1 nov".
 
 Si te invocan sin más indicaciones, pregunta qué pieza hay que hacer y para qué formato.

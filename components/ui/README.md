@@ -10,7 +10,7 @@ Piezas de la plataforma mooza.cl, en CSS puro (`ui.css`). Ángulos rectos, color
 | `.mz-input` | Campo de texto | Contorno de 1 px. En foco, contorno amarillo de 2 px. |
 | `.mz-fecha` | Celda de fecha | Día abreviado y número. `.mz-fecha--destacado` la pasa a amarillo. |
 | `.mz-precio` | Precio | Contorno. `.mz-precio--gratis` lo rellena de blanco. No usarlo sobre fondo amarillo o blanco. |
-| `.mz-evento` | Fila de evento | Fecha, categoría, nombre en serif, lugar y hora, precio. |
+| `.mz-evento` | Fila de evento | Fecha, categoría, nombre, lugar y hora, precio. |
 
 ## Reglas
 

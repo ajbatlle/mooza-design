@@ -72,7 +72,7 @@ async function leer(tipo, formato) {
   return lienzo.evaluate(async ([tipo, f, W]) => {
     await document.fonts.ready;
     const host = document.createElement('div'); host.style.cssText = 'width:' + W + 'px;position:absolute;left:0;top:0'; document.body.appendChild(host);
-    const el = document.createElement('div'); host.appendChild(el); MoozaPoster.mount(el, tipo, null, f);
+    const el = document.createElement('div'); host.appendChild(el); MoozaPoster.mount(el, tipo, { fondo: false }, f);
     await new Promise(r => requestAnimationFrame(r));
     const box = el.getBoundingClientRect(), items = [];
     const rc = e => { const r = e.getBoundingClientRect(); return { x: r.left - box.left, y: r.top - box.top, w: r.width, h: r.height }; };
@@ -104,7 +104,7 @@ async function leer(tipo, formato) {
       for (const L of lines) {
         const right = cs.textAlign === 'right';
         items.push({ k: 'text', t: L.s.trim(), x: (right ? L.r : L.l) - box.left, y: L.top - box.top + asc, anchor: right ? 'end' : 'start',
-          serif: false, size, w: cs.fontWeight, ls: cs.letterSpacing === 'normal' ? 0 : parseFloat(cs.letterSpacing),
+          size, w: cs.fontWeight, ls: cs.letterSpacing === 'normal' ? 0 : parseFloat(cs.letterSpacing),
           fill: c.hex, op: c.a * parseFloat(cs.opacity) });
       }
     }
@@ -118,7 +118,7 @@ async function plantilla(tipo, formato) {
     if (i.k === 'rect') B.push(`<rect x="${f2(i.x)}" y="${f2(i.y)}" width="${f2(i.w)}" height="${f2(i.h)}" fill="${i.fill}"/>`);
     else if (i.k === 'stroke') B.push(`<rect x="${f2(i.x + 1.25)}" y="${f2(i.y + 1.25)}" width="${f2(i.w - 2.5)}" height="${f2(i.h - 2.5)}" fill="none" stroke="${C.azul}" stroke-width="2.5"/>`);
     else if (i.k === 'logo') B.push(logo(i.x, i.y, i.w, i.text, i.iso));
-    else B.push(text({ x: i.x, y: i.y, size: i.size, w: i.w, fam: i.serif ? 'serif' : 'grot', fill: i.op < 1 ? `rgba(${[1, 3, 5].map(k => parseInt(i.fill.slice(k, k + 2), 16)).join(',')},${f2(i.op)})` : i.fill, ls: i.ls ? f2(i.ls) : 0, anchor: i.anchor, t: i.t }));
+    else B.push(text({ x: i.x, y: i.y, size: i.size, w: i.w, fam: 'grot', fill: i.op < 1 ? `rgba(${[1, 3, 5].map(k => parseInt(i.fill.slice(k, k + 2), 16)).join(',')},${f2(i.op)})` : i.fill, ls: i.ls ? f2(i.ls) : 0, anchor: i.anchor, t: i.t }));
   }
   return { H, svg: wrap(H, B.join('\n'), bg, 'Mooza · cartel ' + tipo + (formato ? ' ' + formato : '')) };
 }

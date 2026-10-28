@@ -34,7 +34,7 @@
     dias:[['L',26],['M',27],['M',28],['J',29],['V',30],['S',31],['D',1]],
     diaDestacado:4,
     evento:{nombre:'Cuarteto de<br>jazz en vivo',meta:'Teatro del Parque<br>Vie 30 • 21:00 • desde $8.000'},
-    agenda:{dia:'Sábado',n:20,pag:'2/5',eventos:[
+    agenda:{dia:'Sábado',n:20,pag:'2/4',eventos:[
       {h:'22:00',t:'El alma al aire II: canciones de Alejandro Sanz',v:'Bar La Otra Casa',p:'$10.000'},
       {h:'22:00',t:'Glam Fest en Biker Chop',v:'Biker Chop',p:'$8.000'},
       {h:'23:30',t:'Noche de cumbia en vivo',v:'Club Subterráneo',p:'$6.000'}
@@ -93,47 +93,47 @@
   /* el acento pequeño es amarillo, salvo que la zona ya sea amarilla: entonces es naranja */
   function acento(d,def){return 'background:var(--mz-'+((d.color||def)==='amarillo'?'naranja':'amarillo')+')'}
 
-  /* fondo de marca: el logo a una escala tan grande que ya no se lee como logo; quedan arcos y bandas que cruzan el cartel.
-     datos.fondo = 'tono' (forma plana de un tono apenas distinto del fondo de cada zona), 'lineas' (línea fina) o 'relleno' (forma plana del color de acento). datos.semilla cambia la composición. datos.difuminado (número, en cqw) suaviza el borde de las formas: 1,8 por defecto, 0 lo deja nítido. Con fondo, el grano va activo por defecto (grano: false lo quita).
+  /* fondo de marca: el logo a una escala tan grande que ya no se lee como logo. Es la manera de comunicar de Mooza y va siempre,
+     detrás del texto, salvo que se pida datos.fondo = false.
+     Cada zona lleva las formas en un tono apenas distinto de su color (--mz-tono-azul, -amarillo, -naranja y -claro sobre el gris),
+     con el borde suave (datos.difuminado, 1,8 por defecto, 0 lo deja nítido) y el grano encima (datos.grano). datos.semilla cambia la composición.
      Procedimiento:
-       1. Se ponen tres símbolos del logo (dos veces las "o" juntas y una vez el ícono) a una escala en que una "o" mide más que el
-          cartel. Solo se usan las partes curvas: así no aparecen letras ni diagonales.
-       2. Cada uno se ancla por un punto de interés (el centro de una "o", el cuenco de la "a", un lóbulo del ícono) a un punto
-          cualquiera del cartel y se gira en múltiplos de 90°. Los arcos de escalas distintas se cruzan.
-       3. Dentro de la zona de color la línea es del color de acento; sobre el gris, azul. Se corta donde hay texto o logo. */
+       1. Se ponen dos símbolos del logo, las dos "o" juntas y el ícono, a una escala en que una "o" mide más que el cartel.
+          Solo se usan las partes curvas: así no aparecen letras ni diagonales.
+       2. Cada uno se ancla por un punto de interés (el centro de una "o", la lente entre las dos, un lóbulo del ícono) cerca de una
+          esquina y se gira en múltiplos de 90°. La semilla decide cuál y dónde.
+       3. Las formas cruzan el límite entre la zona de color y el gris, y el tono cambia con la zona. */
   /* x0, y0, w, h: caja del símbolo. pi: puntos de interés. esc: cqw por unidad del símbolo (la "o" mide 80 unidades de alto) */
   var SIMB={
     'mz-oo':{x0:311,y0:77,w:171,h:83,pi:[[350.8,118.3],[441.7,118.3],[396,118.3]],esc:[1.2,1.5,2.4]},
     'mz-iso':{x0:0,y0:0,w:168.34,h:163.27,pi:[[45,55],[125,40],[84,120]],esc:[1.7,2.2,3]}
   };
+  function rng(sem){var a=sem>>>0;return function(){a=(a+0x6D2B79F5)|0;var t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296}}
+  function r2(x){return Math.round(x*100)/100}
   function altura(f){var a=FORMATOS[f].ar.split('/');return 100*a[1]/a[0]}
-  function fondoLogo(f,sem,tono){
-    var R=rng(sem||1),Hc=altura(f),sim=tono?['mz-oo','mz-iso']:['mz-oo','mz-oo','mz-iso'];
+  function fondoLogo(f,sem){
+    var R=rng(sem||1),Hc=altura(f),sim=['mz-oo','mz-iso'];
     return sim.map(function(id){
-      var S=SIMB[id],a=S.pi[Math.floor(R()*S.pi.length)],k=S.esc[Math.floor(R()*3)]*(tono?1.25:1),tx=R()*100,ty=R()*Hc;
-      if(tono){tx=(R()<.5?0:100)+(R()-.5)*30;ty=(R()<.5?.1:.9)*Hc+(R()-.5)*Hc*.3}
+      var S=SIMB[id],a=S.pi[Math.floor(R()*S.pi.length)],k=S.esc[Math.floor(R()*3)]*1.25,tx=(R()<.5?0:100)+(R()-.5)*30,ty=(R()<.5?.1:.9)*Hc+(R()-.5)*Hc*.3;
       return {id:id,x:tx-(a[0]-S.x0)*k,y:ty-(a[1]-S.y0)*k,w:S.w*k,h:S.h*k,k:k,rot:90*Math.floor(R()*4),tx:tx,ty:ty};
     });
   }
   var _fid=0;
-  /* zona: [x,y,ancho,alto] de la zona de color, en cqw. acento: color del trazo dentro de la zona.
+  /* zona: [x,y,ancho,alto] de la zona de color, en cqw.
      solo: true cuando la zona es una foto o va encima: solo se dibuja la parte sobre el gris, debajo de ella. */
   function fondo(d,f,zona,def,solo){
     if(!d.fondo)return '';
-    var Hc=altura(f),id='mzf'+(++_fid),z=d.color||def,acento='var(--mz-'+(z==='amarillo'?'naranja':'amarillo')+')',lleno=d.fondo==='relleno',
-        tono=d.fondo==='tono',it=fondoLogo(f,d.semilla,tono),zr='M'+zona[0]+','+zona[1]+'h'+zona[2]+'v'+zona[3]+'h-'+zona[2]+'Z';
+    var Hc=altura(f),id='mzf'+(++_fid),z=d.color||def,it=fondoLogo(f,d.semilla),zr='M'+zona[0]+','+zona[1]+'h'+zona[2]+'v'+zona[3]+'h-'+zona[2]+'Z';
     var sg=+d.difuminado||0,fil=sg?'<filter id="'+id+'f" filterUnits="userSpaceOnUse" x="-10" y="-10" width="120" height="'+r2(Hc+20)+'"><feGaussianBlur stdDeviation="'+sg+'"/></filter>':'';
-    function usos(lw,col){
-      return (sg?'<g filter="url(#'+id+'f)">':'')+it.map(function(t){
-        return '<use href="#'+t.id+'" x="'+r2(t.x)+'" y="'+r2(t.y)+'" width="'+r2(t.w)+'" height="'+r2(t.h)+'" transform="rotate('+t.rot+' '+r2(t.tx)+' '+r2(t.ty)+')" '+
-               'style="--mz-lt-fill:'+(lleno||tono?'currentColor':'none')+';--mz-lt-stroke:'+(lleno||tono?'none':'currentColor')+';--mz-lt-w:'+r2(lw/t.k)+'"/>';
-      }).join('')+(sg?'</g>':'');
-    }
-    return '<svg class="mz-fondo" viewBox="0 0 100 '+r2(Hc)+'" data-h="'+r2(Hc)+'" aria-hidden="true"><defs>'+
+    var usos=(sg?'<g filter="url(#'+id+'f)">':'')+it.map(function(t){
+      return '<use href="#'+t.id+'" x="'+r2(t.x)+'" y="'+r2(t.y)+'" width="'+r2(t.w)+'" height="'+r2(t.h)+'" transform="rotate('+t.rot+' '+r2(t.tx)+' '+r2(t.ty)+')" '+
+             'style="--mz-lt-fill:currentColor;--mz-lt-stroke:none;--mz-lt-w:0"/>';
+    }).join('')+(sg?'</g>':'');
+    return '<svg class="mz-fondo" viewBox="0 0 100 '+r2(Hc)+'" aria-hidden="true"><defs>'+
       '<clipPath id="'+id+'z"><path d="'+zr+'"/></clipPath>'+
       '<clipPath id="'+id+'g"><path clip-rule="evenodd" d="M0,0h100v'+r2(Hc)+'h-100Z'+zr+'"/></clipPath>'+fil+'</defs>'+
-      (solo?'':'<g'+(tono?'':' data-m')+' clip-path="url(#'+id+'z)" style="color:'+(tono?'var(--mz-tono-'+z+')':acento)+'">'+usos(.3)+'</g>')+
-      (lleno?'':'<g'+(tono?'':' data-m')+' clip-path="url(#'+id+'g)" style="color:'+(tono?'var(--mz-tono-claro)':'var(--mz-azul)')+'">'+usos(.22)+'</g>')+'</svg>';
+      (solo?'':'<g clip-path="url(#'+id+'z)" style="color:var(--mz-tono-'+z+')">'+usos+'</g>')+
+      '<g clip-path="url(#'+id+'g)" style="color:var(--mz-tono-claro)">'+usos+'</g></svg>';
   }
   /* grano: una película de ruido fino sobre todo el cartel, texto incluido, para darle unidad y textura.
      datos.grano = true (fuerza 1) o un número entre 0 y 2. Se mezcla en "superponer": aclara y oscurece sin cambiar el color.
@@ -153,98 +153,6 @@
     return arriba?m+s*fh+(s-1)*g+g/2:m+s*(fh+g)-g/2;
   }
 
-  /* esquina: un módulo de celdas de la grilla en la esquina de la zona de color. datos.curvas = true.
-     Opciones: datos.esquina ('br','bl','tr','tl'), datos.semilla (número), datos.escala ('chico' para zonas de dos filas),
-               datos.cols y datos.filas (celdas del módulo; 3 y 2 por defecto).
-     Procedimiento:
-       1. Las líneas de la grilla se ven dentro del módulo y salen hasta el borde del cartel y el borde de la zona.
-       2. La celda de la esquina se pinta con un cuarto de disco, que sale del margen: es el bloque de color, con una esquina redonda.
-       3. Cada celda vecina puede llevar un arco fino de un radio de celda, centrado en una de sus esquinas. La semilla decide cuáles
-          y hacia dónde; cuanto más lejos de la esquina, menos probable. Los arcos se tocan en los nodos de la grilla.
-       4. Una celda con texto o logo encima se vacía sola, y las líneas se cortan alrededor, con aire.
-     Todo va en el color de acento: amarillo sobre azul y naranjo, naranjo sobre amarillo. */
-  function rng(sem){var a=sem>>>0;return function(){a=(a+0x6D2B79F5)|0;var t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296}}
-  function r2(x){return Math.round(x*100)/100}
-  /* esquina: arma el módulo en coordenadas locales (u desde el borde del cartel, v desde el borde de la zona), en cqw */
-  function esquina(o){
-    var m=o.m,g=o.g,p=(100-2*m-6*g)/7+g,e=m-g/2,R=rng(o.semilla||1),N=o.cols||3,F=o.filas||2,k,r,i,t,
-        W=e+N*p,H=F*p,lineas=[],arcos=[],disco=[];
-    for(i=0;i<=N;i++)lineas.push([[e+i*p,0],[e+i*p,H]]);
-    for(i=1;i<=F;i++)lineas.push([[0,i*p],[W,i*p]]);
-    disco.push([0,0],[0,p]);
-    for(t=0;t<=24;t++)disco.push([e+p*Math.cos(Math.PI/2*(1-t/24)),p*Math.sin(Math.PI/2*(1-t/24))]);
-    disco.push([e+p,0]);
-    for(k=0;k<N;k++)for(r=0;r<F;r++){
-      var d=k+r,u0=e+k*p,v0=r*p;
-      if(!d)continue;
-      if(R()<.9-d*.16){
-        var cc=R()<.5?2:(R()<.5?1:3),cu=(cc===1||cc===2)?u0+p:u0,cv=(cc>=2)?v0+p:v0,pts=[];
-        for(t=0;t<=32;t++){var a=(cc+t/32)*Math.PI/2;pts.push([cu+p*Math.cos(a),cv+p*Math.sin(a)])}
-        arcos.push({pts:pts,celda:[u0,v0,u0+p,v0+p]});
-      }
-    }
-    return {p:p,e:e,W:W,H:H,lineas:lineas,arcos:arcos,disco:disco};
-  }
-  /* las mismas formas como SVG, llevadas a la esquina esq ('br','bl','tr','tl') de un lienzo de W × H */
-  function esquinaSvg(c,esq,W,H,k){
-    k=k||1;
-    var ox=/l/.test(esq),oy=/t/.test(esq);
-    function X(u){return ox?u:W-u}
-    function Y(v){return oy?v:H-v}
-    function poli(pts){return pts.map(function(q){return r2(X(q[0]))+','+r2(Y(q[1]))}).join('L')}
-    function caja(q){var x=[X(q[0]),X(q[2])],y=[Y(q[1]),Y(q[3])];return r2(Math.min(x[0],x[1]))+','+r2(Math.min(y[0],y[1]))+','+r2(Math.max(x[0],x[1]))+','+r2(Math.max(y[0],y[1]))}
-    return '<path d="M'+poli(c.disco)+'Z" fill="currentColor" stroke="none"/>'+
-      '<g fill="none" stroke="currentColor" stroke-width="'+r2(.3*k)+'" stroke-linecap="round">'+
-      '<g stroke-width="'+r2(.17*k)+'">'+c.lineas.map(function(l){return '<path data-r="l" d="M'+poli(l)+'"/>'}).join('')+'</g>'+
-      c.arcos.map(function(a){return '<path data-r="a" data-celda="'+caja(a.celda)+'" d="M'+poli(a.pts)+'"/>'}).join('')+'</g>';
-  }
-  function trama(d,esq,zona){
-    if(!d.curvas)return '';
-    var chico=d.escala==='chico',c=esquina({m:d._m||6,g:d._g||1.2,semilla:d.semilla,cols:d.cols||3,filas:d.filas||(chico?1:2)}),W=r2(c.W),H=r2(c.H),z=d.color||zona,
-        pos=(/l/.test(esq=d.esquina||esq)?'left':'right')+':0;'+(/t/.test(esq)?'top':'bottom')+':0';
-    return '<svg class="mz-trama" viewBox="0 0 '+W+' '+H+'" data-w="'+W+'" style="width:'+W+'cqw;height:'+H+'cqw;'+pos+';color:var(--mz-'+(z==='amarillo'?'naranja':'amarillo')+')" aria-hidden="true">'+
-           esquinaSvg(c,esq,W,H,z==='azul'?1:1.5)+'</svg>';
-  }
-  /* retirar: vacía las celdas que tienen texto o logo encima y corta las líneas alrededor, con aire. Se llama cuando la tipografía ya cargó. */
-  function retirar(el){
-    var tr=el.querySelectorAll('svg.mz-trama'),fo=el.querySelectorAll('svg.mz-fondo');
-    if(!(tr.length||fo.length)||!el.ownerDocument)return;
-    var doc=el.ownerDocument,rects=[];
-    el.querySelectorAll('.mz-grid [class*="mz-t-"], .mz-grid .mz-fecha-pie').forEach(function(t){
-      var rg=doc.createRange();rg.selectNodeContents(t);
-      Array.prototype.forEach.call(rg.getClientRects(),function(b){if(b.width>0&&b.height>0)rects.push(b)});
-    });
-    el.querySelectorAll('.mz-grid .mz-logo, .mz-grid .mz-dc').forEach(function(t){rects.push(t.getBoundingClientRect())});
-    Array.prototype.forEach.call(fo,function(sv){
-      var sb=sv.getBoundingClientRect(),sc=sb.width/100,pad=2.4,Hc=+sv.getAttribute('data-h'),id='mzk'+(++_fid),
-          m='<mask id="'+id+'" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="'+Hc+'"><rect width="100" height="'+Hc+'" fill="#fff"/>';
-      rects.forEach(function(b){
-        m+='<rect x="'+r2((b.left-sb.left)/sc-pad)+'" y="'+r2((b.top-sb.top)/sc-pad)+'" width="'+r2(b.width/sc+2*pad)+'" height="'+r2(b.height/sc+2*pad)+'" fill="#000"/>';
-      });
-      sv.insertAdjacentHTML('afterbegin','<defs>'+m+'</mask></defs>');
-      Array.prototype.forEach.call(sv.querySelectorAll('g[data-m]'),function(g){g.setAttribute('mask','url(#'+id+')')});
-    });
-    Array.prototype.forEach.call(tr,function(sv){
-      var sb=sv.getBoundingClientRect(),W=+sv.getAttribute('data-w'),sc=sb.width/W,pad=1.6,paso=.5,minimo=4,
-          cajas=rects.map(function(b){return [(b.left-sb.left)/sc-pad,(b.top-sb.top)/sc-pad,(b.right-sb.left)/sc+pad,(b.bottom-sb.top)/sc+pad]});
-      function dentro(x,y){return cajas.some(function(c){return x>=c[0]&&x<=c[2]&&y>=c[1]&&y<=c[3]})}
-      Array.prototype.forEach.call(sv.querySelectorAll('path[data-r="a"]'),function(pa){
-        var q=pa.getAttribute('data-celda').split(',').map(Number);
-        if(cajas.some(function(c){return q[0]<c[2]&&q[2]>c[0]&&q[1]<c[3]&&q[3]>c[1]}))pa.remove();
-      });
-      Array.prototype.forEach.call(sv.querySelectorAll('path[data-r="l"]'),function(pa){
-        var n=pa.getAttribute('d').slice(1).split('L').map(function(q){return q.split(',').map(Number)}),a=n[0],b=n[1],
-            k=Math.max(1,Math.ceil(Math.hypot(b[0]-a[0],b[1]-a[1])/paso)),j,pts=[a],tramos=[],cur=[];
-        for(j=1;j<=k;j++)pts.push([a[0]+(b[0]-a[0])*j/k,a[1]+(b[1]-a[1])*j/k]);
-        pts.forEach(function(q){if(dentro(q[0],q[1])){if(cur.length)tramos.push(cur);cur=[]}else cur.push(q)});
-        if(cur.length)tramos.push(cur);
-        pa.setAttribute('d',tramos.filter(function(t){return t.length*paso>=minimo}).map(function(t){
-          return 'M'+r2(t[0][0])+','+r2(t[0][1])+'L'+r2(t[t.length-1][0])+','+r2(t[t.length-1][1]);
-        }).join(''));
-      });
-    });
-  }
-
   /* pie: la última fila de todo cartel. El logo mide dos columnas y va a la izquierda; el texto, a la derecha.
      Nada más entra en esa fila, así que el logo nunca choca. oscuro: el pie está sobre el color oscuro. */
   function pie(n,texto,oscuro){
@@ -258,7 +166,7 @@
     if(f==='16x9')return grid(n,mitad(campo(d,'azul'))+fondo(d,f,[50,0,50,altura(f)],'azul')+cell(1,3,1,3,'mz-t-grande',d.titular)+cell(5,7,1,1,'mz-t-sub'+k,d.rango)+
       cell(1,2,n,n,'mz-pie-logo',LOGO)+cell(5,7,n,n,'mz-t-dato mz-fecha-pie'+k,'mooza.cl'));
     var s=ARRIBA_TITULAR[f];
-    return grid(n,(hayFoto(d)?fondo(d,f,[0,0,100,yZona(d,f,n,s,true)],'azul',true):'')+zonaA(s,hayFoto(d)?campoFoto(d,'amarillo'):campo(d,'azul'),hayFoto(d)?fotoHtml(d):trama(d,'br','azul'))+(hayFoto(d)?'':fondo(d,f,[0,0,100,yZona(d,f,n,s,true)],'azul'))+cell(1,7,1,s,'mz-t-grande'+(hayFoto(d)?sobreFoto(d):k),d.titular)+
+    return grid(n,(hayFoto(d)?fondo(d,f,[0,0,100,yZona(d,f,n,s,true)],'azul',true):'')+zonaA(s,hayFoto(d)?campoFoto(d,'amarillo'):campo(d,'azul'),hayFoto(d)?fotoHtml(d):'')+(hayFoto(d)?'':fondo(d,f,[0,0,100,yZona(d,f,n,s,true)],'azul'))+cell(1,7,1,s,'mz-t-grande'+(hayFoto(d)?sobreFoto(d):k),d.titular)+
       cell(1,7,s+2,s+2,'mz-t-sub mz-abajo',d.rango)+pie(n,'mooza.cl'));
   }
 
@@ -268,7 +176,7 @@
     if(f==='16x9')return grid(n,mitad(campo(d,'amarillo'))+fondo(d,f,[50,0,50,altura(f)],'amarillo')+cell(1,3,1,2,'mz-t-grande','Esta<br>semana')+cell(5,7,1,3,'mz-t-display'+k,d.corto)+
       cell(1,2,n,n,'mz-pie-logo',LOGO)+cell(5,7,n,n,'mz-t-dato mz-fecha-pie'+k,'mooza.cl'));
     var s=ARRIBA[f];
-    return grid(n,zona(s+1,n,campo(d,'amarillo'),trama(d,'tr','amarillo'))+(function(){var y=yZona(d,f,n,s,false);return fondo(d,f,[0,y,100,altura(f)-y],'amarillo')})()+cell(1,7,1,s,'mz-t-display',d.corto)+
+    return grid(n,zona(s+1,n,campo(d,'amarillo'))+(function(){var y=yZona(d,f,n,s,false);return fondo(d,f,[0,y,100,altura(f)-y],'amarillo')})()+cell(1,7,1,s,'mz-t-display',d.corto)+
       cell(1,7,s+2,s+2,'mz-t-titular mz-abajo'+k,'Esta semana')+pie(n,'mooza.cl',k));
   }
 
@@ -284,7 +192,7 @@
 
   /* semana: arriba, sobre el color, el titular. Abajo, sobre gris, siete días; el destacado lleva el acento. */
   function semana(d,n,f){
-    var s=ARRIBA[f],fila=n-2,h=(hayFoto(d)?fondo(d,f,[0,0,100,yZona(d,f,n,s,true)],'naranja',true):'')+zonaA(s,hayFoto(d)?campoFoto(d,'naranja'):campo(d,'naranja'),hayFoto(d)?fotoHtml(d):trama(d,'br','naranja'))+(hayFoto(d)?'':fondo(d,f,[0,0,100,yZona(d,f,n,s,true)],'naranja'))+cell(1,7,1,s,'mz-t-grande'+(hayFoto(d)?sobreFoto(d):tinta(d,'naranja')),'Esta<br>semana');
+    var s=ARRIBA[f],fila=n-2,h=(hayFoto(d)?fondo(d,f,[0,0,100,yZona(d,f,n,s,true)],'naranja',true):'')+zonaA(s,hayFoto(d)?campoFoto(d,'naranja'):campo(d,'naranja'),hayFoto(d)?fotoHtml(d):'')+(hayFoto(d)?'':fondo(d,f,[0,0,100,yZona(d,f,n,s,true)],'naranja'))+cell(1,7,1,s,'mz-t-grande'+(hayFoto(d)?sobreFoto(d):tinta(d,'naranja')),'Esta<br>semana');
     d.dias.forEach(function(x,i){
       h+=cell(i+1,i+1,fila,fila,'mz-dc'+(i===d.diaDestacado?' mz-dc-on':''),'<span class="mz-t-micro">'+x[0]+'</span><b>'+x[1]+'</b>',i===d.diaDestacado?acento(d,'naranja'):'');
     });
@@ -293,7 +201,7 @@
 
   /* agenda: arriba, sobre el color, el día. Abajo, sobre gris, hasta tres eventos. */
   function agenda(d,n,f){
-    var a=d.agenda,h=zonaA(2,campo(d,'amarillo'),trama(d,'br','amarillo'))+fondo(d,f,[0,0,100,yZona(d,f,n,2,true)],'amarillo')+cell(1,7,1,2,'mz-cabeza'+tinta(d,'amarillo'),'<span class="mz-t-grande mz-num">'+a.n+'</span><span class="mz-t-titular">'+a.dia+'</span>');
+    var a=d.agenda,h=zonaA(2,campo(d,'amarillo'))+fondo(d,f,[0,0,100,yZona(d,f,n,2,true)],'amarillo')+cell(1,7,1,2,'mz-cabeza'+tinta(d,'amarillo'),'<span class="mz-t-grande mz-num">'+a.n+'</span><span class="mz-t-titular">'+a.dia+'</span>');
     /* dos eventos: filas 4 y 7, con una fila de aire entre ellos.
        Tres eventos: parten en la fila 3, cada uno con una línea fina arriba (salvo el primero, que ya tiene el borde de la zona)
        y el mismo respiro bajo la línea. Se reparten hasta el pie: en A3 sobra una fila entre ellos. */
@@ -345,6 +253,8 @@
     if(!BUILD[tipo])throw new Error('Diseño desconocido: '+tipo);
     var f=formatoDe(tipo,formato);
     var d=merge(datos);
+    if(d.fondo===undefined)d.fondo='tono';
+    if(d.fondo===false)d.fondo=null;
     if(d.fondo){if(d.difuminado===undefined)d.difuminado=1.8;if(d.grano===undefined)d.grano=true}
     return BUILD[tipo](d,filas(tipo,f),f)+grano(d);
   }
@@ -357,11 +267,10 @@
     for(k in (datos||{}))dd[k]=datos[k];
     dd._m=cs&&parseFloat(cs.getPropertyValue('--mz-m'))||6;dd._g=cs&&parseFloat(cs.getPropertyValue('--mz-g'))||1.2;
     el.innerHTML=html(tipo,dd,f);
-    if((dd.curvas||dd.fondo)&&el.ownerDocument&&el.ownerDocument.fonts)el.ownerDocument.fonts.ready.then(function(){retirar(el)});
     return el;
   }
 
-  var api={FORMATOS:FORMATOS,ROWS:ROWS,ARRIBA:ARRIBA,ARRIBA_TITULAR:ARRIBA_TITULAR,EJEMPLO:EJEMPLO,sprite:sprite,html:html,mount:mount,esquina:esquina,esquinaSvg:esquinaSvg,fondoLogo:fondoLogo};
+  var api={FORMATOS:FORMATOS,ROWS:ROWS,ARRIBA:ARRIBA,ARRIBA_TITULAR:ARRIBA_TITULAR,EJEMPLO:EJEMPLO,sprite:sprite,html:html,mount:mount,fondoLogo:fondoLogo};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
   root.MoozaPoster=api;
 })(typeof window!=='undefined'?window:globalThis);

@@ -21,13 +21,13 @@
 
   /* escala tipográfica: siete pasos, cada uno cerca de 1,6 veces el anterior, medidos en columnas.
      Un cartel usa tres pasos como máximo, con saltos claros entre ellos. */
-  --mz-t-display: calc(var(--mz-col) * 2.2 * 1cqw);     /* el número del cartel, grotesca. Uno por pieza */
-  --mz-t-grande: calc(var(--mz-col) * 1.4 * 1cqw);    /* el titular, serif. Ocupa casi todo el ancho */
-  --mz-t-titular: calc(var(--mz-col) * .95 * 1cqw);   /* nombre del evento o segundo titular, serif */
-  --mz-t-sub: calc(var(--mz-col) * .62 * 1cqw);       /* fecha en bloque, grotesca */
-  --mz-t-texto: calc(var(--mz-col) * .44 * 1cqw);     /* nombres en listas, serif; horas, grotesca */
-  --mz-t-dato: calc(var(--mz-col) * .28 * 1cqw);       /* fechas, lugares, precios y pie, grotesca */
-  --mz-t-micro: calc(var(--mz-col) * .2 * 1cqw);     /* etiquetas y letras de día, grotesca */
+  --mz-t-display: calc(var(--mz-col) * 2.2 * 1cqw);     /* el número del cartel. Uno por pieza */
+  --mz-t-grande: calc(var(--mz-col) * 1.4 * 1cqw);    /* el titular. Ocupa casi todo el ancho */
+  --mz-t-titular: calc(var(--mz-col) * .95 * 1cqw);   /* nombre del evento o segundo titular */
+  --mz-t-sub: calc(var(--mz-col) * .62 * 1cqw);       /* fecha en bloque */
+  --mz-t-texto: calc(var(--mz-col) * .44 * 1cqw);     /* nombres en listas y horas */
+  --mz-t-dato: calc(var(--mz-col) * .28 * 1cqw);       /* fechas, lugares, precios y pie */
+  --mz-t-micro: calc(var(--mz-col) * .2 * 1cqw);     /* etiquetas y letras de día */
 
   --mz-radio: 0;   /* todo es celda: sin bordes redondeados */
 }

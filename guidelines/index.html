@@ -121,7 +121,7 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
 .voz li:last-child{border-bottom:1px solid var(--mz-linea)}
 .voz .e{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mz-amarillo)}
 .voz .v{font-size:19px;line-height:1.25}
-.voz .v.sr{font-family:var(--mz-palabra);font-size:24px}
+.voz .v.sr{font-size:24px}
 .voz .r{grid-column:2;font-size:13px;color:var(--mz-fg-tenue)}
 
 /* kit */
@@ -144,13 +144,13 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
 
 <header class="wrap top">
   <svg viewBox="0 0 629.21 159.59" role="img" aria-label="Mooza"><use href="#mz-lockup"/></svg>
-  <nav aria-label="Secciones"><a href="#grilla">Grilla</a><a href="#formatos">Formatos</a><a href="#logo">Logo</a><a href="#color">Color</a><a href="#tipo">Tipo</a><a href="#interfaz">Interfaz</a><a href="#ilustracion">Ilustración</a><a href="#fotos">Fotos</a><a href="#voz">Voz</a><a href="#kit">Kit</a></nav>
+  <nav aria-label="Secciones"><a href="#grilla">Grilla</a><a href="#formatos">Formatos</a><a href="#logo">Logo</a><a href="#color">Color</a><a href="#tipo">Tipo</a><a href="#interfaz">Interfaz</a><a href="#fondo">Fondo</a><a href="#fotos">Fotos</a><a href="#ilustracion">Musas</a><a href="#poleras">Poleras</a><a href="#voz">Voz</a><a href="#kit">Kit</a></nav>
 </header>
 
 <main class="wrap">
   <section class="intro">
-    <h1>sistema de diseño Mooza</h1>
-    <p class="lead">La semana es la grilla: siete columnas, una por día. Cada cartel, story y pantalla se arma sobre ella, con color plano, palabras en serif y números en grotesca.</p>
+    <h1>Sistema de diseño Mooza</h1>
+    <p class="lead">La semana es la grilla: siete columnas, una por día. Cada pieza se arma sobre ella, con color plano, una sola familia tipográfica y, detrás de todo, el logo a una escala en que ya no se lee como logo. Este es el único sistema vigente.</p>
   </section>
 
   <section class="sec" id="grilla">
@@ -158,7 +158,7 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
     <h2>Siete columnas, margen y medianil ajustables</h2>
     <p class="nota" style="margin-bottom:28px">Margen y medianil son un porcentaje del ancho, así que escalan con cualquier formato. Los titulares y los números se miden en columnas: si cambias el margen o el medianil, el texto se reajusta y la composición se mantiene. Prueba los controles.</p>
 
-    <a class="mz-btn mz-btn--linea enlace" href="elementos.html" style="margin:0 0 28px">Ver los seis elementos</a>
+    <a class="mz-btn mz-btn--linea enlace" href="elementos.html" style="margin:0 0 28px">Ver los elementos</a>
 
     <div class="ctl" role="group" aria-label="Ajustes de la grilla">
       <label for="m">Margen<output id="mv"></output><input id="m" type="range" min="3" max="12" step=".5" value="6"></label>
@@ -173,7 +173,7 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
       <figure class="fig"><div id="pb" role="img" aria-label="Cartel número"></div><figcaption><i>número</i><b>El rango de la semana</b><span>Enorme, arriba a la izquierda.</span></figcaption></figure>
       <figure class="fig"><div id="pc" role="img" aria-label="Cartel foto"></div><figcaption><i>foto</i><b>Una foto y el evento</b><span>Nombre y una línea de datos.</span></figcaption></figure>
       <figure class="fig"><div id="pd" role="img" aria-label="Cartel semana"></div><figcaption><i>semana</i><b>Siete días en una tira</b><span>El día destacado, relleno.</span></figcaption></figure>
-      <figure class="fig"><div id="pe" role="img" aria-label="Cartel agenda"></div><figcaption><i>agenda</i><b>Un día por lámina</b><span>Hasta dos eventos. Para el carrusel.</span></figcaption></figure>
+      <figure class="fig"><div id="pe" role="img" aria-label="Cartel agenda"></div><figcaption><i>agenda</i><b>Un día por lámina</b><span>Hasta tres eventos. Para el carrusel.</span></figcaption></figure>
       <figure class="fig"><div id="pf" role="img" aria-label="Story"></div><figcaption><i>story</i><b>La misma grilla en 9:16</b><span>El margen vertical sube 2,2 veces, con tope de 18 %.</span></figcaption></figure>
       <dl class="reglas">
         <div><dt>Columnas</dt><dd>Siete, siempre. Las filas cambian con el formato: 9 en 4:5 y 16 en 9:16.</dd></div>
@@ -210,13 +210,12 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
   <section class="sec" id="logo">
     <span class="k">Logo</span>
     <h2>El logo no se redibuja</h2>
-    <p class="nota" style="margin-bottom:28px">Se usan los archivos oficiales de <code>assets/logos/</code> y sus variantes monocromas de <code>kit/marca/</code>. El degradé del original solo aparece sobre azul. En el resto, el logo va plano.</p>
+    <p class="nota" style="margin-bottom:28px">Se usan los archivos oficiales de <code>assets/logos/</code> y sus variantes monocromas de <code>kit/marca/</code>. El logo va siempre plano, en un solo color.</p>
     <div class="lgs">
       <div class="lg c-claro"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo azul" style="color:var(--mz-azul);--mz-iso:var(--mz-azul)"><use href="#mz-lockup"/></svg><small>Azul sobre claro</small></div>
-      <div class="lg c-blanco"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo azul" style="color:var(--mz-azul);--mz-iso:var(--mz-azul)"><use href="#mz-lockup"/></svg><small>Noche sobre blanco</small></div>
-      <div class="lg c-amarillo"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo azul" style="color:var(--mz-azul);--mz-iso:var(--mz-azul)"><use href="#mz-lockup"/></svg><small>Noche sobre amarillo</small></div>
-      <div class="lg c-naranja"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo azul" style="color:var(--mz-azul);--mz-iso:var(--mz-azul)"><use href="#mz-lockup"/></svg><small>Noche sobre naranja</small></div>
-      <div class="lg c-azul"><img src="../assets/logos/logo-horizontal-color-dark.svg" alt="Logo oficial con degradé"><small>Oficial sobre azul</small></div>
+      <div class="lg c-blanco"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo azul" style="color:var(--mz-azul);--mz-iso:var(--mz-azul)"><use href="#mz-lockup"/></svg><small>Azul sobre blanco</small></div>
+      <div class="lg c-amarillo"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo azul" style="color:var(--mz-azul);--mz-iso:var(--mz-azul)"><use href="#mz-lockup"/></svg><small>Azul sobre amarillo</small></div>
+      <div class="lg c-naranja"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo azul" style="color:var(--mz-azul);--mz-iso:var(--mz-azul)"><use href="#mz-lockup"/></svg><small>Azul sobre naranja</small></div>
       <div class="lg c-azul"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo blanco" style="color:var(--mz-blanco);--mz-iso:var(--mz-blanco)"><use href="#mz-lockup"/></svg><small>Blanco sobre azul</small></div>
     </div>
     <div class="cols" style="margin-top:36px;align-items:start">
@@ -237,7 +236,7 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
       </div>
       <div>
         <span class="k">No</span>
-        <p class="nota">No deformarlo ni girarlo. No usar el degradé sobre amarillo, naranja o blanco. No recolorearlo con colores fuera de la paleta. No ponerlo sobre una foto sin duotono. No agregarle sombras, bordes ni efectos.</p>
+        <p class="nota">No deformarlo ni girarlo. No recolorearlo con colores fuera de la paleta. No ponerlo sobre una foto. No agregarle sombras, bordes ni efectos.</p>
       </div>
     </div>
   </section>
@@ -247,11 +246,18 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
     <h2>Cinco colores planos y un neutro</h2>
     <p class="nota" style="margin-bottom:28px">Orden de importancia: gris claro (el "blanco" de la marca, fondo de todo), azul (protagonista, pero no absoluto) y amarillo y naranjo. Cada pieza tiene una sola zona de color: en un conjunto, cerca de la mitad es azul y el resto se reparte entre amarillo y naranjo. Los colores nunca compiten. No hay degradados ni sombras.</p>
     <div class="sw">
-      <div class="c-azul"><b>azul</b><span><code>#1b1444</code><small>Color principal: la zona de color y la foto.</small></span></div>
-      <div class="c-amarillo"><b>amarillo</b><span><code>#fcee21</code><small>Acento.</small></span></div>
-      <div class="c-naranja"><b>naranja</b><span><code>#fbb03b</code><small>Acento alternativo.</small></span></div>
+      <div class="c-azul"><b>azul</b><span><code>#1b1444</code><small>Color principal: zona de color, tinta de textos y de fotos.</small></span></div>
+      <div class="c-amarillo"><b>amarillo</b><span><code>#fcee21</code><small>Zona de color o acento.</small></span></div>
+      <div class="c-naranja"><b>naranja</b><span><code>#fbb03b</code><small>Zona de color o acento alternativo.</small></span></div>
       <div class="c-blanco"><b>blanco</b><span><code>#ffffff</code><small>Texto y logo sobre azul.</small></span></div>
-      <div class="c-claro"><b>claro</b><span><code>#f2f2f2</code><small>El "blanco" de la marca: fondo de todo cartel y de la web.</small></span></div>
+      <div class="c-claro"><b>claro</b><span><code>#f2f2f2</code><small>El "blanco" de la marca: fondo de todo.</small></span></div>
+    </div>
+    <p class="nota" style="margin-top:28px">Cuatro tonos derivados, solo para las formas del fondo de marca, mezclas de la propia paleta:</p>
+    <div class="sw" style="margin-top:14px">
+      <div style="background:var(--mz-tono-azul);color:var(--mz-blanco)"><b>tono azul</b><span><code>--mz-tono-azul</code></span></div>
+      <div style="background:var(--mz-tono-amarillo);color:var(--mz-azul)"><b>tono amarillo</b><span><code>--mz-tono-amarillo</code></span></div>
+      <div style="background:var(--mz-tono-naranja);color:var(--mz-azul)"><b>tono naranja</b><span><code>--mz-tono-naranja</code></span></div>
+      <div style="background:var(--mz-tono-claro);color:var(--mz-azul)"><b>tono claro</b><span><code>--mz-tono-claro</code></span></div>
     </div>
     <div class="pares" aria-label="Pares de color y su contraste">
       <div class="par"><i class="c-amarillo">Aa</i><p><b>14,1 : 1</b>Azul sobre amarillo. AA</p></div>
@@ -292,31 +298,28 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
         <div class="fila"><button class="mz-btn" type="button">Ver agenda</button><button class="mz-btn mz-btn--linea" type="button">Guardar</button></div>
         <div class="fila" id="chips" role="group" aria-label="Categorías"></div>
         <div class="fila"><input class="mz-input" type="search" placeholder="Busca panoramas" aria-label="Buscar panoramas"></div>
-        <p class="nota">En el tema claro, el de la web, el botón principal es azul con texto blanco y se vuelve amarillo al pasar el cursor. Los filtros activos y el destacado llevan el amarillo como acento. En el tema oscuro el botón principal es amarillo con texto azul.</p>
+        <p class="nota">En el tema claro el botón principal es azul con texto blanco y se vuelve amarillo al pasar el cursor. Los filtros activos y el destacado llevan el amarillo como acento. En el tema oscuro el botón principal es amarillo con texto azul.</p>
       </div>
       <div id="eventos" aria-label="Eventos de ejemplo"></div>
     </div>
   </section>
 
-  <section class="sec" id="ilustracion">
-    <span class="k">Ilustración</span>
-    <h2>Musas, sin figura</h2>
-    <p class="nota" style="margin-bottom:28px">Mooza suena a musa. Nueve dibujos de trazo fino, en una tinta o en duotono, que acompañan la marca sin ilustrarla de forma literal: cada musa aparece por un objeto, no por una figura. El duotono es la tinta más un campo plano desplazado unos píxeles, como en un grabado mal registrado.</p>
-    <div class="ilus">
-      <figure><img src="../kit/ilustraciones/svg/erato-lira-amarillo.svg" alt="Lira"><figcaption>Erato, la lira. Música.</figcaption></figure>
-      <figure><img src="../kit/ilustraciones/svg/euterpe-aulos-amarillo.svg" alt="Aulós, flauta doble"><figcaption>Euterpe, el aulós. Música.</figcaption></figure>
-      <figure><img src="../kit/ilustraciones/svg/melpomene-talia-mascaras-amarillo.svg" alt="Máscaras de teatro"><figcaption>Melpómene y Talía, las máscaras. Teatro.</figcaption></figure>
-      <figure><img src="../kit/ilustraciones/svg/terpsicore-tela-amarillo.svg" alt="Tela en movimiento"><figcaption>Terpsícore, la tela. Danza.</figcaption></figure>
-      <figure><img src="../kit/ilustraciones/svg/caliope-rollo-pluma-amarillo.svg" alt="Rollo y pluma"><figcaption>Calíope, el rollo y la pluma. Letras y arte.</figcaption></figure>
-      <figure><img src="../kit/ilustraciones/svg/clio-anfora-amarillo.svg" alt="Ánfora con greca"><figcaption>Clío, el ánfora. Memoria y arte.</figcaption></figure>
-      <figure class="osc"><img src="../kit/ilustraciones/svg/urania-luna-claro.svg" alt="Luna creciente con estrellas"><figcaption>Urania, la luna. Ornamento.</figcaption></figure>
-      <figure class="osc"><img src="../kit/ilustraciones/svg/polimnia-ojo-claro.svg" alt="Ojo con rayos"><figcaption>Polimnia, el ojo. Cine.</figcaption></figure>
-      <figure class="osc"><img src="../kit/ilustraciones/svg/laurel-claro.svg" alt="Rama de laurel"><figcaption>El laurel. Ornamento y cierre.</figcaption></figure>
+
+  <section class="sec" id="fondo">
+    <span class="k">Fondo</span>
+    <h2>El logo como fondo</h2>
+    <p class="nota" style="margin-bottom:28px">El logo a una escala tan grande que ya no se lee como logo es la manera de comunicar de Mooza. Va siempre, detrás del texto, en todas las piezas. Se usan solo las partes curvas, las dos "o" y el ícono; cada zona lleva la forma en un tono apenas distinto de su color, con el borde suave y un grano fino encima.</p>
+    <div class="ilus" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+      <figure><img src="img/f1-logo.jpg" alt="El logo de Mooza en azul sobre gris claro"><figcaption>1. Logo</figcaption></figure>
+      <figure><img src="img/f2-escala.jpg" alt="Las dos o y el ícono del logo a una escala mayor que el cartel, en contorno"><figcaption>2. A gran escala</figcaption></figure>
+      <figure><img src="img/f3-forma.jpg" alt="Las mismas formas en azul plano"><figcaption>3. Forma plana</figcaption></figure>
+      <figure><img src="img/f4-cartel.jpg" alt="Cartel con las formas en tono sobre tono, con grano y borde suave"><figcaption>4. En la pieza</figcaption></figure>
     </div>
+    <img src="img/d-fondo4.jpg" alt="Cuatro carteles con el fondo de marca: titular, número, semana y agenda" style="width:100%;height:auto;display:block;margin-top:clamp(16px,2vw,28px)">
     <div class="cols" style="margin-top:32px">
-      <p>Cuatro versiones de cada dibujo: <code>tinta</code> (una sola tinta), <code>amarillo</code> y <code>naranja</code> (tinta azul con campo de color, sobre fondos claros) y <code>claro</code> (tinta clara con campo amarillo, sobre azul).</p>
-      <p>Se usa un dibujo por pieza, de al menos 96 px de lado. Reemplaza a la foto cuando el evento no tiene una, según su categoría. Nunca va sobre una foto ni dentro de una celda de color que choque con su campo.</p>
-      <p>Los SVG usan un filtro de trazo a mano que se ve en navegadores. Para Figma o Illustrator están los PNG de la hoja de muestra en <code>kit/ilustraciones/</code>.</p>
+      <p>Va por defecto en el generador: <code>fondo: 'tono'</code>, <code>difuminado: 1.8</code> y <code>grano: true</code>. La semilla cambia la composición. <code>fondo: false</code> lo quita.</p>
+      <p>Las plantillas SVG del kit no lo llevan, porque el grano y el borde suave no viajan dentro de un SVG editable.</p>
+      <p>Es la única excepción a la regla de "sin degradados ni sombras".</p>
     </div>
   </section>
 
@@ -329,16 +332,42 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
       <figure style="margin:0"><div style="background:var(--mz-amarillo)"><img src="../kit/fotos/ejemplo/saxofon-tinta.png" alt="Músico con saxofón en tinta azul sobre fondo amarillo" style="width:100%;display:block"></div><figcaption style="font-size:13px;margin-top:8px">Sobre amarillo</figcaption></figure>
       <figure style="margin:0"><div style="background:var(--mz-naranja)"><img src="../kit/fotos/ejemplo/saxofon-tinta.png" alt="Músico con saxofón en tinta azul sobre fondo naranja" style="width:100%;display:block"></div><figcaption style="font-size:13px;margin-top:8px">Sobre naranja</figcaption></figure>
     </div>
-    <p class="nota" style="margin-top:24px">Procedimiento (el del PSD de ejemplo): una capa de relleno sólido azul cuya máscara es el canal verde de la foto, invertido. El alfa es 255 menos el canal verde, así que las sombras quedan opacas y las luces transparentes. Se hace con la herramienta <code>kit/duotono/index.html</code> en el navegador, con <code>kit/duotono/duotono.py</code> por lotes o con <code>components/duotono/</code> en una web. El duotono clásico de dos colores sigue disponible como alternativa.</p>
-    <a class="mz-btn mz-btn--linea enlace" href="../kit/duotono/index.html">Abrir la herramienta</a>
-    <a class="mz-btn mz-btn--linea enlace" href="web.html" style="margin-left:10px">Ver la propuesta web</a>
+    <p class="nota" style="margin-top:24px">Procedimiento (el del PSD de ejemplo): una capa de relleno sólido azul cuya máscara es el canal verde de la foto, invertido. El alfa es 255 menos el canal verde, así que las sombras quedan opacas y las luces transparentes. Se hace con la herramienta <code>kit/tinta/index.html</code> en el navegador, con <code>kit/tinta/tinta.py</code> por lotes o con <code>components/tinta/</code> en una web.</p>
+    <a class="mz-btn mz-btn--linea enlace" href="../kit/tinta/index.html">Abrir la herramienta</a>
+  </section>
+
+  <section class="sec" id="ilustracion">
+    <span class="k">Ilustración</span>
+    <h2>Las cuatro musas</h2>
+    <p class="nota" style="margin-bottom:28px">Mooza suena a musa. Euterpe (música), Talía (teatro), Terpsícore (danza) y Calíope (letras): grabado de línea fina en tinta azul con transparencia, flotando, sin escena ni marco. Van sobre una zona de color o sobre el corte entre dos colores, con el color pasando por la figura; nunca sobre una foto.</p>
+    <div class="ilus" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+      <figure><img src="img/musa-euterpe.jpg" alt="Euterpe, musa de la música"><figcaption>Música: Euterpe</figcaption></figure>
+      <figure><img src="img/musa-talia.jpg" alt="Talía, musa del teatro"><figcaption>Teatro: Talía</figcaption></figure>
+      <figure><img src="img/musa-terpsicore.jpg" alt="Terpsícore, musa de la danza"><figcaption>Danza: Terpsícore</figcaption></figure>
+      <figure><img src="img/musa-caliope.jpg" alt="Calíope, musa de las letras"><figcaption>Letras: Calíope</figcaption></figure>
+    </div>
+    <div class="cols" style="margin-top:32px">
+      <p>Una musa por pieza. Con el logo y mooza.cl en el pie, es el diseño <code>musa</code> del generador, en formato carta.</p>
+      <p>Los dibujos, sus versiones en tinta azul y los prompts con que se hicieron están en <code>kit/ilustraciones/</code>.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="poleras">
+    <span class="k">Productos</span>
+    <h2>Poleras</h2>
+    <p class="nota" style="margin-bottom:28px">Estampa en serigrafía de dos tintas sobre polera gris claro: un círculo naranjo o amarillo, alternados entre musas, y las líneas azules encima. El círculo va en el centro de los cuatro bloques (titular, categoría, nombre y logo), y la musa queda centrada entre el titular y el logo. Titular en Geist 400 y mucho blanco.</p>
+    <div class="ilus" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+      <figure><img src="img/euterpe-pasan-cosas.jpg" alt="Polera gris con Esta semana pasan cosas, Euterpe sobre un círculo naranjo, el logo y mooza.cl"><figcaption>Esta semana pasan cosas.</figcaption></figure>
+      <figure><img src="img/euterpe-sales.jpg" alt="Polera gris con Esta semana sales, Euterpe sobre un círculo naranjo, el logo y mooza.cl"><figcaption>Esta semana sales.</figcaption></figure>
+    </div>
+    <p class="nota" style="margin-top:24px">Las maquetas son simuladas, no fotografías. Las capas de impresión (una por tinta) están en <code>kit/poleras/</code>.</p>
   </section>
 
   <section class="sec" id="voz">
     <span class="k">Voz</span>
     <h2>Tú, directo y sin exclamaciones</h2>
     <ul class="voz">
-      <li><span class="e">Titular</span><span class="v sr">Hay jazz, teatro y cine</span><span class="r">Serif, mayúscula inicial y sin punto de exclamación.</span></li>
+      <li><span class="e">Titular</span><span class="v sr">Esta semana pasan cosas</span><span class="r">Directo, con mayúscula inicial y sin punto de exclamación. Sin eslóganes.</span></li>
       <li><span class="e">Fecha</span><span class="v">26 oct – 1 nov</span><span class="r">Mes abreviado en minúscula y raya corta con espacios. Rango corto en grande: 26–1.</span></li>
       <li><span class="e">Lugar y hora</span><span class="v">Teatro del Parque • 21:00</span><span class="r">Punto medio entre lugar y hora. Hora en 24 horas.</span></li>
       <li><span class="e">Precio</span><span class="v">$6.000 • desde $5.000 • Gratis</span><span class="r">Punto de miles, sin decimales. “Gratis” con mayúscula inicial, nunca “free” ni “GRATIS”.</span></li>
@@ -356,9 +385,10 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
       <li><b>Celdas</b><span>Cuadrados rellenos y de contorno en los colores de la paleta, para armar composiciones a mano. <code>kit/celdas/</code></span></li>
       <li><b>Marca</b><span>Logo horizontal e ícono en azul y en amarillo plano, además de los oficiales en <code>assets/logos/</code>. <code>kit/marca/</code></span></li>
       <li><b>Fotos</b><span>Marcador de posición y reglas de recorte para las fotos de eventos. <code>kit/fotos/</code></span></li>
-      <li><b>Ilustraciones</b><span>Nueve dibujos de musas en cuatro versiones, en SVG, más hojas de muestra en PNG. <code>kit/ilustraciones/</code></span></li>
-      <li><b>Duotono</b><span>Herramienta en el navegador, script por lotes y reglas para convertir fotos. <code>kit/duotono/</code></span></li>
-      <li><b>Generadores</b><span>Scripts que regeneran las plantillas y las ilustraciones. <code>kit/build-kit.mjs</code> y <code>kit/ilustraciones/build-ilustraciones.mjs</code></span></li>
+      <li><b>Tinta</b><span>Herramienta en el navegador y script por lotes para convertir fotos a tinta azul con transparencia. <code>kit/tinta/</code></span></li>
+      <li><b>Ilustraciones</b><span>Las cuatro musas, sus versiones en tinta azul y los prompts con que se hicieron. <code>kit/ilustraciones/</code></span></li>
+      <li><b>Poleras</b><span>Capas de impresión y maquetas. <code>kit/poleras/</code></span></li>
+      <li><b>Generador</b><span>Regenera las plantillas del kit. <code>kit/build-kit.mjs</code></span></li>
     </ul>
     <div class="miniaturas">
       <img src="../kit/plantillas/titular.png" alt="Plantilla titular">
@@ -371,7 +401,7 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
   </section>
 </main>
 
-<footer class="wrap pie">Sistema de diseño Mooza v2 • los eventos, salas y precios son ejemplos.</footer>
+<footer class="wrap pie">Sistema de diseño Mooza • los eventos, salas y precios son ejemplos.</footer>
 
 <script>
 (function(){
@@ -394,12 +424,12 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
   upd();
 
   /* interfaz de ejemplo */
-  var CATS=['Todo','Música','Teatro','Cine','Arte'],sel='Todo';
+  var CATS=['Todo','Música','Teatro','Danza','Letras'],sel='Todo';
   var EV=[
     {c:'Música',d:'vie',n:30,t:'Cuarteto de jazz en vivo',v:'Teatro del Parque',h:'21:00',p:'desde $8.000',f:1},
     {c:'Teatro',d:'vie',n:30,t:'La casa de Matilde',v:'Sala Mapocho',h:'20:30',p:'$6.000'},
-    {c:'Cine',d:'sáb',n:31,t:'Ciclo de cine chileno de los 80',v:'Cine Arte Sur',h:'19:00',p:'Gratis'},
-    {c:'Arte',d:'sáb',n:31,t:'Paisajes de agua',v:'Galería Costanera',h:'12:00',p:'Gratis'}
+    {c:'Danza',d:'sáb',n:31,t:'Noche de tango en la plaza',v:'Plaza Ñuñoa',h:'19:00',p:'Gratis'},
+    {c:'Letras',d:'sáb',n:31,t:'Lectura de poesía chilena',v:'Biblioteca Santiago',h:'12:00',p:'Gratis'}
   ];
   function chips(){$('#chips').innerHTML=CATS.map(function(c){return '<button type="button" class="mz-chip" aria-pressed="'+(c===sel)+'">'+c+'</button>'}).join('')}
   function eventos(){

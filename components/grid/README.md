@@ -1,6 +1,6 @@
 # Cartel sobre grilla
 
-Genera los seis diseños de cartel de Mooza y la lámina de musa sobre la grilla de siete columnas. Los estilos están en `grid.css` y el generador en `poster.js`. Requiere `styles.css` (tokens de color, tipo y grilla).
+Genera los siete diseños de Mooza sobre la grilla de siete columnas. Los estilos están en `grid.css` y el generador en `poster.js`. Requiere `styles.css` (tokens de color, tipo y grilla).
 
 ## API
 
@@ -13,7 +13,7 @@ MoozaPoster.ROWS                             // filas por diseño y formato
 MoozaPoster.EJEMPLO                         // datos de ejemplo
 ```
 
-Diseños: `titular`, `numero`, `foto`, `semana`, `agenda`, `story`.
+Diseños: `titular`, `numero`, `foto`, `semana`, `agenda`, `story` y `musa`.
 
 Formatos (tercer parámetro, `4x5` por defecto y `9x16` para story):
 
@@ -23,12 +23,13 @@ Formatos (tercer parámetro, `4x5` por defecto y `9x16` para story):
 | semana | `4x5`, `a3`, `1x1` |
 | agenda | `4x5`, `a3` |
 | story | `9x16` |
+| musa | `carta` |
 
 Un diseño que no existe en un formato lanza un error.
 
 ## Datos
 
-Los campos que no pases se toman de `MoozaPoster.EJEMPLO`: `color` (la zona de color: `azul`, `amarillo` o `naranja`; cada diseño tiene el suyo por defecto: titular azul, número amarillo, semana naranja y agenda amarillo; el texto sobre amarillo y naranjo va en azul), `rango`, `corto`, `titular`, `dias` y `diaDestacado` (semana), `evento` (foto), `agenda` (`dia`, `n`, `pag` y `eventos` con `h`, `t`, `v`, `p`, `f`) y `story`.
+Los campos que no pases se toman de `MoozaPoster.EJEMPLO`: `color` (la zona de color: `azul`, `amarillo` o `naranja`; cada diseño tiene el suyo por defecto: titular azul, número amarillo, semana naranja y agenda amarillo; el texto sobre amarillo y naranjo va en azul), `rango`, `corto`, `titular`, `dias` y `diaDestacado` (semana), `evento` (foto), `agenda` (`dia`, `n`, `pag` y hasta tres `eventos` con `h`, `t`, `v`, `p`, `f`) y `story`.
 
 ## Reglas
 
@@ -43,53 +44,20 @@ Los campos que no pases se toman de `MoozaPoster.EJEMPLO`: `color` (la zona de c
 
 ## Fotos
 
-`MoozaPoster.mount(el, 'foto', {foto: {src: 'evento.jpg', duotono: 'azul-amarillo', pos: '50% 30%', alt: '...'}}, '4x5')` pone la foto en la celda de foto (diseños `foto` y `story`). `duotono` es opcional (`azul-amarillo`, `azul-naranja` o `azul-claro`); sin él la foto va en color. `pos` es el punto de enfoque del recorte. Para el duotono carga `components/duotono/duotono.js` antes de `poster.js` (así `sprite()` incluye los filtros). Para probar fotos propias sin escribir código: `guidelines/fotos.html`.
-
-## Fuente de las palabras
-
-Los titulares, nombres de evento y textos de lista usan `--mz-palabra` (por defecto Geist 400). Para probar otra tipografía sin tocar los diseños, define en el cartel o en un ancestro: `--mz-palabra` (familia), `--mz-palabra-peso`, `--mz-palabra-track` (interletraje), `--mz-palabra-lh` (interlínea) y `--mz-palabra-var` (variaciones, por ejemplo `'wdth' 70`). Ver `kit/tablero/tipografia-opciones.png`.
+`MoozaPoster.mount(el, 'foto', {foto: {src: 'evento.jpg', pos: '50% 30%', color: 'naranja', alt: '...'}}, '4x5')` pone la foto en la celda de foto (diseños `foto` y `story`). Una foto normal se convierte al vuelo a tinta azul con transparencia (filtro `#mz-tinta`); con `listo: true` se usa tal cual un PNG ya convertido. `color` es la zona lisa de atrás (`amarillo` o `naranja`) y `pos`, el punto de enfoque del recorte. En `titular` y `semana`, `foto` va a sangre en la zona de color, y `texto: 'blanco'` pone el titular en blanco sobre una foto oscura. Para probar fotos propias sin escribir código: `guidelines/fotos.html`.
 
 ## Color por pieza
 
-`MoozaPoster.mount(el, 'titular', {color: 'amarillo'})` cambia la zona de color de esa pieza (`azul`, `amarillo` o `naranja`). El texto se ajusta solo. Ver `kit/tablero/color-en-proporcion.png`.
-
-## Esquina
-
-`MoozaPoster.mount(el, 'titular', {curvas: true})` dibuja un módulo de celdas de la grilla en la esquina de la zona de color. Funciona en `titular`, `numero`, `semana` y `agenda`. Va en el color de acento: amarillo sobre azul y naranjo, naranjo sobre amarillo.
-
-El módulo se arma así:
-
-1. Las líneas de la grilla se ven dentro del módulo y salen hasta el borde del cartel y el borde de la zona.
-2. La celda de la esquina se pinta con un cuarto de disco que sale del margen. Es el bloque de color, con una esquina redonda.
-3. Las celdas vecinas pueden llevar un arco fino de un radio de celda, centrado en una de sus esquinas. La semilla decide cuáles y hacia dónde. Cuanto más lejos de la esquina, menos probable. Los arcos se tocan en los nodos de la grilla.
-4. Una celda con texto o logo encima se vacía sola y las líneas se cortan alrededor.
-
-Opciones: `esquina` (`br`, `bl`, `tr`, `tl`), `semilla` (número), `escala: 'chico'` (una fila de celdas, para zonas de dos filas), `cols` y `filas` (3 y 2 por defecto). `MoozaPoster.esquina` y `MoozaPoster.esquinaSvg` entregan las mismas formas para otros soportes, como poleras. Ver `kit/tablero/trama-propuesta.png`.
+`MoozaPoster.mount(el, 'titular', {color: 'amarillo'})` cambia la zona de color de esa pieza (`azul`, `amarillo` o `naranja`). El texto se ajusta solo.
 
 ## Fondo de marca
 
-`MoozaPoster.mount(el, 'titular', {fondo: 'tono'})` pone detrás del texto el logo a una escala en que ya no se lee: formas muy grandes que cruzan las dos zonas del cartel. Funciona en `titular`, `numero`, `semana` y `agenda` (no en horizontal).
+Va por defecto en todos los diseños: el logo a gran escala, tono sobre tono, con borde suave y grano. Opciones: `fondo: false` lo quita, `semilla` (número) cambia la composición, `difuminado` (1,8 por defecto, en unidades de ancho de pieza; 0 lo deja nítido) y `grano` (`true`, o un número de 0 a 2 para la fuerza; `false` lo quita). `MoozaPoster.fondoLogo(formato, semilla)` entrega las posiciones de las formas para otros soportes, como las poleras.
 
-Se arma así:
-
-1. Se ponen dos símbolos del logo, las dos "o" juntas y el ícono, a una escala en que una "o" mide más que el cartel. Solo se usan las partes curvas, así no aparecen letras ni diagonales.
-2. Cada símbolo se ancla por un punto de interés (el centro de una "o", la lente entre las dos, un lóbulo del ícono) cerca de una esquina y se gira en múltiplos de 90°. La semilla decide cuál y dónde.
-3. Cada zona lleva la forma en un tono apenas distinto de su color: `--mz-tono-azul`, `--mz-tono-amarillo`, `--mz-tono-naranja` sobre la zona de color y `--mz-tono-claro` sobre el gris. Así el texto no pierde contraste.
-
-Opciones de `fondo`: `'tono'` (forma plana de tono sobre tono), `'lineas'` (solo el contorno, en color de acento dentro de la zona y azul sobre el gris, cortado alrededor del texto) y `'relleno'` (forma plana del color de acento). `semilla` cambia la composición. `MoozaPoster.fondoLogo(formato, semilla, true)` entrega las posiciones para otros soportes, como poleras. Ver `kit/tablero/fondo-propuesta.png`.
-
-## Grano y borde suave
-
-`grano: true` cubre todo el cartel, texto incluido, con una película de ruido fino. Aclara y oscurece sin cambiar el color, así que sirve igual sobre azul, amarillo, naranjo y gris. Da unidad entre piezas y textura a los tonos planos. `grano` acepta también un número de 0 a 2 para la fuerza (1 es la normal). El tamaño del grano es fijo en píxeles: no crece con el cartel.
-
-`difuminado` suaviza el borde de las formas del fondo de marca (el valor está en cqw). El borde entre zonas y los textos siguen nítidos. Por defecto es 1,8 y `0` lo deja nítido.
-
-Con `fondo` activo, el grano y el difuminado van encendidos por defecto: `{fondo: 'tono'}` equivale a `{fondo: 'tono', grano: true, difuminado: 1.8}`. Para quitarlos, `grano: false` y `difuminado: 0`. Ver `kit/tablero/grano-y-borde.png`.
-
-El grano es un filtro SVG: funciona en el navegador y al exportar a imagen. No viaja dentro de las plantillas SVG editables.
+El procedimiento y los tonos (`--mz-tono-*`) están en `readme.md`. El grano y el borde suave son filtros SVG: se ven en el navegador y al exportar a imagen, y no viajan dentro de las plantillas SVG editables, que se generan con `fondo: false`.
 
 ## Lámina de musa
 
-`MoozaPoster.mount(el, 'musa', {musa: {src: 'euterpe.png', colores: ['gris', 'amarillo'], corte: 'v', x: 16.3, y: 8.2}}, 'carta')` pone una ilustración sola cruzando el corte entre dos colores, con el pie de siempre: el logo de dos columnas a la izquierda y mooza.cl a la derecha. Formato `carta` (612 × 792).
+`MoozaPoster.mount(el, 'musa', {musa: {src: 'euterpe.png', colores: ['gris', 'amarillo'], corte: 'v', x: 16.3, y: 8.2}}, 'carta')` pone una musa cruzando el corte entre dos colores, con el pie de siempre: el logo de dos columnas a la izquierda y mooza.cl a la derecha. Formato `carta` (612 × 792).
 
-La ilustración es una tinta azul con transparencia (`kit/ilustraciones/musas/tinta/`), así el color pasa por la figura. `corte` es `'v'` (izquierda y derecha) o `'h'` (arriba y abajo). `colores` va en el mismo orden. `x` e `y` son la esquina superior izquierda de la ilustración, en % del ancho y del alto; `ancho` es su ancho en %. Los estampados de poleras no llevan logo ni web: esto es solo para láminas.
+La ilustración es una tinta azul con transparencia (`kit/ilustraciones/musas/tinta/`), así el color pasa por la figura. `corte` es `'v'` (izquierda y derecha) o `'h'` (arriba y abajo). `colores` va en el mismo orden. `x` e `y` son la esquina superior izquierda de la ilustración, en % del ancho y del alto; `ancho` es su ancho en %.
