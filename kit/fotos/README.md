@@ -1,12 +1,20 @@
 # Fotos de eventos
 
-Mientras Mooza no tenga fotografía propia, el lugar de cada foto lo ocupa `foto-placeholder.svg` (cuadrado azul con la etiqueta "foto del evento").
+Las fotos de Mooza son una tinta azul con transparencia: un PNG de un solo color (el azul `#1b1444`) cuyo canal alfa sale de la luminancia. Las sombras quedan opacas y las luces transparentes. Se apoyan sobre una zona lisa amarilla o naranja, que asoma por las luces. `ejemplo/saxofon-tinta.png` es un ejemplo ya convertido.
 
-## Reglas de recorte
+## Cómo se prepara una foto
 
-- La foto ocupa celdas completas de la grilla: nunca queda entre dos celdas ni llega al borde del cartel.
-- Proporciones recomendadas: cuadrada (5 × 5 celdas en el cartel `foto`) o apaisada (7 × 5 celdas en el story).
-- Un solo recorte por pieza. Si hay varias fotos, van en cuadrados de una o dos celdas, como en el cartel `editorial`.
-- Sin filtros de color, bordes ni sombras. La foto se entrega tal cual y el color plano de la grilla hace de marco.
-- Texto sobre foto solo en una etiqueta pequeña abajo a la izquierda, con contraste de al menos 4,5 a 1.
-- Prefiere fotos con fondo liso o recortes de personas y objetos, que conviven bien con los campos de color plano.
+- En el navegador: `kit/duotono/index.html`, modo "Tinta azul con transparencia". Ajusta contraste y medios tonos y descarga el PNG.
+- Por lotes: `python3 kit/duotono/duotono.py carpeta/ --salida salida/` (requiere Pillow y numpy).
+- A mano, en un editor: pasa la foto a blanco y negro, ajusta niveles, llénala de azul `#1b1444` y usa la luminancia invertida como transparencia.
+- Para ver el resultado en los carteles sin escribir código: `guidelines/fotos.html`.
+
+## Reglas
+
+- La zona bajo la foto es plana, amarilla o naranja. Nunca otro color ni degradado.
+- La foto ocupa celdas completas de la grilla en los diseños `foto` y `story`, o va a sangre en la zona de color de `titular` y `semana`.
+- Un solo recorte por pieza.
+- Titular sobre foto solo en blanco y solo donde la foto es oscura (las sombras opacas); sobre las luces, donde asoma el amarillo o el naranja, no se lee.
+- Prefiere fotos con buen rango de luces y sombras, y con el motivo bien separado del fondo.
+- Si el evento no tiene foto, se usa el marcador (la zona de color con la nota "foto del evento") o la ilustración de su categoría.
+- Las fotos de eventos son de sus organizadores: confirma los derechos antes de publicarlas.

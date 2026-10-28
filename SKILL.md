@@ -18,7 +18,7 @@ Decisiones de la marca:
 - Logo: nunca redibujado, con media altura de espacio libre y 96 px de ancho mínimo. En carteles va en azul sobre gris. Degradé solo sobre azul.
 - Ángulos rectos, sin bordes redondeados.
 - Español con tuteo, sin voseo ni emoji. "Gratis", "$6.000", hora en 24 horas, "26 oct – 1 nov".
-- Imagen: una foto por pieza, en celdas completas y sin llegar al borde. Las fotos van en duotono con los colores de la marca (`kit/duotono/`). Si el evento no tiene foto, usa la ilustración de su categoría (`kit/ilustraciones/`, musas representadas por objetos).
+- Imagen: una foto por pieza, en celdas completas y sin llegar al borde. Las fotos son una tinta azul con transparencia (sombras opacas, luces transparentes) apoyada sobre una zona lisa amarilla o naranja (`kit/duotono/`, `guidelines/fotos.html`). Si el evento no tiene foto, usa la ilustración de su categoría (`kit/ilustraciones/`, musas representadas por objetos).
 - El logo oficial no se redibuja. Usa los archivos de `assets/logos/` o las variantes monocromas de `kit/marca/`.
 
 Si te invocan sin más indicaciones, pregunta qué pieza hay que hacer y para qué formato.

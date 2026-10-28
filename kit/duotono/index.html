@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Duotono Mooza</title>
+<title>Fotos Mooza</title>
 <link rel="stylesheet" href="../../styles.css">
 <style>
 *{box-sizing:border-box}
@@ -35,21 +35,23 @@ canvas{width:100%;height:auto;display:block;background:var(--mz-azul)}
 </head>
 <body class="mz-ui">
 <div class="wrap">
-  <h1>duotono</h1>
-  <p class="lead">Convierte una foto a dos colores de la paleta de Mooza: las sombras toman el color oscuro y las luces el claro. Todo ocurre en tu navegador y la foto no se sube a ningún lado.</p>
+  <h1>Fotos</h1>
+  <p class="lead">La foto de Mooza es una tinta azul con transparencia: las sombras quedan opacas y las luces transparentes, y se apoya sobre una zona lisa amarilla o naranja. Aquí la conviertes y descargas el PNG. Debajo hay además el duotono clásico de dos colores. Todo ocurre en tu navegador y la foto no se sube a ningún lado.
   <div class="grid">
     <div class="ctl">
       <div><span class="k">Foto</span><input id="archivo" type="file" accept="image/*"><div style="margin-top:10px"><button class="mz-btn mz-btn--linea" id="prueba" type="button">Usar imagen de prueba</button></div></div>
-      <div><span class="k">Paleta (sombra a luz)</span><div class="pal" id="pal"></div></div>
+      <div><span class="k">Modo</span><div class="pal" id="pal"></div></div>
+      <div id="cfondo"><span class="k">Fondo de la vista previa</span><div class="acc"><button class="mz-btn mz-btn--linea" type="button" data-f="amarillo" aria-pressed="true">Amarillo</button><button class="mz-btn mz-btn--linea" type="button" data-f="naranja" aria-pressed="false">Naranja</button></div></div>
       <div>
         <label for="contraste">Contraste <output id="oc"></output><input id="contraste" type="range" min="1" max="1.8" step=".05" value="1.15"></label>
         <label for="gamma" style="margin-top:14px">Medios tonos <output id="og"></output><input id="gamma" type="range" min=".6" max="1.6" step=".05" value="1"></label>
-        <label for="grano" style="margin-top:14px">Grano <output id="or"></output><input id="grano" type="range" min="0" max=".08" step=".005" value="0.02"></label>
+        <label for="grano" style="margin-top:14px">Grano <output id="or"></output><input id="grano" type="range" min="0" max=".08" step=".005" value="0"></label>
       </div>
     </div>
     <div class="out">
-      <div class="vista"><figure><canvas id="antes"></canvas><figcaption>Original</figcaption></figure><figure><canvas id="despues"></canvas><figcaption id="leyenda">Duotono</figcaption></figure></div>
+      <div class="vista"><figure><canvas id="antes"></canvas><figcaption>Original</figcaption></figure><figure><canvas id="despues"></canvas><figcaption id="leyenda">Tinta azul</figcaption></figure></div>
       <div class="acc"><button class="mz-btn" id="bajar" type="button">Descargar PNG</button></div>
+      <p class="nota">En el modo tinta azul el PNG que descargas conserva la transparencia: úsalo sobre una zona amarilla o naranja en tu diseño. La grilla y los carteles de Mooza lo usan tal cual.</p>
       <p class="nota">Procedimiento: escala de grises por luminancia, niveles (punto negro y blanco en los percentiles 1 y 99, más medios tonos y contraste) y mapa de degradado entre los dos colores. La imagen de prueba no es una foto: sirve para ver cómo responde cada paleta. Mejor usar fotos con buen rango de luces y sombras.</p>
     </div>
   </div>
@@ -57,7 +59,7 @@ canvas{width:100%;height:auto;display:block;background:var(--mz-azul)}
 <script src="../../components/duotono/duotono.js"></script>
 <script>
 (function(){
-  var $=function(s){return document.querySelector(s)},D=MoozaDuotono,fuente=null,paleta='azul-amarillo';
+  var $=function(s){return document.querySelector(s)},D=MoozaDuotono,fuente=null,paleta='tinta',fondo='amarillo';
   var antes=$('#antes'),desp=$('#despues');
 
   function prueba(){ /* escena de luces y sombras, no es una foto */
@@ -72,16 +74,21 @@ canvas{width:100%;height:auto;display:block;background:var(--mz-azul)}
     var k=Math.min(1,1000/Math.max(fuente.width||fuente.naturalWidth,fuente.height||fuente.naturalHeight));
     var w=Math.round((fuente.width||fuente.naturalWidth)*k),h=Math.round((fuente.height||fuente.naturalHeight)*k);
     antes.width=w;antes.height=h;antes.getContext('2d').drawImage(fuente,0,0,w,h);
-    D.aplicar(antes,desp,paleta,{contraste:+$('#contraste').value,gamma:+$('#gamma').value,grano:+$('#grano').value});
+    var op={contraste:+$('#contraste').value,gamma:+$('#gamma').value,grano:+$('#grano').value};
+    if(paleta==='tinta'){D.aplicarTinta(antes,desp,op);desp.style.background='var(--mz-'+fondo+')'}
+    else{D.aplicar(antes,desp,paleta,op);desp.style.background=''}
+    $('#cfondo').style.display=paleta==='tinta'?'':'none';
     $('#oc').textContent=$('#contraste').value;$('#og').textContent=$('#gamma').value;$('#or').textContent=$('#grano').value;
-    $('#leyenda').textContent='Duotono '+paleta;
+    $('#leyenda').textContent=paleta==='tinta'?'Tinta azul sobre '+fondo:'Duotono '+paleta;
   }
-  $('#pal').innerHTML=Object.keys(D.PALETAS).map(function(k){var p=D.PALETAS[k];return '<button type="button" data-p="'+k+'" aria-pressed="'+(k===paleta)+'"><i style="background:linear-gradient(90deg,'+p[0]+','+p[1]+')"></i>'+k+'</button>'}).join('');
+  var ITEMS=[['tinta','linear-gradient(90deg,#1b1444,#fcee21)','Tinta azul con transparencia']].concat(Object.keys(D.PALETAS).map(function(k){var p=D.PALETAS[k];return [k,'linear-gradient(90deg,'+p[0]+','+p[1]+')','Duotono '+k]}));
+  $('#pal').innerHTML=ITEMS.map(function(it){return '<button type="button" data-p="'+it[0]+'" aria-pressed="'+(it[0]===paleta)+'"><i style="background:'+it[1]+'"></i>'+it[2]+'</button>'}).join('');
+  $('#cfondo').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;fondo=b.dataset.f;[].forEach.call($('#cfondo').querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',x===b)});pintar()});
   $('#pal').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;paleta=b.dataset.p;[].forEach.call(document.querySelectorAll('#pal button'),function(x){x.setAttribute('aria-pressed',x===b)});pintar()});
   ['contraste','gamma','grano'].forEach(function(id){$('#'+id).addEventListener('input',pintar)});
   $('#archivo').addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;var im=new Image();im.onload=function(){fuente=im;pintar()};im.src=URL.createObjectURL(f)});
   $('#prueba').addEventListener('click',function(){fuente=prueba();pintar()});
-  $('#bajar').addEventListener('click',function(){if(!fuente)return;var a=document.createElement('a');a.download='duotono-'+paleta+'.png';a.href=desp.toDataURL('image/png');a.click()});
+  $('#bajar').addEventListener('click',function(){if(!fuente)return;var a=document.createElement('a');a.download=(paleta==='tinta'?'foto-tinta-azul':'duotono-'+paleta)+'.png';a.href=desp.toDataURL('image/png');a.click()});
   fuente=prueba();pintar();
 })();
 </script>

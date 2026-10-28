@@ -8,7 +8,8 @@ Procedimiento:
   4. Grano opcional, sutil, para que el plano no se vea digital.
 
 Uso:
-  python3 kit/duotono/duotono.py foto.jpg --paleta azul-amarillo
+  python3 kit/duotono/duotono.py foto.jpg            # tinta azul con transparencia
+  python3 kit/duotono/duotono.py foto.jpg --paleta azul-amarillo   # duotono de dos colores
   python3 kit/duotono/duotono.py carpeta/ --paleta azul-naranja --lado 1600 --grano 0.03
 Requiere Pillow y numpy.
 """
@@ -60,11 +61,38 @@ def duotono(img, paleta, contraste=1.15, gamma=1.0, grano=0.0, negro=1, blanco=9
     return Image.fromarray(np.clip(out, 0, 255).astype(np.uint8), "RGB")
 
 
+AZUL = "#1b1444"
+
+
+def tinta(img, contraste=1.2, gamma=1.0, grano=0.0, negro=1, blanco=99, lado=None, semilla=7):
+    """El modo de mostrar fotografías: una tinta azul con transparencia. Las sombras quedan opacas y las luces
+    transparentes; se apoya sobre una zona lisa amarilla o naranja. Devuelve un PNG RGBA."""
+    img = ImageOps.exif_transpose(img).convert("RGB")
+    if lado and max(img.size) > lado:
+        k = lado / max(img.size)
+        img = img.resize((round(img.width * k), round(img.height * k)), Image.LANCZOS)
+    a = np.asarray(img, dtype=np.float32)
+    lum = 0.2126 * a[..., 0] + 0.7152 * a[..., 1] + 0.0722 * a[..., 2]
+    lo, hi = np.percentile(lum, [negro, blanco])
+    if hi <= lo:
+        lo, hi = 0.0, 255.0
+    t = np.clip((lum - lo) / (hi - lo), 0, 1)
+    t = np.power(t, 1.0 / gamma)
+    t = curva(t, contraste)
+    if grano:
+        rng = np.random.default_rng(semilla)
+        t = np.clip(t + (rng.random(t.shape, dtype=np.float32) - 0.5) * grano, 0, 1)
+    out = np.zeros(t.shape + (4,), dtype=np.uint8)
+    out[..., :3] = np.asarray(rgb(AZUL), dtype=np.uint8)
+    out[..., 3] = np.round(255 * (1 - t)).astype(np.uint8)
+    return Image.fromarray(out, "RGBA")
+
+
 def main():
-    p = argparse.ArgumentParser(description="Duotono con los colores de Mooza")
+    p = argparse.ArgumentParser(description="Fotos de Mooza: tinta azul con transparencia (por defecto) o duotono")
     p.add_argument("entrada", help="Imagen o carpeta de imágenes")
-    p.add_argument("--paleta", choices=sorted(PALETAS), default="azul-amarillo")
-    p.add_argument("--contraste", type=float, default=1.15, help="1 es lineal; más de 1 da curva en S (por defecto 1,15)")
+    p.add_argument("--paleta", choices=["tinta"] + sorted(PALETAS), default="tinta", help="tinta: azul con transparencia (el modo oficial); las demás son duotonos de dos colores")
+    p.add_argument("--contraste", type=float, default=1.2, help="1 es lineal; más de 1 da curva en S (por defecto 1,2)")
     p.add_argument("--gamma", type=float, default=1.0, help="Mayor que 1 aclara los medios tonos")
     p.add_argument("--grano", type=float, default=0.0, help="Ruido sutil, de 0 a 0,1 (por defecto 0)")
     p.add_argument("--lado", type=int, default=None, help="Lado máximo en px")
@@ -83,7 +111,10 @@ def main():
             dest = Path(a.salida)
         else:
             dest = f.with_name(f"{f.stem}-{a.paleta}.png")
-        duotono(Image.open(f), a.paleta, a.contraste, a.gamma, a.grano, lado=a.lado).save(dest)
+        if a.paleta == "tinta":
+            tinta(Image.open(f), a.contraste, a.gamma, a.grano, lado=a.lado).save(dest)
+        else:
+            duotono(Image.open(f), a.paleta, a.contraste, a.gamma, a.grano, lado=a.lado).save(dest)
         print(dest)
 
 

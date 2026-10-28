@@ -25,7 +25,7 @@
 
 /* zona de abajo: llega a los bordes laterales e inferior del cartel */
 .mz-grid>.mz-zona{z-index:0;margin:calc(var(--mz-g)*-.5cqw) calc(var(--mz-m)*-1cqw) calc(var(--mz-pv)*-1)}
-.mz-grid>.mz-zona-a{z-index:0;margin:calc(var(--mz-pv)*-1) calc(var(--mz-m)*-1cqw) calc(var(--mz-g)*-.5cqw)}
+.mz-grid>.mz-zona-a{z-index:0;overflow:hidden;margin:calc(var(--mz-pv)*-1) calc(var(--mz-m)*-1cqw) calc(var(--mz-g)*-.5cqw)}
 
 /* mitad derecha de los horizontales: del centro al borde */
 .mz-grid>.mz-mitad{position:absolute;left:50%;right:0;top:0;bottom:0;z-index:0}
@@ -59,7 +59,7 @@
 .mz-evento-t .mz-t-dato,.mz-d-story .mz-t-dato{opacity:.72}
 
 /* foto: celdas completas, nunca al borde */
-.mz-ph{position:relative;overflow:hidden;background:var(--mz-azul);color:rgba(255,255,255,.7);display:flex;align-items:flex-end;padding:2cqw;font-size:2.8cqw;font-weight:500;letter-spacing:.02em}
+.mz-ph{position:relative;overflow:hidden;background:var(--mz-amarillo);color:rgba(27,20,68,.7);display:flex;align-items:flex-end;padding:2cqw;font-size:2.8cqw;font-weight:500;letter-spacing:.02em}
 
 .mz-foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 

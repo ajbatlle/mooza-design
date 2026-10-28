@@ -96,7 +96,7 @@ Cada dibujo tiene cuatro versiones: `tinta` (una sola tinta), `amarillo` y `nara
 
 ### Fotos en duotono
 
-Las fotos se convierten a dos colores de la paleta: las sombras toman el color oscuro y las luces el claro. Hay tres paletas (`azul-amarillo`, `azul-naranja` y `azul-claro`), una por pieza. El procedimiento, la herramienta en el navegador y el script por lotes están en `kit/duotono/`. Los filtros para web, en `components/duotono/duotono.js`.
+Las fotografías se muestran de un solo modo: una tinta azul con transparencia. La foto se convierte a un PNG de un solo color, el azul `#1b1444`, cuyo canal alfa sale de la luminancia: las sombras quedan opacas y las luces transparentes. Esa imagen se apoya sobre una zona lisa amarilla o naranja, que asoma por las luces. Puede ir en la celda de foto (diseños `foto` y `story`, y la mitad derecha del horizontal) o a sangre en la zona de color de los diseños `titular` y `semana`; sobre una foto oscura el titular puede ir en blanco. El generador convierte una foto normal al vuelo o usa tal cual un PNG ya convertido (`foto.listo`). Para convertir y descargar el PNG: `kit/duotono/index.html` (navegador) o `python3 kit/duotono/duotono.py foto.jpg` (por lotes). Para ver una foto en los carteles: `guidelines/fotos.html`. El duotono de dos colores (`azul-amarillo`, `azul-naranja`, `azul-claro`) queda como alternativa en `kit/duotono/`.
 
 ### Movimiento
 

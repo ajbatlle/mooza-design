@@ -1,6 +1,12 @@
-# Fotos en duotono
+# Fotos: tinta azul con transparencia y duotono
 
-Las fotos de Mooza se convierten a dos colores de la paleta: las sombras toman el color oscuro y las luces el claro.
+## Modo oficial: tinta azul con transparencia
+
+La foto se convierte a un PNG de un solo color, el azul `#1b1444`, con el canal alfa tomado de la luminancia: sombras opacas, luces transparentes. Se apoya sobre una zona lisa amarilla o naranja. En el navegador: `index.html` (modo "Tinta azul con transparencia"). Por lotes: `python3 kit/duotono/duotono.py foto.jpg` (sin `--paleta`). En web o canvas: `MoozaDuotono.aplicarTinta()` y `MoozaDuotono.filtroTinta()` (`components/duotono/duotono.js`).
+
+## Alternativa: duotono de dos colores
+
+Las fotos se convierten a dos colores de la paleta: las sombras toman el color oscuro y las luces el claro.
 
 ## Procedimiento
 

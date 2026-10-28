@@ -322,15 +322,14 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
 
   <section class="sec" id="fotos">
     <span class="k">Fotos</span>
-    <h2>Duotono con los colores de Mooza</h2>
-    <p class="nota" style="margin-bottom:28px">Las fotos se convierten a dos colores de la paleta: las sombras toman el color oscuro y las luces el claro. Una paleta por pieza, y la foto entra en celdas completas de la grilla.</p>
+    <h2>Fotos en tinta azul con transparencia</h2>
+    <p class="nota" style="margin-bottom:28px">La foto se convierte a un PNG de un solo color, el azul, con las sombras opacas y las luces transparentes. Se apoya sobre una zona lisa amarilla o naranja, que asoma por las luces. Va en la celda de foto o a sangre en la zona de color, y sobre una foto oscura el titular puede ir en blanco.</p>
     <a class="mz-btn mz-btn--linea enlace" href="fotos.html" style="margin:0 0 28px">Probar con tus fotos</a>
-    <div class="duo">
-      <div><i style="background:linear-gradient(90deg,#1b1444,#fcee21)"></i><b>azul-amarillo</b><span>La principal.</span></div>
-      <div><i style="background:linear-gradient(90deg,#1b1444,#fbb03b)"></i><b>azul-naranja</b><span>La más cálida.</span></div>
-      <div><i style="background:linear-gradient(90deg,#1b1444,#f2f2f2)"></i><b>azul-claro</b><span>Un solo tono. Para fondos amarillos o naranjas.</span></div>
+    <div class="duo" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+      <figure style="margin:0"><div style="background:var(--mz-amarillo)"><img src="../kit/fotos/ejemplo/saxofon-tinta.png" alt="Músico con saxofón en tinta azul sobre fondo amarillo" style="width:100%;display:block"></div><figcaption style="font-size:13px;margin-top:8px">Sobre amarillo</figcaption></figure>
+      <figure style="margin:0"><div style="background:var(--mz-naranja)"><img src="../kit/fotos/ejemplo/saxofon-tinta.png" alt="Músico con saxofón en tinta azul sobre fondo naranja" style="width:100%;display:block"></div><figcaption style="font-size:13px;margin-top:8px">Sobre naranja</figcaption></figure>
     </div>
-    <p class="nota" style="margin-top:24px">Procedimiento: escala de grises por luminancia, niveles (punto negro y blanco en los percentiles 1 y 99, medios tonos y contraste) y mapa de degradado entre los dos colores, con un grano mínimo opcional. Se hace con la herramienta <code>kit/duotono/index.html</code> en el navegador, con <code>kit/duotono/duotono.py</code> por lotes o con los filtros de <code>components/duotono/</code> en una web.</p>
+    <p class="nota" style="margin-top:24px">Procedimiento: escala de grises por luminancia, niveles (punto negro y blanco en los percentiles 1 y 99, medios tonos y contraste) y el resultado va al canal alfa de una imagen azul, de modo que las sombras quedan opacas y las luces transparentes. Se hace con la herramienta <code>kit/duotono/index.html</code> en el navegador, con <code>kit/duotono/duotono.py</code> por lotes o con <code>components/duotono/</code> en una web. El duotono clásico de dos colores sigue disponible como alternativa.</p>
     <a class="mz-btn mz-btn--linea enlace" href="../kit/duotono/index.html">Abrir la herramienta</a>
     <a class="mz-btn mz-btn--linea enlace" href="web.html" style="margin-left:10px">Ver la propuesta web</a>
   </section>
