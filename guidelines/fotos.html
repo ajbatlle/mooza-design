@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Probar fotos Mooza</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+/* Las fotos de Mooza son una tinta azul con transparencia (oscuro opaco, claro transparente) sobre una zona lisa amarilla o naranja.
+   Carga una foto normal y se convierte al vuelo, o carga el PNG ya convertido. La foto no sale de tu navegador. */
+*{box-sizing:border-box}
+body{margin:0;background:var(--mz-claro);color:var(--mz-azul);font-family:var(--mz-grot);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{width:100%;max-width:1320px;margin-inline:auto;padding:clamp(20px,4vw,48px) max(16px,env(safe-area-inset-left,0px))}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:clamp(20px,3vw,36px);flex-wrap:wrap}
+.top svg{width:120px;display:block;color:var(--mz-azul);--mz-iso:var(--mz-azul)}
+.top a{font-size:14px;color:var(--mz-azul)}
+h1{font-weight:var(--mz-peso-titular);letter-spacing:-.05em;line-height:.95;font-size:clamp(34px,5vw,64px);margin:0 0 12px}
+.lead{max-width:64ch;margin:0 0 24px;font-size:16px;line-height:1.5;color:rgba(27,20,68,.78)}
+.acciones{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:clamp(20px,3vw,32px)}
+#drop{display:grid;place-items:center;text-align:center;gap:6px;padding:clamp(24px,4vw,44px);margin-bottom:16px;box-shadow:inset 0 0 0 1px var(--mz-azul);cursor:pointer;background:transparent;border:0;width:100%;color:inherit;font:inherit}
+#drop b{font-size:20px;font-weight:500}
+#drop span{font-size:14px;color:rgba(27,20,68,.72)}
+#drop.sobre,#drop:hover{background:var(--mz-amarillo);box-shadow:none}
+#drop:focus-visible,.btn:focus-visible{outline:3px solid var(--mz-azul);outline-offset:3px}
+.btn{padding:14px 20px;border:0;background:var(--mz-azul);color:var(--mz-blanco);font:600 13px/1 var(--mz-grot);letter-spacing:.02em;cursor:pointer}
+.btn:hover{background:var(--mz-amarillo);color:var(--mz-azul)}
+.btn.linea{background:transparent;color:var(--mz-azul);box-shadow:inset 0 0 0 1px var(--mz-azul)}
+.btn.linea:hover{background:var(--mz-azul);color:var(--mz-blanco)}
+.btn[disabled]{opacity:.4;pointer-events:none}
+.ctl{display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center;margin-bottom:clamp(24px,3vw,40px)}
+.ctl label{font-size:14px;font-weight:500;display:flex;gap:10px;align-items:center}
+.ctl input[type=range]{width:150px;accent-color:var(--mz-azul)}
+.ctl input[type=checkbox]{accent-color:var(--mz-azul);width:18px;height:18px}
+.ctl .solo-foto.off{opacity:.4;pointer-events:none}
+#estado{font-size:13px;color:rgba(27,20,68,.72);margin-bottom:20px;min-height:1.4em}
+h2{font-weight:var(--mz-peso-titular);letter-spacing:-.04em;font-size:clamp(24px,3vw,36px);margin:clamp(28px,4vw,48px) 0 16px}
+.fila{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,2vw,24px);align-items:start}
+.fila.s{grid-template-columns:repeat(4,minmax(0,.62fr));justify-content:start}
+.fila.h{grid-template-columns:repeat(2,minmax(0,1fr))}
+figure{margin:0}
+figcaption{font-size:13px;font-weight:500;margin-top:8px}
+figcaption small{display:block;font-weight:400;color:rgba(27,20,68,.72)}
+.pz{width:100%}
+@media (max-width:900px){.fila,.fila.s{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<script src="../components/tinta/tinta.js"></script>
+<script src="../components/grid/poster.js"></script>
+<script>document.body.insertAdjacentHTML('afterbegin',MoozaPoster.sprite())</script>
+<main class="wrap">
+  <div class="top"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Mooza"><use href="#mz-lockup"/></svg><a href="index.html">Volver al sistema</a></div>
+  <h1>Probar fotos</h1>
+  <p class="lead">Una foto de Mooza es una tinta azul con transparencia: el alfa es 255 menos el canal verde de la foto, así que las sombras quedan opacas y las luces dejan ver la zona lisa de atrás, amarilla o naranja. Carga una foto normal y se convierte aquí mismo, o carga el PNG que ya tiene la transparencia. Todo ocurre en tu navegador.</p>
+
+  <button id="drop" type="button"><b>Elige una foto o arrástrala aquí</b><span>JPG, PNG o WebP. Si el PNG ya es azul con transparencia, se usa tal cual.</span></button>
+  <input id="archivo" type="file" accept="image/*" hidden>
+  <div class="acciones">
+    <button class="btn linea" id="ejemplo" type="button">Usar la foto de ejemplo</button>
+    <button class="btn" id="bajar" type="button" disabled>Descargar PNG en tinta azul</button>
+  </div>
+  <p id="estado" role="status"></p>
+  <div class="ctl">
+    <label>Enfoque horizontal <input id="px" type="range" min="0" max="100" value="50"></label>
+    <label>Enfoque vertical <input id="py" type="range" min="0" max="100" value="30"></label>
+    <label class="solo-foto" id="lc">Contraste <input id="contraste" type="range" min="1" max="1.8" step=".05" value="1"></label>
+    <label class="solo-foto" id="lg">Medios tonos <input id="gamma" type="range" min=".6" max="1.6" step=".05" value="1"></label>
+    <label><input id="blanco" type="checkbox" checked> Titular en blanco sobre la foto</label>
+  </div>
+
+  <h2>Cartel foto, 4:5</h2>
+  <div class="fila" id="f45"></div>
+  <h2>La foto como zona de color</h2>
+  <div class="fila" id="fz"></div>
+  <h2>Story, 9:16</h2>
+  <div class="fila s" id="f916"></div>
+  <h2>Horizontal, 16:9</h2>
+  <div class="fila h" id="f169"></div>
+</main>
+<script>
+(function(){
+  var $=function(s){return document.querySelector(s)},D=MoozaTinta;
+  var original=null,url=null,blob=null,tieneAlfa=false,hecho=document.createElement('canvas'),pend=0;
+
+  function montar(host,items){
+    host.innerHTML='';
+    items.forEach(function(it){
+      var fig=document.createElement('figure'),pz=document.createElement('div');pz.className='pz';fig.appendChild(pz);
+      var cap=document.createElement('figcaption');cap.innerHTML=it.t+'<small>'+it.s+'</small>';fig.appendChild(cap);host.appendChild(fig);
+      var foto=url?{src:url,listo:true,pos:$('#px').value+'% '+$('#py').value+'%',color:it.c,texto:$('#blanco').checked?'blanco':null,alt:'Foto de prueba'}:null;
+      MoozaPoster.mount(pz,it.d,foto?{foto:foto}:null,it.f);
+    });
+  }
+  function dibujar(){
+    montar($('#f45'),[{d:'foto',f:'4x5',c:'amarillo',t:'Sobre amarillo',s:'Zona lisa, la foto asoma por las luces'},{d:'foto',f:'4x5',c:'naranja',t:'Sobre naranja',s:'La variante cálida'}]);
+    montar($('#fz'),[{d:'titular',f:'4x5',c:'amarillo',t:'Titular',s:'Foto a sangre en la zona de color'},{d:'semana',f:'4x5',c:'naranja',t:'Semana',s:'La misma idea con la tira de días'}]);
+    montar($('#f916'),[{d:'story',f:'9x16',c:'naranja',t:'Sobre naranja',s:''},{d:'story',f:'9x16',c:'amarillo',t:'Sobre amarillo',s:''}]);
+    montar($('#f169'),[{d:'foto',f:'16x9',c:'amarillo',t:'Sobre amarillo',s:''},{d:'foto',f:'16x9',c:'naranja',t:'Sobre naranja',s:''}]);
+  }
+  function listo(blobNuevo){
+    if(url)URL.revokeObjectURL(url);
+    blob=blobNuevo;url=URL.createObjectURL(blobNuevo);$('#bajar').disabled=false;dibujar();
+  }
+  function convertir(){
+    if(!original)return;
+    $('#lc').classList.toggle('off',tieneAlfa);$('#lg').classList.toggle('off',tieneAlfa);
+    if(tieneAlfa){ /* ya es tinta con transparencia: se usa tal cual */
+      hecho.width=original.naturalWidth;hecho.height=original.naturalHeight;hecho.getContext('2d').drawImage(original,0,0);
+      var id=++pend;hecho.toBlob(function(b){if(id===pend)listo(b)},'image/png');return;
+    }
+    D.aplicarTinta(original,hecho,{lado:1600,contraste:+$('#contraste').value,gamma:+$('#gamma').value});
+    var id2=++pend;hecho.toBlob(function(b){if(id2===pend)listo(b)},'image/png');
+  }
+  function usar(img,nombre){
+    original=img;
+    var c=document.createElement('canvas'),w=Math.min(400,img.naturalWidth),k=w/img.naturalWidth;c.width=w;c.height=Math.round(img.naturalHeight*k);
+    var x=c.getContext('2d');x.drawImage(img,0,0,c.width,c.height);
+    var a=0;try{var d=x.getImageData(0,0,c.width,c.height).data;for(var i=3;i<d.length;i+=4*7)if(d[i]<250){a=1;break}}catch(err){}
+    tieneAlfa=!!a;
+    $('#estado').textContent=nombre+': '+(tieneAlfa?'ya tiene transparencia, se usa tal cual.':'foto normal, convertida con el procedimiento de Mooza. Contraste y medios tonos son ajustes opcionales.');
+    convertir();
+  }
+  function cargar(f){
+    if(!f||!/^image\//.test(f.type))return;
+    var im=new Image();im.onload=function(){usar(im,f.name)};im.src=URL.createObjectURL(f);
+  }
+  $('#drop').addEventListener('click',function(){$('#archivo').click()});
+  $('#archivo').addEventListener('change',function(e){cargar(e.target.files[0])});
+  ['dragenter','dragover'].forEach(function(t){$('#drop').addEventListener(t,function(e){e.preventDefault();this.classList.add('sobre')})});
+  ['dragleave','drop'].forEach(function(t){$('#drop').addEventListener(t,function(e){e.preventDefault();this.classList.remove('sobre')})});
+  $('#drop').addEventListener('drop',function(e){cargar(e.dataTransfer.files[0])});
+  /* la foto de ejemplo ya es tinta con transparencia: se usa directo, sin pasar por el lienzo */
+  $('#ejemplo').addEventListener('click',function(){
+    var ruta='../kit/fotos/ejemplo/saxofon-tinta.png';
+    original=null;blob=null;pend++;
+    if(url&&url.indexOf('blob:')===0)URL.revokeObjectURL(url);
+    url=ruta;tieneAlfa=true;$('#lc').classList.add('off');$('#lg').classList.add('off');$('#bajar').disabled=false;
+    $('#estado').textContent='Foto de ejemplo: ya tiene transparencia, se usa tal cual.';dibujar();
+  });
+  ['#px','#py','#blanco'].forEach(function(s){$(s).addEventListener('input',function(){if(url)dibujar()})});
+  ['#contraste','#gamma'].forEach(function(s){$(s).addEventListener('input',function(){if(original&&!tieneAlfa)convertir()})});
+  $('#bajar').addEventListener('click',function(){
+    var a=document.createElement('a');a.download='foto-tinta-azul.png';a.href=blob?URL.createObjectURL(blob):url;a.click();
+  });
+  dibujar();
+})();
+
+/* En el visor de artefactos las descargas pasan por la capacidad downloads; fuera de él, el enlace funciona normal. */
+document.addEventListener('click',async function(e){
+  var b=e.target.closest&&e.target.closest('#bajar');if(!b||!window.claude||!claude.use)return;
+  var d=null;try{d=await claude.use('downloads')}catch(x){}
+  if(!d)return;
+  e.stopImmediatePropagation();
+  var c=document.querySelector('.pz img.mz-foto');if(!c)return;
+  try{var r=await fetch(c.src),bl=await r.blob();await d.save({filename:'foto-tinta-azul.png',data:bl})}catch(err){}
+},true);
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cartel sobre grilla</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+body{margin:0;padding:24px;background:var(--mz-azul);color:var(--mz-blanco);font-family:var(--mz-grot)}
+.fila{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px;align-items:start}
+label{display:inline-flex;gap:8px;align-items:center;margin:0 20px 20px 0;font-size:13px}
+</style>
+</head>
+<body>
+<script src="poster.js"></script>
+<script>document.body.insertAdjacentHTML('afterbegin',MoozaPoster.sprite())</script>
+<div id="escena">
+  <label><input id="ver" type="checkbox"> Ver grilla</label>
+  <label>Margen <input id="m" type="range" min="3" max="14" step=".5" value="6"></label>
+  <div class="fila" id="fila"></div>
+</div>
+<script>
+var fila=document.getElementById('fila'),esc=document.getElementById('escena');
+['titular','numero','foto','semana','agenda','story'].forEach(function(t){var d=document.createElement('div');fila.appendChild(d);MoozaPoster.mount(d,t)});
+document.getElementById('ver').onchange=function(e){esc.classList.toggle('mz-show-grid',e.target.checked)};
+document.getElementById('m').oninput=function(e){esc.style.setProperty('--mz-m',e.target.value)};
+</script>
+</body>
+</html>

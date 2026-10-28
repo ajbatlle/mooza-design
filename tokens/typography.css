@@ -1,0 +1,20 @@
+/* Mooza · tipografía
+   Una sola familia: Geist (sans, licencia OFL, Google Fonts). Palabras en peso 400 y números, fechas y etiquetas en peso 500.
+   La jerarquía sale del tamaño (escala en tokens/grid.css), no del peso ni de mezclar familias. */
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
+
+:root{
+  --mz-palabra: 'Geist', 'Helvetica Neue', Arial, sans-serif;   /* titulares, nombres de evento y textos */
+  --mz-grot:    var(--mz-palabra);                               /* números, fechas, horas, precios y etiquetas */
+
+  --mz-peso-titular: 400;   /* palabras */
+  --mz-peso-texto:   400;
+  --mz-peso-dato:    500;   /* fechas y horas */
+  --mz-peso-numero:  500;   /* número grande del cartel */
+  --mz-peso-etiqueta:500;
+
+  --mz-track-titular: -.05em;
+  --mz-track-numero:  -.04em;
+  --mz-track-etiqueta: .02em;
+  --mz-leading-titular: .92;
+}

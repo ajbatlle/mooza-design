@@ -1,0 +1,27 @@
+/* Mooza · colores
+   Cinco colores planos y un neutro. Sin degradados ni sombras, salvo el borde suave y el grano del fondo de marca (ver components/grid/README.md).
+   Orden de importancia: gris claro (fondo de todo), azul (el color principal, en una zona),
+   amarillo y naranjo (zonas de color y acentos). Los colores nunca compiten. Azul es el color más oscuro y también la tinta de textos y logo. No hay negro. */
+:root{
+  --mz-azul:     #1b1444;  /* el color más oscuro: zona de color, tinta de textos y logo, lugar de las fotos */
+  --mz-amarillo: #fcee21;  /* zona de color o acento: destacados, filtro activo */
+  --mz-naranja:  #fbb03b;  /* zona de color o acento alternativo */
+  --mz-blanco:   #ffffff;  /* texto sobre azul */
+  --mz-claro:    #f2f2f2;  /* el "blanco" de la marca: fondo de todo */
+
+  /* tonos para el fondo de marca: el mismo color un paso más claro o más cálido. Solo para formas muy grandes detrás del texto. */
+  --mz-tono-azul:     color-mix(in srgb, var(--mz-azul) 90%, #fff);
+  --mz-tono-amarillo: color-mix(in srgb, var(--mz-amarillo) 80%, var(--mz-naranja));
+  --mz-tono-naranja:  color-mix(in srgb, var(--mz-naranja) 72%, var(--mz-amarillo));
+  --mz-tono-claro:    color-mix(in srgb, var(--mz-claro) 93%, var(--mz-azul));
+
+  /* alias de uso */
+  --mz-bg:        var(--mz-azul);
+  --mz-fg:        var(--mz-blanco);
+  --mz-fg-suave:  rgba(255,255,255,.72);
+  --mz-fg-tenue:  rgba(255,255,255,.55);
+  --mz-acento:    var(--mz-amarillo);
+  --mz-linea:     rgba(255,255,255,.22);
+  --mz-linea-clara: rgba(27,20,68,.5);   /* línea de grilla sobre fondo claro o amarillo */
+  --mz-linea-naranja: rgba(255,255,255,.85); /* línea de grilla sobre naranja */
+}
