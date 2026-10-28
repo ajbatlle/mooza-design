@@ -52,9 +52,9 @@ En el cartel "semana" el día destacado lleva el acento (amarillo) sobre gris.
 
 ### Tipografía
 
-- Las palabras van en Newsreader 500: titulares, nombres de evento, sala y artista.
-- Los números van en Inter Tight: fechas, horas, precios y el número grande del cartel (peso 500 a 600, cifras tabulares).
-- Las etiquetas van en Inter Tight 600, en mayúsculas y con tracking +0,14 em.
+- Una sola familia, Geist: peso 400 en titulares, nombres de evento, sala y artista, y peso 500 en números, fechas, horas, precios y etiquetas.
+- Los números van en peso 500, con cifras tabulares: fechas, horas, precios y el número grande del cartel.
+- Las etiquetas van en peso 500, con mayúscula inicial y tracking +0,02 em.
 - Ambas fuentes tienen licencia abierta (OFL) y se cargan desde Google Fonts.
 - El titular lleva tracking −0,035 em e interlínea 0,9 a 0,93. El número grande, tracking −0,05 em.
 
@@ -157,5 +157,5 @@ Los datos tienen la forma de `MoozaPoster.EJEMPLO` (semana con eventos que traen
 ## Qué cambió respecto de v1
 
 - Fuera: Sora, DM Sans, JetBrains Mono, Material Symbols, la escala de azules, las sombras, los botones en píldora y el degradé del fondo.
-- Entra: la grilla de siete días como motivo, Newsreader e Inter Tight, el campo de color plano por cartel y los ángulos rectos.
+- Entra: la grilla de siete días como motivo, Geist, el campo de color plano por cartel y los ángulos rectos.
 - Se mantiene: la voz en español con tuteo, "Gratis", el formato de precios, la hora en 24 horas, las etiquetas en mayúsculas y el logo.

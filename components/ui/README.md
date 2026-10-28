@@ -14,7 +14,7 @@ Piezas de la plataforma mooza.cl, en CSS puro (`ui.css`). Ángulos rectos, color
 
 ## Reglas
 
-- Los nombres de evento van en serif (Newsreader). Los datos y etiquetas van en grotesca (Inter Tight).
+- Todo va en Geist: los nombres de evento en peso 400 y los datos y etiquetas en peso 500.
 - El foco visible es un contorno naranja de 3 px.
 - Las filas de evento se separan con una línea de 1 px y no tienen tarjeta.
 - Un solo botón principal por vista.

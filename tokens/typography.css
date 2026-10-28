@@ -1,20 +1,20 @@
 /* Mooza · tipografía
-   Las palabras van en serif (Newsreader). Los números, fechas, horas y precios van en grotesca (Inter Tight).
-   Ambas tienen licencia abierta (OFL) y se cargan desde Google Fonts. */
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300..800&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&display=swap');
+   Una sola familia: Geist (sans, licencia OFL, Google Fonts). Palabras en peso 400 y números, fechas y etiquetas en peso 500.
+   La jerarquía sale del tamaño (escala en tokens/grid.css), no del peso ni de mezclar familias. */
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
 
 :root{
-  --mz-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
-  --mz-grot:  'Inter Tight', 'Helvetica Neue', Arial, sans-serif;
+  --mz-palabra: 'Geist', 'Helvetica Neue', Arial, sans-serif;   /* titulares, nombres de evento y textos */
+  --mz-grot:    var(--mz-palabra);                               /* números, fechas, horas, precios y etiquetas */
 
-  --mz-peso-titular: 500;   /* serif de titular */
+  --mz-peso-titular: 400;   /* palabras */
   --mz-peso-texto:   400;
-  --mz-peso-dato:    500;   /* grotesca de fechas y horas */
+  --mz-peso-dato:    500;   /* fechas y horas */
   --mz-peso-numero:  500;   /* número grande del cartel */
   --mz-peso-etiqueta:500;
 
-  --mz-track-titular: -.035em;
+  --mz-track-titular: -.05em;
   --mz-track-numero:  -.04em;
-  --mz-track-etiqueta: .14em;
-  --mz-leading-titular: .93;
+  --mz-track-etiqueta: .02em;
+  --mz-leading-titular: .92;
 }

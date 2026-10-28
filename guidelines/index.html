@@ -20,10 +20,10 @@ a{color:inherit}
 .top nav a{text-decoration:none;color:var(--mz-fg-suave);padding:6px 0}
 .top nav a:hover{color:var(--mz-blanco)}
 .intro{padding-block:clamp(32px,6vw,88px) clamp(36px,5vw,64px);display:grid;gap:clamp(20px,3vw,32px)}
-h1{font-family:var(--mz-serif);font-weight:500;letter-spacing:-.03em;line-height:.96;font-size:clamp(46px,8.6vw,120px);text-wrap:balance;max-width:13ch}
+h1{font-family:var(--mz-palabra);font-weight:var(--mz-peso-titular);letter-spacing:-.03em;line-height:.96;font-size:clamp(46px,8.6vw,120px);text-wrap:balance;max-width:13ch}
 .lead{max-width:52ch;font-size:clamp(16px,1.4vw,19px);color:var(--mz-fg-suave);line-height:1.6}
 .sec{padding-block:clamp(40px,6vw,88px);border-top:1px solid var(--mz-linea)}
-h2{font-family:var(--mz-serif);font-weight:500;letter-spacing:-.025em;line-height:1;font-size:clamp(32px,4.4vw,56px);margin-bottom:clamp(24px,3vw,40px);text-wrap:balance}
+h2{font-family:var(--mz-palabra);font-weight:var(--mz-peso-titular);letter-spacing:-.025em;line-height:1;font-size:clamp(32px,4.4vw,56px);margin-bottom:clamp(24px,3vw,40px);text-wrap:balance}
 .k{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mz-fg-tenue);display:block;margin-bottom:14px}
 .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:clamp(20px,3vw,48px)}
 .cols p,.nota{font-size:15px;color:var(--mz-fg-suave);max-width:38ch}
@@ -70,7 +70,7 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
 /* color */
 .sw{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr))}
 .sw div{aspect-ratio:1;padding:14px;display:flex;flex-direction:column;justify-content:space-between}
-.sw b{font-family:var(--mz-serif);font-weight:500;font-size:26px;letter-spacing:-.02em;line-height:1}
+.sw b{font-family:var(--mz-palabra);font-weight:var(--mz-peso-titular);font-size:26px;letter-spacing:-.02em;line-height:1}
 .sw code{background:none;padding:0;font-size:12px;letter-spacing:.04em}
 .sw small{font-size:12px;line-height:1.35}
 .c-noche{background:var(--mz-noche);color:var(--mz-blanco);box-shadow:inset 0 0 0 1px var(--mz-linea)}
@@ -89,7 +89,7 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
 /* tipo */
 .tipo{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,4vw,64px);align-items:start}
 .muestra{background:var(--mz-claro);color:var(--mz-noche);padding:clamp(20px,3vw,40px);display:grid;gap:18px}
-.muestra .s{font-family:var(--mz-serif);font-weight:500;letter-spacing:-.035em;line-height:.93;font-size:clamp(48px,7vw,96px)}
+.muestra .s{font-family:var(--mz-palabra);font-weight:var(--mz-peso-titular);letter-spacing:-.035em;line-height:.93;font-size:clamp(48px,7vw,96px)}
 .muestra .n{font-weight:600;letter-spacing:-.05em;line-height:.8;font-size:clamp(64px,10vw,140px);font-variant-numeric:tabular-nums}
 .muestra .d{font-size:14px;color:rgba(3,2,27,.72)}
 .estilos li{display:grid;grid-template-columns:1fr auto;gap:2px 16px;padding:12px 0;border-top:1px solid var(--mz-linea);align-items:baseline}
@@ -122,13 +122,13 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
 .voz li:last-child{border-bottom:1px solid var(--mz-linea)}
 .voz .e{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mz-amarillo)}
 .voz .v{font-size:19px;line-height:1.25}
-.voz .v.sr{font-family:var(--mz-serif);font-size:24px}
+.voz .v.sr{font-family:var(--mz-palabra);font-size:24px}
 .voz .r{grid-column:2;font-size:13px;color:var(--mz-fg-tenue)}
 
 /* kit */
 .kit{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(20px,3vw,40px)}
 .kit li{border-top:1px solid var(--mz-linea);padding-top:14px;display:grid;gap:6px;align-content:start;font-size:14px;color:var(--mz-fg-suave)}
-.kit b{font-family:var(--mz-serif);font-weight:500;font-size:24px;color:var(--mz-blanco);letter-spacing:-.02em}
+.kit b{font-family:var(--mz-palabra);font-weight:var(--mz-peso-titular);font-size:24px;color:var(--mz-blanco);letter-spacing:-.02em}
 .kit code{word-break:break-all}
 .miniaturas{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:14px;margin-top:clamp(24px,3vw,40px)}
 .miniaturas img{width:100%;height:auto;display:block}
@@ -269,19 +269,19 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
 
   <section class="sec" id="tipo">
     <span class="k">Tipo</span>
-    <h2>Las palabras en serif, los números en grotesca</h2>
+    <h2>Una sola familia, la jerarquía en el tamaño</h2>
     <div class="tipo">
       <div class="muestra">
         <span class="s">Tu semana cultural</span>
         <span class="n">26–1</span>
-        <p class="d">Newsreader 500 para titulares y nombres. Inter Tight 500 a 600 para números, fechas, horas, precios y etiquetas. Ambas con licencia abierta (OFL) en Google Fonts.</p>
+        <p class="d">Geist para todo. Peso 400 en titulares, nombres y textos; peso 500 en números, fechas, horas, precios y etiquetas. Licencia abierta (OFL) en Google Fonts. Lo que ordena la lectura es el tamaño, no el peso.</p>
       </div>
       <ul class="estilos">
-        <li><span class="a" style="font-family:var(--mz-serif);font-weight:500;letter-spacing:-.035em">titular</span><span class="m">Newsreader 500</span><span class="s2">1,4 columnas de alto de letra • interlínea 0,9 • tracking −0,035 em • mayúscula inicial</span></li>
-        <li><span class="a" style="font-family:var(--mz-serif);font-weight:500">Cuarteto de jazz en vivo</span><span class="m">Newsreader 500</span><span class="s2">Nombre de evento, sala o artista • 0,95 columnas • mayúscula inicial</span></li>
-        <li><span class="a" style="font-weight:600;letter-spacing:-.05em">26–1 • 21:00 • $6.000</span><span class="m">Inter Tight 600</span><span class="s2">Números y datos • cifras tabulares • tracking −0,05 em en tamaño grande</span></li>
-        <li><span class="a" style="font-size:14px;font-weight:600">Música • Teatro • Cine</span><span class="m">Inter Tight 600</span><span class="s2">Etiquetas de categoría • 0,2 columnas • mayúscula inicial</span></li>
-        <li><span class="a" style="font-size:16px;font-weight:400">Texto de cuerpo y de interfaz</span><span class="m">Inter Tight 400</span><span class="s2">16 px, interlínea 1,5 • ancho de línea máximo de 65 caracteres</span></li>
+        <li><span class="a" style="font-weight:var(--mz-peso-titular);letter-spacing:-.05em">Titular</span><span class="m">Geist 400</span><span class="s2">1,4 columnas de alto de letra • interlínea 0,92 • tracking −0,05 em • mayúscula inicial</span></li>
+        <li><span class="a" style="font-weight:var(--mz-peso-titular);letter-spacing:-.03em">Cuarteto de jazz en vivo</span><span class="m">Geist 400</span><span class="s2">Nombre de evento, sala o artista • 0,95 columnas • mayúscula inicial</span></li>
+        <li><span class="a" style="font-weight:500;letter-spacing:-.04em">26–1 • 21:00 • $6.000</span><span class="m">Geist 500</span><span class="s2">Números y datos • 2,2 columnas el número • cifras tabulares • tracking −0,04 em</span></li>
+        <li><span class="a" style="font-size:14px;font-weight:500">Música • Teatro • Cine</span><span class="m">Geist 500</span><span class="s2">Etiquetas de categoría • 0,2 columnas • mayúscula inicial</span></li>
+        <li><span class="a" style="font-size:16px;font-weight:400">Texto de cuerpo y de interfaz</span><span class="m">Geist 400</span><span class="s2">16 px, interlínea 1,5 • ancho de línea máximo de 65 caracteres</span></li>
       </ul>
     </div>
   </section>

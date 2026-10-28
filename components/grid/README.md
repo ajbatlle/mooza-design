@@ -43,7 +43,7 @@ Los campos que no pases se toman de `MoozaPoster.EJEMPLO`: `color` (`azul` por d
 
 ## Fuente de las palabras
 
-Los titulares, nombres de evento y textos de lista usan `--mz-palabra` (por defecto Newsreader, serif). Para probar otra tipografía sin tocar los diseños, define en el cartel o en un ancestro: `--mz-palabra` (familia), `--mz-palabra-peso`, `--mz-palabra-track` (interletraje), `--mz-palabra-lh` (interlínea) y `--mz-palabra-var` (variaciones, por ejemplo `'wdth' 70`). Ver `kit/tablero/tipografia-opciones.png`.
+Los titulares, nombres de evento y textos de lista usan `--mz-palabra` (por defecto Geist 400). Para probar otra tipografía sin tocar los diseños, define en el cartel o en un ancestro: `--mz-palabra` (familia), `--mz-palabra-peso`, `--mz-palabra-track` (interletraje), `--mz-palabra-lh` (interlínea) y `--mz-palabra-var` (variaciones, por ejemplo `'wdth' 70`). Ver `kit/tablero/tipografia-opciones.png`.
 
 ## Color por pieza
 

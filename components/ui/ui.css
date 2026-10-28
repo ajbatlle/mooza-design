@@ -35,7 +35,7 @@
 /* fila de evento: fecha, categoría, nombre en serif, lugar y hora, precio */
 .mz-evento{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:clamp(12px,2vw,24px);align-items:center;padding:14px 0;border-top:1px solid var(--mz-linea)}
 .mz-evento .mz-cat{font:600 12px/1 var(--mz-grot);letter-spacing:.02em;color:var(--mz-fg-suave);display:block;margin-bottom:6px}
-.mz-evento h4{margin:0;font:var(--mz-peso-titular) clamp(20px,2.2vw,26px)/1.12 var(--mz-serif);letter-spacing:-.02em}
+.mz-evento h4{margin:0;font:var(--mz-peso-titular) clamp(20px,2.2vw,26px)/1.12 var(--mz-palabra);letter-spacing:-.03em}
 .mz-evento p{margin:3px 0 0;font:400 13px/1.3 var(--mz-grot);color:var(--mz-fg-suave)}
 @media (max-width:520px){.mz-evento{grid-template-columns:auto minmax(0,1fr)}.mz-evento .mz-precio{grid-column:2;justify-self:start}}
 

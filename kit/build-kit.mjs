@@ -2,7 +2,7 @@
 // Regenera grillas, celdas, variantes de logo y plantillas (SVG con texto editable + PNG).
 // Uso:  npm i playwright && node kit/build-kit.mjs
 // Los datos de ejemplo salen de components/grid/poster.js y la geometría de tokens/grid.css
-// (margen 6 %, medianil 1,2 %, siete columnas). Las plantillas usan las fuentes Newsreader e Inter Tight.
+// (margen 6 %, medianil 1,2 %, siete columnas). Las plantillas usan la fuente Geist.
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
@@ -43,18 +43,18 @@ const out = (rel, text) => { const f = path.join(ROOT, rel); fs.mkdirSync(path.d
 // ── métricas de fuente, medidas en el navegador ──
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
-const FONTS = 'https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300..800&family=Newsreader:ital,opsz,wght@0,6..72,300..700&display=swap';
-await page.setContent(`<link rel="stylesheet" href="${FONTS}"><body style="margin:0"><span style="font:500 40px Newsreader">x</span><span style="font:600 40px 'Inter Tight'">x</span></body>`, { waitUntil: 'networkidle' });
+const FONTS = 'https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap';
+await page.setContent(`<link rel="stylesheet" href="${FONTS}"><body style="margin:0"><span style="font:600 40px 'Geist'">x</span></body>`, { waitUntil: 'networkidle' });
 await page.evaluate(() => document.fonts.ready);
 const MET = await page.evaluate(() => {
   const m = (font) => { const c = document.createElement('canvas').getContext('2d'); c.font = font; const t = c.measureText('Hxg'); return { asc: t.fontBoundingBoxAscent / 100, desc: t.fontBoundingBoxDescent / 100 }; };
-  return { serif: m("500 100px Newsreader"), grot: m("600 100px 'Inter Tight'") };
+  return { grot: m("500 100px 'Geist'") };
 });
 
 // baseline de una línea cuya caja empieza en `top` y mide `lh` px
 const base = (top, lh, size, m) => top + (lh - (m.asc + m.desc) * size) / 2 + m.asc * size;
 function text(o) {
-  const fam = o.fam === 'serif' ? "'Newsreader', Georgia, serif" : "'Inter Tight', 'Helvetica Neue', Arial, sans-serif";
+  const fam = "'Geist', 'Helvetica Neue', Arial, sans-serif";
   const ls = o.ls ? ` letter-spacing="${o.ls}"` : '';
   const tx = o.t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
   return `<text x="${f2(o.x)}" y="${f2(o.y)}" font-family="${fam}" font-size="${f2(o.size)}" font-weight="${o.w}" fill="${o.fill}" text-anchor="${o.anchor || 'start'}"${ls}${o.upper ? ' style="text-transform:uppercase"' : ''}>${tx}</text>`;
@@ -102,7 +102,7 @@ async function leer(tipo, formato) {
       for (const L of lines) {
         const right = cs.textAlign === 'right';
         items.push({ k: 'text', t: L.s.trim(), x: (right ? L.r : L.l) - box.left, y: L.top - box.top + asc, anchor: right ? 'end' : 'start',
-          serif: /Newsreader/.test(cs.fontFamily), size, w: cs.fontWeight, ls: cs.letterSpacing === 'normal' ? 0 : parseFloat(cs.letterSpacing),
+          serif: false, size, w: cs.fontWeight, ls: cs.letterSpacing === 'normal' ? 0 : parseFloat(cs.letterSpacing),
           fill: c.hex, op: c.a * parseFloat(cs.opacity) });
       }
     }
@@ -150,7 +150,7 @@ for (const [n, v] of [['noche', C.noche], ['amarillo', C.amarillo]]) {
 }
 
 // ── foto de ejemplo ──
-out('kit/fotos/foto-placeholder.svg', `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><title>Marcador de foto de evento</title><rect width="100" height="100" fill="${C.azul}"/><text x="6" y="94" font-family="'Inter Tight',Arial,sans-serif" font-size="5" font-weight="500" fill="rgba(255,255,255,.7)">foto del evento</text></svg>\n`);
+out('kit/fotos/foto-placeholder.svg', `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><title>Marcador de foto de evento</title><rect width="100" height="100" fill="${C.azul}"/><text x="6" y="94" font-family="'Geist',Arial,sans-serif" font-size="5" font-weight="500" fill="rgba(255,255,255,.7)">foto del evento</text></svg>\n`);
 
 // ── escribir plantillas y PNG ──
 const LISTA = [], HOJA = [];
@@ -177,11 +177,11 @@ let y = MARG, ancho = 0, G_ = [];
 for (const [f, rotulo] of FILAS) {
   const fila = HOJA.filter(h => h.f === f); if (!fila.length) continue;
   const alto = Math.max(...fila.map(h => h.H));
-  G_.push(`<text x="${MARG}" y="${y + 34}" font-family="'Inter Tight', 'Helvetica Neue', Arial, sans-serif" font-size="34" font-weight="600" fill="${C.noche}">${rotulo}</text>`);
+  G_.push(`<text x="${MARG}" y="${y + 34}" font-family="'Geist', 'Helvetica Neue', Arial, sans-serif" font-size="34" font-weight="600" fill="${C.noche}">${rotulo}</text>`);
   let x = MARG;
   for (const h of fila) {
     const cuerpo = h.svg.slice(h.svg.indexOf('</style>') + 8, h.svg.lastIndexOf('</svg>')).trim();
-    G_.push(`<g id="${h.tipo}-${f}" transform="translate(${x} ${f2(y + ROT)})">\n<text x="0" y="-14" font-family="'Inter Tight', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="500" fill="${C.noche}" fill-opacity=".6">${h.tipo} · ${f}</text>\n${cuerpo}\n</g>`);
+    G_.push(`<g id="${h.tipo}-${f}" transform="translate(${x} ${f2(y + ROT)})">\n<text x="0" y="-14" font-family="'Geist', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="500" fill="${C.noche}" fill-opacity=".6">${h.tipo} · ${f}</text>\n${cuerpo}\n</g>`);
     x += h.W + GAP;
   }
   ancho = Math.max(ancho, x - GAP + MARG);

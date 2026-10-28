@@ -15,7 +15,7 @@ Todo está construido sobre la grilla de siete columnas, con margen 6 % y median
 
 ## Cómo usarlos
 
-- Las plantillas usan Newsreader e Inter Tight. Instala ambas fuentes (Google Fonts, licencia OFL) antes de editar el texto en Figma, Illustrator o Affinity.
+- Las plantillas usan Geist. Instala la fuente (Google Fonts, licencia OFL) antes de editar el texto en Figma, Illustrator o Affinity.
 - Para armar una pieza nueva, pon la grilla de `grillas/` como capa de guías, apila celdas de `celdas/` y escribe los textos con los estilos de `readme.md`.
 - Las ilustraciones usan un filtro SVG de trazo a mano. Se ven bien en navegadores; para Figma o Illustrator usa las hojas PNG o exporta desde el navegador.
 - Si cambias el margen o el medianil, regenera todo con el script: `npm i playwright && node kit/build-kit.mjs`. Para eso edita las constantes `MP` y `GP` al inicio del script.

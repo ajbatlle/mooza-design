@@ -38,10 +38,10 @@
 
 /* escala tipográfica (tokens/grid.css). Palabras en serif, números y datos en grotesca. */
 .mz-t-display{font-weight:var(--mz-peso-numero);letter-spacing:var(--mz-track-numero);font-size:var(--mz-t-display);line-height:.74;white-space:nowrap;align-self:start;font-variant-numeric:tabular-nums}
-.mz-t-grande{font-family:var(--mz-palabra,var(--mz-serif));font-weight:var(--mz-palabra-peso,var(--mz-peso-titular));letter-spacing:var(--mz-palabra-track,var(--mz-track-titular));font-variation-settings:var(--mz-palabra-var,normal);line-height:var(--mz-palabra-lh,.9);font-size:var(--mz-t-grande);align-self:start;margin-top:.075em}
-.mz-t-titular{font-family:var(--mz-palabra,var(--mz-serif));font-weight:var(--mz-palabra-peso,var(--mz-peso-titular));letter-spacing:var(--mz-palabra-track,-.03em);font-variation-settings:var(--mz-palabra-var,normal);line-height:calc(var(--mz-palabra-lh,.9) + .05);font-size:var(--mz-t-titular);display:block}
+.mz-t-grande{font-family:var(--mz-palabra);font-weight:var(--mz-palabra-peso,var(--mz-peso-titular));letter-spacing:var(--mz-palabra-track,var(--mz-track-titular));font-variation-settings:var(--mz-palabra-var,normal);line-height:var(--mz-palabra-lh,.9);font-size:var(--mz-t-grande);align-self:start;margin-top:.075em}
+.mz-t-titular{font-family:var(--mz-palabra);font-weight:var(--mz-palabra-peso,var(--mz-peso-titular));letter-spacing:var(--mz-palabra-track,var(--mz-track-titular));font-variation-settings:var(--mz-palabra-var,normal);line-height:calc(var(--mz-palabra-lh,.9) + .05);font-size:var(--mz-t-titular);display:block}
 .mz-t-sub{font-weight:var(--mz-peso-dato);letter-spacing:-.02em;line-height:1.1;font-size:var(--mz-t-sub);font-variant-numeric:tabular-nums}
-.mz-t-texto{font-family:var(--mz-palabra,var(--mz-serif));font-weight:var(--mz-palabra-peso,var(--mz-peso-titular));letter-spacing:var(--mz-palabra-track,-.03em);font-variation-settings:var(--mz-palabra-var,normal);line-height:1;font-size:var(--mz-t-texto);display:block}
+.mz-t-texto{font-family:var(--mz-palabra);font-weight:var(--mz-palabra-peso,var(--mz-peso-titular));letter-spacing:var(--mz-palabra-track,var(--mz-track-titular));font-variation-settings:var(--mz-palabra-var,normal);line-height:1;font-size:var(--mz-t-texto);display:block}
 .mz-t-dato{font-weight:var(--mz-peso-dato);font-size:var(--mz-t-dato);line-height:1.3;font-variant-numeric:tabular-nums;display:block}
 .mz-t-micro{font-weight:var(--mz-peso-etiqueta);font-size:var(--mz-t-micro);line-height:1}
 .mz-abajo{align-self:start}
