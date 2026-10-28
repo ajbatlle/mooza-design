@@ -122,7 +122,7 @@ Escala tipográfica, en múltiplos del ancho de columna: número 3, titular 1,8,
 
 ## Propuesta web
 
-`guidelines/web.html` es una portada para mooza.cl: hero amarillo con el titular, la semana en siete columnas (un bloque por evento, amarillo si es destacado y blanco si es gratis), lista con filtros, destacado con foto en duotono y pie. Los eventos sin foto usan la ilustración de su categoría. Está hecha sin ver el sitio actual, que no estaba accesible: se apoya en lo que esta documentación dice de la plataforma (búsqueda, categorías y agenda semanal).
+`guidelines/web.html` es una portada para mooza.cl: fondo blanco con una sola zona de color (el amarillo de la cabecera y la portada), buscador y filtros en la zona blanca, la semana en siete columnas (un bloque por evento, con el amarillo como acento para los destacados), lista, destacado con foto en duotono y pie. Usa el tema claro de la interfaz (`.mz-ui--claro`). Los eventos sin foto usan la ilustración de su categoría. Está hecha sin ver el sitio actual, que no estaba accesible: se apoya en lo que esta documentación dice de la plataforma (búsqueda, categorías y agenda semanal).
 
 ## Uso en código
 
