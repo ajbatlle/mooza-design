@@ -20,6 +20,8 @@ La idea es una sola: la semana es la grilla. Siete columnas, una por día. Cada 
 
 ### Grilla
 
+Regla de base: cada elemento ocupa celdas completas, y ningún elemento comparte celdas con otro. Los seis elementos (logo, fecha, titular, número, celda y foto) están medidos en `guidelines/elementos.html`.
+
 Siete columnas. Todo se mide en porcentaje del ancho del cartel, así que la regla sirve en cualquier formato.
 
 | Variable | Valor | Rango |
@@ -151,6 +153,7 @@ Los datos tienen la forma de `MoozaPoster.EJEMPLO` (semana con eventos que traen
 | `components/ui/` | Botón, filtro, campo, fecha, precio y fila de evento, con vista previa |
 | `components/duotono/` | Duotono con los colores de la marca, para canvas y como filtros SVG |
 | `guidelines/index.html` | Referencia navegable del sistema, con la grilla ajustable |
+| `guidelines/elementos.html` | Los seis elementos (logo, fecha, titular, número, celda y foto): tamaño, posición y qué pueden tocar |
 | `guidelines/web.html` | Propuesta de portada para mooza.cl con el sistema |
 | `kit/` | Recursos gráficos: plantillas, grillas, celdas, marca, fotos, ilustraciones y duotono |
 | `assets/logos/` | Logos oficiales |

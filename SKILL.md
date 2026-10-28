@@ -9,6 +9,7 @@ Lee `readme.md` y revisa `guidelines/index.html` antes de diseñar.
 Si haces piezas visuales (carteles, stories, maquetas), parte de `kit/plantillas/` o usa `MoozaPoster` (`components/grid/poster.js`). Importa `styles.css` para color, tipo y grilla. Si trabajas código de producción, usa los tokens de `tokens/` y los componentes de `components/ui/`.
 
 Decisiones de la marca:
+- Regla de base: cada elemento ocupa celdas completas y ninguno comparte celdas con otro. Los seis elementos (logo, fecha, titular, número, celda y foto) están medidos en `guidelines/elementos.html`. Corre `components/grid/auditoria.mjs` después de cambiar un diseño.
 - La semana es la grilla: siete columnas, una por día. Margen 6 % y medianil 1,2 % del ancho como estándar. Margen entre 3 y 12 %, medianil entre 0,6 y 3,5 % y como máximo la mitad del margen.
 - Un campo de color plano por cartel (noche, amarillo, naranja, blanco o claro). Las celdas llevan los demás. Sin degradados, sombras ni iconos.
 - Las palabras van en Newsreader 500 y los números en Inter Tight. Titulares en minúsculas de frase.
