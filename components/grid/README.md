@@ -53,3 +53,7 @@ Los campos que no pases se toman de `EJEMPLO`.
 - En el cartel `semana`, las celdas son amarillo (destacado), blanco (gratis) o noche (de pago). Si dos eventos caen en la misma celda gana el destacado, luego el gratis.
 - La foto ocupa celdas completas y nunca llega al borde.
 - Agrega `.mz-show-grid` a un ancestro para ver la grilla.
+
+## Auditoría
+
+`node components/grid/auditoria.mjs` (requiere Playwright) monta cada diseño en cada formato con cinco combinaciones de margen y medianil, mide la tinta real de los textos y avisa si el logo choca con algo, se sale del margen o queda desalineado con la fecha, y si un texto se sale de su celda o toca una foto, un bloque o una celda. Termina con error si encuentra problemas. Córrelo después de tocar `poster.js` o `grid.css`.
