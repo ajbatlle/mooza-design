@@ -67,9 +67,19 @@ const lines = s => s.split('<br>');
 // ── plantillas ──
 const T = {};
 
+// pie: la última fila de todo cartel. El logo mide dos columnas, va a la izquierda y se alinea al borde inferior de la fila;
+// la fecha va a la derecha, con su línea base en ese mismo borde. Nada más entra en esa fila.
+function pie(g, n, fecha) {
+  const B = [], bottom = g.y(n) + g.rh;
+  let lw = 2 * COL + G; if (LH(lw) > g.rh) lw = g.rh / (159.59 / 629.21);
+  B.push(logo(g.x(1), bottom - LH(lw), lw, C.noche, C.noche));
+  if (fecha) B.push(text({ x: g.x(7) + COL, y: bottom, size: COL * .3, w: 500, fam: 'grot', fill: C.noche, anchor: 'end', t: fecha }));
+  return B;
+}
+
 T.semana = (H = 1350, n = 10) => {
   const g = geo(H, n), B = [];
-  const fs = COL * .3, fd = 3.2 * CQ;
+  const fd = 3.2 * CQ;
   'LMMJVSD'.split('').forEach((l, i) => B.push(text({ x: g.x(i + 1) + COL / 2, y: g.y(1) + g.rh - .6 * CQ - MET.grot.desc * fd, size: fd, w: 500, fam: 'grot', fill: C.noche, anchor: 'middle', t: l })));
   const F = {}; const PR = { y: 3, w: 2, n: 1 };
   D.semana.forEach((dia, i) => dia.e.forEach(e => { const k = e.f ? 'y' : (/gratis/i.test(e.p) ? 'w' : 'n'), key = (i + 1) + '-' + P.franja(e.s, n); if (!F[key] || PR[k] > PR[F[key]]) F[key] = k; }));
@@ -79,44 +89,36 @@ T.semana = (H = 1350, n = 10) => {
     B.push(k ? `<rect x="${f2(x)}" y="${f2(y)}" width="${f2(COL)}" height="${f2(g.rh)}" fill="${fill[k]}"/>`
              : `<rect x="${f2(x + 1.25)}" y="${f2(y + 1.25)}" width="${f2(COL - 2.5)}" height="${f2(g.rh - 2.5)}" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="2.5"/>`);
   }
-  const lw = 23 * CQ, bottom = g.y(n) + g.rh;
-  B.push(logo(g.x(1), bottom - LH(lw), lw, C.noche, C.noche));
-  const lh = 1.1 * fs;
-  B.push(text({ x: g.x(7) + COL, y: base(bottom - lh, lh, fs, MET.grot), size: fs, w: 500, fam: 'grot', fill: C.noche, anchor: 'end', t: D.rango }));
+  B.push(...pie(g, n, D.rango));
   return wrap(H, B.join('\n'), C.naranja, 'Mooza · cartel semana');
 };
 
 T.foto = (H = 1350, n = 9) => {
-  const g = geo(H, n), B = [], fd = COL * .3, lw = 23 * CQ, fl = 2.8 * CQ;
-  if (n === 4) { // horizontal 16:9: foto a la derecha, titular abajo a la izquierda
-    B.push(logo(g.x(1), g.y(1) + g.rh - LH(lw), lw, C.noche, C.noche));
-    B.push(text({ x: g.x(4) + COL, y: base(g.y(1), 1.1 * fd, fd, MET.grot), size: fd, w: 500, fam: 'grot', fill: C.noche, anchor: 'end', t: D.rango }));
-    const px = g.x(5), py = g.y(1), pw = g.w(5, 7), ph = g.h(1, 4);
+  const g = geo(H, n), B = [], fl = 2.8 * CQ;
+  const foto = (px, py, pw, ph) => {
     B.push(`<rect x="${f2(px)}" y="${f2(py)}" width="${f2(pw)}" height="${f2(ph)}" fill="${C.azul}"/>`);
     B.push(text({ x: px + 2 * CQ, y: py + ph - 2 * CQ - MET.grot.desc * fl, size: fl, w: 500, fam: 'grot', fill: 'rgba(255,255,255,.7)', t: 'foto del evento' }));
-    const fs = COL * 1.52 * .62, lh = .9 * fs, ls = lines(D.titularFoto), bottom = g.y(4) + g.rh, top = bottom - ls.length * lh;
+  };
+  const titulo = (bottom, factor) => {
+    const fs = COL * 1.52 * factor, lh = .9 * fs, ls = lines(D.titularFoto), top = bottom - ls.length * lh;
     ls.forEach((l, i) => B.push(text({ x: M, y: base(top + i * lh, lh, fs, MET.serif), size: fs, w: 500, fam: 'serif', fill: C.noche, ls: f2(-.035 * fs), t: l })));
-    return wrap(H, B.join('\n'), C.blanco, 'Mooza · cartel foto 16:9');
+  };
+  if (n === 4) { // horizontal 16:9: titular a la izquierda, foto a la derecha
+    foto(g.x(5), g.y(1), g.w(5, 7), g.h(1, 3));
+    titulo(g.y(3) + g.rh, .62);
+  } else {
+    foto(g.x(3), g.y(1), g.w(3, 7), g.h(1, n - 4));
+    titulo(g.y(n - 1) + g.rh, n === 8 ? .82 : (n === 11 ? .92 : 1));
   }
-  B.push(`<line x1="${f2(g.x(3))}" y1="${f2(g.y(1))}" x2="${f2(g.x(3))}" y2="${f2(g.y(n) + g.rh)}" stroke="rgba(3,2,27,.5)" stroke-width="2.5"/>`);
-  B.push(`<line x1="${f2(M)}" y1="${f2(g.y(n - 3) + g.rh)}" x2="${f2(W - M)}" y2="${f2(g.y(n - 3) + g.rh)}" stroke="rgba(3,2,27,.5)" stroke-width="2.5"/>`);
-  B.push(logo(g.x(1), g.y(1) + g.rh - LH(lw), lw, C.noche, C.noche));
-  B.push(text({ x: g.x(7) + COL, y: base(g.y(1), 1.1 * fd, fd, MET.grot), size: fd, w: 500, fam: 'grot', fill: C.noche, anchor: 'end', t: D.rango }));
-  const px = g.x(3), py = g.y(2), pw = g.w(3, 7), ph = g.h(2, n - 3);
-  B.push(`<rect x="${f2(px)}" y="${f2(py)}" width="${f2(pw)}" height="${f2(ph)}" fill="${C.azul}"/>`);
-  B.push(text({ x: px + 2 * CQ, y: py + ph - 2 * CQ - MET.grot.desc * fl, size: fl, w: 500, fam: 'grot', fill: 'rgba(255,255,255,.7)', t: 'foto del evento' }));
-  const fs = COL * 1.52, lh = .9 * fs, ls = lines(D.titularFoto), bottom = g.y(n) + g.rh, top = bottom - ls.length * lh;
-  ls.forEach((l, i) => B.push(text({ x: M, y: base(top + i * lh, lh, fs, MET.serif), size: fs, w: 500, fam: 'serif', fill: C.noche, ls: f2(-.035 * fs), t: l })));
-  return wrap(H, B.join('\n'), C.blanco, 'Mooza · cartel foto');
+  B.push(...pie(g, n, D.rango));
+  return wrap(H, B.join('\n'), C.blanco, n === 4 ? 'Mooza · cartel foto 16:9' : 'Mooza · cartel foto');
 };
 
 T.grafico = (H = 1350, n = 9) => {
   const g = geo(H, n), B = [];
-  const lw = 23 * CQ, b2 = g.y(2) + g.rh;
-  B.push(logo(g.x(1), b2 - LH(lw), lw, C.noche, C.noche));
   const fs = COL * 2.17, lh = .74 * fs;
-  B.push(text({ x: g.x(7) + COL, y: base(b2 - lh, lh, fs, MET.grot), size: fs, w: 600, fam: 'grot', fill: C.noche, anchor: 'end', ls: f2(-.05 * fs), t: D.corto }));
-  const hh = g.h(3, n);
+  B.push(text({ x: M, y: base(g.y(1), lh, fs, MET.grot), size: fs, w: 600, fam: 'grot', fill: C.noche, ls: f2(-.05 * fs), t: D.corto }));
+  const hh = g.h(3, n - 1);
   D.semana.forEach((dia, i) => {
     const x = g.x(i + 1), y = g.y(3);
     B.push(`<rect x="${f2(x + 1.25)}" y="${f2(y + 1.25)}" width="${f2(COL - 2.5)}" height="${f2(hh - 2.5)}" fill="none" stroke="rgba(3,2,27,.5)" stroke-width="2.5"/>`);
@@ -125,16 +127,17 @@ T.grafico = (H = 1350, n = 9) => {
       B.push(`<rect x="${f2(x + .12 * COL)}" y="${f2(y + t * hh)}" width="${f2(.76 * COL)}" height="${f2(h * hh)}" fill="${e.f ? C.blanco : C.noche}"/>`);
     });
   });
+  B.push(...pie(g, n, D.rango));
   return wrap(H, B.join('\n'), C.amarillo, 'Mooza · cartel gráfico');
 };
 
 T.editorial = (H = 1350, n = 9) => {
   const g = geo(H, n), B = [], SQ = { n: C.naranja, y: C.amarillo, a: C.azul, k: C.noche };
-  D.cuadrados.forEach(s => { const a = s[2] >= 8 ? s[2] + (n - 9) : s[2], b = s[3] >= 8 ? s[3] + (n - 9) : s[3]; B.push(`<rect x="${f2(g.x(s[0]))}" y="${f2(g.y(a))}" width="${f2(g.w(s[0], s[1]))}" height="${f2(g.h(a, b))}" fill="${SQ[s[4]]}"/>`); });
-  const fs = COL * 1.1, lh = .93 * fs, ls = lines(D.titularEditorial), rt = g.y(3), rh = g.h(3, n - 2), top = rt + (rh - ls.length * lh) / 2;
+  const cc = Math.floor((3 + n - 2) / 2), fila = v => v === 'c' ? cc : v === 'c+1' ? cc + 1 : (v < 0 ? n + v : v);
+  D.cuadrados.forEach(s => { const a = fila(s[2]), b = fila(s[3]); B.push(`<rect x="${f2(g.x(s[0]))}" y="${f2(g.y(a))}" width="${f2(g.w(s[0], s[1]))}" height="${f2(g.h(a, b))}" fill="${SQ[s[4]]}"/>`); });
+  const fs = COL * 1.04, lh = .93 * fs, ls = lines(D.titularEditorial), rt = g.y(3), rh = g.h(3, n - 2), top = rt + (rh - ls.length * lh) / 2;
   ls.forEach((l, i) => B.push(text({ x: W / 2, y: base(top + i * lh, lh, fs, MET.serif), size: fs, w: 500, fam: 'serif', fill: C.noche, anchor: 'middle', ls: f2(-.035 * fs), t: l })));
-  const fp = 3 * CQ;
-  B.push(text({ x: W / 2, y: g.y(n) + g.rh - MET.grot.desc * fp, size: fp, w: 500, fam: 'grot', fill: C.noche, anchor: 'middle', t: 'mooza.cl' }));
+  B.push(...pie(g, n, 'mooza.cl'));
   return wrap(H, B.join('\n'), C.claro, 'Mooza · cartel editorial');
 };
 
@@ -154,8 +157,7 @@ T.story = () => {
   const px = g.x(1), py = g.y(10), pw = g.w(1, 7), ph = g.h(10, 14), fl = 2.8 * CQ;
   B.push(`<rect x="${f2(px)}" y="${f2(py)}" width="${f2(pw)}" height="${f2(ph)}" fill="${C.azul}"/>`);
   B.push(text({ x: px + 2 * CQ, y: py + ph - 2 * CQ - MET.grot.desc * fl, size: fl, w: 500, fam: 'grot', fill: 'rgba(255,255,255,.7)', t: 'foto del evento' }));
-  const lw = 23 * CQ;
-  B.push(logo(g.x(1), g.y(16) + g.rh - LH(lw), lw, C.noche, C.noche));
+  B.push(...pie(g, 16, null));
   return wrap(1920, B.join('\n'), C.claro, 'Mooza · story 9:16');
 };
 

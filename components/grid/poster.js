@@ -37,7 +37,7 @@
     ],
     titularFoto:'tu semana<br>cultural',
     titularEditorial:'hay jazz,<br>teatro y cine<br>gratis, una<br>feria de<br>grabado.',
-    cuadrados:[[1,2,1,2,'n'],[6,7,1,1,'k'],[7,7,3,4,'y'],[1,1,5,6,'y'],[1,2,8,9,'a'],[6,7,8,9,'k']],
+    cuadrados:[[1,2,1,1,'n'],[6,7,1,1,'k'],[1,2,-1,-1,'a'],[6,7,-1,-1,'k']],
     story:{categoria:'Música',titulo:'cuarteto de jazz<br>en vivo',meta:'Teatro del Parque<br>Viernes 30, 21:00 • desde $8.000',dia:4}
   };
 
@@ -54,7 +54,13 @@
   function overlay(rows){return '<div class="mz-overlay" style="--rows:'+rows+'">'+new Array(7*rows+1).join('<i></i>')+'</div>'}
   function grid(rows,inner){return '<div class="mz-grid" style="--rows:'+rows+'">'+inner+'</div>'+overlay(rows)}
 
-  /* semana: cada celda es un día (columna) y una franja de 1,5 h desde las 12:00 (fila 2 a 9) */
+  /* pie: la última fila de todo cartel. El logo mide dos columnas y va a la izquierda; la fecha, a la derecha.
+     Nada más entra en esa fila, así que el logo nunca choca. */
+  function pie(n,fecha,desde){
+    return cell(1,2,n,n,'mz-pie-logo',LOGO)+(fecha?cell(desde||5,7,n,n,'mz-dato mz-fecha-pie',fecha):'');
+  }
+
+  /* semana: cada celda es un día (columna) y una franja horaria (fila 2 a n−1); fila 1 los días */
   var PRIO={y:3,w:2,n:1};
   /* franja: fila (2 a n−1) de una hora, repartiendo las 12 horas entre las 12:00 y las 24:00 en las filas disponibles */
   function franja(s,n){n=n||10;var slots=n-2,k=Math.floor((s-12)/(12/slots));return 2+Math.max(0,Math.min(slots-1,k))}
@@ -66,40 +72,39 @@
       if(!F[key]||PRIO[k]>PRIO[F[key]])F[key]=k;
     })});
     for(var r=2;r<=n-1;r++)for(var c=1;c<=7;c++){var k=F[c+'-'+r];h+=cell(c,c,r,r,'mz-tile'+(k?' mz-f-'+k:''))}
-    h+=cell(1,3,n,n,'',LOGO)+cell(5,7,n,n,'mz-dato',d.rango,'text-align:right;align-self:end');
-    return grid(n,h);
+    return grid(n,h+pie(n,d.rango));
   }
 
-  /* foto: una foto en celdas completas, dos guías, titular serif */
+  /* foto: una foto en celdas completas arriba y el titular serif en tres filas debajo */
   function foto(d,n){
-    if(n===4)return grid(4, /* horizontal 16:9: foto a la derecha, titular abajo a la izquierda */
-      cell(1,2,1,1,'',LOGO)+cell(3,4,1,1,'mz-dato',d.rango,'text-align:right;align-self:start')+
-      cell(5,7,1,4,'mz-ph','foto del evento')+
-      cell(1,4,2,4,'mz-titular',d.titularFoto,'font-size:calc(var(--mz-fs-titular)*.62)'));
+    if(n===4)return grid(4, /* horizontal 16:9: titular a la izquierda, foto a la derecha */
+      cell(5,7,1,3,'mz-ph','foto del evento')+
+      cell(1,4,1,3,'mz-titular',d.titularFoto,'font-size:calc(var(--mz-fs-titular)*.62)')+pie(4,d.rango));
     return grid(n,
-      cell(3,3,1,n,'mz-guia-v')+cell(1,7,n-3,n-3,'mz-guia-h')+
-      cell(1,3,1,1,'',LOGO)+cell(5,7,1,1,'mz-dato',d.rango,'text-align:right;align-self:start')+
-      cell(3,7,2,n-3,'mz-ph','foto del evento')+
-      cell(1,7,n-2,n,'mz-titular',d.titularFoto));
+      cell(3,7,1,n-4,'mz-ph','foto del evento')+
+      cell(1,7,n-3,n-1,'mz-titular',d.titularFoto,n===8?'font-size:calc(var(--mz-fs-titular)*.82)':(n===11?'font-size:calc(var(--mz-fs-titular)*.92)':''))+pie(n,d.rango));
   }
 
-  /* gráfico: la semana como horario. Escala de 10:00 a 24:00; el alto del bloque es la duración */
+  /* gráfico: número grande arriba a la izquierda y la semana como horario. Escala de 10:00 a 24:00; el alto del bloque es la duración */
   function grafico(d,n){
     var cols='';
     d.semana.forEach(function(dia,i){
-      cols+=cell(i+1,i+1,3,n,'mz-col',dia.e.map(function(e){
+      cols+=cell(i+1,i+1,3,n-1,'mz-col',dia.e.map(function(e){
         var t=(e.s-10)/14*100,hh=(e.e-e.s)/14*100;
         return '<i class="'+(e.f?'mz-w':'')+'" style="top:'+t.toFixed(2)+'%;height:'+hh.toFixed(2)+'%"></i>';
       }).join(''));
     });
-    return grid(n,cell(1,2,1,2,'',LOGO)+cell(3,7,1,2,'mz-numero',d.corto)+cols);
+    return grid(n,cell(1,7,1,2,'mz-numero',d.corto)+cols+pie(n,d.rango));
   }
 
-  /* editorial: titular escrito con lo que pasa, cuadrados donde irían las fotos */
+  /* editorial: titular escrito con lo que pasa y cuadrados donde irían las fotos.
+     Los cuadrados van en la fila 1 y en la fila previa al pie (−1), fuera de las filas del titular (3 a n−2).
+     Las filas pueden ser números, negativos (desde el pie) o 'c' y 'c+1' (centro del titular). */
   function editorial(d,n){
-    var sq=d.cuadrados.map(function(s){ /* las filas 8 y 9 de los cuadrados se desplazan al fondo si hay más filas */
-      var a=s[2]>=8?s[2]+(n-9):s[2],b=s[3]>=8?s[3]+(n-9):s[3];return cell(s[0],s[1],a,b,'mz-sq mz-s-'+s[4]);}).join('');
-    return grid(n,sq+cell(1,7,3,n-2,'mz-titular-largo',d.titularEditorial)+cell(1,7,n,n,'mz-pie','mooza.cl'));
+    var c=Math.floor((3+n-2)/2);
+    function fila(v){return v==='c'?c:v==='c+1'?c+1:(v<0?n+v:v)}
+    var sq=d.cuadrados.map(function(s){return cell(s[0],s[1],fila(s[2]),fila(s[3]),'mz-sq mz-s-'+s[4])}).join('');
+    return grid(n,sq+cell(1,7,3,n-2,'mz-titular-largo',d.titularEditorial)+pie(n,'mooza.cl'));
   }
 
   /* story 9:16: 16 filas, margen vertical 2,2 veces el margen */
@@ -111,7 +116,7 @@
       cell(1,7,5,7,'mz-titular-story',s.titulo)+
       cell(1,5,8,8,'mz-meta',s.meta)+
       cell(1,7,10,14,'mz-ph','foto del evento')+
-      cell(1,3,16,16,'',LOGO));
+      pie(16,null));
   }
 
   var BUILD={semana:semana,foto:foto,grafico:grafico,editorial:editorial,story:story};

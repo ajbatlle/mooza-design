@@ -24,10 +24,10 @@ Siete columnas. Todo se mide en porcentaje del ancho del cartel, así que la reg
 
 | Variable | Valor | Rango |
 |---|---|---|
-| `--mz-m` margen | 6 | 3 a 14 |
-| `--mz-g` medianil | 1,2 | 0,6 a 4, y como máximo la mitad del margen |
+| `--mz-m` margen | 6 | 3 a 12 |
+| `--mz-g` medianil | 1,2 | 0,6 a 3,5, y como máximo la mitad del margen |
 | `--mz-col` columna | (100 − 2 × margen − 6 × medianil) ÷ 7 | 11,5 con los valores estándar |
-| `--mz-mv-story` | 2,2 | El margen vertical de 9:16 es 2,2 veces el margen |
+| `--mz-mv-story` | 2,2 | El margen vertical de 9:16 es 2,2 veces el margen, con tope de 18 % |
 
 Las filas dependen del formato: 9 o 10 en 4:5 y 16 en 9:16. Los titulares y los números se miden en columnas (ver `tokens/grid.css`): al cambiar el margen o el medianil el texto se reajusta y la composición se mantiene. La grilla se puede mostrar sobre cualquier cartel agregando `.mz-show-grid` a un contenedor.
 
@@ -59,6 +59,8 @@ En el cartel "semana" el código de celdas es: amarillo para destacado, blanco p
 ### Logo
 
 El logo oficial no se redibuja. Se usan los archivos de `assets/logos/` y las variantes monocromas de `kit/marca/`.
+
+- Posición: en todo cartel la última fila de la grilla es el pie. El logo va ahí, a la izquierda, con el ancho exacto de dos columnas y apoyado en el borde inferior de la fila. La fecha va a la derecha, con su línea base en ese mismo borde. Nada más entra en esa fila, así que el logo nunca choca con otro elemento.
 
 - Colores: noche sobre claro, blanco, amarillo y naranja. Blanco sobre azul y noche. La versión oficial con degradé, solo sobre noche o azul.
 - Espacio libre: media altura del logo por los cuatro lados.
@@ -116,7 +118,7 @@ Diseños:
 | Diseño | Proporción base | Filas base | Qué muestra |
 |---|---|---|---|
 | semana | 4:5 | 10 | Cada celda es un día y una franja horaria de 1,5 h desde las 12:00 |
-| foto | 4:5 | 9 | Una foto en celdas completas, dos guías cruzadas y titular serif |
+| foto | 4:5 | 9 | Una foto en celdas completas y el titular serif debajo |
 | gráfico | 4:5 | 9 | La semana como horario: cada bloque es un evento y su alto es la duración |
 | editorial | 4:5 | 9 | Titular escrito con lo que pasa y cuadrados donde irían las fotos |
 | story | 9:16 | 16 | Día activo, categoría, nombre, lugar y foto |

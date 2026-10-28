@@ -21,6 +21,7 @@ Todo está construido sobre la grilla de siete columnas, con margen 6 % y median
 
 ## Reglas rápidas
 
+- Pie: la última fila de todo cartel. Logo de dos columnas a la izquierda y fecha a la derecha; nada más entra en esa fila.
 - Un campo de color de fondo por pieza. Las celdas llevan los demás.
 - Palabras en serif, números en grotesca.
 - Fotos en celdas completas y sin llegar al borde.

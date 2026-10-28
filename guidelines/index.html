@@ -160,8 +160,8 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
     <p class="nota" style="margin-bottom:28px">Margen y medianil son un porcentaje del ancho, así que escalan con cualquier formato. Los titulares y los números se miden en columnas: si cambias el margen o el medianil, el texto se reajusta y la composición se mantiene. Prueba los controles.</p>
 
     <div class="ctl" role="group" aria-label="Ajustes de la grilla">
-      <label for="m">Margen<output id="mv"></output><input id="m" type="range" min="3" max="14" step=".5" value="6"></label>
-      <label for="g">Medianil<output id="gv"></output><input id="g" type="range" min=".6" max="4" step=".2" value="1.2"></label>
+      <label for="m">Margen<output id="mv"></output><input id="m" type="range" min="3" max="12" step=".5" value="6"></label>
+      <label for="g">Medianil<output id="gv"></output><input id="g" type="range" min=".6" max="3.5" step=".2" value="1.2"></label>
       <label class="chk" for="ver"><input id="ver" type="checkbox"> Ver grilla</label>
       <button class="mz-btn mz-btn--linea" id="reset" type="button">Restablecer</button>
       <p class="math" id="math"></p>
@@ -171,7 +171,7 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
       <figure class="fig"><div id="pa" role="img" aria-label="Cartel semana"></div>
         <figcaption><i>semana</i><b>Cada celda, un día y una franja</b><span>Franjas de 1,5 h desde las 12:00. Amarillo: destacado. Blanco: gratis. Noche: de pago.</span></figcaption></figure>
       <figure class="fig"><div id="pb" role="img" aria-label="Cartel foto"></div>
-        <figcaption><i>foto</i><b>Una foto, en celdas completas</b><span>Dos guías cruzadas a la vista. El titular va en serif y cierra el cartel.</span></figcaption></figure>
+        <figcaption><i>foto</i><b>Una foto, en celdas completas</b><span>Cinco columnas por cinco filas de foto, y el titular serif en las tres filas de abajo.</span></figcaption></figure>
       <figure class="fig"><div id="pc" role="img" aria-label="Cartel gráfico"></div>
         <figcaption><i>gráfico</i><b>La semana como horario</b><span>Cada bloque es un evento y su alto es la duración. Escala de 10:00 a 24:00.</span></figcaption></figure>
       <figure class="fig"><div id="pd" role="img" aria-label="Cartel editorial"></div>
@@ -180,8 +180,9 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
         <figcaption><i>story</i><b>La misma grilla en 9:16</b><span>16 filas. El margen vertical sube 2,2 veces para dejar libre la interfaz de la app.</span></figcaption></figure>
       <dl class="reglas">
         <div><dt>Columnas</dt><dd>Siete, siempre. Las filas cambian con el formato: 9 o 10 en 4:5 y 16 en 9:16.</dd></div>
-        <div><dt>Margen</dt><dd>Del 3 al 14 % del ancho. Estándar 6 %. Más margen da más aire, menos margen da más densidad.</dd></div>
-        <div><dt>Medianil</dt><dd>De 0,6 a 4 %, y como máximo la mitad del margen.</dd></div>
+        <div><dt>Margen</dt><dd>Del 3 al 12 % del ancho. Estándar 6 %. Más margen da más aire, menos margen da más densidad.</dd></div>
+        <div><dt>Medianil</dt><dd>De 0,6 a 3,5 %, y como máximo la mitad del margen.</dd></div>
+        <div><dt>Pie</dt><dd>La última fila de todo cartel. El logo, de dos columnas, a la izquierda; la fecha, a la derecha. Nada más entra ahí.</dd></div>
         <div><dt>Imagen</dt><dd>Ocupa celdas completas y nunca llega al borde. En los ejemplos es un cuadrado azul.</dd></div>
       </dl>
     </div>
@@ -223,6 +224,8 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
     </div>
     <div class="cols" style="margin-top:36px;align-items:start">
       <div>
+        <span class="k">Posición</span>
+        <p class="nota" style="margin-bottom:22px">En los carteles el logo vive en el pie: la última fila, a la izquierda, con el ancho exacto de dos columnas.</p>
         <span class="k">Espacio libre</span>
         <div class="libre"><div><svg viewBox="0 0 629.21 159.59" aria-hidden="true"><use href="#mz-lockup"/></svg></div></div>
         <p class="nota" style="margin-top:12px">Media altura del logo por los cuatro lados.</p>
