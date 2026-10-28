@@ -1,6 +1,6 @@
 # Sistema de diseño Mooza
 
-Mooza (mooza.cl, @mooza_cl) reúne y ordena los panoramas y eventos culturales de Chile en una agenda semanal. Su lema es "Tu semana cultural". Esta versión (v2) reemplaza al sistema anterior, que quedó en el historial de git (commit `525959c`).
+Mooza (mooza.cl, @mooza_cl) reúne y ordena los panoramas y eventos culturales de Chile en una agenda semanal. Su lema es "Agenda cultural". Esta versión (v2) reemplaza al sistema anterior, que quedó en el historial de git (commit `525959c`).
 
 La idea es una sola: la semana es la grilla. Siete columnas, una por día. Cada cartel, story y pantalla se arma sobre ella, con color plano, palabras en serif y números en grotesca.
 
@@ -8,7 +8,7 @@ La idea es una sola: la semana es la grilla. Siete columnas, una por día. Cada 
 
 - Español, con tuteo ("mira", "ven", "guarda tu plan"). Sin voseo y sin emoji.
 - Frases cortas. El cartel dice poco y el evento dice el resto.
-- Titulares en serif, con mayúscula inicial y el resto en minúscula salvo nombres propios, y sin signos de exclamación: "Tu semana cultural", "Hay jazz, teatro y cine".
+- Titulares en serif, con mayúscula inicial y el resto en minúscula salvo nombres propios, y sin signos de exclamación: "Agenda cultural", "Hay jazz, teatro y cine".
 - Nombres de evento, sala y artista en serif y con mayúscula inicial: "Cuarteto de jazz en vivo", "Bar La Otra Casa", "Alejandro Sanz".
 - Etiquetas de categoría con mayúscula inicial: Música, Teatro, Cine, Arte, Danza. Los días también: "Sábado".
 - Fechas: "26 oct – 1 nov", con mes abreviado en minúscula y raya corta con espacios. El rango corto grande se escribe "26–1".

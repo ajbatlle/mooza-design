@@ -30,7 +30,7 @@
   var EJEMPLO={
     rango:'26 oct – 1 nov',
     corto:'26–1',
-    titular:'Tu semana<br>cultural',
+    titular:'Agenda<br>cultural',
     dias:[['L',26],['M',27],['M',28],['J',29],['V',30],['S',31],['D',1]],
     diaDestacado:4,
     evento:{nombre:'Cuarteto de<br>jazz en vivo',meta:'Teatro del Parque<br>Vie 30 • 21:00 • desde $8.000'},
