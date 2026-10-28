@@ -40,3 +40,11 @@ Los campos que no pases se toman de `MoozaPoster.EJEMPLO`: `color` (`azul` por d
 ## Auditoría
 
 `node components/grid/auditoria.mjs` (requiere Playwright) monta cada diseño en cada formato con cinco combinaciones de margen y medianil, mide la tinta real de los textos y avisa si el logo choca con algo, se sale del margen o queda desalineado con la fecha, y si un texto se sale de su celda o toca una foto, un bloque o una celda. Termina con error si encuentra problemas. Córrelo después de tocar `poster.js` o `grid.css`.
+
+## Fuente de las palabras
+
+Los titulares, nombres de evento y textos de lista usan `--mz-palabra` (por defecto Newsreader, serif). Para probar otra tipografía sin tocar los diseños, define en el cartel o en un ancestro: `--mz-palabra` (familia), `--mz-palabra-peso`, `--mz-palabra-track` (interletraje), `--mz-palabra-lh` (interlínea) y `--mz-palabra-var` (variaciones, por ejemplo `'wdth' 70`). Ver `kit/tablero/tipografia-opciones.png`.
+
+## Color por pieza
+
+`MoozaPoster.mount(el, 'titular', {color: 'amarillo'})` cambia la zona de color de esa pieza (`azul` por defecto; también `naranja` y `noche`). El texto se ajusta solo. Ver `kit/tablero/color-en-proporcion.png`.
