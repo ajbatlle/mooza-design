@@ -84,6 +84,7 @@ async function leer(tipo, formato) {
       else if (c.a > 0) items.push({ k: 'rect', ...rc(e), fill: c.hex });
     });
     el.querySelectorAll('.mz-hora-on span').forEach(e => { const r = rc(e), bw = parseFloat(getComputedStyle(e).borderBottomWidth); items.push({ k: 'rect', x: r.x, y: r.y + r.h - bw, w: r.w, h: bw, fill: '#fbb03b' }); });
+    el.querySelectorAll('.mz-sep').forEach(e => { const r = rc(e); items.push({ k: 'rect', x: r.x, y: r.y, w: r.w, h: 1, fill: '#86839b' }); });
     const lg = el.querySelector('.mz-logo');
     if (lg) { const cs = getComputedStyle(lg); items.push({ k: 'logo', ...rc(lg), text: col(cs.color).hex, iso: (() => { const t = document.createElement('i'); t.style.color = 'var(--mz-iso)'; lg.parentElement.appendChild(t); const h = col(getComputedStyle(t).color).hex; t.remove(); return h; })() }); }
     const ctx = document.createElement('canvas').getContext('2d');

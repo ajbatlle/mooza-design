@@ -84,6 +84,9 @@
 .mz-cabeza .mz-num{flex:none;width:calc((var(--mz-col)*3 + var(--mz-g)*3)*1cqw)}
 .mz-hora{font-size:var(--mz-t-texto);font-weight:var(--mz-peso-dato);line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;align-self:start}
 /* la hora destacada lleva una línea naranja bajo el texto: queda dentro de su celda y alineada al margen */
+.mz-d-agenda .mz-hora,.mz-d-agenda .mz-evento-t .mz-t-texto{font-size:calc(var(--mz-col)*.38*1cqw)}  /* la agenda lleva hasta tres eventos: letra un paso más chica */
+.mz-e3{padding-top:calc(var(--mz-col)*.3*1cqw)}
+.mz-sep{align-self:start;height:0;margin-top:calc(var(--mz-g)*-.5cqw);border-top:1px solid var(--mz-linea-clara)}
 .mz-hora span{display:inline-block}
 .mz-hora-on span{padding-bottom:.2em;border-bottom:.2em solid var(--mz-naranja)}
 

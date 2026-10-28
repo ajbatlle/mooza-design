@@ -35,7 +35,8 @@
     evento:{nombre:'Cuarteto de<br>jazz en vivo',meta:'Teatro del Parque<br>Vie 30 • 21:00 • desde $8.000'},
     agenda:{dia:'Sábado',n:20,pag:'2/5',eventos:[
       {h:'22:00',t:'El alma al aire II: canciones de Alejandro Sanz',v:'Bar La Otra Casa',p:'$10.000'},
-      {h:'22:00',t:'Glam Fest en Biker Chop',v:'Biker Chop',p:'$8.000'}
+      {h:'22:00',t:'Glam Fest en Biker Chop',v:'Biker Chop',p:'$8.000'},
+      {h:'23:30',t:'Noche de cumbia en vivo',v:'Club Subterráneo',p:'$6.000'}
     ]},
     story:{categoria:'Música',titulo:'Cuarteto de<br>jazz en vivo',meta:'Teatro del Parque<br>Viernes 30, 21:00<br>Desde $8.000'}
   };
@@ -287,13 +288,18 @@
     return grid(n,h+pie(n,d.rango));
   }
 
-  /* agenda: arriba, sobre el color, el día. Abajo, sobre gris, hasta dos eventos con una fila de aire entre ellos. */
+  /* agenda: arriba, sobre el color, el día. Abajo, sobre gris, hasta tres eventos. */
   function agenda(d,n,f){
     var a=d.agenda,h=zonaA(2,campo(d,'amarillo'),trama(d,'br','amarillo'))+fondo(d,f,[0,0,100,yZona(d,f,n,2,true)],'amarillo')+cell(1,7,1,2,'mz-cabeza'+tinta(d,'amarillo'),'<span class="mz-t-grande mz-num">'+a.n+'</span><span class="mz-t-titular">'+a.dia+'</span>');
-    a.eventos.slice(0,2).forEach(function(e,i){
-      var r=4+i*3;
-      h+=cell(1,2,r,r,'mz-hora'+(e.f?' mz-hora-on':''),e.h?'<span>'+e.h+'</span>':'')+
-         cell(3,7,r,r+1,'mz-evento-t','<span class="mz-t-texto">'+e.t+'</span><span class="mz-t-dato">'+e.v+(e.p?' • '+e.p:'')+'</span>');
+    /* dos eventos: filas 4 y 7, con una fila de aire entre ellos.
+       Tres eventos: parten en la fila 3, cada uno con una línea fina arriba (salvo el primero, que ya tiene el borde de la zona)
+       y el mismo respiro bajo la línea. Se reparten hasta el pie: en A3 sobra una fila entre ellos. */
+    var ev=a.eventos.slice(0,3),tres=ev.length===3,paso=tres?2+Math.max(0,Math.floor((n-9)/2)):3,ini=tres?3:4;
+    ev.forEach(function(e,i){
+      var r=ini+i*paso,k=tres?' mz-e3':'';
+      if(tres&&i)h+=cell(1,7,r,r,'mz-sep');
+      h+=cell(1,2,r,r,'mz-hora'+k+(e.f?' mz-hora-on':''),e.h?'<span>'+e.h+'</span>':'')+
+         cell(3,7,r,r+1,'mz-evento-t'+k,'<span class="mz-t-texto">'+e.t+'</span><span class="mz-t-dato">'+e.v+(e.p?' • '+e.p:'')+'</span>');
     });
     return grid(n,h+pie(n,a.pag||''));
   }
