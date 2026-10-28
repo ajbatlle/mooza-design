@@ -113,6 +113,7 @@ Una idea por cartel y mucho espacio libre. Cada cartel se parte en dos zonas, un
 | foto | Arriba, la foto. Abajo, sobre gris, el nombre del evento y sus datos | 4:5, A3, 1:1, 16:9 |
 | semana | Arriba, sobre el color, el titular. Abajo, sobre gris, siete días con el destacado en acento | 4:5, A3, 1:1 |
 | agenda | Arriba, sobre el color, el día. Abajo, sobre gris, hasta tres eventos, con una línea fina entre ellos. Para el carrusel semanal | 4:5, A3 |
+| musa | Una ilustración de musa cruzando el corte entre dos colores, con el logo y mooza.cl en el pie. No va en estampados | Carta |
 | story | Arriba, la foto. Abajo, sobre gris, categoría, nombre y datos | 9:16 |
 
 Filas por formato: 9 en 4:5, 11 en A3, 8 en 1:1, 4 en 16:9 y 16 en 9:16. En 16:9 la mitad izquierda es gris y la derecha lleva el azul o la foto; la columna 4 queda sobre el centro y va vacía.

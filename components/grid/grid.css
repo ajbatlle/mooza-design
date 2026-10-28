@@ -65,6 +65,14 @@
 
 /* trama de esquina: contornos de acento que parten de la esquina de la zona y llegan a los bordes */
 .mz-trama{position:absolute;display:block;pointer-events:none}
+/* lámina de musa: dos colores a pantalla completa y una ilustración encima, bajo el pie */
+.mz-grid>.mz-musa-a,.mz-grid>.mz-musa-b,.mz-grid>.mz-musa-img{position:absolute;z-index:0}
+.mz-musa-a{left:0;top:0;width:50%;height:100%}
+.mz-musa-b{right:0;top:0;width:50%;height:100%}
+.mz-musa-a.mz-musa-h{width:100%;height:50%}
+.mz-musa-b.mz-musa-h{width:100%;height:50%;top:auto;bottom:0}
+.mz-musa-img{display:block;height:auto}
+
 /* grano: película de ruido sobre todo el cartel */
 .mz-grano{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:8;mix-blend-mode:overlay}
 

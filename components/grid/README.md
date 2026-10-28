@@ -1,6 +1,6 @@
 # Cartel sobre grilla
 
-Genera los seis diseños de cartel de Mooza sobre la grilla de siete columnas. Los estilos están en `grid.css` y el generador en `poster.js`. Requiere `styles.css` (tokens de color, tipo y grilla).
+Genera los seis diseños de cartel de Mooza y la lámina de musa sobre la grilla de siete columnas. Los estilos están en `grid.css` y el generador en `poster.js`. Requiere `styles.css` (tokens de color, tipo y grilla).
 
 ## API
 
@@ -87,3 +87,9 @@ Opciones de `fondo`: `'tono'` (forma plana de tono sobre tono), `'lineas'` (solo
 Con `fondo` activo, el grano y el difuminado van encendidos por defecto: `{fondo: 'tono'}` equivale a `{fondo: 'tono', grano: true, difuminado: 1.8}`. Para quitarlos, `grano: false` y `difuminado: 0`. Ver `kit/tablero/grano-y-borde.png`.
 
 El grano es un filtro SVG: funciona en el navegador y al exportar a imagen. No viaja dentro de las plantillas SVG editables.
+
+## Lámina de musa
+
+`MoozaPoster.mount(el, 'musa', {musa: {src: 'euterpe.png', colores: ['gris', 'amarillo'], corte: 'v', x: 16.3, y: 8.2}}, 'carta')` pone una ilustración sola cruzando el corte entre dos colores, con el pie de siempre: el logo de dos columnas a la izquierda y mooza.cl a la derecha. Formato `carta` (612 × 792).
+
+La ilustración es una tinta azul con transparencia (`kit/ilustraciones/musas/tinta/`), así el color pasa por la figura. `corte` es `'v'` (izquierda y derecha) o `'h'` (arriba y abajo). `colores` va en el mismo orden. `x` e `y` son la esquina superior izquierda de la ilustración, en % del ancho y del alto; `ancho` es su ancho en %. Los estampados de poleras no llevan logo ni web: esto es solo para láminas.

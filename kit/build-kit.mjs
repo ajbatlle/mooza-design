@@ -157,7 +157,7 @@ out('kit/fotos/foto-placeholder.svg', `<?xml version="1.0" encoding="UTF-8"?>\n<
 // ── escribir plantillas y PNG ──
 const LISTA = [], HOJA = [];
 const SUF = { '4x5': '', a3: '-a3', '1x1': '-1x1', '16x9': '-16x9', '9x16': '' };
-for (const [tipo, fs] of Object.entries(P.ROWS)) for (const f of Object.keys(fs)) LISTA.push([tipo + SUF[f], tipo, f]);
+for (const [tipo, fs] of Object.entries(P.ROWS)) { if (tipo === 'musa') continue; for (const f of Object.keys(fs)) LISTA.push([tipo + SUF[f], tipo, f]); }
 for (const f of fs.readdirSync(path.join(ROOT, 'kit/plantillas'))) fs.unlinkSync(path.join(ROOT, 'kit/plantillas', f));
 for (const [nombre, tipo, f] of LISTA) {
   const { H, svg } = await plantilla(tipo, f);

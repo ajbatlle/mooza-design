@@ -1,6 +1,6 @@
 /* Mooza · generador de carteles sobre la grilla de siete días.
    Cada cartel se parte en dos zonas, una arriba y otra abajo (en horizontal, izquierda y derecha), y cada zona dice una sola cosa.
-   Seis diseños: titular, numero, foto, semana, agenda y story.
+   Siete diseños: titular, numero, foto, semana, agenda, story y musa.
    Uso:
      <link rel="stylesheet" href="styles.css">
      <script src="components/grid/poster.js"></script>
@@ -10,7 +10,7 @@
   'use strict';
 
   /* formatos: proporción (ancho/alto). Siempre siete columnas. */
-  var FORMATOS={'4x5':{ar:'4/5'},'1x1':{ar:'1/1'},'a3':{ar:'297/420'},'9x16':{ar:'9/16'},'16x9':{ar:'16/9'}};
+  var FORMATOS={'4x5':{ar:'4/5'},'1x1':{ar:'1/1'},'a3':{ar:'297/420'},'9x16':{ar:'9/16'},'16x9':{ar:'16/9'},'carta':{ar:'612/792'}};
   /* filas de cada formato (la última es siempre el pie) y filas de la zona de arriba.
      En 16x9 el cartel se parte en mitades: izquierda blanca, derecha de color; la columna 4 queda sobre la línea del centro. */
   var ARRIBA={'4x5':4,'a3':5,'1x1':3,'9x16':8};
@@ -21,9 +21,10 @@
     foto:{'4x5':9,'a3':11,'1x1':8,'16x9':4},
     semana:{'4x5':9,'a3':11,'1x1':8},
     agenda:{'4x5':9,'a3':11},
-    story:{'9x16':16}
+    story:{'9x16':16},
+    musa:{'carta':9}
   };
-  var CLASES={titular:'mz-d-titular',numero:'mz-d-numero',foto:'mz-d-foto',semana:'mz-d-semana',agenda:'mz-d-agenda',story:'mz-d-story'};
+  var CLASES={titular:'mz-d-titular',numero:'mz-d-numero',foto:'mz-d-foto',semana:'mz-d-semana',agenda:'mz-d-agenda',story:'mz-d-story',musa:'mz-d-musa'};
 
   /* datos de ejemplo. Los eventos, salas y precios son inventados. */
   var EJEMPLO={
@@ -38,6 +39,7 @@
       {h:'22:00',t:'Glam Fest en Biker Chop',v:'Biker Chop',p:'$8.000'},
       {h:'23:30',t:'Noche de cumbia en vivo',v:'Club Subterráneo',p:'$6.000'}
     ]},
+    musa:{src:'',corte:'v',colores:['gris','amarillo']},
     story:{categoria:'Música',titulo:'Cuarteto de<br>jazz en vivo',meta:'Teatro del Parque<br>Viernes 30, 21:00<br>Desde $8.000'}
   };
 
@@ -314,7 +316,22 @@
       cell(1,5,s+6,s+7,'mz-t-dato',t.meta)+pie(16,null));
   }
 
-  var BUILD={titular:titular,numero:numero,foto:foto,semana:semana,agenda:agenda,story:story};
+  /* musa: una ilustración sola que cruza el corte entre dos colores, con el pie de siempre (logo a la izquierda, mooza.cl a la derecha).
+     datos.musa = {src, corte, colores, x, y, ancho, alt}
+       src      la ilustración: una tinta azul con transparencia, para que el color pase por la figura
+       corte    'v' parte el cartel en izquierda y derecha; 'h', en arriba y abajo
+       colores  los dos colores, en el orden izquierda-derecha o arriba-abajo: 'gris', 'amarillo', 'naranja' o 'azul'
+       x, y     posición de la esquina superior izquierda de la ilustración, en % del ancho y del alto (por defecto, centrada arriba)
+       ancho    ancho de la ilustración en % del ancho del cartel (66,9 por defecto) */
+  function musa(d,n,f){
+    var m=d.musa||{},c=m.colores||['gris','amarillo'],h=m.corte==='h'?' mz-musa-h':'',w=m.ancho||66.9,
+        x=m.x!==undefined?m.x:(100-w)/2,y=m.y!==undefined?m.y:8;
+    function bg(k){return 'background:'+(k==='gris'?'var(--mz-claro)':'var(--mz-'+k+')')}
+    return grid(n,'<div class="mz-musa-a'+h+'" style="'+bg(c[0])+'"></div><div class="mz-musa-b'+h+'" style="'+bg(c[1])+'"></div>'+
+      (m.src?'<img class="mz-musa-img" src="'+m.src+'" alt="'+(m.alt||'')+'" style="left:'+x+'%;top:'+y+'%;width:'+w+'%">':'')+pie(n,'mooza.cl'));
+  }
+
+  var BUILD={titular:titular,numero:numero,foto:foto,semana:semana,agenda:agenda,story:story,musa:musa};
 
   function merge(d){var o={};for(var k in EJEMPLO)o[k]=EJEMPLO[k];for(var j in (d||{}))o[j]=d[j];return o}
   function formatoDe(tipo,formato){return formato||(tipo==='story'?'9x16':'4x5')}
