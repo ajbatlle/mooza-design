@@ -12,7 +12,6 @@ const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const { chromium } = require('playwright');
 const P = require(path.join(ROOT, 'components/grid/poster.js'));
-const D = P.EJEMPLO;
 
 // ── colores (tokens/colors.css) ──
 const C = { noche: '#03021b', azul: '#1b1444', amarillo: '#fcee21', naranja: '#fbb03b', blanco: '#ffffff', claro: '#f2f2f2' };
@@ -65,113 +64,62 @@ const wrap = (H, body, bg, title) =>
 const lines = s => s.split('<br>');
 
 // ── plantillas ──
-const T = {};
-
-// medición de texto en el navegador, para cortar líneas como lo haría el cartel en HTML
-async function medir(fuente, textos) { return page.evaluate(([f, ts]) => { const c = document.createElement('canvas').getContext('2d'); c.font = f; return ts.map(t => c.measureText(t).width); }, [fuente, textos]); }
-async function cortar(t, fuente, ancho, extra = 0) { // extra: tracking en px por letra
-  const palabras = t.split(' '), out = []; let linea = '';
-  for (const p of palabras) { const prueba = linea ? linea + ' ' + p : p; const [w] = await medir(fuente, [prueba]); if (w + extra * prueba.length > ancho && linea) { out.push(linea); linea = p; } else linea = prueba; }
-  if (linea) out.push(linea); return out;
+// Cada plantilla se monta con components/grid/poster.js a 1080 px de ancho y se lee del navegador:
+// rectángulos, logo y cada línea de texto con su posición real. Así el kit no puede diverger del generador.
+const lienzo = await browser.newPage({ viewport: { width: W, height: 1920 } });
+await lienzo.goto('file://' + path.join(ROOT, 'components/grid/preview.html'), { waitUntil: 'networkidle' });
+async function leer(tipo, formato) {
+  return lienzo.evaluate(async ([tipo, f, W]) => {
+    await document.fonts.ready;
+    const host = document.createElement('div'); host.style.cssText = 'width:' + W + 'px;position:absolute;left:0;top:0'; document.body.appendChild(host);
+    const el = document.createElement('div'); host.appendChild(el); MoozaPoster.mount(el, tipo, null, f);
+    await new Promise(r => requestAnimationFrame(r));
+    const box = el.getBoundingClientRect(), items = [];
+    const rc = e => { const r = e.getBoundingClientRect(); return { x: r.left - box.left, y: r.top - box.top, w: r.width, h: r.height }; };
+    const col = s => { const p = s.match(/rgba?\(([^)]+)\)/)[1].split(',').map(Number); return { hex: '#' + p.slice(0, 3).map(v => Math.round(v).toString(16).padStart(2, '0')).join(''), a: p.length > 3 ? p[3] : 1 }; };
+    const bg = col(getComputedStyle(el).backgroundColor).hex;
+    el.querySelectorAll('.mz-zona,.mz-zona-a,.mz-mitad,.mz-ph,.mz-dc,.mz-hora-on,.mz-etiqueta i').forEach(e => {
+      const c = col(getComputedStyle(e).backgroundColor);
+      if (e.classList.contains('mz-dc') && !e.classList.contains('mz-dc-on')) items.push({ k: 'stroke', ...rc(e) });
+      else if (c.a > 0) items.push({ k: 'rect', ...rc(e), fill: c.hex });
+    });
+    const lg = el.querySelector('.mz-logo');
+    if (lg) { const cs = getComputedStyle(lg); items.push({ k: 'logo', ...rc(lg), text: col(cs.color).hex, iso: (() => { const t = document.createElement('i'); t.style.color = 'var(--mz-iso)'; lg.parentElement.appendChild(t); const h = col(getComputedStyle(t).color).hex; t.remove(); return h; })() }); }
+    const ctx = document.createElement('canvas').getContext('2d');
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); let n;
+    while ((n = walker.nextNode())) {
+      if (!n.textContent.trim() || n.parentElement.closest('svg')) continue;
+      const pe = n.parentElement, cs = getComputedStyle(pe), c = col(cs.color), size = parseFloat(cs.fontSize);
+      ctx.font = cs.fontWeight + ' ' + size + 'px ' + cs.fontFamily;
+      const asc = ctx.measureText('x').fontBoundingBoxAscent, rg = document.createRange(), txt = n.textContent, lines = [];
+      let cur = null;
+      for (let i = 0; i < txt.length; i++) {
+        rg.setStart(n, i); rg.setEnd(n, i + 1);
+        const r = rg.getClientRects()[0]; if (!r) continue;
+        if (cur && Math.abs(r.top - cur.top) < 3) { cur.s += txt[i]; cur.r = Math.max(cur.r, r.right); }
+        else if (txt[i].trim()) { cur = { s: txt[i], top: r.top, l: r.left, r: r.right }; lines.push(cur); }
+      }
+      for (const L of lines) {
+        const right = cs.textAlign === 'right';
+        items.push({ k: 'text', t: L.s.trim(), x: (right ? L.r : L.l) - box.left, y: L.top - box.top + asc, anchor: right ? 'end' : 'start',
+          serif: /Newsreader/.test(cs.fontFamily), size, w: cs.fontWeight, ls: cs.letterSpacing === 'normal' ? 0 : parseFloat(cs.letterSpacing),
+          fill: c.hex, op: c.a * parseFloat(cs.opacity) });
+      }
+    }
+    host.remove();
+    return { H: box.height, bg, items };
+  }, [tipo, formato, W]);
 }
-
-// pie: la última fila de todo cartel. El logo mide dos columnas, va a la izquierda y se alinea al borde inferior de la fila;
-// el texto va a la derecha, con su línea base en ese mismo borde. Nada más entra en esa fila.
-function pie(g, n, fecha, tinta = C.noche) {
-  const B = [], bottom = g.y(n) + g.rh;
-  let lw = 2 * COL + G; if (LH(lw) > g.rh) lw = g.rh / (159.59 / 629.21);
-  B.push(logo(g.x(1), bottom - LH(lw), lw, tinta, tinta));
-  if (fecha) B.push(text({ x: g.x(7) + COL, y: bottom, size: COL * .3, w: 500, fam: 'grot', fill: tinta, anchor: 'end', t: fecha }));
-  return B;
+async function plantilla(tipo, formato) {
+  const { H, bg, items } = await leer(tipo, formato), B = [];
+  for (const i of items) {
+    if (i.k === 'rect') B.push(`<rect x="${f2(i.x)}" y="${f2(i.y)}" width="${f2(i.w)}" height="${f2(i.h)}" fill="${i.fill}"/>`);
+    else if (i.k === 'stroke') B.push(`<rect x="${f2(i.x + 1.25)}" y="${f2(i.y + 1.25)}" width="${f2(i.w - 2.5)}" height="${f2(i.h - 2.5)}" fill="none" stroke="${C.noche}" stroke-width="2.5"/>`);
+    else if (i.k === 'logo') B.push(logo(i.x, i.y, i.w, i.text, i.iso));
+    else B.push(text({ x: i.x, y: i.y, size: i.size, w: i.w, fam: i.serif ? 'serif' : 'grot', fill: i.op < 1 ? `rgba(${[1, 3, 5].map(k => parseInt(i.fill.slice(k, k + 2), 16)).join(',')},${f2(i.op)})` : i.fill, ls: i.ls ? f2(i.ls) : 0, anchor: i.anchor, t: i.t }));
+  }
+  return { H, svg: wrap(H, B.join('\n'), bg, 'Mooza · cartel ' + tipo + (formato ? ' ' + formato : '')) };
 }
-const serif = (x, y, fs, t, fill, o = {}) => text({ x, y, size: fs, w: 500, fam: 'serif', fill, ls: f2((o.ls ?? -.035) * fs), anchor: o.anchor, t });
-
-T.titular = (H = 1350, n = 9) => {
-  const g = geo(H, n), B = [], fs = COL * 1.52 * (n === 4 ? .62 : 1), lh = .9 * fs;
-  lines(D.titular).forEach((l, i) => B.push(serif(M, base(g.y(1) + i * lh, lh, fs, MET.serif), fs, l, C.noche)));
-  B.push(...pie(g, n, D.rango));
-  return wrap(H, B.join('\n'), C.amarillo, 'Mooza · cartel titular');
-};
-
-T.numero = (H = 1350, n = 9) => {
-  const g = geo(H, n), B = [], fs = COL * 3, lh = .74 * fs;
-  B.push(text({ x: M, y: base(g.y(1), lh, fs, MET.grot), size: fs, w: 600, fam: 'grot', fill: C.blanco, ls: f2(-.05 * fs), t: D.corto }));
-  B.push(...pie(g, n, 'mooza.cl', C.blanco));
-  return wrap(H, B.join('\n'), C.noche, 'Mooza · cartel número');
-};
-
-T.foto = async (H = 1350, n = 9) => {
-  const g = geo(H, n), B = [], fl = 2.8 * CQ;
-  const foto = (px, py, pw, ph) => {
-    B.push(`<rect x="${f2(px)}" y="${f2(py)}" width="${f2(pw)}" height="${f2(ph)}" fill="${C.azul}"/>`);
-    B.push(text({ x: px + 2 * CQ, y: py + ph - 2 * CQ - MET.grot.desc * fl, size: fl, w: 500, fam: 'grot', fill: 'rgba(255,255,255,.7)', t: 'foto del evento' }));
-  };
-  const fn = COL * (n === 4 ? .52 : .72), ln = .95 * fn;
-  if (n === 4) {
-    foto(g.x(5), g.y(1), g.w(5, 7), g.h(1, 3));
-    const ls = lines(D.evento.nombre), bottom = g.y(3) + g.rh, top = bottom - ls.length * ln;
-    ls.forEach((l, i) => B.push(serif(M, base(top + i * ln, ln, fn, MET.serif), fn, l, C.noche, { ls: -.03 })));
-  } else {
-    foto(g.x(3), g.y(1), g.w(3, 7), g.h(1, n - 4));
-    const top = g.y(n - 3), ls = lines(D.evento.nombre);
-    ls.forEach((l, i) => B.push(serif(g.x(3), base(top + i * ln, ln, fn, MET.serif), fn, l, C.noche, { ls: -.03 })));
-    const fm = COL * .33, lm = 1.3 * fm, y0 = top + ls.length * ln + COL * .18;
-    lines(D.evento.meta).forEach((l, i) => B.push(text({ x: g.x(3), y: base(y0 + i * lm, lm, fm, MET.grot), size: fm, w: 400, fam: 'grot', fill: 'rgba(3,2,27,.72)', t: l })));
-  }
-  B.push(...pie(g, n, D.rango));
-  return wrap(H, B.join('\n'), C.blanco, 'Mooza · cartel foto');
-};
-
-T.semana = (H = 1350, n = 9) => {
-  const g = geo(H, n), B = [], row = n - 2;
-  if (n !== 4) { const fs = COL * 1.05, lh = .9 * fs; B.push(serif(M, base(g.y(1), lh, fs, MET.serif), fs, 'esta semana', C.noche)); }
-  const fl = COL * .22, fn = COL * .46, pad = COL * .09;
-  D.dias.forEach((d, i) => {
-    const x = g.x(i + 1), y = g.y(row), on = i === D.diaDestacado;
-    B.push(on ? `<rect x="${f2(x)}" y="${f2(y)}" width="${f2(COL)}" height="${f2(g.rh)}" fill="${C.amarillo}"/>`
-              : `<rect x="${f2(x + 1.25)}" y="${f2(y + 1.25)}" width="${f2(COL - 2.5)}" height="${f2(g.rh - 2.5)}" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.5"/>`);
-    B.push(text({ x: x + pad, y: base(y + pad, fl, fl, MET.grot), size: fl, w: 500, fam: 'grot', fill: C.noche, t: d[0] }));
-    B.push(text({ x: x + pad, y: base(y + g.rh - pad - fn, fn, fn, MET.grot), size: fn, w: 600, fam: 'grot', fill: C.noche, ls: f2(-.04 * fn), t: String(d[1]) }));
-  });
-  B.push(...pie(g, n, D.rango));
-  return wrap(H, B.join('\n'), C.naranja, 'Mooza · cartel semana');
-};
-
-T.agenda = async (H = 1350, n = 9) => {
-  const g = geo(H, n), B = [], a = D.agenda, max = 2;
-  const fnum = COL * 2.2, lnum = .74 * fnum;
-  B.push(text({ x: M, y: base(g.y(1), lnum, fnum, MET.grot), size: fnum, w: 600, fam: 'grot', fill: C.blanco, ls: f2(-.05 * fnum), t: String(a.n) }));
-  const fd = COL * .5, bd = g.y(2) + g.rh - COL * .05;
-  B.push(serif(g.x(5), base(bd - fd, fd, fd, MET.serif), fd, a.dia, C.blanco, { ls: -.03 }));
-  const fh = COL * .42, hh = COL * .8, fnm = COL * .46, fm = COL * .33, lm = 1.3 * fm;
-  const ancho = g.w(3, 7);
-  for (const [i, e] of a.eventos.slice(0, max).entries()) {
-    const r = 4 + i * 3, y = g.y(r);
-    if (e.f) B.push(`<rect x="${f2(g.x(1))}" y="${f2(y)}" width="${f2(g.w(1, 2))}" height="${f2(hh)}" fill="${C.amarillo}"/>`);
-    if (e.h) B.push(text({ x: g.x(1) + COL * .12, y: base(y + (hh - fh) / 2, fh, fh, MET.grot), size: fh, w: 600, fam: 'grot', fill: e.f ? C.noche : C.blanco, ls: f2(-.02 * fh), t: e.h }));
-    const ls = await cortar(e.t, `500 ${fnm}px Newsreader`, ancho, -.03 * fnm);
-    ls.forEach((l, k) => B.push(serif(g.x(3), base(y + k * fnm, fnm, fnm, MET.serif), fnm, l, C.blanco, { ls: -.03 })));
-    B.push(text({ x: g.x(3), y: base(y + ls.length * fnm + COL * .14, lm, fm, MET.grot), size: fm, w: 400, fam: 'grot', fill: 'rgba(255,255,255,.7)', t: e.v + (e.p ? ' • ' + e.p : '') }));
-  }
-  B.push(...pie(g, n, a.pag || '', C.blanco));
-  return wrap(H, B.join('\n'), C.noche, 'Mooza · cartel agenda');
-};
-
-T.story = () => {
-  const g = geo(1920, 16, true), B = [], s = D.story;
-  const fe = COL * .28, lbh = (MET.grot.asc + MET.grot.desc) * fe, sq = 2.4 * CQ, bottom = g.y(3) + g.rh, ty = bottom - lbh;
-  B.push(`<rect x="${f2(M)}" y="${f2(ty + (lbh - sq) / 2)}" width="${f2(sq)}" height="${f2(sq)}" fill="${C.naranja}"/>`);
-  B.push(text({ x: M + sq + 2 * CQ, y: ty + MET.grot.asc * fe, size: fe, w: 600, fam: 'grot', fill: C.noche, ls: f2(.14 * fe), t: s.categoria.toUpperCase() }));
-  const fs = COL * 1.05, lh = .95 * fs;
-  lines(s.titulo).forEach((l, i) => B.push(serif(M, base(g.y(4) + i * lh, lh, fs, MET.serif), fs, l, C.noche, { ls: -.03 })));
-  const fm = COL * .33, lm = 1.3 * fm;
-  lines(s.meta).forEach((l, i) => B.push(text({ x: M, y: base(g.y(7) + i * lm, lm, fm, MET.grot), size: fm, w: 400, fam: 'grot', fill: 'rgba(3,2,27,.72)', t: l })));
-  const px = g.x(1), py = g.y(9), pw = g.w(1, 7), ph = g.h(9, 13), fl = 2.8 * CQ;
-  B.push(`<rect x="${f2(px)}" y="${f2(py)}" width="${f2(pw)}" height="${f2(ph)}" fill="${C.azul}"/>`);
-  B.push(text({ x: px + 2 * CQ, y: py + ph - 2 * CQ - MET.grot.desc * fl, size: fl, w: 500, fam: 'grot', fill: 'rgba(255,255,255,.7)', t: 'foto del evento' }));
-  B.push(...pie(g, 16, null));
-  return wrap(1920, B.join('\n'), C.claro, 'Mooza · story 9:16');
-};
 
 // ── grillas (capa de guías) ──
 function grilla(H, rows, story, name, label) {
@@ -205,15 +153,12 @@ for (const [n, v] of [['noche', C.noche], ['amarillo', C.amarillo]]) {
 out('kit/fotos/foto-placeholder.svg', `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><title>Marcador de foto de evento</title><rect width="100" height="100" fill="${C.azul}"/><text x="6" y="94" font-family="'Inter Tight',Arial,sans-serif" font-size="5" font-weight="500" fill="rgba(255,255,255,.7)">foto del evento</text></svg>\n`);
 
 // ── escribir plantillas y PNG ──
-const A3 = 1080 * 420 / 297, R169 = 1080 * 9 / 16;
-const FOR = { '': [1350, 9], '-a3': [A3, 11], '-1x1': [1080, 8], '-16x9': [R169, 4] };
 const LISTA = [];
-for (const t of ['titular', 'numero', 'foto', 'semana']) for (const [suf, [H, n]] of Object.entries(FOR)) LISTA.push([t + suf, t, H, n]);
-for (const suf of ['', '-a3']) LISTA.push(['agenda' + suf, 'agenda', FOR[suf][0], FOR[suf][1]]);
-LISTA.push(['story', 'story', 1920, 16]);
+const SUF = { '4x5': '', a3: '-a3', '1x1': '-1x1', '16x9': '-16x9', '9x16': '' };
+for (const [tipo, fs] of Object.entries(P.ROWS)) for (const f of Object.keys(fs)) LISTA.push([tipo + SUF[f], tipo, f]);
 for (const f of fs.readdirSync(path.join(ROOT, 'kit/plantillas'))) fs.unlinkSync(path.join(ROOT, 'kit/plantillas', f));
-for (const [nombre, tipo, H, n] of LISTA) {
-  const svg = tipo === 'story' ? await T.story() : await T[tipo](H, n);
+for (const [nombre, tipo, f] of LISTA) {
+  const { H, svg } = await plantilla(tipo, f);
   out(`kit/plantillas/${nombre}.svg`, svg);
   const pg = await browser.newPage({ viewport: { width: W, height: Math.ceil(H) } });
   await pg.setContent(`<link rel="stylesheet" href="${FONTS}"><body style="margin:0;background:#fff">${svg.replace(/<\?xml[^>]*>\s*/, '')}</body>`, { waitUntil: 'networkidle' });

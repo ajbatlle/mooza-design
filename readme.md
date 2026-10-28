@@ -8,9 +8,9 @@ La idea es una sola: la semana es la grilla. Siete columnas, una por día. Cada 
 
 - Español, con tuteo ("mira", "ven", "guarda tu plan"). Sin voseo y sin emoji.
 - Frases cortas. El cartel dice poco y el evento dice el resto.
-- Titulares en serif, minúsculas de frase y sin signos de exclamación: "hay jazz, teatro y cine".
-- Nombres de evento, sala y artista en serif y en minúsculas de frase, como hoy.
-- Etiquetas de categoría en mayúsculas: MÚSICA, TEATRO, CINE, ARTE, DANZA.
+- Titulares en serif, con mayúscula inicial y el resto en minúscula salvo nombres propios, y sin signos de exclamación: "Tu semana cultural", "Hay jazz, teatro y cine".
+- Nombres de evento, sala y artista en serif y con mayúscula inicial: "Cuarteto de jazz en vivo", "Bar La Otra Casa", "Alejandro Sanz".
+- Etiquetas de categoría con mayúscula inicial: Música, Teatro, Cine, Arte, Danza. Los días también: "Sábado".
 - Fechas: "26 oct – 1 nov", con mes abreviado en minúscula y raya corta con espacios. El rango corto grande se escribe "26–1".
 - Hora en 24 horas ("21:00") y lugar con punto medio: "Teatro del Parque • 21:00".
 - Precios con punto de miles y sin decimales: "$6.000", "desde $5.000". Gratis se escribe "Gratis".
@@ -35,20 +35,20 @@ Las filas dependen del formato: 9 o 10 en 4:5 y 16 en 9:16. Los titulares y los 
 
 ### Color
 
-Cinco colores planos y un neutro. Un cartel tiene un solo campo de fondo, y las celdas llevan los demás. No hay degradados ni sombras.
+Cinco colores planos y un neutro. El blanco predomina: todo cartel es blanco y el color es secundario. Cada pieza tiene un solo color protagonista, en una zona que llega a los bordes, y como mucho un segundo color como acento pequeño (el día destacado, una hora, el punto de la categoría). Los colores no compiten: nunca dos campos de color grandes en la misma lámina. La tinta de todo texto y logo es noche. No hay degradados ni sombras.
 
 | Token | Hex | Uso |
 |---|---|---|
-| noche | `#03021b` | Tinta y fondo base |
-| azul | `#1b1444` | Superficie oscura y lugar de las fotos de ejemplo |
-| amarillo | `#fcee21` | Acento y fondo de cartel |
-| naranja | `#fbb03b` | Segundo campo de cartel |
-| blanco | `#ffffff` | Celdas "gratis" y fondo claro |
-| claro | `#f2f2f2` | Neutro de story |
+| blanco | `#ffffff` | Fondo de todo cartel |
+| noche | `#03021b` | Tinta: textos y logo |
+| amarillo | `#fcee21` | Color protagonista o acento |
+| naranja | `#fbb03b` | Color protagonista o acento |
+| azul | `#1b1444` | Lugar de la foto de ejemplo. No es un campo de cartel |
+| claro | `#f2f2f2` | Neutro de interfaz |
 
 Pares de texto verificados (contraste WCAG): noche sobre blanco 20,4, sobre claro 18,2, sobre amarillo 16,9 y sobre naranja 11,1. Blanco sobre azul 17,1 y amarillo sobre azul 14,1. No usar blanco como texto sobre naranja (1,8) ni naranja sobre amarillo (1,5).
 
-En el cartel "semana" el código de celdas es: amarillo para destacado, blanco para gratis y noche para de pago.
+En el cartel "semana" el día destacado lleva el acento (amarillo) sobre blanco.
 
 ### Tipografía
 
@@ -105,18 +105,20 @@ Transiciones de 0,15 s en estados interactivos y escala 0,98 al presionar. Sin r
 
 ## Carteles
 
-Una idea por cartel y mucho blanco. Seis diseños sobre la misma grilla. Siempre son siete columnas, y la última fila es el pie (logo a la izquierda, fecha a la derecha). Los constructores están en `components/grid/poster.js` y las plantillas editables en `kit/plantillas/`.
+Una idea por cartel y mucho blanco. Cada cartel se parte en dos zonas, una arriba y otra abajo (en 16:9, izquierda y derecha), y cada zona dice una sola cosa. Una de las zonas es blanca y la otra lleva el color. Seis diseños sobre la misma grilla. Siempre son siete columnas, y la última fila es el pie (logo a la izquierda, fecha a la derecha). Los constructores están en `components/grid/poster.js` y las plantillas editables en `kit/plantillas/`.
 
 | Diseño | Qué muestra | Formatos |
 |---|---|---|
-| titular | Solo el titular, arriba a la izquierda | 4:5, A3, 1:1, 16:9 |
-| número | El rango de la semana, enorme | 4:5, A3, 1:1, 16:9 |
-| foto | Una foto, el nombre del evento y una línea de datos | 4:5, A3, 1:1, 16:9 |
-| semana | Siete días en una tira, el destacado relleno | 4:5, A3, 1:1, 16:9 |
-| agenda | Un día por lámina y hasta dos eventos. Para el carrusel semanal | 4:5, A3 |
-| story | Categoría, nombre, datos y foto | 9:16 |
+| titular | Arriba, el titular sobre el color. Abajo, sobre blanco, la fecha | 4:5, A3, 1:1, 16:9 |
+| número | Arriba, sobre blanco, el rango de la semana, enorme. Abajo, sobre el color, qué es | 4:5, A3, 1:1, 16:9 |
+| foto | Arriba, la foto. Abajo, sobre blanco, el nombre del evento y sus datos | 4:5, A3, 1:1, 16:9 |
+| semana | Arriba, sobre el color, el titular. Abajo, sobre blanco, siete días con el destacado en acento | 4:5, A3, 1:1 |
+| agenda | Arriba, sobre el color, el día. Abajo, sobre blanco, hasta dos eventos. Para el carrusel semanal | 4:5, A3 |
+| story | Arriba, la foto. Abajo, sobre blanco, categoría, nombre y datos | 9:16 |
 
-Filas por formato: 9 en 4:5, 11 en A3, 8 en 1:1, 4 en 16:9 y 16 en 9:16. El carrusel semanal de Instagram se arma con una portada (titular), una o más láminas de agenda por día y un cierre (titular).
+Filas por formato: 9 en 4:5, 11 en A3, 8 en 1:1, 4 en 16:9 y 16 en 9:16. En 16:9 la mitad izquierda es blanca y la derecha lleva el color o la foto; la columna 4 queda sobre el centro y va vacía.
+
+Escala tipográfica, en múltiplos del ancho de columna: número 3, titular 1,8, nombre 1,12, fecha en bloque 0,7, texto de lista 0,44, dato 0,28 y etiqueta 0,2. Cada paso es cerca de 1,6 veces el anterior y un cartel usa tres como máximo. En 1:1 y 16:9 el titular y el número bajan para caber en la zona. El carrusel semanal de Instagram se arma con una portada (titular), una o más láminas de agenda por día y un cierre (titular).
 
 ## Propuesta web
 

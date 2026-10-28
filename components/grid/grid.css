@@ -1,73 +1,80 @@
 /* Mooza · cartel sobre grilla de siete columnas.
-   Un cartel es un .mz-poster que contiene una .mz-grid. Cada hijo de la grilla se ubica
-   con grid-column y grid-row. Las filas se fijan por formato (--rows) y la última es siempre el pie.
-   Una idea por cartel y mucho blanco. Requiere tokens/colors.css, tokens/typography.css y tokens/grid.css. */
+   Un cartel es un .mz-poster que contiene una .mz-grid. Cada hijo de la grilla se ubica con grid-column y grid-row.
+   El cartel se parte en dos zonas de color (la de arriba es el fondo del cartel, la de abajo es una .mz-zona).
+   La última fila es siempre el pie. Requiere tokens/colors.css, tokens/typography.css y tokens/grid.css. */
 
 .mz-poster{
   position:relative;aspect-ratio:var(--mz-ar,4/5);container-type:inline-size;overflow:hidden;isolation:isolate;
-  background:var(--mz-claro);color:var(--mz-noche);font-family:var(--mz-grot);
+  background:var(--mz-blanco);color:var(--mz-noche);font-family:var(--mz-grot);
 }
 
 .mz-grid,.mz-overlay{
+  --mz-pv:calc(var(--mz-m)*1cqw);
   position:absolute;inset:0;display:grid;
-  padding:calc(var(--mz-m)*1cqw);gap:calc(var(--mz-g)*1cqw);
+  padding:var(--mz-pv) calc(var(--mz-m)*1cqw);gap:calc(var(--mz-g)*1cqw);
   grid-template-columns:repeat(7,minmax(0,1fr));
   grid-template-rows:repeat(var(--rows),minmax(0,1fr));
 }
-.mz-story-p .mz-grid,.mz-d-story .mz-grid,.mz-d-story .mz-overlay{padding-block:min(calc(var(--mz-m)*var(--mz-mv-story)*1cqw),18cqw)}
-.mz-grid>*{min-width:0;min-height:0}
+.mz-d-story .mz-grid,.mz-d-story .mz-overlay{--mz-pv:min(calc(var(--mz-m)*var(--mz-mv-story)*1cqw),18cqw)}
+.mz-grid>*{min-width:0;min-height:0;position:relative;z-index:1}
 
 /* grilla visible: se activa con .mz-show-grid en cualquier ancestro */
 .mz-overlay{display:none;pointer-events:none;z-index:9}
 .mz-show-grid .mz-overlay{display:grid}
 .mz-overlay i{box-shadow:inset 0 0 0 1px rgba(255,45,111,.6);background:rgba(255,45,111,.08)}
 
-/* fondos: un campo plano por cartel */
-.mz-d-titular{background:var(--mz-amarillo)}
-.mz-d-numero{background:var(--mz-noche);color:var(--mz-blanco)}
-.mz-d-foto{background:var(--mz-blanco)}
-.mz-d-semana{background:var(--mz-naranja)}
-.mz-d-agenda{background:var(--mz-noche);color:var(--mz-blanco)}
-.mz-d-story{background:var(--mz-claro)}
+/* zona de abajo: llega a los bordes laterales e inferior del cartel */
+.mz-grid>.mz-zona{z-index:0;margin:calc(var(--mz-g)*-.5cqw) calc(var(--mz-m)*-1cqw) calc(var(--mz-pv)*-1)}
+.mz-grid>.mz-zona-a{z-index:0;margin:calc(var(--mz-pv)*-1) calc(var(--mz-m)*-1cqw) calc(var(--mz-g)*-.5cqw)}
+
+/* mitad derecha de los horizontales: del centro al borde */
+.mz-grid>.mz-mitad{position:absolute;left:50%;right:0;top:0;bottom:0;z-index:0}
+.mz-f-16x9{--mz-t-display:calc(var(--mz-col)*1.2*1cqw);--mz-t-grande:calc(var(--mz-col)*.8*1cqw);--mz-t-titular:calc(var(--mz-col)*.5*1cqw);--mz-t-sub:calc(var(--mz-col)*.46*1cqw);--mz-t-dato:calc(var(--mz-col)*.24*1cqw)}
+.mz-f-1x1{--mz-t-grande:calc(var(--mz-col)*1.5*1cqw);--mz-t-titular:calc(var(--mz-col)*.9*1cqw)}
+
+/* el fondo es siempre blanco; el color vive en una zona (ver arriba) */
+.mz-sobre-oscuro{color:var(--mz-blanco)}
+.mz-sobre-claro{color:var(--mz-noche)}
+
+/* escala tipográfica (tokens/grid.css). Palabras en serif, números y datos en grotesca. */
+.mz-t-display{font-weight:var(--mz-peso-numero);letter-spacing:var(--mz-track-numero);font-size:var(--mz-t-display);line-height:.74;white-space:nowrap;align-self:start;font-variant-numeric:tabular-nums}
+.mz-t-grande{font-family:var(--mz-serif);font-weight:var(--mz-peso-titular);letter-spacing:var(--mz-track-titular);line-height:.9;font-size:var(--mz-t-grande);align-self:start;margin-top:.075em}
+.mz-t-titular{font-family:var(--mz-serif);font-weight:var(--mz-peso-titular);letter-spacing:-.03em;line-height:.95;font-size:var(--mz-t-titular);display:block}
+.mz-t-sub{font-weight:var(--mz-peso-dato);letter-spacing:-.02em;line-height:1.1;font-size:var(--mz-t-sub);font-variant-numeric:tabular-nums}
+.mz-t-texto{font-family:var(--mz-serif);font-weight:var(--mz-peso-titular);letter-spacing:-.03em;line-height:1;font-size:var(--mz-t-texto);display:block}
+.mz-t-dato{font-weight:var(--mz-peso-dato);font-size:var(--mz-t-dato);line-height:1.3;font-variant-numeric:tabular-nums;display:block}
+.mz-t-micro{font-weight:var(--mz-peso-etiqueta);font-size:var(--mz-t-micro);line-height:1}
+.mz-abajo{align-self:start}
 
 /* pie: logo de dos columnas a la izquierda, fecha a la derecha */
 .mz-pie-logo{display:flex;align-items:flex-end}
 .mz-logo{display:block;width:100%;height:auto;max-height:100%;color:var(--mz-noche);--mz-iso:var(--mz-noche)}
-.mz-d-numero .mz-logo,.mz-d-agenda .mz-logo{color:var(--mz-blanco);--mz-iso:var(--mz-blanco)}
+.mz-sobre-oscuro .mz-logo{color:var(--mz-blanco);--mz-iso:var(--mz-blanco)}
 .mz-lt{fill:currentColor}
 .mz-li{fill:var(--mz-iso,var(--mz-noche))}
-.mz-dato{font-weight:var(--mz-peso-dato);font-size:var(--mz-fs-dato);line-height:1.1;font-variant-numeric:tabular-nums;letter-spacing:-.005em}
-.mz-fecha-pie{text-align:right;align-self:end;transform:translateY(.186em)}
+.mz-fecha-pie{text-align:right;align-self:end;line-height:1.1;transform:translateY(.186em)}
 
-/* palabras: serif, minúsculas de frase */
-.mz-titular{font-family:var(--mz-serif);font-weight:var(--mz-peso-titular);letter-spacing:var(--mz-track-titular);line-height:.9;font-size:var(--mz-fs-titular);align-self:start}
-.mz-titular-s{font-size:calc(var(--mz-col)*1.05*1cqw)}
-.mz-nombre{display:block;font-family:var(--mz-serif);font-weight:var(--mz-peso-titular);letter-spacing:-.03em;line-height:.95;font-size:calc(var(--mz-col)*.72*1cqw)}
-.mz-evento-t{align-self:start;display:grid;gap:calc(var(--mz-col)*.18*1cqw);align-content:start}
-.mz-meta{display:block;font-size:var(--mz-fs-meta);line-height:1.3;color:rgba(3,2,27,.72)}
-.mz-d-agenda .mz-meta{color:rgba(255,255,255,.7)}
-
-/* números: grotesca */
-.mz-numero{font-weight:var(--mz-peso-numero);letter-spacing:var(--mz-track-numero);font-size:var(--mz-fs-numero);line-height:.74;white-space:nowrap;align-self:start;font-variant-numeric:tabular-nums}
-
-/* agenda: hora y evento */
-.mz-dia-t{align-self:end;padding-bottom:calc(var(--mz-col)*.05*1cqw)}
-.mz-d-agenda .mz-numero{font-size:calc(var(--mz-col)*2.2*1cqw)}
-.mz-d-agenda .mz-nombre{font-size:calc(var(--mz-col)*.46*1cqw);line-height:1}
-.mz-d-agenda .mz-evento-t{gap:calc(var(--mz-col)*.14*1cqw)}
-.mz-hora{font-size:calc(var(--mz-col)*.42*1cqw);font-weight:600;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;padding:calc(var(--mz-col)*.1*1cqw) calc(var(--mz-col)*.12*1cqw);align-self:start;height:calc(var(--mz-col)*.8*1cqw);display:flex;align-items:center}
-.mz-hora-on{background:var(--mz-amarillo);color:var(--mz-noche)}
+/* bloques de texto con dos niveles */
+.mz-evento-t{align-self:start;display:grid;gap:calc(var(--mz-col)*.14*1cqw);align-content:start}
+.mz-evento-t .mz-t-dato,.mz-d-story .mz-t-dato{opacity:.72}
 
 /* foto: celdas completas, nunca al borde */
 .mz-ph{background:var(--mz-azul);color:rgba(255,255,255,.7);display:flex;align-items:flex-end;padding:2cqw;font-size:2.8cqw;font-weight:500;letter-spacing:.02em}
 
 /* semana: tira de siete días */
-.mz-dc{box-shadow:inset 0 0 0 1px rgba(255,255,255,.9);display:flex;flex-direction:column;justify-content:space-between;padding:calc(var(--mz-col)*.09*1cqw)}
-.mz-dc span{font-size:calc(var(--mz-col)*.22*1cqw);font-weight:500;line-height:1}
-.mz-dc b{font-size:calc(var(--mz-col)*.46*1cqw);font-weight:600;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
-.mz-dc-on{background:var(--mz-amarillo);box-shadow:none}
+.mz-dc{box-shadow:inset 0 0 0 1px var(--mz-noche);display:flex;flex-direction:column;justify-content:space-between;padding:calc(var(--mz-col)*.06*1cqw)}
+.mz-dc b{font-size:var(--mz-t-texto);font-weight:600;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.mz-dc-on{background:var(--mz-amarillo);box-shadow:none;color:var(--mz-noche)}
+
+/* agenda */
+.mz-num{font-family:var(--mz-grot);font-weight:var(--mz-peso-numero);letter-spacing:var(--mz-track-numero);line-height:.74;font-variant-numeric:tabular-nums}
+/* el día va en la misma línea base que el número, empezando en la columna 4 */
+.mz-cabeza{display:flex;align-items:baseline;align-self:start}
+.mz-cabeza>*{align-self:baseline}
+.mz-cabeza .mz-num{flex:none;width:calc((var(--mz-col)*3 + var(--mz-g)*3)*1cqw)}
+.mz-hora{font-size:var(--mz-t-texto);font-weight:600;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;padding:0 calc(var(--mz-col)*.12*1cqw);align-self:start;height:calc(var(--mz-col)*.8*1cqw);display:flex;align-items:center}
+.mz-hora-on{background:var(--mz-amarillo);color:var(--mz-noche)}
 
 /* story */
-.mz-etiqueta{display:flex;align-items:center;gap:2cqw;font-size:var(--mz-fs-etiqueta);font-weight:var(--mz-peso-etiqueta);letter-spacing:var(--mz-track-etiqueta);text-transform:uppercase;align-self:end}
+.mz-etiqueta{display:flex;align-items:center;gap:2cqw;align-self:end}
 .mz-etiqueta i{width:2.4cqw;height:2.4cqw;background:var(--mz-naranja)}
-.mz-titular-story{font-family:var(--mz-serif);font-weight:var(--mz-peso-titular);letter-spacing:-.03em;line-height:.95;font-size:var(--mz-fs-story);align-self:start}

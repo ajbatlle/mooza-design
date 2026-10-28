@@ -12,16 +12,22 @@
 :root{
   --mz-m: 6;
   --mz-g: 1.2;
-  --mz-col: calc((100 - 2*var(--mz-m) - 6*var(--mz-g)) / 7);
   --mz-mv-story: 2.2;
+}
 
-  --mz-fs-titular: calc(var(--mz-col) * 1.52 * 1cqw);  /* titular serif del cartel "foto" */
-  --mz-fs-titular-largo: calc(var(--mz-col) * 1.04 * 1cqw);  /* titular editorial de varias líneas */
-  --mz-fs-story: calc(var(--mz-col) * 1.05 * 1cqw);
-  --mz-fs-numero: calc(var(--mz-col) * 3 * 1cqw);   /* número grande, grotesca: ocupa casi todo el ancho */
-  --mz-fs-dato: calc(var(--mz-col) * .3 * 1cqw);       /* fecha, hora */
-  --mz-fs-meta: calc(var(--mz-col) * .33 * 1cqw);      /* lugar y precio en story */
-  --mz-fs-etiqueta: calc(var(--mz-col) * .28 * 1cqw);
+/* se repite en cada cartel para que el texto siga al margen y al medianil que se le asignen ahí */
+:root,.mz-poster{
+  --mz-col: calc((100 - 2*var(--mz-m) - 6*var(--mz-g)) / 7);
+
+  /* escala tipográfica: siete pasos, cada uno cerca de 1,6 veces el anterior, medidos en columnas.
+     Un cartel usa tres pasos como máximo, con saltos claros entre ellos. */
+  --mz-t-display: calc(var(--mz-col) * 3 * 1cqw);     /* el número del cartel, grotesca. Uno por pieza */
+  --mz-t-grande: calc(var(--mz-col) * 1.8 * 1cqw);    /* el titular, serif. Ocupa casi todo el ancho */
+  --mz-t-titular: calc(var(--mz-col) * 1.12 * 1cqw);   /* nombre del evento o segundo titular, serif */
+  --mz-t-sub: calc(var(--mz-col) * .7 * 1cqw);       /* fecha en bloque, grotesca */
+  --mz-t-texto: calc(var(--mz-col) * .44 * 1cqw);     /* nombres en listas, serif; horas, grotesca */
+  --mz-t-dato: calc(var(--mz-col) * .28 * 1cqw);       /* fechas, lugares, precios y pie, grotesca */
+  --mz-t-micro: calc(var(--mz-col) * .2 * 1cqw);     /* etiquetas y letras de día, grotesca */
 
   --mz-radio: 0;   /* todo es celda: sin bordes redondeados */
 }

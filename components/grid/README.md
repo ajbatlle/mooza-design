@@ -19,7 +19,8 @@ Formatos (tercer parámetro, `4x5` por defecto y `9x16` para story):
 
 | Diseño | Formatos |
 |---|---|
-| titular, numero, foto, semana | `4x5`, `a3`, `1x1`, `16x9` |
+| titular, numero, foto | `4x5`, `a3`, `1x1`, `16x9` |
+| semana | `4x5`, `a3`, `1x1` |
 | agenda | `4x5`, `a3` |
 | story | `9x16` |
 
@@ -27,7 +28,7 @@ Un diseño que no existe en un formato lanza un error.
 
 ## Datos
 
-Los campos que no pases se toman de `MoozaPoster.EJEMPLO`: `rango`, `corto`, `titular`, `dias` y `diaDestacado` (semana), `evento` (foto), `agenda` (`dia`, `n`, `pag` y `eventos` con `h`, `t`, `v`, `p`, `f`) y `story`.
+Los campos que no pases se toman de `MoozaPoster.EJEMPLO`: `color` (`amarillo` o `naranja`, el protagonista de la pieza), `rango`, `corto`, `titular`, `dias` y `diaDestacado` (semana), `evento` (foto), `agenda` (`dia`, `n`, `pag` y `eventos` con `h`, `t`, `v`, `p`, `f`) y `story`.
 
 ## Reglas
 

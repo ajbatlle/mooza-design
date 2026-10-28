@@ -1,5 +1,6 @@
 /* Mooza · generador de carteles sobre la grilla de siete días.
-   Una idea por cartel y mucho blanco. Seis diseños: titular, numero, foto, semana, agenda y story.
+   Cada cartel se parte en dos zonas, una arriba y otra abajo (en horizontal, izquierda y derecha), y cada zona dice una sola cosa.
+   Seis diseños: titular, numero, foto, semana, agenda y story.
    Uso:
      <link rel="stylesheet" href="styles.css">
      <script src="components/grid/poster.js"></script>
@@ -8,17 +9,20 @@
 (function(root){
   'use strict';
 
-  /* formatos: proporción (ancho/alto) y alto relativo. Siempre siete columnas. */
-  var FORMATOS={'4x5':{ar:'4/5',h:125},'1x1':{ar:'1/1',h:100},'a3':{ar:'297/420',h:141.4},'9x16':{ar:'9/16',h:177.8},'16x9':{ar:'16/9',h:56.25}};
-  /* filas de la grilla por diseño y formato (la última es siempre el pie). Un diseño no listado para un formato no existe en él. */
-  var FILAS={'4x5':9,'a3':11,'1x1':8,'16x9':4,'9x16':16};
+  /* formatos: proporción (ancho/alto). Siempre siete columnas. */
+  var FORMATOS={'4x5':{ar:'4/5'},'1x1':{ar:'1/1'},'a3':{ar:'297/420'},'9x16':{ar:'9/16'},'16x9':{ar:'16/9'}};
+  /* filas de cada formato (la última es siempre el pie) y filas de la zona de arriba.
+     En 16x9 el cartel se parte en mitades: izquierda blanca, derecha de color; la columna 4 queda sobre la línea del centro. */
+  var ARRIBA={'4x5':4,'a3':5,'1x1':3,'9x16':8};
+  /* el titular de tres líneas necesita una fila más en vertical */
+  var ARRIBA_TITULAR={'4x5':5,'a3':6,'1x1':3};
   var ROWS={
-    titular:{'4x5':FILAS['4x5'],'a3':FILAS.a3,'1x1':FILAS['1x1'],'16x9':FILAS['16x9']},
-    numero:{'4x5':FILAS['4x5'],'a3':FILAS.a3,'1x1':FILAS['1x1'],'16x9':FILAS['16x9']},
-    foto:{'4x5':FILAS['4x5'],'a3':FILAS.a3,'1x1':FILAS['1x1'],'16x9':FILAS['16x9']},
-    semana:{'4x5':FILAS['4x5'],'a3':FILAS.a3,'1x1':FILAS['1x1'],'16x9':FILAS['16x9']},
-    agenda:{'4x5':FILAS['4x5'],'a3':FILAS.a3},
-    story:{'9x16':FILAS['9x16']}
+    titular:{'4x5':9,'a3':11,'1x1':8,'16x9':4},
+    numero:{'4x5':9,'a3':11,'1x1':8,'16x9':4},
+    foto:{'4x5':9,'a3':11,'1x1':8,'16x9':4},
+    semana:{'4x5':9,'a3':11,'1x1':8},
+    agenda:{'4x5':9,'a3':11},
+    story:{'9x16':16}
   };
   var CLASES={titular:'mz-d-titular',numero:'mz-d-numero',foto:'mz-d-foto',semana:'mz-d-semana',agenda:'mz-d-agenda',story:'mz-d-story'};
 
@@ -26,16 +30,15 @@
   var EJEMPLO={
     rango:'26 oct – 1 nov',
     corto:'26–1',
-    titular:'tu semana<br>cultural',
+    titular:'Tu semana<br>cultural',
     dias:[['L',26],['M',27],['M',28],['J',29],['V',30],['S',31],['D',1]],
     diaDestacado:4,
-    evento:{nombre:'Cuarteto de jazz<br>en vivo',meta:'Teatro del Parque<br>Vie 30 • 21:00 • desde $8.000'},
-    agenda:{dia:'sábado',n:20,pag:'2/5',eventos:[
-      {h:'22:00',t:'el alma al aire ii: canciones de alejandro sanz',v:'Bar La Otra Casa',p:'$10.000'},
-      {h:'22:00',t:'glam fest en biker chop',v:'Biker Chop',p:'$8.000'},
-      {h:'21:30',t:'leo quinteros vuelve al bar de rené',v:'Bar de René',p:'desde $6.000',f:1}
+    evento:{nombre:'Cuarteto de<br>jazz en vivo',meta:'Teatro del Parque<br>Vie 30 • 21:00 • desde $8.000'},
+    agenda:{dia:'Sábado',n:20,pag:'2/5',eventos:[
+      {h:'22:00',t:'El alma al aire II: canciones de Alejandro Sanz',v:'Bar La Otra Casa',p:'$10.000'},
+      {h:'22:00',t:'Glam Fest en Biker Chop',v:'Biker Chop',p:'$8.000'}
     ]},
-    story:{categoria:'Música',titulo:'cuarteto de jazz<br>en vivo',meta:'Teatro del Parque<br>Viernes 30, 21:00 • desde $8.000'}
+    story:{categoria:'Música',titulo:'Cuarteto de<br>jazz en vivo',meta:'Teatro del Parque<br>Viernes 30, 21:00<br>Desde $8.000'}
   };
 
   var LOGO='<svg class="mz-logo" viewBox="0 0 629.21 159.59" role="img" aria-label="Mooza"><use href="#mz-lockup"/></svg>';
@@ -51,64 +54,74 @@
   function overlay(rows){return '<div class="mz-overlay" style="--rows:'+rows+'">'+new Array(7*rows+1).join('<i></i>')+'</div>'}
   function grid(rows,inner){return '<div class="mz-grid" style="--rows:'+rows+'">'+inner+'</div>'+overlay(rows)}
 
-  /* pie: la última fila de todo cartel. El logo mide dos columnas y va a la izquierda; la fecha, a la derecha.
-     Nada más entra en esa fila, así que el logo nunca choca. */
-  function pie(n,texto,desde){
-    return cell(1,2,n,n,'mz-pie-logo',LOGO)+(texto?cell(desde||5,7,n,n,'mz-dato mz-fecha-pie',texto):'');
+  /* campo de color: la zona que llega a los bordes. El resto del cartel es blanco.
+     zonaA: el campo está arriba y termina en la fila indicada. zona: el campo está abajo y empieza en la fila indicada. */
+  function zonaA(hasta,fondo){return cell(1,7,1,hasta,'mz-zona-a','','background:'+fondo)}
+  function zona(desde,n,fondo){return cell(1,7,desde,n,'mz-zona','','background:'+fondo)}
+  /* mitad derecha de un cartel horizontal: del centro al borde */
+  function mitad(fondo,cls){return '<div class="mz-mitad'+(cls?' '+cls:'')+'"'+(fondo?' style="background:'+fondo+'"':'')+'></div>'}
+  /* el color de la pieza: el que venga en datos.color o el del diseño */
+  function campo(d,def){return 'var(--mz-'+(d.color||def)+')'}
+
+  /* pie: la última fila de todo cartel. El logo mide dos columnas y va a la izquierda; el texto, a la derecha.
+     Nada más entra en esa fila, así que el logo nunca choca. Todo va en tinta (noche), sobre blanco o sobre el color. */
+  function pie(n,texto){
+    return cell(1,2,n,n,'mz-pie-logo',LOGO)+(texto?cell(5,7,n,n,'mz-t-dato mz-fecha-pie',texto):'');
   }
 
-  /* titular: solo el titular, arriba a la izquierda. El resto es blanco. */
-  function titular(d,n){
-    if(n===4)return grid(4,cell(1,5,1,2,'mz-titular',d.titular,'font-size:calc(var(--mz-fs-titular)*.62)')+pie(4,d.rango));
-    return grid(n,cell(1,7,1,3,'mz-titular',d.titular)+pie(n,d.rango));
+  /* titular: arriba, el titular sobre el color. Abajo, sobre blanco, la fecha. */
+  function titular(d,n,f){
+    if(f==='16x9')return grid(n,mitad(campo(d,'amarillo'))+cell(1,3,1,3,'mz-t-grande',d.titular)+cell(5,7,1,1,'mz-t-sub',d.rango)+pie(n,'mooza.cl'));
+    var s=ARRIBA_TITULAR[f];
+    return grid(n,zonaA(s,campo(d,'amarillo'))+cell(1,7,1,s,'mz-t-grande',d.titular)+
+      cell(1,7,s+2,s+2,'mz-t-sub mz-abajo',d.rango)+pie(n,'mooza.cl'));
   }
 
-  /* número: el rango corto de la semana, enorme, arriba a la izquierda. */
-  function numero(d,n){
-    return grid(n,cell(1,7,1,3,'mz-numero',d.corto)+pie(n,'mooza.cl'));
+  /* número: arriba, sobre blanco, el rango de la semana, enorme. Abajo, sobre el color, qué es. */
+  function numero(d,n,f){
+    if(f==='16x9')return grid(n,mitad(campo(d,'naranja'))+cell(1,3,1,2,'mz-t-grande','Esta<br>semana')+cell(5,7,1,3,'mz-t-display',d.corto)+pie(n,'mooza.cl'));
+    var s=ARRIBA[f];
+    return grid(n,zona(s+1,n,campo(d,'naranja'))+cell(1,7,1,s,'mz-t-display',d.corto)+
+      cell(1,7,s+2,s+2,'mz-t-titular mz-abajo','Esta semana')+pie(n,'mooza.cl'));
   }
 
-  /* foto: una foto, el nombre del evento y una línea de datos. A la izquierda queda blanco. */
-  function foto(d,n){
-    if(n===4)return grid(4,
-      cell(5,7,1,3,'mz-ph','foto del evento')+
-      cell(1,4,1,3,'mz-nombre',d.evento.nombre,'align-self:end;font-size:calc(var(--mz-col)*.52*1cqw)')+pie(4,d.rango));
-    return grid(n,
-      cell(3,7,1,n-4,'mz-ph','foto del evento')+
-      cell(3,7,n-3,n-2,'mz-evento-t','<span class="mz-nombre">'+d.evento.nombre+'</span><span class="mz-meta">'+d.evento.meta+'</span>')+pie(n,d.rango));
+  /* foto: arriba, la foto (es el color de la pieza). Abajo, sobre blanco, el nombre del evento y sus datos. */
+  function foto(d,n,f){
+    var txt='<span class="mz-t-titular">'+d.evento.nombre+'</span><span class="mz-t-dato">'+d.evento.meta+'</span>';
+    /* en horizontal el texto tiene tres columnas: el precio pasa a su propia línea */
+    if(f==='16x9')return grid(n,mitad(null,'mz-ph')+cell(1,3,1,3,'mz-evento-t',txt.replace(' • desde','<br>desde'))+pie(n,null));
+    var s=ARRIBA[f];
+    return grid(n,cell(1,7,1,s,'mz-ph','foto del evento')+
+      cell(1,7,s+2,n-1,'mz-evento-t',txt)+pie(n,d.rango));
   }
 
-  /* semana: una tira de siete días, uno por columna, y el día destacado relleno. */
-  function semana(d,n){
-    var fila=n-2,h=n===4?'':cell(1,7,1,2,'mz-titular mz-titular-s','esta semana');
+  /* semana: arriba, sobre el color, el titular. Abajo, sobre blanco, siete días; el destacado lleva el acento. */
+  function semana(d,n,f){
+    var s=ARRIBA[f],fila=n-2,h=zonaA(s,campo(d,'naranja'))+cell(1,7,1,s,'mz-t-grande','Esta<br>semana');
     d.dias.forEach(function(x,i){
-      h+=cell(i+1,i+1,fila,fila,'mz-dc'+(i===d.diaDestacado?' mz-dc-on':''),'<span>'+x[0]+'</span><b>'+x[1]+'</b>');
+      h+=cell(i+1,i+1,fila,fila,'mz-dc'+(i===d.diaDestacado?' mz-dc-on':''),'<span class="mz-t-micro">'+x[0]+'</span><b>'+x[1]+'</b>');
     });
     return grid(n,h+pie(n,d.rango));
   }
 
-  /* agenda: un día por lámina. El número del día y hasta dos eventos con su hora, nombre y lugar.
-     Cada evento ocupa dos filas y entre ellos queda una fila vacía; el primero empieza en la fila 4, tras una fila de aire.
-     El destacado lleva la hora en una celda amarilla. */
+  /* agenda: arriba, sobre el color, el día. Abajo, sobre blanco, hasta dos eventos con una fila de aire entre ellos. */
   function agenda(d,n){
-    var a=d.agenda,max=2,h=cell(1,4,1,2,'mz-numero',String(a.n))+cell(5,7,1,2,'mz-nombre mz-dia-t',a.dia);
-    a.eventos.slice(0,max).forEach(function(e,i){
+    var a=d.agenda,h=zonaA(2,campo(d,'amarillo'))+cell(1,7,1,2,'mz-cabeza','<span class="mz-t-grande mz-num">'+a.n+'</span><span class="mz-t-titular">'+a.dia+'</span>');
+    a.eventos.slice(0,2).forEach(function(e,i){
       var r=4+i*3;
       h+=cell(1,2,r,r,'mz-hora'+(e.f?' mz-hora-on':''),e.h||'')+
-         cell(3,7,r,r+1,'mz-evento-t','<span class="mz-nombre">'+e.t+'</span><span class="mz-meta">'+e.v+(e.p?' • '+e.p:'')+'</span>');
+         cell(3,7,r,r+1,'mz-evento-t','<span class="mz-t-texto">'+e.t+'</span><span class="mz-t-dato">'+e.v+(e.p?' • '+e.p:'')+'</span>');
     });
     return grid(n,h+pie(n,a.pag||''));
   }
 
-  /* story 9:16: categoría, nombre, datos y foto. Sin adornos. */
-  function story(d,n){
-    var s=d.story;
-    return grid(16,
-      cell(1,7,3,3,'mz-etiqueta','<i></i>'+s.categoria)+
-      cell(1,7,4,6,'mz-titular-story',s.titulo)+
-      cell(1,5,7,8,'mz-meta',s.meta)+
-      cell(1,7,9,13,'mz-ph','foto del evento')+
-      pie(16,null));
+  /* story 9:16: arriba, la foto. Abajo, sobre blanco, la categoría (con su acento), el nombre y los datos. */
+  function story(d,n,f){
+    var s=ARRIBA[f],t=d.story;
+    return grid(16,cell(1,7,1,s,'mz-ph','foto del evento')+
+      cell(1,7,s+2,s+2,'mz-t-micro mz-etiqueta','<i></i>'+t.categoria)+
+      cell(1,7,s+3,s+5,'mz-t-titular',t.titulo)+
+      cell(1,5,s+6,s+7,'mz-t-dato',t.meta)+pie(16,null));
   }
 
   var BUILD={titular:titular,numero:numero,foto:foto,semana:semana,agenda:agenda,story:story};
@@ -120,21 +133,22 @@
     if(!n)throw new Error('El diseño "'+tipo+'" no existe en el formato '+formatoDe(tipo,formato));
     return n;
   }
-  /* html: diseño, datos y formato ('4x5' por defecto; 'a3', '1x1' y '16x9' donde existan; '9x16' para story) */
+  /* html: diseño, datos y formato ('4x5' por defecto; 'a3' y '1x1' donde existan; '9x16' para story) */
   function html(tipo,datos,formato){
     if(!BUILD[tipo])throw new Error('Diseño desconocido: '+tipo);
-    return BUILD[tipo](merge(datos),filas(tipo,formato));
+    var f=formatoDe(tipo,formato);
+    return BUILD[tipo](merge(datos),filas(tipo,f),f);
   }
   /* mount: pone el cartel dentro de un elemento. Agrega .mz-poster, la clase del diseño y la proporción. */
   function mount(el,tipo,datos,formato){
     var f=formatoDe(tipo,formato);
-    el.className=(el.className?el.className+' ':'')+'mz-poster '+CLASES[tipo];
+    el.className=(el.className?el.className+' ':'')+'mz-poster '+CLASES[tipo]+' mz-f-'+f;
     el.style.setProperty('--mz-ar',FORMATOS[f].ar);
     el.innerHTML=html(tipo,datos,f);
     return el;
   }
 
-  var api={FORMATOS:FORMATOS,ROWS:ROWS,EJEMPLO:EJEMPLO,sprite:sprite,html:html,mount:mount};
+  var api={FORMATOS:FORMATOS,ROWS:ROWS,ARRIBA:ARRIBA,ARRIBA_TITULAR:ARRIBA_TITULAR,EJEMPLO:EJEMPLO,sprite:sprite,html:html,mount:mount};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
   root.MoozaPoster=api;
 })(typeof window!=='undefined'?window:globalThis);

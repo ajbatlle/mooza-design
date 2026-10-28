@@ -1,6 +1,7 @@
 /* Mooza · colores
    Cinco colores planos y un neutro. Sin degradados, sin sombras.
-   Un cartel usa un solo campo de fondo; las celdas llevan los demás. */
+   El blanco predomina y es el fondo de todo cartel. Cada pieza tiene un color protagonista en una zona,
+   y como mucho otro como acento pequeño. Los colores nunca compiten. Noche es la tinta de textos y logo. */
 :root{
   --mz-noche:    #03021b;  /* tinta y fondo base */
   --mz-azul:     #1b1444;  /* superficie oscura, lugar de las fotos de ejemplo */

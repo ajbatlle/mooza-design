@@ -7,24 +7,27 @@
 <link rel="stylesheet" href="../styles.css">
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:var(--mz-noche);color:var(--mz-blanco);font-family:var(--mz-grot);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{margin:0;background:var(--mz-claro);color:var(--mz-noche);font-family:var(--mz-grot);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 .wrap{width:100%;max-width:1240px;margin-inline:auto;padding:clamp(20px,4vw,48px) max(16px,env(safe-area-inset-left,0px))}
 .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:clamp(20px,3vw,36px)}
-.top svg{width:120px;color:var(--mz-blanco);--mz-iso:var(--mz-blanco);display:block}
-.top a{font-size:13px;color:var(--mz-fg-suave);text-decoration:none}
+.top svg{width:120px;color:var(--mz-noche);--mz-iso:var(--mz-noche);display:block}
+.top a{font-size:13px;color:var(--mz-noche);text-decoration:none}
 .fila{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(20px,3vw,44px)}
-.pz{width:100%}
+.pz{width:100%;box-shadow:0 0 0 1px rgba(3,2,27,.14)}
 .nota{margin:clamp(20px,3vw,36px) 0 0;font-family:var(--mz-serif);font-size:clamp(20px,2.4vw,32px);letter-spacing:-.02em;line-height:1.15}
 
 /* cada elemento, con su contorno y su rótulo */
-.etq .mz-ph,.etq .mz-titular,.etq .mz-pie-logo,.etq .mz-fecha-pie,.etq .mz-numero,.etq .mz-dc-on{outline:2px solid #ff2d6f;outline-offset:2px;position:relative}
-.etq .mz-ph::after,.etq .mz-titular::after,.etq .mz-pie-logo::after,.etq .mz-fecha-pie::after,.etq .mz-numero::after,.etq .mz-dc-on::after{
+.etq .mz-ph,.etq .mz-t-grande,.etq .mz-t-titular,.etq .mz-t-sub,.etq .mz-t-display,.etq .mz-pie-logo,.etq .mz-fecha-pie,.etq .mz-dc-on{outline:2px solid #ff2d6f;outline-offset:2px;position:relative}
+.etq .mz-ph::after,.etq .mz-t-grande::after,.etq .mz-t-titular::after,.etq .mz-t-sub::after,.etq .mz-t-display::after,.etq .mz-pie-logo::after,.etq .mz-fecha-pie::after,.etq .mz-dc-on::after{
   position:absolute;left:-2px;top:-2px;transform:translateY(-100%);background:#ff2d6f;color:#fff;font:600 2.6cqw/1 var(--mz-grot);padding:.7cqw 1.2cqw;white-space:nowrap;letter-spacing:.02em;z-index:5}
 .etq .mz-ph::after{content:"foto";top:auto;bottom:-2px;transform:none;left:auto;right:-2px}
-.etq .mz-titular::after{content:"titular"}
+.etq .mz-t-grande::after{content:"titular";top:auto;bottom:-2px;transform:translateY(100%)}
+.etq .mz-t-sub::after{content:"fecha";top:auto;bottom:-2px;transform:translateY(100%)}
+.etq .mz-t-titular::after{content:"nombre"}
+#b .mz-t-titular::after{content:"título"}
+.etq .mz-t-display::after{content:"número";top:auto;bottom:-2px;left:auto;right:-2px;transform:translateY(100%)}
 .etq .mz-pie-logo::after{content:"logo";top:-2px;transform:translateY(-130%)}
 .etq .mz-fecha-pie::after{content:"fecha";left:auto;right:-2px;top:-2px;transform:translateY(-130%)}
-.etq .mz-numero::after{content:"número";top:auto;bottom:-2px;left:auto;right:-2px;transform:translateY(100%)}
 .etq .mz-dc-on::after{content:"día";top:auto;bottom:-2px;transform:translateY(100%)}
 #b .mz-pie-logo,#b .mz-fecha-pie,#c .mz-pie-logo,#c .mz-fecha-pie,#d .mz-pie-logo,#d .mz-fecha-pie{outline:none}
 #b .mz-pie-logo::after,#b .mz-fecha-pie::after,#c .mz-pie-logo::after,#c .mz-fecha-pie::after,#d .mz-pie-logo::after,#d .mz-fecha-pie::after{display:none}
@@ -45,7 +48,7 @@ body{margin:0;background:var(--mz-noche);color:var(--mz-blanco);font-family:var(
     <div><div class="pz etq" id="c"></div></div>
     <div><div class="pz etq" id="d"></div></div>
   </div>
-  <p class="nota">Cada elemento, sus celdas. Nada comparte celdas.</p>
+  <p class="nota">Cada cartel se parte en dos zonas. Cada elemento ocupa sus celdas y nada las comparte.</p>
 </main>
 <script>
 MoozaPoster.mount(document.getElementById('a'),'titular');

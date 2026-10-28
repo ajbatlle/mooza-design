@@ -22,7 +22,7 @@ Todo está construido sobre la grilla de siete columnas, con margen 6 % y median
 ## Reglas rápidas
 
 - Pie: la última fila de todo cartel. Logo de dos columnas a la izquierda y fecha a la derecha; nada más entra en esa fila.
-- Un campo de color de fondo por pieza. Las celdas llevan los demás.
+- Fondo blanco. Un solo color protagonista por pieza, en una zona; un segundo color solo como acento pequeño.
 - Palabras en serif, números en grotesca.
 - Fotos en celdas completas y sin llegar al borde.
-- Logo siempre en noche sobre fondos claros, amarillos y naranjas, y en blanco o amarillo sobre noche y azul.
+- Logo en noche sobre blanco, amarillo y naranja; en blanco o amarillo solo sobre noche o azul.
