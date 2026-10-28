@@ -5,7 +5,7 @@
 
 .mz-poster{
   position:relative;aspect-ratio:var(--mz-ar,4/5);container-type:inline-size;overflow:hidden;isolation:isolate;
-  background:var(--mz-claro);color:var(--mz-noche);font-family:var(--mz-grot);
+  background:var(--mz-claro);color:var(--mz-azul);font-family:var(--mz-grot);
 }
 
 .mz-grid,.mz-overlay{
@@ -34,7 +34,7 @@
 
 /* el fondo es siempre el gris claro; el color vive en una zona (ver arriba) */
 .mz-sobre-oscuro{color:var(--mz-blanco)}
-.mz-sobre-claro{color:var(--mz-noche)}
+.mz-sobre-claro{color:var(--mz-azul)}
 
 /* escala tipográfica (tokens/grid.css). Palabras en serif, números y datos en grotesca. */
 .mz-t-display{font-weight:var(--mz-peso-numero);letter-spacing:var(--mz-track-numero);font-size:var(--mz-t-display);line-height:.74;white-space:nowrap;align-self:start;font-variant-numeric:tabular-nums}
@@ -48,10 +48,10 @@
 
 /* pie: logo de dos columnas a la izquierda, fecha a la derecha */
 .mz-pie-logo{display:flex;align-items:flex-end}
-.mz-logo{display:block;width:100%;height:auto;max-height:100%;color:var(--mz-noche);--mz-iso:var(--mz-noche)}
+.mz-logo{display:block;width:100%;height:auto;max-height:100%;color:var(--mz-azul);--mz-iso:var(--mz-azul)}
 .mz-sobre-oscuro .mz-logo{color:var(--mz-blanco);--mz-iso:var(--mz-blanco)}
 .mz-lt{fill:currentColor}
-.mz-li{fill:var(--mz-iso,var(--mz-noche))}
+.mz-li{fill:var(--mz-iso,var(--mz-azul))}
 .mz-fecha-pie{text-align:right;align-self:end;line-height:1.1;transform:translateY(.186em)}
 
 /* bloques de texto con dos niveles */
@@ -62,9 +62,9 @@
 .mz-ph{background:var(--mz-azul);color:rgba(255,255,255,.7);display:flex;align-items:flex-end;padding:2cqw;font-size:2.8cqw;font-weight:500;letter-spacing:.02em}
 
 /* semana: tira de siete días */
-.mz-dc{box-shadow:inset 0 0 0 1px var(--mz-noche);display:flex;flex-direction:column;justify-content:space-between;padding:calc(var(--mz-col)*.06*1cqw)}
+.mz-dc{box-shadow:inset 0 0 0 1px var(--mz-azul);display:flex;flex-direction:column;justify-content:space-between;padding:calc(var(--mz-col)*.06*1cqw)}
 .mz-dc b{font-size:var(--mz-t-texto);font-weight:600;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
-.mz-dc-on{background:var(--mz-amarillo);box-shadow:none;color:var(--mz-noche)}
+.mz-dc-on{background:var(--mz-amarillo);box-shadow:none;color:var(--mz-azul)}
 
 /* agenda */
 .mz-num{font-family:var(--mz-grot);font-weight:var(--mz-peso-numero);letter-spacing:var(--mz-track-numero);line-height:.74;font-variant-numeric:tabular-nums}
@@ -73,7 +73,7 @@
 .mz-cabeza>*{align-self:baseline}
 .mz-cabeza .mz-num{flex:none;width:calc((var(--mz-col)*3 + var(--mz-g)*3)*1cqw)}
 .mz-hora{font-size:var(--mz-t-texto);font-weight:600;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;padding:0 calc(var(--mz-col)*.12*1cqw);align-self:start;height:calc(var(--mz-col)*.8*1cqw);display:flex;align-items:center}
-.mz-hora-on{background:var(--mz-amarillo);color:var(--mz-noche)}
+.mz-hora-on{background:var(--mz-amarillo);color:var(--mz-azul)}
 
 /* story */
 .mz-etiqueta{display:flex;align-items:center;gap:2cqw;align-self:end}

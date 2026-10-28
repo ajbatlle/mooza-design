@@ -8,7 +8,7 @@
 <style>
 /* Esta página documenta el sistema. Solo usa sus tokens y componentes. */
 *{box-sizing:border-box}
-body{margin:0;background:var(--mz-noche);color:var(--mz-blanco);font-family:var(--mz-grot);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{margin:0;background:var(--mz-azul);color:var(--mz-blanco);font-family:var(--mz-grot);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 h1,h2,h3,p,ul,dl,dd,figure,figcaption{margin:0;padding:0}
 ul{list-style:none}
 a{color:inherit}
@@ -52,9 +52,9 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
 .lg{aspect-ratio:16/10;display:grid;place-items:center;position:relative}
 .lg svg,.lg img{width:54%;height:auto;display:block}
 .lg small{position:absolute;left:12px;bottom:10px;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;opacity:.8}
-.libre{display:grid;place-items:center;padding:clamp(28px,5vw,64px);background:var(--mz-claro);color:var(--mz-noche)}
+.libre{display:grid;place-items:center;padding:clamp(28px,5vw,64px);background:var(--mz-claro);color:var(--mz-azul)}
 .libre div{position:relative;outline:1.5px dashed rgba(255,45,111,.8);outline-offset:0;padding:calc(var(--w)*.1268);background:rgba(255,45,111,.07);--w:180px;width:calc(var(--w)*1.2536)}
-.libre svg{width:var(--w);display:block;color:var(--mz-noche);--mz-iso:var(--mz-noche)}
+.libre svg{width:var(--w);display:block;color:var(--mz-azul);--mz-iso:var(--mz-azul)}
 .libre i{position:absolute;font:600 11px var(--mz-grot);color:rgba(255,45,111,1);font-style:normal}
 .minimos{display:flex;gap:28px;align-items:flex-end;flex-wrap:wrap;margin-top:8px}
 .minimos figure{margin:0;display:grid;gap:8px;font-size:12px;color:var(--mz-fg-suave)}
@@ -73,12 +73,11 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
 .sw b{font-family:var(--mz-palabra);font-weight:var(--mz-peso-titular);font-size:26px;letter-spacing:-.02em;line-height:1}
 .sw code{background:none;padding:0;font-size:12px;letter-spacing:.04em}
 .sw small{font-size:12px;line-height:1.35}
-.c-noche{background:var(--mz-noche);color:var(--mz-blanco);box-shadow:inset 0 0 0 1px var(--mz-linea)}
 .c-azul{background:var(--mz-azul);color:var(--mz-blanco)}
-.c-amarillo{background:var(--mz-amarillo);color:var(--mz-noche)}
-.c-naranja{background:var(--mz-naranja);color:var(--mz-noche)}
-.c-blanco{background:var(--mz-blanco);color:var(--mz-noche)}
-.c-claro{background:var(--mz-claro);color:var(--mz-noche)}
+.c-amarillo{background:var(--mz-amarillo);color:var(--mz-azul)}
+.c-naranja{background:var(--mz-naranja);color:var(--mz-azul)}
+.c-blanco{background:var(--mz-blanco);color:var(--mz-azul)}
+.c-claro{background:var(--mz-claro);color:var(--mz-azul)}
 .pares{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:10px;margin-top:28px}
 .par{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.06);padding:10px}
 .par i{width:56px;height:44px;display:grid;place-items:center;font-style:normal;font-weight:600;font-size:20px;flex:none}
@@ -88,10 +87,10 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
 
 /* tipo */
 .tipo{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,4vw,64px);align-items:start}
-.muestra{background:var(--mz-claro);color:var(--mz-noche);padding:clamp(20px,3vw,40px);display:grid;gap:18px}
+.muestra{background:var(--mz-claro);color:var(--mz-azul);padding:clamp(20px,3vw,40px);display:grid;gap:18px}
 .muestra .s{font-family:var(--mz-palabra);font-weight:var(--mz-peso-titular);letter-spacing:-.035em;line-height:.93;font-size:clamp(48px,7vw,96px)}
 .muestra .n{font-weight:600;letter-spacing:-.05em;line-height:.8;font-size:clamp(64px,10vw,140px);font-variant-numeric:tabular-nums}
-.muestra .d{font-size:14px;color:rgba(3,2,27,.72)}
+.muestra .d{font-size:14px;color:rgba(27,20,68,.72)}
 .estilos li{display:grid;grid-template-columns:1fr auto;gap:2px 16px;padding:12px 0;border-top:1px solid var(--mz-linea);align-items:baseline}
 .estilos li:last-child{border-bottom:1px solid var(--mz-linea)}
 .estilos .a{font-size:24px;line-height:1}
@@ -104,10 +103,10 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
 
 /* ilustración y fotos */
 .ilus{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;background:var(--mz-claro)}
-.ilus figure{margin:0;padding:clamp(8px,1.4vw,20px);display:grid;gap:6px;color:var(--mz-noche)}
+.ilus figure{margin:0;padding:clamp(8px,1.4vw,20px);display:grid;gap:6px;color:var(--mz-azul)}
 .ilus img{width:100%;height:auto;display:block}
-.ilus figcaption{font-size:12px;color:rgba(3,2,27,.7);padding:0 4px 8px}
-.ilus .osc{background:var(--mz-noche);color:var(--mz-blanco)}
+.ilus figcaption{font-size:12px;color:rgba(27,20,68,.7);padding:0 4px 8px}
+.ilus .osc{background:var(--mz-azul);color:var(--mz-blanco)}
 .ilus .osc figcaption{color:var(--mz-fg-suave)}
 .duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px;margin-top:8px}
 .duo div{display:grid;gap:8px}
@@ -211,13 +210,13 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
   <section class="sec" id="logo">
     <span class="k">Logo</span>
     <h2>El logo no se redibuja</h2>
-    <p class="nota" style="margin-bottom:28px">Se usan los archivos oficiales de <code>assets/logos/</code> y sus variantes monocromas de <code>kit/marca/</code>. El degradé del original solo aparece sobre noche o azul. En el resto, el logo va plano.</p>
+    <p class="nota" style="margin-bottom:28px">Se usan los archivos oficiales de <code>assets/logos/</code> y sus variantes monocromas de <code>kit/marca/</code>. El degradé del original solo aparece sobre azul. En el resto, el logo va plano.</p>
     <div class="lgs">
-      <div class="lg c-claro"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo noche" style="color:var(--mz-noche);--mz-iso:var(--mz-noche)"><use href="#mz-lockup"/></svg><small>Noche sobre claro</small></div>
-      <div class="lg c-blanco"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo noche" style="color:var(--mz-noche);--mz-iso:var(--mz-noche)"><use href="#mz-lockup"/></svg><small>Noche sobre blanco</small></div>
-      <div class="lg c-amarillo"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo noche" style="color:var(--mz-noche);--mz-iso:var(--mz-noche)"><use href="#mz-lockup"/></svg><small>Noche sobre amarillo</small></div>
-      <div class="lg c-naranja"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo noche" style="color:var(--mz-noche);--mz-iso:var(--mz-noche)"><use href="#mz-lockup"/></svg><small>Noche sobre naranja</small></div>
-      <div class="lg c-noche"><img src="../assets/logos/logo-horizontal-color-dark.svg" alt="Logo oficial con degradé"><small>Oficial sobre noche</small></div>
+      <div class="lg c-claro"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo azul" style="color:var(--mz-azul);--mz-iso:var(--mz-azul)"><use href="#mz-lockup"/></svg><small>Azul sobre claro</small></div>
+      <div class="lg c-blanco"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo azul" style="color:var(--mz-azul);--mz-iso:var(--mz-azul)"><use href="#mz-lockup"/></svg><small>Noche sobre blanco</small></div>
+      <div class="lg c-amarillo"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo azul" style="color:var(--mz-azul);--mz-iso:var(--mz-azul)"><use href="#mz-lockup"/></svg><small>Noche sobre amarillo</small></div>
+      <div class="lg c-naranja"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo azul" style="color:var(--mz-azul);--mz-iso:var(--mz-azul)"><use href="#mz-lockup"/></svg><small>Noche sobre naranja</small></div>
+      <div class="lg c-azul"><img src="../assets/logos/logo-horizontal-color-dark.svg" alt="Logo oficial con degradé"><small>Oficial sobre azul</small></div>
       <div class="lg c-azul"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Logo blanco" style="color:var(--mz-blanco);--mz-iso:var(--mz-blanco)"><use href="#mz-lockup"/></svg><small>Blanco sobre azul</small></div>
     </div>
     <div class="cols" style="margin-top:36px;align-items:start">
@@ -248,7 +247,6 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
     <h2>Cinco colores planos y un neutro</h2>
     <p class="nota" style="margin-bottom:28px">Orden de importancia: gris claro (el "blanco" de la marca, fondo de todo), azul (el color principal, en una zona) y amarillo o naranjo (solo acentos pequeños). Los colores nunca compiten. No hay degradados ni sombras.</p>
     <div class="sw">
-      <div class="c-noche"><b>noche</b><span><code>#03021b</code><small>Tinta de textos y logo sobre gris.</small></span></div>
       <div class="c-azul"><b>azul</b><span><code>#1b1444</code><small>Color principal: la zona de color y la foto.</small></span></div>
       <div class="c-amarillo"><b>amarillo</b><span><code>#fcee21</code><small>Acento.</small></span></div>
       <div class="c-naranja"><b>naranja</b><span><code>#fbb03b</code><small>Acento alternativo.</small></span></div>
@@ -256,10 +254,10 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
       <div class="c-claro"><b>claro</b><span><code>#f2f2f2</code><small>El "blanco" de la marca: fondo de todo cartel y de la web.</small></span></div>
     </div>
     <div class="pares" aria-label="Pares de color y su contraste">
-      <div class="par"><i class="c-amarillo">Aa</i><p><b>16,9 : 1</b>Noche sobre amarillo. AA</p></div>
-      <div class="par"><i class="c-naranja">Aa</i><p><b>11,1 : 1</b>Noche sobre naranja. AA</p></div>
-      <div class="par"><i class="c-claro">Aa</i><p><b>18,2 : 1</b>Noche sobre claro. AA</p></div>
-      <div class="par"><i class="c-blanco">Aa</i><p><b>20,4 : 1</b>Noche sobre blanco. AA</p></div>
+      <div class="par"><i class="c-amarillo">Aa</i><p><b>14,1 : 1</b>Azul sobre amarillo. AA</p></div>
+      <div class="par"><i class="c-naranja">Aa</i><p><b>9,2 : 1</b>Azul sobre naranja. AA</p></div>
+      <div class="par"><i class="c-claro">Aa</i><p><b>15,2 : 1</b>Azul sobre gris claro. AA</p></div>
+      <div class="par"><i class="c-blanco">Aa</i><p><b>17,1 : 1</b>Azul sobre blanco. AA</p></div>
       <div class="par"><i class="c-azul" style="color:var(--mz-amarillo)">Aa</i><p><b>14,1 : 1</b>Amarillo sobre azul. AA</p></div>
       <div class="par"><i class="c-azul">Aa</i><p><b>17,1 : 1</b>Blanco sobre azul. AA</p></div>
       <div class="par"><i class="c-naranja" style="color:var(--mz-blanco)">Aa</i><p><b>1,8 : 1</b>Blanco sobre naranja. No usar como texto</p></div>
@@ -294,7 +292,7 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
         <div class="fila"><button class="mz-btn" type="button">Ver agenda</button><button class="mz-btn mz-btn--linea" type="button">Guardar</button></div>
         <div class="fila" id="chips" role="group" aria-label="Categorías"></div>
         <div class="fila"><input class="mz-input" type="search" placeholder="Busca panoramas" aria-label="Buscar panoramas"></div>
-        <p class="nota">En el tema claro, el de la web, el botón principal es azul con texto blanco y se vuelve amarillo al pasar el cursor. Los filtros activos y el destacado llevan el amarillo como acento. En el tema oscuro el botón principal es amarillo con texto noche.</p>
+        <p class="nota">En el tema claro, el de la web, el botón principal es azul con texto blanco y se vuelve amarillo al pasar el cursor. Los filtros activos y el destacado llevan el amarillo como acento. En el tema oscuro el botón principal es amarillo con texto azul.</p>
       </div>
       <div id="eventos" aria-label="Eventos de ejemplo"></div>
     </div>
@@ -311,12 +309,12 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
       <figure><img src="../kit/ilustraciones/svg/terpsicore-tela-amarillo.svg" alt="Tela en movimiento"><figcaption>Terpsícore, la tela. Danza.</figcaption></figure>
       <figure><img src="../kit/ilustraciones/svg/caliope-rollo-pluma-amarillo.svg" alt="Rollo y pluma"><figcaption>Calíope, el rollo y la pluma. Letras y arte.</figcaption></figure>
       <figure><img src="../kit/ilustraciones/svg/clio-anfora-amarillo.svg" alt="Ánfora con greca"><figcaption>Clío, el ánfora. Memoria y arte.</figcaption></figure>
-      <figure class="osc"><img src="../kit/ilustraciones/svg/urania-luna-noche.svg" alt="Luna creciente con estrellas"><figcaption>Urania, la luna. Ornamento.</figcaption></figure>
-      <figure class="osc"><img src="../kit/ilustraciones/svg/polimnia-ojo-noche.svg" alt="Ojo con rayos"><figcaption>Polimnia, el ojo. Cine.</figcaption></figure>
-      <figure class="osc"><img src="../kit/ilustraciones/svg/laurel-noche.svg" alt="Rama de laurel"><figcaption>El laurel. Ornamento y cierre.</figcaption></figure>
+      <figure class="osc"><img src="../kit/ilustraciones/svg/urania-luna-claro.svg" alt="Luna creciente con estrellas"><figcaption>Urania, la luna. Ornamento.</figcaption></figure>
+      <figure class="osc"><img src="../kit/ilustraciones/svg/polimnia-ojo-claro.svg" alt="Ojo con rayos"><figcaption>Polimnia, el ojo. Cine.</figcaption></figure>
+      <figure class="osc"><img src="../kit/ilustraciones/svg/laurel-claro.svg" alt="Rama de laurel"><figcaption>El laurel. Ornamento y cierre.</figcaption></figure>
     </div>
     <div class="cols" style="margin-top:32px">
-      <p>Cuatro versiones de cada dibujo: <code>tinta</code> (una sola tinta), <code>amarillo</code> y <code>naranja</code> (tinta noche con campo de color, sobre fondos claros) y <code>noche</code> (tinta clara con campo amarillo, sobre noche y azul).</p>
+      <p>Cuatro versiones de cada dibujo: <code>tinta</code> (una sola tinta), <code>amarillo</code> y <code>naranja</code> (tinta azul con campo de color, sobre fondos claros) y <code>claro</code> (tinta clara con campo amarillo, sobre azul).</p>
       <p>Se usa un dibujo por pieza, de al menos 96 px de lado. Reemplaza a la foto cuando el evento no tiene una, según su categoría. Nunca va sobre una foto ni dentro de una celda de color que choque con su campo.</p>
       <p>Los SVG usan un filtro de trazo a mano que se ve en navegadores. Para Figma o Illustrator están los PNG de la hoja de muestra en <code>kit/ilustraciones/</code>.</p>
     </div>
@@ -327,12 +325,9 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
     <h2>Duotono con los colores de Mooza</h2>
     <p class="nota" style="margin-bottom:28px">Las fotos se convierten a dos colores de la paleta: las sombras toman el color oscuro y las luces el claro. Una paleta por pieza, y la foto entra en celdas completas de la grilla.</p>
     <div class="duo">
-      <div><i style="background:linear-gradient(90deg,#03021b,#fcee21)"></i><b>noche-amarillo</b><span>La principal. Sobre noche o azul.</span></div>
-      <div><i style="background:linear-gradient(90deg,#03021b,#fbb03b)"></i><b>noche-naranja</b><span>Variante cálida.</span></div>
-      <div><i style="background:linear-gradient(90deg,#1b1444,#fcee21)"></i><b>azul-amarillo</b><span>Sombras más suaves.</span></div>
+      <div><i style="background:linear-gradient(90deg,#1b1444,#fcee21)"></i><b>azul-amarillo</b><span>La principal.</span></div>
       <div><i style="background:linear-gradient(90deg,#1b1444,#fbb03b)"></i><b>azul-naranja</b><span>La más cálida.</span></div>
       <div><i style="background:linear-gradient(90deg,#1b1444,#f2f2f2)"></i><b>azul-claro</b><span>Un solo tono. Para fondos amarillos o naranjas.</span></div>
-      <div><i style="background:linear-gradient(90deg,#03021b,#f2f2f2)"></i><b>noche-claro</b><span>Blanco y negro de la marca.</span></div>
     </div>
     <p class="nota" style="margin-top:24px">Procedimiento: escala de grises por luminancia, niveles (punto negro y blanco en los percentiles 1 y 99, medios tonos y contraste) y mapa de degradado entre los dos colores, con un grano mínimo opcional. Se hace con la herramienta <code>kit/duotono/index.html</code> en el navegador, con <code>kit/duotono/duotono.py</code> por lotes o con los filtros de <code>components/duotono/</code> en una web.</p>
     <a class="mz-btn mz-btn--linea enlace" href="../kit/duotono/index.html">Abrir la herramienta</a>
@@ -359,7 +354,7 @@ input[type=range]{width:100%;accent-color:var(--mz-amarillo);height:26px;margin:
       <li><b>Plantillas</b><span>Las 18 plantillas en un solo archivo SVG con texto editable: <a href="../kit/mooza-carteles.svg" download>mooza-carteles.svg</a> (<a href="../kit/mooza-carteles.png" download>vista previa</a>). <code>kit/</code><details style="margin-top:8px"><summary style="cursor:pointer">Cada plantilla por separado</summary><p style="line-height:2"><a href="../kit/plantillas/agenda-a3.svg" download>agenda-a3.svg</a> · <a href="../kit/plantillas/agenda.svg" download>agenda.svg</a> · <a href="../kit/plantillas/foto-16x9.svg" download>foto-16x9.svg</a> · <a href="../kit/plantillas/foto-1x1.svg" download>foto-1x1.svg</a> · <a href="../kit/plantillas/foto-a3.svg" download>foto-a3.svg</a> · <a href="../kit/plantillas/foto.svg" download>foto.svg</a> · <a href="../kit/plantillas/numero-16x9.svg" download>numero-16x9.svg</a> · <a href="../kit/plantillas/numero-1x1.svg" download>numero-1x1.svg</a> · <a href="../kit/plantillas/numero-a3.svg" download>numero-a3.svg</a> · <a href="../kit/plantillas/numero.svg" download>numero.svg</a> · <a href="../kit/plantillas/semana-1x1.svg" download>semana-1x1.svg</a> · <a href="../kit/plantillas/semana-a3.svg" download>semana-a3.svg</a> · <a href="../kit/plantillas/semana.svg" download>semana.svg</a> · <a href="../kit/plantillas/story.svg" download>story.svg</a> · <a href="../kit/plantillas/titular-16x9.svg" download>titular-16x9.svg</a> · <a href="../kit/plantillas/titular-1x1.svg" download>titular-1x1.svg</a> · <a href="../kit/plantillas/titular-a3.svg" download>titular-a3.svg</a> · <a href="../kit/plantillas/titular.svg" download>titular.svg</a></p></details></span></li>
       <li><b>Grillas</b><span>Las cinco grillas vacías en SVG: 4:5, A3, 1:1, 9:16 y 16:9. <code>kit/grillas/</code><details style="margin-top:8px"><summary style="cursor:pointer">Descargar</summary><p style="line-height:2"><a href="../kit/grillas/grilla-16x9-4filas.svg" download>grilla-16x9-4filas.svg</a> · <a href="../kit/grillas/grilla-1x1-8filas.svg" download>grilla-1x1-8filas.svg</a> · <a href="../kit/grillas/grilla-4x5-9filas.svg" download>grilla-4x5-9filas.svg</a> · <a href="../kit/grillas/grilla-9x16-16filas.svg" download>grilla-9x16-16filas.svg</a> · <a href="../kit/grillas/grilla-a3-11filas.svg" download>grilla-a3-11filas.svg</a></p></details></span></li>
       <li><b>Celdas</b><span>Cuadrados rellenos y de contorno en los colores de la paleta, para armar composiciones a mano. <code>kit/celdas/</code></span></li>
-      <li><b>Marca</b><span>Logo horizontal e ícono en noche y en amarillo plano, además de los oficiales en <code>assets/logos/</code>. <code>kit/marca/</code></span></li>
+      <li><b>Marca</b><span>Logo horizontal e ícono en azul y en amarillo plano, además de los oficiales en <code>assets/logos/</code>. <code>kit/marca/</code></span></li>
       <li><b>Fotos</b><span>Marcador de posición y reglas de recorte para las fotos de eventos. <code>kit/fotos/</code></span></li>
       <li><b>Ilustraciones</b><span>Nueve dibujos de musas en cuatro versiones, en SVG, más hojas de muestra en PNG. <code>kit/ilustraciones/</code></span></li>
       <li><b>Duotono</b><span>Herramienta en el navegador, script por lotes y reglas para convertir fotos. <code>kit/duotono/</code></span></li>

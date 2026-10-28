@@ -35,18 +35,17 @@ Las filas dependen del formato: 9 o 10 en 4:5 y 16 en 9:16. Los titulares y los 
 
 ### Color
 
-Cinco colores planos y un gris claro. Orden de importancia: gris claro (el "blanco" de la marca, fondo de todo cartel y de la web), azul (el color principal, en una sola zona que llega a los bordes) y amarillo o naranjo (solo como acentos pequeños: el día destacado, una hora, el punto de la categoría, el filtro activo). Los colores no compiten: nunca dos campos de color grandes en la misma pieza. La tinta de textos y logo es noche, y blanco sobre azul. No hay degradados ni sombras.
+Cinco colores planos y un gris claro. Orden de importancia: gris claro (el "blanco" de la marca, fondo de todo cartel y de la web), azul (el color principal, en una sola zona que llega a los bordes) y amarillo o naranjo (solo como acentos pequeños: el día destacado, una hora, el punto de la categoría, el filtro activo). Los colores no compiten: nunca dos campos de color grandes en la misma pieza. No hay negro: el azul es el color más oscuro y es también la tinta de textos y logo sobre gris. Sobre azul, el texto va en blanco. No hay degradados ni sombras.
 
 | Token | Hex | Uso |
 |---|---|---|
 | blanco | `#ffffff` | Fondo de todo cartel |
-| noche | `#03021b` | Tinta: textos y logo |
 | amarillo | `#fcee21` | Color protagonista o acento |
 | naranja | `#fbb03b` | Color protagonista o acento |
 | azul | `#1b1444` | Lugar de la foto de ejemplo. No es un campo de cartel |
 | claro | `#f2f2f2` | Neutro de interfaz |
 
-Pares de texto verificados (contraste WCAG): noche sobre gris 20,4, sobre claro 18,2, sobre amarillo 16,9 y sobre naranja 11,1. Blanco sobre azul 17,1 y amarillo sobre azul 14,1. No usar blanco como texto sobre naranja (1,8) ni naranja sobre amarillo (1,5).
+Pares de texto verificados (contraste WCAG): azul sobre blanco 17,1, sobre gris claro 15,2, sobre amarillo 14,1 y sobre naranja 9,2. Blanco sobre azul 17,1. No usar blanco como texto sobre naranja (1,8) ni naranja sobre amarillo (1,5).
 
 En el cartel "semana" el día destacado lleva el acento (amarillo) sobre gris.
 
@@ -64,10 +63,10 @@ El logo oficial no se redibuja. Se usan los archivos de `assets/logos/` y las va
 
 - Posición: en todo cartel la última fila de la grilla es el pie. El logo va ahí, a la izquierda, con el ancho exacto de dos columnas y apoyado en el borde inferior de la fila. La fecha va a la derecha, con su línea base en ese mismo borde. Nada más entra en esa fila, así que el logo nunca choca con otro elemento.
 
-- Colores: noche sobre claro, blanco, amarillo y naranja. Blanco sobre azul y noche. La versión oficial con degradé, solo sobre noche o azul.
+- Colores: azul sobre gris claro, blanco, amarillo y naranja. Blanco sobre azul. La versión oficial con degradé, solo sobre azul.
 - Espacio libre: media altura del logo por los cuatro lados.
 - Tamaño mínimo: 96 px de ancho en pantalla y 25 mm en impresión. Por debajo se usa solo el ícono, de al menos 24 px.
-- No deformarlo ni girarlo, no usar el degradé sobre amarillo, naranja o blanco, no recolorearlo fuera de la paleta, no ponerlo sobre una foto sin duotono y no agregarle sombras ni efectos.
+- No deformarlo ni girarlo, no usar el degradé sobre amarillo, naranja o gris, no recolorearlo fuera de la paleta, no ponerlo sobre una foto sin duotono y no agregarle sombras ni efectos.
 
 ### Forma
 
@@ -93,11 +92,11 @@ Mooza suena a musa, y las ilustraciones lo dicen sin ser literales: nueve dibujo
 | ojo con rayos | Polimnia | Cine |
 | laurel | Sin musa | Ornamento y cierre |
 
-Cada dibujo tiene cuatro versiones: `tinta` (una sola tinta), `amarillo` y `naranja` (tinta noche con un campo de color desplazado unos píxeles, sobre fondos claros) y `noche` (tinta clara con campo amarillo, sobre noche y azul). Reglas: uno por pieza, de al menos 96 px de lado, y reemplaza a la foto cuando el evento no tiene una. Nunca va sobre una foto. Están en `kit/ilustraciones/`.
+Cada dibujo tiene cuatro versiones: `tinta` (una sola tinta), `amarillo` y `naranja` (tinta azul con un campo de color desplazado unos píxeles, sobre fondos claros) y `claro` (tinta clara con campo amarillo, sobre azul). Reglas: uno por pieza, de al menos 96 px de lado, y reemplaza a la foto cuando el evento no tiene una. Nunca va sobre una foto. Están en `kit/ilustraciones/`.
 
 ### Fotos en duotono
 
-Las fotos se convierten a dos colores de la paleta: las sombras toman el color oscuro y las luces el claro. Hay seis paletas (`noche-amarillo`, `noche-naranja`, `azul-amarillo`, `azul-naranja`, `azul-claro` y `noche-claro`), una por pieza. El procedimiento, la herramienta en el navegador y el script por lotes están en `kit/duotono/`. Los filtros para web, en `components/duotono/duotono.js`.
+Las fotos se convierten a dos colores de la paleta: las sombras toman el color oscuro y las luces el claro. Hay tres paletas (`azul-amarillo`, `azul-naranja` y `azul-claro`), una por pieza. El procedimiento, la herramienta en el navegador y el script por lotes están en `kit/duotono/`. Los filtros para web, en `components/duotono/duotono.js`.
 
 ### Movimiento
 

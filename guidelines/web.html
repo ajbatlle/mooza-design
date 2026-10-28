@@ -9,7 +9,7 @@
 /* Propuesta de portada para mooza.cl con la regla de la marca: fondo gris claro, el azul como color principal en una zona,
    el amarillo como acento y la grilla de siete columnas. Eventos y lugares son ejemplos. */
 *{box-sizing:border-box}
-body{margin:0;background:var(--mz-claro);color:var(--mz-noche);font-family:var(--mz-grot);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{margin:0;background:var(--mz-claro);color:var(--mz-azul);font-family:var(--mz-grot);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 h1,h2,h3,h4,p,ul,figure{margin:0;padding:0}
 ul{list-style:none}
 a{color:inherit}
@@ -47,12 +47,12 @@ h2{font-family:var(--mz-palabra);font-weight:var(--mz-peso-titular);letter-spaci
 .sec-h p{color:var(--mz-fg-suave);font-size:14px;max-width:44ch}
 .sem{align-items:start}
 .dia{display:grid;gap:var(--gap);align-content:start;min-width:0}
-.dia-h{text-align:left;padding:10px 0 12px;border:0;border-bottom:1px solid var(--mz-noche);background:transparent;color:var(--mz-noche);cursor:pointer;display:flex;align-items:baseline;gap:8px;font-family:var(--mz-grot);transition:background .15s ease}
+.dia-h{text-align:left;padding:10px 0 12px;border:0;border-bottom:1px solid var(--mz-azul);background:transparent;color:var(--mz-azul);cursor:pointer;display:flex;align-items:baseline;gap:8px;font-family:var(--mz-grot);transition:background .15s ease}
 .dia-h span{font-size:12px;font-weight:600;letter-spacing:.02em;color:var(--mz-fg-suave)}
 .dia-h b{font-weight:600;letter-spacing:-.04em;font-size:clamp(28px,3.2vw,48px);line-height:1;font-variant-numeric:tabular-nums}
 .dia-h[aria-pressed="true"]{background:var(--mz-amarillo);padding-inline:10px}
-.dia-h[aria-pressed="true"] span{color:var(--mz-noche)}
-.bloque{display:grid;gap:6px;align-content:space-between;padding:12px;min-height:118px;background:transparent;color:var(--mz-noche);box-shadow:inset 0 0 0 1px var(--mz-noche);text-decoration:none;transition:transform .15s ease}
+.dia-h[aria-pressed="true"] span{color:var(--mz-azul)}
+.bloque{display:grid;gap:6px;align-content:space-between;padding:12px;min-height:118px;background:transparent;color:var(--mz-azul);box-shadow:inset 0 0 0 1px var(--mz-azul);text-decoration:none;transition:transform .15s ease}
 .bloque:hover{transform:translateY(-2px)}
 .bloque.dest{background:var(--mz-amarillo);box-shadow:none}
 .bloque .h{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
@@ -84,7 +84,7 @@ h2{font-family:var(--mz-palabra);font-weight:var(--mz-peso-titular);letter-spaci
 .pie{padding-block:clamp(40px,6vw,80px);border-top:1px solid var(--mz-linea)}
 .pie .g7{align-items:end}
 .pie .a{grid-column:1/5;display:grid;gap:18px}
-.pie .a svg{width:150px;color:var(--mz-noche);--mz-iso:var(--mz-noche)}
+.pie .a svg{width:150px;color:var(--mz-azul);--mz-iso:var(--mz-azul)}
 .pie .a p{font-family:var(--mz-palabra);font-size:clamp(28px,3.4vw,48px);line-height:1;letter-spacing:-.03em}
 .pie .b{grid-column:6/8;display:grid;gap:8px;font-size:14px;color:var(--mz-fg-suave);justify-items:end;text-align:right}
 .pie .b img{width:110px;height:auto;display:block}
@@ -124,7 +124,7 @@ h2{font-family:var(--mz-palabra);font-weight:var(--mz-peso-titular);letter-spaci
         <h1>Tu semana<br>cultural</h1>
         <p class="rango"><b>26 oct – 1 nov</b><span>Semana 44</span></p>
       </div>
-      <div class="ilu"><img src="../kit/ilustraciones/svg/erato-lira-noche.svg" alt="Dibujo de una lira, para música"></div>
+      <div class="ilu"><img src="../kit/ilustraciones/svg/erato-lira-claro.svg" alt="Dibujo de una lira, para música"></div>
     </div>
   </div>
 </section>

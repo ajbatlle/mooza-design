@@ -28,7 +28,7 @@ Un diseño que no existe en un formato lanza un error.
 
 ## Datos
 
-Los campos que no pases se toman de `MoozaPoster.EJEMPLO`: `color` (`azul` por defecto; `amarillo` o `naranja` si la pieza lo pide, con texto en noche), `rango`, `corto`, `titular`, `dias` y `diaDestacado` (semana), `evento` (foto), `agenda` (`dia`, `n`, `pag` y `eventos` con `h`, `t`, `v`, `p`, `f`) y `story`.
+Los campos que no pases se toman de `MoozaPoster.EJEMPLO`: `color` (`azul` por defecto; `amarillo` o `naranja` si la pieza lo pide, con texto en azul), `rango`, `corto`, `titular`, `dias` y `diaDestacado` (semana), `evento` (foto), `agenda` (`dia`, `n`, `pag` y `eventos` con `h`, `t`, `v`, `p`, `f`) y `story`.
 
 ## Reglas
 
@@ -47,4 +47,4 @@ Los titulares, nombres de evento y textos de lista usan `--mz-palabra` (por defe
 
 ## Color por pieza
 
-`MoozaPoster.mount(el, 'titular', {color: 'amarillo'})` cambia la zona de color de esa pieza (`azul` por defecto; también `naranja` y `noche`). El texto se ajusta solo. Ver `kit/tablero/color-en-proporcion.png`.
+`MoozaPoster.mount(el, 'titular', {color: 'amarillo'})` cambia la zona de color de esa pieza (`azul` por defecto; también `naranja`). El texto se ajusta solo. Ver `kit/tablero/color-en-proporcion.png`.

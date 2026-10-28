@@ -61,8 +61,8 @@
   function mitad(fondo,cls){return '<div class="mz-mitad'+(cls?' '+cls:'')+'"'+(fondo?' style="background:'+fondo+'"':'')+'></div>'}
   /* el color protagonista de la pieza: azul, o el que venga en datos.color */
   function campo(d){return 'var(--mz-'+(d.color||'azul')+')'}
-  /* sobre azul o noche el texto va en blanco; sobre cualquier otro campo, en noche */
-  function tinta(d){var c=d.color||'azul';return (c==='azul'||c==='noche')?' mz-sobre-oscuro':''}
+  /* sobre azul el texto va en blanco; sobre cualquier otro campo, en azul */
+  function tinta(d){var c=d.color||'azul';return c==='azul'?' mz-sobre-oscuro':''}
 
   /* pie: la última fila de todo cartel. El logo mide dos columnas y va a la izquierda; el texto, a la derecha.
      Nada más entra en esa fila, así que el logo nunca choca. oscuro: el pie está sobre el color oscuro. */

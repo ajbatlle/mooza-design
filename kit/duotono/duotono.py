@@ -8,7 +8,7 @@ Procedimiento:
   4. Grano opcional, sutil, para que el plano no se vea digital.
 
 Uso:
-  python3 kit/duotono/duotono.py foto.jpg --paleta noche-amarillo
+  python3 kit/duotono/duotono.py foto.jpg --paleta azul-amarillo
   python3 kit/duotono/duotono.py carpeta/ --paleta azul-naranja --lado 1600 --grano 0.03
 Requiere Pillow y numpy.
 """
@@ -21,12 +21,9 @@ from PIL import Image, ImageOps
 
 # sombra, luz. Todos son colores de la paleta (tokens/colors.css).
 PALETAS = {
-    "noche-amarillo": ("#03021b", "#fcee21"),
-    "noche-naranja": ("#03021b", "#fbb03b"),
     "azul-amarillo": ("#1b1444", "#fcee21"),
     "azul-naranja": ("#1b1444", "#fbb03b"),
     "azul-claro": ("#1b1444", "#f2f2f2"),
-    "noche-claro": ("#03021b", "#f2f2f2"),
 }
 
 
@@ -66,7 +63,7 @@ def duotono(img, paleta, contraste=1.15, gamma=1.0, grano=0.0, negro=1, blanco=9
 def main():
     p = argparse.ArgumentParser(description="Duotono con los colores de Mooza")
     p.add_argument("entrada", help="Imagen o carpeta de imágenes")
-    p.add_argument("--paleta", choices=sorted(PALETAS), default="noche-amarillo")
+    p.add_argument("--paleta", choices=sorted(PALETAS), default="azul-amarillo")
     p.add_argument("--contraste", type=float, default=1.15, help="1 es lineal; más de 1 da curva en S (por defecto 1,15)")
     p.add_argument("--gamma", type=float, default=1.0, help="Mayor que 1 aclara los medios tonos")
     p.add_argument("--grano", type=float, default=0.0, help="Ruido sutil, de 0 a 0,1 (por defecto 0)")

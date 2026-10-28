@@ -7,8 +7,8 @@ Todo está construido sobre la grilla de siete columnas, con margen 6 % y median
 | `mooza-carteles.svg` | Todas las plantillas en un solo archivo, una fila por formato y cada una en un grupo con id (`titular-4x5`, `foto-a3`, etc.). Vista previa en `mooza-carteles.png` |
 | `plantillas/` | Los seis diseños en SVG con texto editable y en PNG de vista previa, en 4:5 y en las variantes `-a3`, `-1x1` y `-16x9` donde existen |
 | `grillas/` | Capa de guías en SVG: 4:5, A3, 1:1, 9:16 y 16:9. Las guías son magenta y no se exportan |
-| `celdas/` | Cuadrados de 100 × 100 rellenos en los seis colores y de contorno en noche, blanco y amarillo |
-| `marca/` | Logo horizontal e ícono, monocromos en noche y en amarillo. Derivan del logo oficial: el original con degradé y el blanco están en `assets/logos/` |
+| `celdas/` | Cuadrados de 100 × 100 rellenos en los seis colores y de contorno en azul, blanco y amarillo |
+| `marca/` | Logo horizontal e ícono, monocromos en azul y en amarillo. Derivan del logo oficial: el original con degradé y el blanco están en `assets/logos/` |
 | `fotos/` | Marcador de foto de evento y reglas de recorte |
 | `ilustraciones/` | Nueve dibujos de musas en SVG (`svg/`, cuatro versiones de cada uno) y hojas de muestra en PNG |
 | `duotono/` | Herramienta en el navegador, script por lotes (`duotono.py`) y reglas para convertir fotos |
@@ -26,4 +26,4 @@ Todo está construido sobre la grilla de siete columnas, con margen 6 % y median
 - Fondo gris claro. El azul es el color principal, en una sola zona por pieza; amarillo y naranjo solo como acentos pequeños.
 - Palabras en serif, números en grotesca.
 - Fotos en celdas completas y sin llegar al borde.
-- Logo en noche sobre gris claro, amarillo y naranja; en blanco sobre azul y noche.
+- Logo en azul sobre gris claro, amarillo y naranja; en blanco sobre azul.

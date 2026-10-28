@@ -12,7 +12,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const OUT = path.dirname(fileURLToPath(import.meta.url));
 const { chromium } = require('playwright');
 
-const C = { noche: '#03021b', azul: '#1b1444', amarillo: '#fcee21', naranja: '#fbb03b', blanco: '#ffffff', claro: '#f2f2f2' };
+const C = { azul: '#1b1444', amarillo: '#fcee21', naranja: '#fbb03b', blanco: '#ffffff', claro: '#f2f2f2' };
 
 // ── utilidades de dibujo ──
 const r2 = n => Math.round(n * 100) / 100;
@@ -180,10 +180,10 @@ ${relleno}
 }
 
 const VARIANTES = [
-  { id: 'tinta', tinta: C.noche, campo: null, fondo: C.claro },
-  { id: 'amarillo', tinta: C.noche, campo: C.amarillo, fondo: C.claro },
-  { id: 'naranja', tinta: C.noche, campo: C.naranja, fondo: C.claro },
-  { id: 'noche', tinta: C.claro, campo: C.amarillo, fondo: C.noche }
+  { id: 'tinta', tinta: C.azul, campo: null, fondo: C.claro },
+  { id: 'amarillo', tinta: C.azul, campo: C.amarillo, fondo: C.claro },
+  { id: 'naranja', tinta: C.azul, campo: C.naranja, fondo: C.claro },
+  { id: 'claro', tinta: C.claro, campo: C.amarillo, fondo: C.azul }
 ];
 fs.mkdirSync(path.join(OUT, 'svg'), { recursive: true });
 for (const n of Object.keys(D)) for (const v of VARIANTES) fs.writeFileSync(path.join(OUT, 'svg', `${n}-${v.id}.svg`), svg(n, v));

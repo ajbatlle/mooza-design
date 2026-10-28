@@ -4,7 +4,7 @@ Piezas de la plataforma mooza.cl, en CSS puro (`ui.css`). Ángulos rectos, color
 
 | Clase | Qué es | Notas |
 |---|---|---|
-| `.mz-btn` | Botón principal | Amarillo con texto noche. Al pasar el cursor, blanco. |
+| `.mz-btn` | Botón principal | Amarillo con texto azul. Al pasar el cursor, blanco. |
 | `.mz-btn--linea` | Botón secundario | Contorno de 1 px. Al pasar el cursor se rellena de amarillo. |
 | `.mz-chip` | Filtro de categoría | Mayúsculas con tracking. `aria-pressed="true"` lo rellena de amarillo. |
 | `.mz-input` | Campo de texto | Contorno de 1 px. En foco, contorno amarillo de 2 px. |

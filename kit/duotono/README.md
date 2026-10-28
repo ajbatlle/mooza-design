@@ -13,22 +13,19 @@ Las fotos de Mooza se convierten a dos colores de la paleta: las sombras toman e
 
 | Nombre | Sombra | Luz | Cuándo |
 |---|---|---|---|
-| `noche-amarillo` | `#03021b` | `#fcee21` | La principal. Fotos de eventos sobre fondo noche o azul |
-| `noche-naranja` | `#03021b` | `#fbb03b` | Variante cálida |
-| `azul-amarillo` | `#1b1444` | `#fcee21` | Sombras más suaves, tirando a violeta |
+| `azul-amarillo` | `#1b1444` | `#fcee21` | La principal. Fotos de eventos |
 | `azul-naranja` | `#1b1444` | `#fbb03b` | La más cálida |
 | `azul-claro` | `#1b1444` | `#f2f2f2` | Un solo tono: la foto se lee como tinta sobre papel |
-| `noche-claro` | `#03021b` | `#f2f2f2` | Blanco y negro con los neutros de la marca |
 
 ## Cómo usarlo
 
 - En el navegador: abre `kit/duotono/index.html`, elige la foto y la paleta, y descarga el PNG. No sube nada a internet.
-- Por lotes: `python3 kit/duotono/duotono.py carpeta/ --paleta noche-amarillo --lado 1600 --grano 0.02` (requiere Pillow y numpy).
-- En una web: `MoozaDuotono.filtros()` entrega filtros SVG y se aplican con `filter:url(#mz-duo-noche-amarillo)` sobre cualquier imagen (ver `components/duotono/duotono.js`).
+- Por lotes: `python3 kit/duotono/duotono.py carpeta/ --paleta azul-amarillo --lado 1600 --grano 0.02` (requiere Pillow y numpy).
+- En una web: `MoozaDuotono.filtros()` entrega filtros SVG y se aplican con `filter:url(#mz-duo-azul-amarillo)` sobre cualquier imagen (ver `components/duotono/duotono.js`).
 
 ## Reglas
 
 - Una paleta por pieza. No mezclar duotonos distintos en el mismo cartel.
 - La foto entra en celdas completas de la grilla, como indica `kit/fotos/README.md`.
-- Elige la paleta según el fondo: sobre amarillo o naranja usa `azul-claro` o `noche-claro`, para que la foto no se pierda en el campo.
+- Elige la paleta según el fondo: sobre amarillo o naranja usa `azul-claro`, para que la foto no se pierda en el campo.
 - Para que funcione, la foto original necesita buen rango de luces y sombras. Si se ve plana, sube el contraste antes de exportar.

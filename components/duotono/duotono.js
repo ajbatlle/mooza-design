@@ -1,20 +1,17 @@
 /* Mooza · duotono con los colores de la marca.
    Procedimiento: 1) escala de grises por luminancia, 2) niveles (punto negro y blanco por percentiles, gamma y contraste),
    3) mapa de degradado de dos colores: las sombras toman el color oscuro y las luces el claro.
-   Uso en CSS:   document.body.insertAdjacentHTML('afterbegin', MoozaDuotono.filtros());  y luego  <img style="filter:url(#mz-duo-noche-amarillo)">
-   Uso en canvas: MoozaDuotono.aplicar(imagenOCanvas, canvasDestino, 'noche-amarillo', { contraste: 1, gamma: 1, grano: .03 });
+   Uso en CSS:   document.body.insertAdjacentHTML('afterbegin', MoozaDuotono.filtros());  y luego  <img style="filter:url(#mz-duo-azul-amarillo)">
+   Uso en canvas: MoozaDuotono.aplicar(imagenOCanvas, canvasDestino, 'azul-amarillo', { contraste: 1, gamma: 1, grano: .03 });
    También funciona en Node para pruebas: MoozaDuotono.mapear(imageData, 'azul-naranja', opciones). */
 (function(root){
   'use strict';
 
   /* sombra → luz. Todos son colores de la paleta (tokens/colors.css). */
   var PALETAS={
-    'noche-amarillo':['#03021b','#fcee21'],
-    'noche-naranja': ['#03021b','#fbb03b'],
     'azul-amarillo': ['#1b1444','#fcee21'],
     'azul-naranja':  ['#1b1444','#fbb03b'],
-    'azul-claro':    ['#1b1444','#f2f2f2'],
-    'noche-claro':   ['#03021b','#f2f2f2']
+    'azul-claro':    ['#1b1444','#f2f2f2']
   };
 
   function rgb(h){return [1,3,5].map(function(i){return parseInt(h.slice(i,i+2),16)})}

@@ -14,7 +14,7 @@ const { chromium } = require('playwright');
 const P = require(path.join(ROOT, 'components/grid/poster.js'));
 
 // ── colores (tokens/colors.css) ──
-const C = { noche: '#03021b', azul: '#1b1444', amarillo: '#fcee21', naranja: '#fbb03b', blanco: '#ffffff', claro: '#f2f2f2' };
+const C = { azul: '#1b1444', amarillo: '#fcee21', naranja: '#fbb03b', blanco: '#ffffff', claro: '#f2f2f2' };
 const GUIA = '#ff2d6f';
 
 // ── grilla (tokens/grid.css) ──
@@ -114,7 +114,7 @@ async function plantilla(tipo, formato) {
   const { H, bg, items } = await leer(tipo, formato), B = [];
   for (const i of items) {
     if (i.k === 'rect') B.push(`<rect x="${f2(i.x)}" y="${f2(i.y)}" width="${f2(i.w)}" height="${f2(i.h)}" fill="${i.fill}"/>`);
-    else if (i.k === 'stroke') B.push(`<rect x="${f2(i.x + 1.25)}" y="${f2(i.y + 1.25)}" width="${f2(i.w - 2.5)}" height="${f2(i.h - 2.5)}" fill="none" stroke="${C.noche}" stroke-width="2.5"/>`);
+    else if (i.k === 'stroke') B.push(`<rect x="${f2(i.x + 1.25)}" y="${f2(i.y + 1.25)}" width="${f2(i.w - 2.5)}" height="${f2(i.h - 2.5)}" fill="none" stroke="${C.azul}" stroke-width="2.5"/>`);
     else if (i.k === 'logo') B.push(logo(i.x, i.y, i.w, i.text, i.iso));
     else B.push(text({ x: i.x, y: i.y, size: i.size, w: i.w, fam: i.serif ? 'serif' : 'grot', fill: i.op < 1 ? `rgba(${[1, 3, 5].map(k => parseInt(i.fill.slice(k, k + 2), 16)).join(',')},${f2(i.op)})` : i.fill, ls: i.ls ? f2(i.ls) : 0, anchor: i.anchor, t: i.t }));
   }
@@ -137,14 +137,14 @@ grilla(1080 * 9 / 16, 4, false, 'grilla-16x9-4filas', 'Grilla 16:9, 4 filas');
 
 // ── celdas ──
 for (const [n, v] of Object.entries(C))
-  out(`kit/celdas/celda-${n}.svg`, `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><title>Celda ${n}</title><rect width="100" height="100" fill="${v}"${n === 'noche' || n === 'azul' ? '' : ''}/></svg>\n`);
-for (const n of ['noche', 'blanco', 'amarillo'])
+  out(`kit/celdas/celda-${n}.svg`, `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><title>Celda ${n}</title><rect width="100" height="100" fill="${v}"/></svg>\n`);
+for (const n of ['azul', 'blanco', 'amarillo'])
   out(`kit/celdas/celda-contorno-${n}.svg`, `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><title>Celda de contorno ${n}</title><rect x="1" y="1" width="98" height="98" fill="none" stroke="${C[n]}" stroke-width="2"/></svg>\n`);
 
 // ── variantes de logo (derivadas del horizontal e ícono oficiales) ──
 const isoSrc = fs.readFileSync(path.join(ROOT, 'assets/logos/logo-iso-color.svg'), 'utf8');
 const ISO = [...isoSrc.matchAll(/ d="([^"]+)"/g)].map(m => m[1])[0];
-for (const [n, v] of [['noche', C.noche], ['amarillo', C.amarillo]]) {
+for (const [n, v] of [['azul', C.azul], ['amarillo', C.amarillo]]) {
   out(`kit/marca/logo-horizontal-${n}.svg`, `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 629.21 159.59"><title>Mooza, horizontal ${n}</title><g fill="${v}">${LTEXT.map(d => `<path d="${d}"/>`).join('')}<path d="${LISO}"/></g></svg>\n`);
   out(`kit/marca/logo-iso-${n}.svg`, `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168.34 163.27"><title>Ícono de Mooza ${n}</title><path fill="${v}" d="${ISO}"/></svg>\n`);
 }
@@ -177,11 +177,11 @@ let y = MARG, ancho = 0, G_ = [];
 for (const [f, rotulo] of FILAS) {
   const fila = HOJA.filter(h => h.f === f); if (!fila.length) continue;
   const alto = Math.max(...fila.map(h => h.H));
-  G_.push(`<text x="${MARG}" y="${y + 34}" font-family="'Geist', 'Helvetica Neue', Arial, sans-serif" font-size="34" font-weight="600" fill="${C.noche}">${rotulo}</text>`);
+  G_.push(`<text x="${MARG}" y="${y + 34}" font-family="'Geist', 'Helvetica Neue', Arial, sans-serif" font-size="34" font-weight="600" fill="${C.azul}">${rotulo}</text>`);
   let x = MARG;
   for (const h of fila) {
     const cuerpo = h.svg.slice(h.svg.indexOf('</style>') + 8, h.svg.lastIndexOf('</svg>')).trim();
-    G_.push(`<g id="${h.tipo}-${f}" transform="translate(${x} ${f2(y + ROT)})">\n<text x="0" y="-14" font-family="'Geist', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="500" fill="${C.noche}" fill-opacity=".6">${h.tipo} · ${f}</text>\n${cuerpo}\n</g>`);
+    G_.push(`<g id="${h.tipo}-${f}" transform="translate(${x} ${f2(y + ROT)})">\n<text x="0" y="-14" font-family="'Geist', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="500" fill="${C.azul}" fill-opacity=".6">${h.tipo} · ${f}</text>\n${cuerpo}\n</g>`);
     x += h.W + GAP;
   }
   ancho = Math.max(ancho, x - GAP + MARG);
