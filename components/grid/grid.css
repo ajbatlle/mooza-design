@@ -29,8 +29,8 @@
 
 /* mitad derecha de los horizontales: del centro al borde */
 .mz-grid>.mz-mitad{position:absolute;left:50%;right:0;top:0;bottom:0;z-index:0}
-.mz-f-16x9{--mz-t-display:calc(var(--mz-col)*1.2*1cqw);--mz-t-grande:calc(var(--mz-col)*.8*1cqw);--mz-t-titular:calc(var(--mz-col)*.5*1cqw);--mz-t-sub:calc(var(--mz-col)*.46*1cqw);--mz-t-dato:calc(var(--mz-col)*.24*1cqw)}
-.mz-f-1x1{--mz-t-grande:calc(var(--mz-col)*1.5*1cqw);--mz-t-titular:calc(var(--mz-col)*.9*1cqw)}
+.mz-f-16x9{--mz-t-display:calc(var(--mz-col)*.95*1cqw);--mz-t-grande:calc(var(--mz-col)*.65*1cqw);--mz-t-titular:calc(var(--mz-col)*.42*1cqw);--mz-t-sub:calc(var(--mz-col)*.4*1cqw);--mz-t-dato:calc(var(--mz-col)*.24*1cqw)}
+.mz-f-1x1{--mz-t-titular:calc(var(--mz-col)*.8*1cqw)}
 
 /* el fondo es siempre el gris claro; el color vive en una zona (ver arriba) */
 .mz-sobre-oscuro{color:var(--mz-blanco)}

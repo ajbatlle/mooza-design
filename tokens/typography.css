@@ -10,11 +10,11 @@
   --mz-peso-titular: 500;   /* serif de titular */
   --mz-peso-texto:   400;
   --mz-peso-dato:    500;   /* grotesca de fechas y horas */
-  --mz-peso-numero:  600;   /* número grande del cartel */
-  --mz-peso-etiqueta:600;
+  --mz-peso-numero:  500;   /* número grande del cartel */
+  --mz-peso-etiqueta:500;
 
   --mz-track-titular: -.035em;
-  --mz-track-numero:  -.05em;
+  --mz-track-numero:  -.04em;
   --mz-track-etiqueta: .14em;
   --mz-leading-titular: .93;
 }

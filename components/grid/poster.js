@@ -14,8 +14,7 @@
   /* filas de cada formato (la última es siempre el pie) y filas de la zona de arriba.
      En 16x9 el cartel se parte en mitades: izquierda blanca, derecha de color; la columna 4 queda sobre la línea del centro. */
   var ARRIBA={'4x5':4,'a3':5,'1x1':3,'9x16':8};
-  /* el titular de tres líneas necesita una fila más en vertical */
-  var ARRIBA_TITULAR={'4x5':5,'a3':6,'1x1':3};
+  var ARRIBA_TITULAR=ARRIBA;
   var ROWS={
     titular:{'4x5':9,'a3':11,'1x1':8,'16x9':4},
     numero:{'4x5':9,'a3':11,'1x1':8,'16x9':4},

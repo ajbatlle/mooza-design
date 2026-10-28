@@ -118,7 +118,7 @@ Una idea por cartel y mucho espacio libre. Cada cartel se parte en dos zonas, un
 
 Filas por formato: 9 en 4:5, 11 en A3, 8 en 1:1, 4 en 16:9 y 16 en 9:16. En 16:9 la mitad izquierda es gris y la derecha lleva el azul o la foto; la columna 4 queda sobre el centro y va vacía.
 
-Escala tipográfica, en múltiplos del ancho de columna: número 3, titular 1,8, nombre 1,12, fecha en bloque 0,7, texto de lista 0,44, dato 0,28 y etiqueta 0,2. Cada paso es cerca de 1,6 veces el anterior y un cartel usa tres como máximo. En 1:1 y 16:9 el titular y el número bajan para caber en la zona. El carrusel semanal de Instagram se arma con una portada (titular), una o más láminas de agenda por día y un cierre (titular).
+Escala tipográfica, en múltiplos del ancho de columna: número 2,2, titular 1,4, nombre 0,95, fecha en bloque 0,62, texto de lista 0,44, dato 0,28 y etiqueta 0,2. Cada paso es cerca de 1,5 veces el anterior y un cartel usa tres como máximo. Los pesos son medios (500): ni negritas ni finas. En 16:9 y, en parte, en 1:1 los tamaños bajan para caber en la zona. El carrusel semanal de Instagram se arma con una portada (titular), una o más láminas de agenda por día y un cierre (titular).
 
 ## Propuesta web
 
