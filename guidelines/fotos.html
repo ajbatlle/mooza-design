@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Probar fotos Mooza</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+/* Carga una foto y mírala en los carteles, en color y en los tres duotonos. La foto no sale de tu navegador. */
+*{box-sizing:border-box}
+body{margin:0;background:var(--mz-claro);color:var(--mz-azul);font-family:var(--mz-grot);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{width:100%;max-width:1320px;margin-inline:auto;padding:clamp(20px,4vw,48px) max(16px,env(safe-area-inset-left,0px))}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:clamp(20px,3vw,36px);flex-wrap:wrap}
+.top svg{width:120px;display:block;color:var(--mz-azul);--mz-iso:var(--mz-azul)}
+.top a{font-size:14px;color:var(--mz-azul)}
+h1{font-weight:var(--mz-peso-titular);letter-spacing:-.05em;line-height:.95;font-size:clamp(34px,5vw,64px);margin:0 0 12px}
+.lead{max-width:62ch;margin:0 0 24px;font-size:16px;line-height:1.5;color:rgba(27,20,68,.78)}
+.ctl{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;margin-bottom:clamp(24px,3vw,40px)}
+.ctl label{font-size:14px;font-weight:500;display:flex;gap:10px;align-items:center}
+.ctl input[type=range]{width:160px;accent-color:var(--mz-azul)}
+#drop{display:grid;place-items:center;text-align:center;gap:6px;padding:clamp(24px,4vw,48px);margin-bottom:clamp(20px,3vw,32px);box-shadow:inset 0 0 0 1px var(--mz-azul);cursor:pointer;background:transparent;border:0;width:100%;color:inherit;font:inherit}
+#drop b{font-size:20px;font-weight:500}
+#drop span{font-size:14px;color:rgba(27,20,68,.72)}
+#drop.sobre,#drop:hover{background:var(--mz-amarillo);box-shadow:none}
+#drop:focus-visible{outline:3px solid var(--mz-azul);outline-offset:3px}
+h2{font-weight:var(--mz-peso-titular);letter-spacing:-.04em;font-size:clamp(24px,3vw,36px);margin:clamp(28px,4vw,48px) 0 16px}
+.fila{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,2vw,24px);align-items:start}
+.fila.s{grid-template-columns:repeat(4,minmax(0,.62fr));justify-content:start}
+.fila.h{grid-template-columns:repeat(2,minmax(0,1fr))}
+figure{margin:0}
+figcaption{font-size:13px;font-weight:500;margin-top:8px}
+figcaption small{display:block;font-weight:400;color:rgba(27,20,68,.72)}
+.pz{width:100%}
+a.btn{display:inline-block;margin-top:24px;padding:14px 20px;background:var(--mz-azul);color:var(--mz-blanco);text-decoration:none;font-weight:600;font-size:13px}
+a.btn:hover{background:var(--mz-amarillo);color:var(--mz-azul)}
+@media (max-width:900px){.fila,.fila.s{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<script src="../components/duotono/duotono.js"></script>
+<script src="../components/grid/poster.js"></script>
+<script>document.body.insertAdjacentHTML('afterbegin',MoozaPoster.sprite())</script>
+<main class="wrap">
+  <div class="top"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Mooza"><use href="#mz-lockup"/></svg><a href="index.html">Volver al sistema</a></div>
+  <h1>Probar fotos</h1>
+  <p class="lead">Carga una foto de evento y mírala en los carteles, en color y con los tres duotonos de la marca. Todo ocurre en tu navegador: la foto no se sube a ningún lado.</p>
+
+  <button id="drop" type="button"><b>Elige una foto o arrástrala aquí</b><span>JPG, PNG o WebP. Mejor con buen rango de luces y sombras.</span></button>
+  <input id="archivo" type="file" accept="image/*" hidden>
+  <div class="ctl">
+    <label>Enfoque horizontal <input id="px" type="range" min="0" max="100" value="50"></label>
+    <label>Enfoque vertical <input id="py" type="range" min="0" max="100" value="50"></label>
+  </div>
+
+  <h2>Cartel foto, 4:5</h2>
+  <div class="fila" id="f45"></div>
+  <h2>Story, 9:16</h2>
+  <div class="fila s" id="f916"></div>
+  <h2>Horizontal, 16:9</h2>
+  <div class="fila h" id="f169"></div>
+
+  <a class="btn" href="../kit/duotono/index.html">Exportar una foto en duotono</a>
+</main>
+<script>
+(function(){
+  var $=function(s){return document.querySelector(s)};
+  var MODOS=[[null,'Color','Foto tal cual'],['azul-amarillo','Azul y amarillo','La principal'],['azul-naranja','Azul y naranja','La más cálida'],['azul-claro','Azul y gris','Un solo tono']];
+  var src=null;
+  function montar(host,tipo,formato){
+    host.innerHTML='';
+    MODOS.forEach(function(m){
+      var fig=document.createElement('figure'),pz=document.createElement('div');pz.className='pz';
+      fig.appendChild(pz);
+      var cap=document.createElement('figcaption');cap.innerHTML=m[1]+'<small>'+m[2]+'</small>';fig.appendChild(cap);host.appendChild(fig);
+      MoozaPoster.mount(pz,tipo,src?{foto:{src:src,duotono:m[0],pos:$('#px').value+'% '+$('#py').value+'%',alt:'Foto de prueba'}}:null,formato);
+    });
+  }
+  function todo(){montar($('#f45'),'foto','4x5');montar($('#f916'),'story','9x16');montar($('#f169'),'foto','16x9')}
+  function cargar(f){
+    if(!f||!/^image\//.test(f.type))return;
+    if(src)URL.revokeObjectURL(src);
+    src=URL.createObjectURL(f);todo();
+  }
+  $('#drop').addEventListener('click',function(){$('#archivo').click()});
+  $('#archivo').addEventListener('change',function(e){cargar(e.target.files[0])});
+  ['dragenter','dragover'].forEach(function(t){$('#drop').addEventListener(t,function(e){e.preventDefault();this.classList.add('sobre')})});
+  ['dragleave','drop'].forEach(function(t){$('#drop').addEventListener(t,function(e){e.preventDefault();this.classList.remove('sobre')})});
+  $('#drop').addEventListener('drop',function(e){cargar(e.dataTransfer.files[0])});
+  ['#px','#py'].forEach(function(s){$(s).addEventListener('input',function(){if(src)todo()})});
+  todo();
+})();
+</script>
+</body>
+</html>

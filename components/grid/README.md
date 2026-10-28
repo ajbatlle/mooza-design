@@ -41,6 +41,10 @@ Los campos que no pases se toman de `MoozaPoster.EJEMPLO`: `color` (la zona de c
 
 `node components/grid/auditoria.mjs` (requiere Playwright) monta cada diseño en cada formato con cinco combinaciones de margen y medianil, mide la tinta real de los textos y avisa si el logo choca con algo, se sale del margen o queda desalineado con la fecha, y si un texto se sale de su celda o toca una foto, un bloque o una celda. Termina con error si encuentra problemas. Córrelo después de tocar `poster.js` o `grid.css`.
 
+## Fotos
+
+`MoozaPoster.mount(el, 'foto', {foto: {src: 'evento.jpg', duotono: 'azul-amarillo', pos: '50% 30%', alt: '...'}}, '4x5')` pone la foto en la celda de foto (diseños `foto` y `story`). `duotono` es opcional (`azul-amarillo`, `azul-naranja` o `azul-claro`); sin él la foto va en color. `pos` es el punto de enfoque del recorte. Para el duotono carga `components/duotono/duotono.js` antes de `poster.js` (así `sprite()` incluye los filtros). Para probar fotos propias sin escribir código: `guidelines/fotos.html`.
+
 ## Fuente de las palabras
 
 Los titulares, nombres de evento y textos de lista usan `--mz-palabra` (por defecto Geist 400). Para probar otra tipografía sin tocar los diseños, define en el cartel o en un ancestro: `--mz-palabra` (familia), `--mz-palabra-peso`, `--mz-palabra-track` (interletraje), `--mz-palabra-lh` (interlínea) y `--mz-palabra-var` (variaciones, por ejemplo `'wdth' 70`). Ver `kit/tablero/tipografia-opciones.png`.
