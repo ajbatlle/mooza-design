@@ -27,3 +27,11 @@ Illustration 3: Terpsichore, muse of dance. A young woman with her hair tied up 
 ## Mensaje 5: Calíope, letras
 
 Illustration 4: Calliope, muse of epic poetry and letters. A young woman with a laurel wreath in her hair, wearing a long, loose classical gown. In one hand an open scroll that unrolls and trails downward in a long loose curl; in the other hand a stylus (or quill pen) raised as if about to write in the air. Her expression is serious and inspired, gaze lifted. Same style, pose and technical rules as before.
+
+## Poleras azules con una musa al centro
+
+Se adjunta la ilustración de la musa (PNG con transparencia o sobre blanco) y se pega este prompt. Elegir un color de tinta: amarillo `#fcee21`, naranjo `#fbb03b` o gris claro `#f2f2f2`. Una polera por musa.
+
+Create a photorealistic product photo of a plain crew-neck cotton t-shirt in deep indigo navy blue (hex #1b1444), front view, laid flat on a pure light grey (#f2f2f2) surface and photographed from directly above. Soft, diffuse studio light, subtle natural cotton texture and a few soft folds. No model, no hanger, no props, no label, no logo, no text.
+
+Print the attached illustration on the shirt as a single-color screen print, centered on the chest, horizontally centered, with its top edge about 8 cm below the collar and a height of about 30 cm. IMPORTANT: reproduce the attached artwork exactly, line for line. Do not redraw, simplify, restyle or add anything to it, and do not change its proportions. The artwork is dark line work: in the print, only the lines are inked, in [INK COLOR], and everything that is blank in the drawing is not printed at all, so the shirt's blue shows through the figure. Matte, fully opaque plastisol ink with a very slight texture that follows the weave of the fabric. No gradients, no glow, no shadow around the artwork, no second color.
