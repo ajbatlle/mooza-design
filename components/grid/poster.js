@@ -41,7 +41,7 @@
   };
 
   /* filtro que vuelve una foto cualquiera una tinta azul con transparencia (oscuro opaco, claro transparente) */
-  var FILTRO_TINTA='<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="mz-tinta" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 0.1059  0 0 0 0 0.0784  0 0 0 0 0.2667  -0.2126 -0.7152 -0.0722 0 1"/><feComponentTransfer><feFuncA type="table" tableValues="0 0 .06 .22 .5 .78 .94 1 1"/></feComponentTransfer></filter></defs></svg>';
+  var FILTRO_TINTA='<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="mz-tinta" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 0.1059  0 0 0 0 0.0784  0 0 0 0 0.2667  0 -1 0 0 1"/></filter></defs></svg>';
 
   var LOGO='<svg class="mz-logo" viewBox="0 0 629.21 159.59" role="img" aria-label="Mooza"><use href="#mz-lockup"/></svg>';
 

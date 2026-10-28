@@ -36,14 +36,14 @@ canvas{width:100%;height:auto;display:block;background:var(--mz-azul)}
 <body class="mz-ui">
 <div class="wrap">
   <h1>Fotos</h1>
-  <p class="lead">La foto de Mooza es una tinta azul con transparencia: las sombras quedan opacas y las luces transparentes, y se apoya sobre una zona lisa amarilla o naranja. Aquí la conviertes y descargas el PNG. Debajo hay además el duotono clásico de dos colores. Todo ocurre en tu navegador y la foto no se sube a ningún lado.
+  <p class="lead">La foto de Mooza es una tinta azul con transparencia: el alfa es 255 menos el canal verde, así que las sombras quedan opacas y las luces transparentes, y se apoya sobre una zona lisa amarilla o naranja. Aquí la conviertes y descargas el PNG. Debajo hay además el duotono clásico de dos colores. Todo ocurre en tu navegador y la foto no se sube a ningún lado.
   <div class="grid">
     <div class="ctl">
       <div><span class="k">Foto</span><input id="archivo" type="file" accept="image/*"><div style="margin-top:10px"><button class="mz-btn mz-btn--linea" id="prueba" type="button">Usar imagen de prueba</button></div></div>
       <div><span class="k">Modo</span><div class="pal" id="pal"></div></div>
       <div id="cfondo"><span class="k">Fondo de la vista previa</span><div class="acc"><button class="mz-btn mz-btn--linea" type="button" data-f="amarillo" aria-pressed="true">Amarillo</button><button class="mz-btn mz-btn--linea" type="button" data-f="naranja" aria-pressed="false">Naranja</button></div></div>
       <div>
-        <label for="contraste">Contraste <output id="oc"></output><input id="contraste" type="range" min="1" max="1.8" step=".05" value="1.15"></label>
+        <label for="contraste">Contraste <output id="oc"></output><input id="contraste" type="range" min="1" max="1.8" step=".05" value="1"></label>
         <label for="gamma" style="margin-top:14px">Medios tonos <output id="og"></output><input id="gamma" type="range" min=".6" max="1.6" step=".05" value="1"></label>
         <label for="grano" style="margin-top:14px">Grano <output id="or"></output><input id="grano" type="range" min="0" max=".08" step=".005" value="0"></label>
       </div>
@@ -52,7 +52,7 @@ canvas{width:100%;height:auto;display:block;background:var(--mz-azul)}
       <div class="vista"><figure><canvas id="antes"></canvas><figcaption>Original</figcaption></figure><figure><canvas id="despues"></canvas><figcaption id="leyenda">Tinta azul</figcaption></figure></div>
       <div class="acc"><button class="mz-btn" id="bajar" type="button">Descargar PNG</button></div>
       <p class="nota">En el modo tinta azul el PNG que descargas conserva la transparencia: úsalo sobre una zona amarilla o naranja en tu diseño. La grilla y los carteles de Mooza lo usan tal cual.</p>
-      <p class="nota">Procedimiento: escala de grises por luminancia, niveles (punto negro y blanco en los percentiles 1 y 99, más medios tonos y contraste) y mapa de degradado entre los dos colores. La imagen de prueba no es una foto: sirve para ver cómo responde cada paleta. Mejor usar fotos con buen rango de luces y sombras.</p>
+      <p class="nota">Tinta azul: el alfa es 255 menos el canal verde de la foto, igual que la máscara de la capa de relleno del PSD; contraste, medios tonos y grano son ajustes opcionales, apagados por defecto. Duotono: escala de grises por luminancia, niveles, medios tonos y contraste, y mapa de degradado entre los dos colores. La imagen de prueba no es una foto: sirve para ver cómo responde cada paleta. Mejor usar fotos con buen rango de luces y sombras.</p>
     </div>
   </div>
 </div>

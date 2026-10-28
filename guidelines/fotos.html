@@ -51,7 +51,7 @@ figcaption small{display:block;font-weight:400;color:rgba(27,20,68,.72)}
 <main class="wrap">
   <div class="top"><svg viewBox="0 0 629.21 159.59" role="img" aria-label="Mooza"><use href="#mz-lockup"/></svg><a href="index.html">Volver al sistema</a></div>
   <h1>Probar fotos</h1>
-  <p class="lead">Una foto de Mooza es una tinta azul con transparencia: las sombras quedan opacas y las luces dejan ver la zona lisa de atrás, amarilla o naranja. Carga una foto normal y se convierte aquí mismo, o carga el PNG que ya tiene la transparencia. Todo ocurre en tu navegador.</p>
+  <p class="lead">Una foto de Mooza es una tinta azul con transparencia: el alfa es 255 menos el canal verde de la foto, así que las sombras quedan opacas y las luces dejan ver la zona lisa de atrás, amarilla o naranja. Carga una foto normal y se convierte aquí mismo, o carga el PNG que ya tiene la transparencia. Todo ocurre en tu navegador.</p>
 
   <button id="drop" type="button"><b>Elige una foto o arrástrala aquí</b><span>JPG, PNG o WebP. Si el PNG ya es azul con transparencia, se usa tal cual.</span></button>
   <input id="archivo" type="file" accept="image/*" hidden>
@@ -63,7 +63,7 @@ figcaption small{display:block;font-weight:400;color:rgba(27,20,68,.72)}
   <div class="ctl">
     <label>Enfoque horizontal <input id="px" type="range" min="0" max="100" value="50"></label>
     <label>Enfoque vertical <input id="py" type="range" min="0" max="100" value="30"></label>
-    <label class="solo-foto" id="lc">Contraste <input id="contraste" type="range" min="1" max="1.8" step=".05" value="1.2"></label>
+    <label class="solo-foto" id="lc">Contraste <input id="contraste" type="range" min="1" max="1.8" step=".05" value="1"></label>
     <label class="solo-foto" id="lg">Medios tonos <input id="gamma" type="range" min=".6" max="1.6" step=".05" value="1"></label>
     <label><input id="blanco" type="checkbox" checked> Titular en blanco sobre la foto</label>
   </div>
@@ -117,7 +117,7 @@ figcaption small{display:block;font-weight:400;color:rgba(27,20,68,.72)}
     var x=c.getContext('2d');x.drawImage(img,0,0,c.width,c.height);
     var a=0;try{var d=x.getImageData(0,0,c.width,c.height).data;for(var i=3;i<d.length;i+=4*7)if(d[i]<250){a=1;break}}catch(err){}
     tieneAlfa=!!a;
-    $('#estado').textContent=nombre+': '+(tieneAlfa?'ya tiene transparencia, se usa tal cual.':'foto normal, convertida a tinta azul con transparencia. Ajusta contraste y medios tonos.');
+    $('#estado').textContent=nombre+': '+(tieneAlfa?'ya tiene transparencia, se usa tal cual.':'foto normal, convertida con el procedimiento de Mooza. Contraste y medios tonos son ajustes opcionales.');
     convertir();
   }
   function cargar(f){

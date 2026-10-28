@@ -1,10 +1,10 @@
 /* Mooza · fotos en tinta azul con transparencia (el modo de mostrar fotografías) y duotono con los colores de la marca.
-   TINTA: la foto se vuelve una imagen de un solo color, azul, cuyo canal alfa sale de la luminancia: las sombras quedan opacas
-   y las luces transparentes. Se apoya sobre una zona lisa amarilla o naranja, que asoma por las luces.
+   TINTA: la foto se vuelve una imagen de un solo color, azul, cuyo canal alfa es 255 menos el canal verde de la foto: las sombras quedan opacas
+   y las luces transparentes (en Photoshop: relleno sólido azul con máscara = canal verde invertido). Se apoya sobre una zona lisa amarilla o naranja, que asoma por las luces.
    Uso en CSS:    document.body.insertAdjacentHTML('afterbegin', MoozaDuotono.filtroTinta());  y luego  <img style="filter:url(#mz-tinta)">
-   Uso en canvas: MoozaDuotono.aplicarTinta(imagenOCanvas, canvasDestino, { contraste: 1.2, gamma: 1 });  (el PNG que sale conserva la transparencia)
+   Uso en canvas: MoozaDuotono.aplicarTinta(imagenOCanvas, canvasDestino, {});  (el PNG que sale conserva la transparencia)
 
-   Procedimiento: 1) escala de grises por luminancia, 2) niveles (punto negro y blanco por percentiles, gamma y contraste),
+   DUOTONO. Procedimiento: 1) escala de grises por luminancia, 2) niveles (punto negro y blanco por percentiles, gamma y contraste),
    3) mapa de degradado de dos colores: las sombras toman el color oscuro y las luces el claro.
    Uso en CSS:   document.body.insertAdjacentHTML('afterbegin', MoozaDuotono.filtros());  y luego  <img style="filter:url(#mz-duo-azul-amarillo)">
    Uso en canvas: MoozaDuotono.aplicar(imagenOCanvas, canvasDestino, 'azul-amarillo', { contraste: 1, gamma: 1, grano: .03 });
@@ -43,27 +43,36 @@
 
   var AZUL='#1b1444';
 
-  /* filtro SVG con el mismo efecto, para ver una foto cualquiera en tinta azul sin procesarla: filter:url(#mz-tinta) */
+  /* filtro SVG con el mismo efecto, para ver una foto cualquiera en tinta azul sin procesarla: filter:url(#mz-tinta).
+     Es el procedimiento de Mooza: relleno sólido azul con máscara = canal verde de la foto, invertido. */
   function filtroTinta(){
     var a=rgb(AZUL).map(function(v){return (v/255).toFixed(4)});
     return '<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="mz-tinta" color-interpolation-filters="sRGB">'+
-      '<feColorMatrix type="matrix" values="0 0 0 0 '+a[0]+'  0 0 0 0 '+a[1]+'  0 0 0 0 '+a[2]+'  -0.2126 -0.7152 -0.0722 0 1"/>'+
-      '<feComponentTransfer><feFuncA type="table" tableValues="0 0 .06 .22 .5 .78 .94 1 1"/></feComponentTransfer></filter></defs></svg>';
+      '<feColorMatrix type="matrix" values="0 0 0 0 '+a[0]+'  0 0 0 0 '+a[1]+'  0 0 0 0 '+a[2]+'  0 -1 0 0 1"/></filter></defs></svg>';
   }
 
-  /* tinta azul con transparencia sobre un ImageData, in situ. Opciones: contraste (1), gamma (1), negro/blanco (percentiles, 1 y 99), grano (0 a .1) */
+  /* tinta azul con transparencia sobre un ImageData, in situ. Es el procedimiento de Mooza: el alfa es 255 menos el canal verde,
+     y el color es siempre el azul. Sin opciones el resultado es idéntico al de la máscara de la capa de relleno.
+     Opciones (todas apagadas por defecto): contraste (1), gamma (1), niveles: true para estirar negro y blanco por percentiles (negro 1, blanco 99), grano (0 a .1) */
   function mapearTinta(img,o){
     o=o||{};
-    var d=img.data,n=d.length/4,c=rgb(AZUL),L=new Float32Array(n),hist=new Uint32Array(256),i,y;
-    for(i=0;i<n;i++){y=.2126*d[4*i]+.7152*d[4*i+1]+.0722*d[4*i+2];L[i]=y;hist[Math.min(255,Math.round(y))]++}
-    function pct(p){var acc=0,lim=n*p/100;for(var k=0;k<256;k++){acc+=hist[k];if(acc>=lim)return k}return 255}
-    var lo=pct(o.negro!=null?o.negro:1),hi=pct(o.blanco!=null?o.blanco:99);if(hi<=lo){lo=0;hi=255}
-    var gamma=o.gamma||1,contraste=o.contraste||1,grano=o.grano||0;
+    var d=img.data,n=d.length/4,c=rgb(AZUL),i,t;
+    var lo=0,hi=255;
+    if(o.niveles){
+      var hist=new Uint32Array(256);for(i=0;i<n;i++)hist[d[4*i+1]]++;
+      var pct=function(p){var acc=0,lim=n*p/100;for(var k=0;k<256;k++){acc+=hist[k];if(acc>=lim)return k}return 255};
+      lo=pct(o.negro!=null?o.negro:1);hi=pct(o.blanco!=null?o.blanco:99);if(hi<=lo){lo=0;hi=255}
+    }
+    var gamma=o.gamma||1,contraste=o.contraste||1,grano=o.grano||0,ajusta=o.niveles||gamma!==1||contraste!==1||grano;
     for(i=0;i<n;i++){
-      var t=(L[i]-lo)/(hi-lo);t=t<0?0:t>1?1:t;
-      t=Math.pow(t,1/gamma);t=curva(t,contraste);
-      if(grano){t+=(Math.random()-.5)*grano;t=t<0?0:t>1?1:t}
-      d[4*i]=c[0];d[4*i+1]=c[1];d[4*i+2]=c[2];d[4*i+3]=Math.round(255*(1-t));
+      var v=d[4*i+1];
+      if(ajusta){
+        t=(v-lo)/(hi-lo);t=t<0?0:t>1?1:t;
+        t=Math.pow(t,1/gamma);t=curva(t,contraste);
+        if(grano){t+=(Math.random()-.5)*grano;t=t<0?0:t>1?1:t}
+        v=Math.round(255*t);
+      }
+      d[4*i]=c[0];d[4*i+1]=c[1];d[4*i+2]=c[2];d[4*i+3]=255-v;
     }
     return img;
   }
