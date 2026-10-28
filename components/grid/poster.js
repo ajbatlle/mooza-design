@@ -30,7 +30,7 @@
     dias:[['L',26],['M',27],['M',28],['J',29],['V',30],['S',31],['D',1]],
     diaDestacado:4,
     evento:{nombre:'Cuarteto de jazz<br>en vivo',meta:'Teatro del Parque<br>Vie 30 • 21:00 • desde $8.000'},
-    agenda:{dia:'sábado',n:20,pag:'2/4',eventos:[
+    agenda:{dia:'sábado',n:20,pag:'2/5',eventos:[
       {h:'22:00',t:'el alma al aire ii: canciones de alejandro sanz',v:'Bar La Otra Casa',p:'$10.000'},
       {h:'22:00',t:'glam fest en biker chop',v:'Biker Chop',p:'$8.000'},
       {h:'21:30',t:'leo quinteros vuelve al bar de rené',v:'Bar de René',p:'desde $6.000',f:1}
@@ -87,12 +87,13 @@
     return grid(n,h+pie(n,d.rango));
   }
 
-  /* agenda: un día por lámina. El número del día, enorme, y hasta tres eventos (cuatro en A3) con su hora, nombre y lugar.
-     Cada evento ocupa dos filas; el destacado lleva la hora en una celda amarilla. */
+  /* agenda: un día por lámina. El número del día y hasta dos eventos con su hora, nombre y lugar.
+     Cada evento ocupa dos filas y entre ellos queda una fila vacía; el primero empieza en la fila 4, tras una fila de aire.
+     El destacado lleva la hora en una celda amarilla. */
   function agenda(d,n){
-    var a=d.agenda,max=Math.floor((n-3)/2),h=cell(1,4,1,2,'mz-numero',String(a.n))+cell(5,7,1,2,'mz-nombre mz-dia-t',a.dia);
+    var a=d.agenda,max=2,h=cell(1,4,1,2,'mz-numero',String(a.n))+cell(5,7,1,2,'mz-nombre mz-dia-t',a.dia);
     a.eventos.slice(0,max).forEach(function(e,i){
-      var r=3+i*2;
+      var r=4+i*3;
       h+=cell(1,2,r,r,'mz-hora'+(e.f?' mz-hora-on':''),e.h||'')+
          cell(3,7,r,r+1,'mz-evento-t','<span class="mz-nombre">'+e.t+'</span><span class="mz-meta">'+e.v+(e.p?' • '+e.p:'')+'</span>');
     });

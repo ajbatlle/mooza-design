@@ -52,7 +52,7 @@
 
 /* agenda: hora y evento */
 .mz-dia-t{align-self:end;padding-bottom:calc(var(--mz-col)*.05*1cqw)}
-.mz-d-agenda .mz-numero{font-size:calc(var(--mz-col)*2.4*1cqw)}
+.mz-d-agenda .mz-numero{font-size:calc(var(--mz-col)*2.2*1cqw)}
 .mz-d-agenda .mz-nombre{font-size:calc(var(--mz-col)*.46*1cqw);line-height:1}
 .mz-d-agenda .mz-evento-t{gap:calc(var(--mz-col)*.14*1cqw)}
 .mz-hora{font-size:calc(var(--mz-col)*.42*1cqw);font-weight:600;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;padding:calc(var(--mz-col)*.1*1cqw) calc(var(--mz-col)*.12*1cqw);align-self:start;height:calc(var(--mz-col)*.8*1cqw);display:flex;align-items:center}

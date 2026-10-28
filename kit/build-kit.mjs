@@ -138,15 +138,15 @@ T.semana = (H = 1350, n = 9) => {
 };
 
 T.agenda = async (H = 1350, n = 9) => {
-  const g = geo(H, n), B = [], a = D.agenda, max = Math.floor((n - 3) / 2);
-  const fnum = COL * 2.4, lnum = .74 * fnum;
+  const g = geo(H, n), B = [], a = D.agenda, max = 2;
+  const fnum = COL * 2.2, lnum = .74 * fnum;
   B.push(text({ x: M, y: base(g.y(1), lnum, fnum, MET.grot), size: fnum, w: 600, fam: 'grot', fill: C.blanco, ls: f2(-.05 * fnum), t: String(a.n) }));
   const fd = COL * .5, bd = g.y(2) + g.rh - COL * .05;
   B.push(serif(g.x(5), base(bd - fd, fd, fd, MET.serif), fd, a.dia, C.blanco, { ls: -.03 }));
   const fh = COL * .42, hh = COL * .8, fnm = COL * .46, fm = COL * .33, lm = 1.3 * fm;
   const ancho = g.w(3, 7);
   for (const [i, e] of a.eventos.slice(0, max).entries()) {
-    const r = 3 + i * 2, y = g.y(r);
+    const r = 4 + i * 3, y = g.y(r);
     if (e.f) B.push(`<rect x="${f2(g.x(1))}" y="${f2(y)}" width="${f2(g.w(1, 2))}" height="${f2(hh)}" fill="${C.amarillo}"/>`);
     if (e.h) B.push(text({ x: g.x(1) + COL * .12, y: base(y + (hh - fh) / 2, fh, fh, MET.grot), size: fh, w: 600, fam: 'grot', fill: e.f ? C.noche : C.blanco, ls: f2(-.02 * fh), t: e.h }));
     const ls = await cortar(e.t, `500 ${fnm}px Newsreader`, ancho, -.03 * fnm);

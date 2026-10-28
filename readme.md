@@ -113,7 +113,7 @@ Una idea por cartel y mucho blanco. Seis diseños sobre la misma grilla. Siempre
 | número | El rango de la semana, enorme | 4:5, A3, 1:1, 16:9 |
 | foto | Una foto, el nombre del evento y una línea de datos | 4:5, A3, 1:1, 16:9 |
 | semana | Siete días en una tira, el destacado relleno | 4:5, A3, 1:1, 16:9 |
-| agenda | Un día por lámina y hasta tres eventos. Para el carrusel semanal | 4:5, A3 |
+| agenda | Un día por lámina y hasta dos eventos. Para el carrusel semanal | 4:5, A3 |
 | story | Categoría, nombre, datos y foto | 9:16 |
 
 Filas por formato: 9 en 4:5, 11 en A3, 8 en 1:1, 4 en 16:9 y 16 en 9:16. El carrusel semanal de Instagram se arma con una portada (titular), una o más láminas de agenda por día y un cierre (titular).
