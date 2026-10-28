@@ -23,3 +23,11 @@ Cambios pedidos: titular mucho más chico en Geist 400 (sin negrita), más blanc
 - `pruebas/acento-poleras.jpg` y `pruebas/acento-estampas.png`: las cuatro musas con un texto propio cada una y un círculo plano de color detrás, en naranjo (fila de arriba) y en amarillo (fila de abajo). El color va impreso bajo las líneas azules y pasa por la figura.
 
 Textos por musa: Euterpe, "Alguien está afinando en este momento."; Talía, "En algún lugar, la sala está por quedar a oscuras."; Terpsícore, "Nadie baila igual dos veces."; Calíope, "Alguien está a punto de leer en voz alta."
+
+## Tercera ronda: diagramación centrada, naranjo y amarillo alternados, simulación de serigrafía
+
+Vuelve la diagramación centrada. Titular chico en Geist 400, sin paréntesis ni "Musas 01/04", y más blanco. Detrás de cada musa va un círculo plano, naranjo o amarillo alternados. La simulación separa dos capas, color y tinta azul, impresas en multiplicar, con un leve desajuste de registro, tinta que no cubre del todo y borde irregular.
+
+- `pruebas/serigrafia-poleras.jpg`: tres frases para Euterpe (arriba) y Talía, Terpsícore y Calíope con la primera frase (abajo).
+
+Frases a elegir, que reemplazan a "Tu semana cultural": "Esta semana pasan cosas.", "Siete días, cuatro musas." y "Esta semana sales."
