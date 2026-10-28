@@ -23,6 +23,13 @@ ul{list-style:none}
 :focus-visible{outline:3px solid var(--azul);outline-offset:3px}
 .in{width:100%;max-width:1440px;margin-inline:auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
 
+/* fondo de marca: el logo a gran escala, tono sobre tono, detrás de cada banda. Las bandas contiguas del mismo color comparten uno (.grupo). */
+.fondo{position:relative;isolation:isolate;overflow:hidden}
+.fondo::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--f) center/cover no-repeat}
+/* grano: una película sobre toda la página */
+body{position:relative}
+body::after{content:"";position:absolute;inset:0;z-index:60;pointer-events:none;background:url(img/grano.png);background-size:256px 256px;mix-blend-mode:overlay;opacity:.3}
+
 .banda{padding-block:clamp(56px,9vw,128px)}
 .base{background:var(--gris)}
 .panel{background:var(--panel)}
@@ -101,7 +108,7 @@ h3{font-size:clamp(22px,2.4vw,32px);font-weight:500;line-height:1.1;letter-spaci
 </head>
 <body>
 
-<header class="banda azul">
+<header class="banda azul fondo" style="--f:url(img/fondo-azul-1.svg)">
   <div class="in">
     <div class="barra">
       <img src="img/logo-blanco.svg" alt="Logo de Mooza" width="150" height="38">
@@ -112,21 +119,21 @@ h3{font-size:clamp(22px,2.4vw,32px);font-weight:500;line-height:1.1;letter-spaci
       <h1>Tu semana cultural</h1>
       <p class="lead">Nuevo sistema de marca.</p>
     </div>
-    <img class="portada-img" src="img/hero.png" alt="Cuatro carteles de Mooza: titular en amarillo, foto de un saxofonista en azul sobre naranjo, semana en naranjo y número en amarillo" width="3200" height="1000">
+    <img class="portada-img" src="img/hero.webp" alt="Cuatro carteles de Mooza: titular en amarillo, foto de un saxofonista en azul sobre naranjo, semana en naranjo y número en amarillo" width="3200" height="926">
   </div>
 </header>
 
-<section class="banda base">
+<section class="banda base fondo" style="--f:url(img/fondo-base-1.svg)">
   <div class="in">
     <div class="cab"><span class="eyebrow">Grilla</span><h2>Siete columnas, una por día</h2></div>
     <div class="siete">
-      <img src="img/d-grilla.png" alt="Dos carteles con la grilla de siete columnas a la vista" width="1520" height="926">
+      <img src="img/d-grilla.jpg" alt="Dos carteles con la grilla de siete columnas a la vista" width="1520" height="926">
       <div class="siete-n" aria-hidden="true">7</div>
     </div>
   </div>
 </section>
 
-<section class="banda panel">
+<section class="banda panel fondo" style="--f:url(img/fondo-panel-1.svg)">
   <div class="in">
     <div class="cab"><span class="eyebrow">Color</span><h2>Colores</h2></div>
     <div class="proporcion" role="img" aria-label="Proporción de color: gris claro 38, azul 34, amarillo 16 y naranjo 12 partes">
@@ -141,7 +148,7 @@ h3{font-size:clamp(22px,2.4vw,32px);font-weight:500;line-height:1.1;letter-spaci
   </div>
 </section>
 
-<section class="banda base">
+<section class="banda base fondo" style="--f:url(img/fondo-base-2.svg)">
   <div class="in">
     <div class="cab"><span class="eyebrow">Tipografía</span><h2>Geist</h2></div>
     <div class="espec">
@@ -153,7 +160,8 @@ h3{font-size:clamp(22px,2.4vw,32px);font-weight:500;line-height:1.1;letter-spaci
   </div>
 </section>
 
-<section class="banda panel">
+<div class="grupo panel fondo" style="--f:url(img/fondo-panel-2.svg)">
+<section class="banda">
   <div class="in">
     <div class="cab"><span class="eyebrow">Marca</span><h2>Logo</h2></div>
     <div class="logos">
@@ -165,19 +173,20 @@ h3{font-size:clamp(22px,2.4vw,32px);font-weight:500;line-height:1.1;letter-spaci
   </div>
 </section>
 
-<section class="banda panel" style="padding-top:0">
+<section class="banda" style="padding-top:0">
   <div class="in">
     <div class="cab"><span class="eyebrow">Carteles</span><h2>Cada cartel tiene dos zonas</h2></div>
-    <div class="tira"><img src="img/d-carteles4.png" alt="Cuatro carteles: titular en azul, número en amarillo, semana en naranjo y agenda en azul" width="1664" height="500"></div>
-    <div class="sep tira"><img src="img/d-formatos.png" alt="El mismo sistema en A3, story 9:16, cuadrado 1:1 y dos horizontales 16:9" width="1631" height="520"></div>
+    <div class="tira"><img src="img/d-carteles4.jpg" alt="Cuatro carteles: titular en azul, número en amarillo, semana en naranjo y agenda en azul" width="1664" height="500"></div>
+    <div class="sep tira"><img src="img/d-formatos.jpg" alt="El mismo sistema en A3, story 9:16, cuadrado 1:1 y dos horizontales 16:9" width="1631" height="520"></div>
     <div class="sep">
       <div class="sub"><h3>El feed</h3></div>
-      <img src="img/d-feed.png" alt="Seis carteles en una grilla de feed: azul, amarillo, naranjo y una foto" width="1504" height="1232" style="width:100%;max-width:752px">
+      <img src="img/d-feed.jpg" alt="Seis carteles en una grilla de feed: azul, amarillo, naranjo y una foto" width="1504" height="1232" style="width:100%;max-width:752px">
     </div>
   </div>
 </section>
+</div>
 
-<section class="banda base">
+<section class="banda base fondo" style="--f:url(img/fondo-base-3.svg)">
   <div class="in">
     <div class="cab"><span class="eyebrow">Fotografía</span><h2>Fotos en azul sobre amarillo o naranjo</h2></div>
     <div class="paso">
@@ -189,13 +198,13 @@ h3{font-size:clamp(22px,2.4vw,32px);font-weight:500;line-height:1.1;letter-spaci
   </div>
 </section>
 
-<section class="banda panel" style="padding-top:0">
+<section class="banda panel fondo" style="padding-top:0;--f:url(img/fondo-panel-3.svg)">
   <div class="in">
-    <div class="tira"><img src="img/d-fotos.png" alt="Fotos en azul en un cartel, en una semana, en una story y en un horizontal" width="1664" height="500"></div>
+    <div class="tira"><img src="img/d-fotos.jpg" alt="Fotos en azul en un cartel, en una semana, en una story y en un horizontal" width="1664" height="500"></div>
   </div>
 </section>
 
-<section class="banda base">
+<section class="banda base fondo" style="--f:url(img/fondo-base-4.svg)">
   <div class="in">
     <div class="cab"><span class="eyebrow">Fondo</span><h2>El logo como fondo</h2></div>
     <div class="paso">
@@ -207,20 +216,20 @@ h3{font-size:clamp(22px,2.4vw,32px);font-weight:500;line-height:1.1;letter-spaci
   </div>
 </section>
 
-<section class="banda panel" style="padding-top:0">
+<section class="banda panel fondo" style="padding-top:0;--f:url(img/fondo-panel-4.svg)">
   <div class="in">
     <div class="tira"><img src="img/d-fondo4.jpg" alt="Cuatro carteles con el fondo de marca: titular, número, semana y agenda" width="1664" height="500"></div>
   </div>
 </section>
 
-<section class="banda base">
+<section class="banda base fondo" style="--f:url(img/fondo-base-5.svg)">
   <div class="in">
     <div class="cab"><span class="eyebrow">Instagram</span><h2>Carrusel</h2></div>
-    <div class="tira"><img src="img/d-carrusel.png" alt="Carrusel de cinco láminas: portada Tu semana cultural, tres láminas de agenda del sábado y un cierre en naranjo" width="1664" height="408"></div>
+    <div class="tira"><img src="img/d-carrusel.jpg" alt="Carrusel de cinco láminas: portada Tu semana cultural, tres láminas de agenda del sábado y un cierre en naranjo" width="1664" height="408"></div>
   </div>
 </section>
 
-<footer class="banda azul" style="padding-top:0">
+<footer class="banda azul fondo" style="padding-top:0;--f:url(img/fondo-azul-2.svg)">
   <div class="in cierre">
     <h2>Mooza</h2>
     <div class="pie">

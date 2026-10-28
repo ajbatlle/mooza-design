@@ -114,8 +114,9 @@
     });
   }
   var _fid=0;
-  /* zona: [x,y,ancho,alto] de la zona de color, en cqw. acento: color del trazo dentro de la zona. */
-  function fondo(d,f,zona,def){
+  /* zona: [x,y,ancho,alto] de la zona de color, en cqw. acento: color del trazo dentro de la zona.
+     solo: true cuando la zona es una foto o va encima: solo se dibuja la parte sobre el gris, debajo de ella. */
+  function fondo(d,f,zona,def,solo){
     if(!d.fondo)return '';
     var Hc=altura(f),id='mzf'+(++_fid),z=d.color||def,acento='var(--mz-'+(z==='amarillo'?'naranja':'amarillo')+')',lleno=d.fondo==='relleno',
         tono=d.fondo==='tono',it=fondoLogo(f,d.semilla,tono),zr='M'+zona[0]+','+zona[1]+'h'+zona[2]+'v'+zona[3]+'h-'+zona[2]+'Z';
@@ -129,7 +130,7 @@
     return '<svg class="mz-fondo" viewBox="0 0 100 '+r2(Hc)+'" data-h="'+r2(Hc)+'" aria-hidden="true"><defs>'+
       '<clipPath id="'+id+'z"><path d="'+zr+'"/></clipPath>'+
       '<clipPath id="'+id+'g"><path clip-rule="evenodd" d="M0,0h100v'+r2(Hc)+'h-100Z'+zr+'"/></clipPath>'+fil+'</defs>'+
-      '<g'+(tono?'':' data-m')+' clip-path="url(#'+id+'z)" style="color:'+(tono?'var(--mz-tono-'+z+')':acento)+'">'+usos(.3)+'</g>'+
+      (solo?'':'<g'+(tono?'':' data-m')+' clip-path="url(#'+id+'z)" style="color:'+(tono?'var(--mz-tono-'+z+')':acento)+'">'+usos(.3)+'</g>')+
       (lleno?'':'<g'+(tono?'':' data-m')+' clip-path="url(#'+id+'g)" style="color:'+(tono?'var(--mz-tono-claro)':'var(--mz-azul)')+'">'+usos(.22)+'</g>')+'</svg>';
   }
   /* grano: una película de ruido fino sobre todo el cartel, texto incluido, para darle unidad y textura.
@@ -252,17 +253,17 @@
   /* titular: arriba, el titular sobre el color. Abajo, sobre gris, la fecha. */
   function titular(d,n,f){
     var k=tinta(d,'azul');
-    if(f==='16x9')return grid(n,mitad(campo(d,'azul'))+cell(1,3,1,3,'mz-t-grande',d.titular)+cell(5,7,1,1,'mz-t-sub'+k,d.rango)+
+    if(f==='16x9')return grid(n,mitad(campo(d,'azul'))+fondo(d,f,[50,0,50,altura(f)],'azul')+cell(1,3,1,3,'mz-t-grande',d.titular)+cell(5,7,1,1,'mz-t-sub'+k,d.rango)+
       cell(1,2,n,n,'mz-pie-logo',LOGO)+cell(5,7,n,n,'mz-t-dato mz-fecha-pie'+k,'mooza.cl'));
     var s=ARRIBA_TITULAR[f];
-    return grid(n,zonaA(s,hayFoto(d)?campoFoto(d,'amarillo'):campo(d,'azul'),hayFoto(d)?fotoHtml(d):trama(d,'br','azul'))+(hayFoto(d)?'':fondo(d,f,[0,0,100,yZona(d,f,n,s,true)],'azul'))+cell(1,7,1,s,'mz-t-grande'+(hayFoto(d)?sobreFoto(d):k),d.titular)+
+    return grid(n,(hayFoto(d)?fondo(d,f,[0,0,100,yZona(d,f,n,s,true)],'azul',true):'')+zonaA(s,hayFoto(d)?campoFoto(d,'amarillo'):campo(d,'azul'),hayFoto(d)?fotoHtml(d):trama(d,'br','azul'))+(hayFoto(d)?'':fondo(d,f,[0,0,100,yZona(d,f,n,s,true)],'azul'))+cell(1,7,1,s,'mz-t-grande'+(hayFoto(d)?sobreFoto(d):k),d.titular)+
       cell(1,7,s+2,s+2,'mz-t-sub mz-abajo',d.rango)+pie(n,'mooza.cl'));
   }
 
   /* número: arriba, sobre gris, el rango de la semana, enorme. Abajo, sobre el color, qué es. */
   function numero(d,n,f){
     var k=tinta(d,'amarillo');
-    if(f==='16x9')return grid(n,mitad(campo(d,'amarillo'))+cell(1,3,1,2,'mz-t-grande','Esta<br>semana')+cell(5,7,1,3,'mz-t-display'+k,d.corto)+
+    if(f==='16x9')return grid(n,mitad(campo(d,'amarillo'))+fondo(d,f,[50,0,50,altura(f)],'amarillo')+cell(1,3,1,2,'mz-t-grande','Esta<br>semana')+cell(5,7,1,3,'mz-t-display'+k,d.corto)+
       cell(1,2,n,n,'mz-pie-logo',LOGO)+cell(5,7,n,n,'mz-t-dato mz-fecha-pie'+k,'mooza.cl'));
     var s=ARRIBA[f];
     return grid(n,zona(s+1,n,campo(d,'amarillo'),trama(d,'tr','amarillo'))+(function(){var y=yZona(d,f,n,s,false);return fondo(d,f,[0,y,100,altura(f)-y],'amarillo')})()+cell(1,7,1,s,'mz-t-display',d.corto)+
@@ -273,15 +274,15 @@
   function foto(d,n,f){
     var txt='<span class="mz-t-titular">'+d.evento.nombre+'</span><span class="mz-t-dato">'+d.evento.meta+'</span>';
     /* en horizontal el texto tiene tres columnas: el precio pasa a su propia línea */
-    if(f==='16x9')return grid(n,mitad(campoFoto(d,'amarillo'),'mz-ph',fotoHtml(d))+cell(1,3,1,3,'mz-evento-t',txt.replace(' • desde','<br>desde'))+pie(n,null));
+    if(f==='16x9')return grid(n,fondo(d,f,[50,0,50,altura(f)],'amarillo',true)+mitad(campoFoto(d,'amarillo'),'mz-ph',fotoHtml(d))+cell(1,3,1,3,'mz-evento-t',txt.replace(' • desde','<br>desde'))+pie(n,null));
     var s=ARRIBA[f];
-    return grid(n,cell(1,7,1,s,'mz-ph',fotoHtml(d),'background:'+campoFoto(d,'amarillo'))+
+    return grid(n,fondo(d,f,[0,0,0,0],'amarillo',true)+cell(1,7,1,s,'mz-ph',fotoHtml(d),'background:'+campoFoto(d,'amarillo'))+
       cell(1,7,s+2,n-1,'mz-evento-t',txt)+pie(n,d.rango));
   }
 
   /* semana: arriba, sobre el color, el titular. Abajo, sobre gris, siete días; el destacado lleva el acento. */
   function semana(d,n,f){
-    var s=ARRIBA[f],fila=n-2,h=zonaA(s,hayFoto(d)?campoFoto(d,'naranja'):campo(d,'naranja'),hayFoto(d)?fotoHtml(d):trama(d,'br','naranja'))+(hayFoto(d)?'':fondo(d,f,[0,0,100,yZona(d,f,n,s,true)],'naranja'))+cell(1,7,1,s,'mz-t-grande'+(hayFoto(d)?sobreFoto(d):tinta(d,'naranja')),'Esta<br>semana');
+    var s=ARRIBA[f],fila=n-2,h=(hayFoto(d)?fondo(d,f,[0,0,100,yZona(d,f,n,s,true)],'naranja',true):'')+zonaA(s,hayFoto(d)?campoFoto(d,'naranja'):campo(d,'naranja'),hayFoto(d)?fotoHtml(d):trama(d,'br','naranja'))+(hayFoto(d)?'':fondo(d,f,[0,0,100,yZona(d,f,n,s,true)],'naranja'))+cell(1,7,1,s,'mz-t-grande'+(hayFoto(d)?sobreFoto(d):tinta(d,'naranja')),'Esta<br>semana');
     d.dias.forEach(function(x,i){
       h+=cell(i+1,i+1,fila,fila,'mz-dc'+(i===d.diaDestacado?' mz-dc-on':''),'<span class="mz-t-micro">'+x[0]+'</span><b>'+x[1]+'</b>',i===d.diaDestacado?acento(d,'naranja'):'');
     });
@@ -307,7 +308,7 @@
   /* story 9:16: arriba, la foto. Abajo, sobre gris, la categoría (con su acento), el nombre y los datos. */
   function story(d,n,f){
     var s=ARRIBA[f],t=d.story;
-    return grid(16,cell(1,7,1,s,'mz-ph',fotoHtml(d),'background:'+campoFoto(d,'naranja'))+
+    return grid(16,fondo(d,f,[0,0,0,0],'naranja',true)+cell(1,7,1,s,'mz-ph',fotoHtml(d),'background:'+campoFoto(d,'naranja'))+
       cell(1,7,s+2,s+2,'mz-t-dato mz-etiqueta',t.categoria)+
       cell(1,7,s+3,s+5,'mz-t-titular',t.titulo)+
       cell(1,5,s+6,s+7,'mz-t-dato',t.meta)+pie(16,null));
