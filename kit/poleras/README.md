@@ -14,3 +14,12 @@ Para fotos reales de producto sirven los prompts de `../ilustraciones/prompts-ch
 - `pruebas/tipografias-poleras.jpg`: las mismas sobre polera.
 
 Filas: 1) tipografía de Mooza (Geist 400 y 500, minúscula con inicial), 2) Geist negrita extra en mayúsculas, 3) grotesca extendida negra en mayúsculas (Archivo, ancho 125, peso 900), que no es de la marca.
+
+## Segunda ronda: más blanco, titular chico y acento de color
+
+Cambios pedidos: titular mucho más chico en Geist 400 (sin negrita), más blanco, sin paréntesis ni "Musas 01/04", un texto menos obvio que "Tu semana cultural" y un acento naranjo o amarillo.
+
+- `pruebas/textos-poleras.jpg`: Euterpe con tres textos: "Las musas no avisan. Mooza sí.", "Hay más pasando de lo que crees." y "Alguien está afinando en este momento."
+- `pruebas/acento-poleras.jpg` y `pruebas/acento-estampas.png`: las cuatro musas con un texto propio cada una y un círculo plano de color detrás, en naranjo (fila de arriba) y en amarillo (fila de abajo). El color va impreso bajo las líneas azules y pasa por la figura.
+
+Textos por musa: Euterpe, "Alguien está afinando en este momento."; Talía, "En algún lugar, la sala está por quedar a oscuras."; Terpsícore, "Nadie baila igual dos veces."; Calíope, "Alguien está a punto de leer en voz alta."
