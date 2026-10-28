@@ -65,3 +65,15 @@ El módulo se arma así:
 4. Una celda con texto o logo encima se vacía sola y las líneas se cortan alrededor.
 
 Opciones: `esquina` (`br`, `bl`, `tr`, `tl`), `semilla` (número), `escala: 'chico'` (una fila de celdas, para zonas de dos filas), `cols` y `filas` (3 y 2 por defecto). `MoozaPoster.esquina` y `MoozaPoster.esquinaSvg` entregan las mismas formas para otros soportes, como poleras. Ver `kit/tablero/trama-propuesta.png`.
+
+## Fondo de marca
+
+`MoozaPoster.mount(el, 'titular', {fondo: 'tono'})` pone detrás del texto el logo a una escala en que ya no se lee: formas muy grandes que cruzan las dos zonas del cartel. Funciona en `titular`, `numero`, `semana` y `agenda` (no en horizontal).
+
+Se arma así:
+
+1. Se ponen dos símbolos del logo, las dos "o" juntas y el ícono, a una escala en que una "o" mide más que el cartel. Solo se usan las partes curvas, así no aparecen letras ni diagonales.
+2. Cada símbolo se ancla por un punto de interés (el centro de una "o", la lente entre las dos, un lóbulo del ícono) cerca de una esquina y se gira en múltiplos de 90°. La semilla decide cuál y dónde.
+3. Cada zona lleva la forma en un tono apenas distinto de su color: `--mz-tono-azul`, `--mz-tono-amarillo`, `--mz-tono-naranja` sobre la zona de color y `--mz-tono-claro` sobre el gris. Así el texto no pierde contraste.
+
+Opciones de `fondo`: `'tono'` (forma plana de tono sobre tono), `'lineas'` (solo el contorno, en color de acento dentro de la zona y azul sobre el gris, cortado alrededor del texto) y `'relleno'` (forma plana del color de acento). `semilla` cambia la composición. `MoozaPoster.fondoLogo(formato, semilla, true)` entrega las posiciones para otros soportes, como poleras. Ver `kit/tablero/fondo-propuesta.png`.

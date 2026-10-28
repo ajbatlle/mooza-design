@@ -50,8 +50,8 @@
 .mz-pie-logo{display:flex;align-items:flex-end}
 .mz-logo{display:block;width:100%;height:auto;max-height:100%;color:var(--mz-azul);--mz-iso:var(--mz-azul)}
 .mz-sobre-oscuro .mz-logo{color:var(--mz-blanco);--mz-iso:var(--mz-blanco)}
-.mz-lt{fill:currentColor}
-.mz-li{fill:var(--mz-iso,var(--mz-azul))}
+.mz-lt{fill:var(--mz-lt-fill,currentColor);stroke:var(--mz-lt-stroke,none);stroke-width:var(--mz-lt-w,0)}
+.mz-li{fill:var(--mz-lt-fill,var(--mz-iso,var(--mz-azul)));stroke:var(--mz-lt-stroke,none);stroke-width:var(--mz-lt-w,0)}
 .mz-fecha-pie{text-align:right;align-self:end;line-height:1.1;transform:translateY(.186em)}
 
 /* bloques de texto con dos niveles */
@@ -65,6 +65,8 @@
 
 /* trama de esquina: contornos de acento que parten de la esquina de la zona y llegan a los bordes */
 .mz-trama{position:absolute;display:block;pointer-events:none}
+/* fondo de marca: el logo gigante, a toda la lámina, bajo el texto */
+.mz-grid>.mz-fondo{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden}
 
 /* semana: tira de siete días */
 .mz-dc{box-shadow:inset 0 0 0 1px var(--mz-azul);display:flex;flex-direction:column;justify-content:space-between;padding:calc(var(--mz-col)*.06*1cqw)}
