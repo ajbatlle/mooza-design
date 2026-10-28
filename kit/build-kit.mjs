@@ -78,11 +78,12 @@ async function leer(tipo, formato) {
     const rc = e => { const r = e.getBoundingClientRect(); return { x: r.left - box.left, y: r.top - box.top, w: r.width, h: r.height }; };
     const col = s => { const p = s.match(/rgba?\(([^)]+)\)/)[1].split(',').map(Number); return { hex: '#' + p.slice(0, 3).map(v => Math.round(v).toString(16).padStart(2, '0')).join(''), a: p.length > 3 ? p[3] : 1 }; };
     const bg = col(getComputedStyle(el).backgroundColor).hex;
-    el.querySelectorAll('.mz-zona,.mz-zona-a,.mz-mitad,.mz-ph,.mz-dc,.mz-hora-on,.mz-etiqueta i').forEach(e => {
+    el.querySelectorAll('.mz-zona,.mz-zona-a,.mz-mitad,.mz-ph,.mz-dc').forEach(e => {
       const c = col(getComputedStyle(e).backgroundColor);
       if (e.classList.contains('mz-dc') && !e.classList.contains('mz-dc-on')) items.push({ k: 'stroke', ...rc(e) });
       else if (c.a > 0) items.push({ k: 'rect', ...rc(e), fill: c.hex });
     });
+    el.querySelectorAll('.mz-hora-on span').forEach(e => { const r = rc(e), bw = parseFloat(getComputedStyle(e).borderBottomWidth); items.push({ k: 'rect', x: r.x, y: r.y + r.h - bw, w: r.w, h: bw, fill: '#fbb03b' }); });
     const lg = el.querySelector('.mz-logo');
     if (lg) { const cs = getComputedStyle(lg); items.push({ k: 'logo', ...rc(lg), text: col(cs.color).hex, iso: (() => { const t = document.createElement('i'); t.style.color = 'var(--mz-iso)'; lg.parentElement.appendChild(t); const h = col(getComputedStyle(t).color).hex; t.remove(); return h; })() }); }
     const ctx = document.createElement('canvas').getContext('2d');

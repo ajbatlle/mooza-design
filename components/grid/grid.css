@@ -74,9 +74,11 @@
 .mz-cabeza{display:flex;align-items:baseline;align-self:start}
 .mz-cabeza>*{align-self:baseline}
 .mz-cabeza .mz-num{flex:none;width:calc((var(--mz-col)*3 + var(--mz-g)*3)*1cqw)}
-.mz-hora{font-size:var(--mz-t-texto);font-weight:600;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;padding:0 calc(var(--mz-col)*.12*1cqw);align-self:start;height:calc(var(--mz-col)*.8*1cqw);display:flex;align-items:center}
-.mz-hora-on{background:var(--mz-amarillo);color:var(--mz-azul)}
+.mz-hora{font-size:var(--mz-t-texto);font-weight:var(--mz-peso-dato);line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;align-self:start}
+/* la hora destacada lleva una línea naranja bajo el texto: queda dentro de su celda y alineada al margen */
+.mz-hora span{display:inline-block}
+.mz-hora-on span{padding-bottom:.2em;border-bottom:.2em solid var(--mz-naranja)}
 
 /* story */
-.mz-etiqueta{display:flex;align-items:center;gap:2cqw;align-self:end}
-.mz-etiqueta i{width:2.4cqw;height:2.4cqw;background:var(--mz-naranja)}
+/* categoría de la story: texto simple sobre el título, en el margen */
+.mz-etiqueta{align-self:end;font-weight:var(--mz-peso-dato)}

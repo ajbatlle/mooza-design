@@ -141,7 +141,7 @@
     var a=d.agenda,h=zonaA(2,campo(d,'amarillo'))+cell(1,7,1,2,'mz-cabeza'+tinta(d,'amarillo'),'<span class="mz-t-grande mz-num">'+a.n+'</span><span class="mz-t-titular">'+a.dia+'</span>');
     a.eventos.slice(0,2).forEach(function(e,i){
       var r=4+i*3;
-      h+=cell(1,2,r,r,'mz-hora'+(e.f?' mz-hora-on':''),e.h||'',e.f?acento(d,'amarillo'):'')+
+      h+=cell(1,2,r,r,'mz-hora'+(e.f?' mz-hora-on':''),e.h?'<span>'+e.h+'</span>':'')+
          cell(3,7,r,r+1,'mz-evento-t','<span class="mz-t-texto">'+e.t+'</span><span class="mz-t-dato">'+e.v+(e.p?' • '+e.p:'')+'</span>');
     });
     return grid(n,h+pie(n,a.pag||''));
@@ -151,7 +151,7 @@
   function story(d,n,f){
     var s=ARRIBA[f],t=d.story;
     return grid(16,cell(1,7,1,s,'mz-ph',fotoHtml(d),'background:'+campoFoto(d,'naranja'))+
-      cell(1,7,s+2,s+2,'mz-t-micro mz-etiqueta','<i></i>'+t.categoria)+
+      cell(1,7,s+2,s+2,'mz-t-dato mz-etiqueta',t.categoria)+
       cell(1,7,s+3,s+5,'mz-t-titular',t.titulo)+
       cell(1,5,s+6,s+7,'mz-t-dato',t.meta)+pie(16,null));
   }
