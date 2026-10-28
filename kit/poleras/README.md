@@ -11,7 +11,7 @@ Maquetas simuladas, no fotografías: silueta, tela con textura, pliegues, costur
 
 ## Archivos
 
-- `estampas/<musa>-<frase>-tinta-azul.png` y `estampas/<musa>-<frase>-color.png`: las dos capas de impresión, una por pantalla, con transparencia, a 1800 × 2400 px. El color y la tinta están en la misma posición.
+- `estampas/<musa>-<frase>-tinta-azul.png` y `estampas/<musa>-<frase>-color.png`: las dos capas de impresión, una por pantalla, con transparencia, a 1800 × 2400 px (en `estampas/pdf/`, los mismos en PDF). El color y la tinta están en la misma posición.
 - `maquetas/<musa>-<frase>.jpg`: la polera simulada con cada estampa.
 
 La resolución sale de las musas de 750 × 1125 px. Para imprimir hace falta el original grande o una versión vectorial. Las dos tintas implican dos pantallas de serigrafía: hay que confirmarlo con la imprenta.

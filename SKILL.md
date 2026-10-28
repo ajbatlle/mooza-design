@@ -6,7 +6,7 @@ user-invocable: true
 
 Lee `readme.md` y revisa `guidelines/index.html` antes de diseñar. Este es el único sistema vigente.
 
-Si haces piezas visuales (carteles, stories, maquetas), parte de `kit/plantillas/` o usa `MoozaPoster` (`components/grid/poster.js`). Importa `styles.css` para color, tipo y grilla. Los tokens están en `tokens/` y los componentes de interfaz en `components/ui/`.
+Si haces piezas visuales (carteles, stories, maquetas), parte de `kit/plantillas/` (con y sin fondo de marca) o usa `MoozaPoster` (`components/grid/poster.js`). Importa `styles.css` para color, tipo y grilla. Los tokens están en `tokens/` y los componentes de interfaz en `components/ui/`.
 
 Decisiones de la marca:
 - Regla de base: cada elemento ocupa celdas completas y ninguno comparte celdas con otro. Corre `components/grid/auditoria.mjs` después de cambiar un diseño.

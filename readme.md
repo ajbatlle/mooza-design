@@ -61,7 +61,7 @@ Una sola familia, Geist (licencia OFL, Google Fonts). La jerarquía sale del tam
 
 ### Logo
 
-El logo oficial no se redibuja. Los archivos están en `assets/logos/` y las variantes monocromas, en `kit/marca/`.
+El logo oficial no se redibuja. La geometría está en `kit/logo/base/` y todas las variantes (azul, blanco, amarillo y naranjo; horizontal, vertical e ícono) están en `kit/logo/`, en SVG, PNG sin fondo y PDF, y también sobre cada fondo.
 
 - Posición: la última fila de la grilla es el pie. El logo va ahí, a la izquierda, con el ancho exacto de dos columnas. La fecha o la web va a la derecha. Nada más entra en esa fila.
 - Colores: azul sobre gris claro, amarillo y naranjo; blanco sobre azul.
@@ -140,6 +140,4 @@ Los datos tienen la forma de `MoozaPoster.EJEMPLO`. Los eventos, salas y precios
 | `guidelines/elementos.html` | Los seis elementos: tamaño, posición y qué pueden tocar |
 | `guidelines/fotos.html` | Probar fotos en los carteles y descargar la tinta |
 | `caso-de-estudio/` | La presentación del rebrand, en página y en PDF |
-| `kit/` | Plantillas, grillas, celdas, marca, fotos, tinta, ilustraciones y poleras |
-| `assets/logos/` | Logos oficiales |
-| `uploads/` | Logos editables originales de la marca |
+| `kit/` | La entrega de recursos gráficos: logo, plantillas, fondos, grillas, celdas, ilustraciones, poleras y fotos, en SVG, PNG y PDF. Ver `kit/README.md` |

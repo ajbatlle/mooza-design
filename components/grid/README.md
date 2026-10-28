@@ -60,4 +60,4 @@ El procedimiento y los tonos (`--mz-tono-*`) están en `readme.md`. El grano y e
 
 `MoozaPoster.mount(el, 'musa', {musa: {src: 'euterpe.png', colores: ['gris', 'amarillo'], corte: 'v', x: 16.3, y: 8.2}}, 'carta')` pone una musa cruzando el corte entre dos colores, con el pie de siempre: el logo de dos columnas a la izquierda y mooza.cl a la derecha. Formato `carta` (612 × 792).
 
-La ilustración es una tinta azul con transparencia (`kit/ilustraciones/musas/tinta/`), así el color pasa por la figura. `corte` es `'v'` (izquierda y derecha) o `'h'` (arriba y abajo). `colores` va en el mismo orden. `x` e `y` son la esquina superior izquierda de la ilustración, en % del ancho y del alto; `ancho` es su ancho en %.
+La ilustración es una tinta azul con transparencia (`kit/ilustraciones/sin-fondo/png/`), así el color pasa por la figura. `corte` es `'v'` (izquierda y derecha) o `'h'` (arriba y abajo). `colores` va en el mismo orden. `x` e `y` son la esquina superior izquierda de la ilustración, en % del ancho y del alto; `ancho` es su ancho en %.
